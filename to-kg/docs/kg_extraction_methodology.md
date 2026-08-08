@@ -1,43 +1,48 @@
-# Methodology Proposal: Best-Possible KG Extraction from MultiCaRe Cases
+# Methodology Proposal: Local, Encoder-Based KG Extraction from MultiCaRe Cases
 
 **Purpose of this document.** This is a proposal, not an implemented pipeline.
-It answers: *if the goal were the best knowledge graph we can reasonably
-produce from `cases.parquet`, using any model or framework available today,
-what would that pipeline look like?* It is meant to be run once by the
-instructor (not by students, not on Binder) to produce an illustrative KG —
-shown at the start of the course as "here's where NLP can take you" — and
-then reverse-engineered into the simplified, manual steps students already
-work through in
-[Activity_Plan_Clinical_Cases_to_Knowledge_Graphs.md](../Activity_Plan_Clinical_Cases_to_Knowledge_Graphs.md).
-See Section 7 for that mapping.
+It answers: *given a hard constraint of running entirely on a local laptop,
+with no remote LLM APIs and encoder-only (BERT-family) models rather than
+generative ones, what's the best KG-extraction pipeline achievable?* This
+supersedes an earlier sketch of the same idea that assumed API access to a
+generative LLM (Claude) — that version traded infrastructure simplicity for
+API cost and a network dependency; this version makes the opposite trade:
+lower peak quality, in exchange for zero cost, zero API keys, and full
+reproducibility on a single machine. Section 5 makes that trade-off
+explicit.
 
-Nothing here has been added to `environment.yml` or implemented in a
-notebook yet — Section 8 lists what implementation would require.
+It is meant to be run once by the instructor to produce an illustrative KG
+— shown at the start of the course as "here's where NLP can take you" —
+and then reverse-engineered into the simplified, manual steps students
+already work through in
+[Activity_Plan_Clinical_Cases_to_Knowledge_Graphs.md](../Activity_Plan_Clinical_Cases_to_Knowledge_Graphs.md).
+See Section 8 for that mapping. Nothing here has been added to
+`environment.yml` or implemented in a notebook yet — Section 9 lists what
+implementation would require.
 
 ## 1. Design goals and constraints
 
-- **Best quality, not classroom-runnable.** Unlike the pedagogical steps,
-  this pipeline is allowed to call a frontier LLM API and use models too
-  heavy for Binder's free-tier CPU containers. It produces an artifact
-  (graph file, Neo4j dump, screenshots/video) that gets *shown* to students,
-  not re-run by them.
-- **No gold KG exists for this corpus.** `docs/data_source.md` already
-  establishes that MultiCaRe supplies raw text only, and the LREC 2020
-  paper (Schulz et al.) supplies a category scheme, not annotations over
-  this data. So "best possible" has to be validated against a small
-  hand-checked sample (Section 6), not against a pre-existing benchmark.
-- **Reuse the activity plan's own schema.** Step 3 of the activity plan
-  already commits to six entity categories (Symptom, Disease, Drug,
-  Laboratory Test, Anatomy, Procedure) and Step 4 to example relations
-  (`has_symptom`, `reveals`, `treats`). The automatic pipeline should target
-  the *same* schema, not a richer one — otherwise the "compare your manual
-  annotation to the automatic one" discussion (Section 7) breaks down.
-- **Small, curated sample, not the full 98k cases.** A convincing
-  illustrative graph needs real hub structure (a drug treating several
-  diseases, a symptom shared across cases) but doesn't need scale. Stratify
-  a sample of roughly 150–300 cases across `metadata.mesh_terms` /
-  `major_mesh_terms`, age, and gender so the graph reads as multi-specialty
-  rather than one narrow topic.
+- **Fully local, fully offline after model download.** No calls to any
+  hosted LLM API. Every model runs on the instructor's laptop CPU (a GPU
+  helps but isn't required at this scale).
+- **Encoder-only (BERT-family) models throughout.** No generative
+  decoding anywhere in the pipeline — every stage that would use a
+  generative LLM in a cloud-based design is replaced by a *classification*
+  or *embedding-similarity* stage instead. This is the main architectural
+  consequence of the constraint (Section 2).
+- **Consciously lower KG quality than a generative-LLM pipeline, in
+  exchange for zero cost/infrastructure.** No implicit multi-sentence
+  relation understanding, no free-form disambiguation via world knowledge
+  — only what fits in fixed label sets and entailment scoring. This is an
+  accepted trade, not an oversight (Section 5).
+- **Reuse the activity plan's own schema.** Still targets the same six
+  entity categories (Symptom, Disease, Drug, Laboratory Test, Anatomy,
+  Procedure) and a small controlled relation vocabulary from Step 3/4 of
+  the activity plan, so the automatic output stays comparable to what
+  students produce by hand later.
+- **No gold KG exists for this corpus** (unchanged from the earlier
+  version — see `docs/data_source.md`). "Best achievable" is validated
+  against a small hand-checked sample (Section 7), not a benchmark.
 
 ## 2. Pipeline stages
 
@@ -46,228 +51,312 @@ case_text
     ↓
 1. Sentence/narrative segmentation
     ↓
-2. Candidate NER + UMLS grounding (classical, local)
+2. Candidate NER (BERT-family token classifier)
     ↓
-3. Negation / assertion tagging
+3. Entity grounding/normalization (SapBERT + UMLS)
     ↓
-4. LLM joint entity + relation extraction (whole case_text, schema-constrained)
+4. Negation / assertion tagging
     ↓
-5. Merge classical + LLM entities, reconcile to CUIs
+5. Relation candidate generation (dependency+cues) + typing (zero-shot NLI)
     ↓
-6. Cross-case entity resolution (CUI exact match + embedding clustering)
+6. Cross-case entity resolution (embedding clustering)
     ↓
-7. LLM-as-judge faithfulness filter
+7. Faithfulness filter (entailment score, same NLI model as Stage 5)
     ↓
 8. Graph construction, storage, visualization
 ```
 
+One design principle worth stating up front: **stages 1, 5, and 7 all
+reuse a single general-purpose NLI/zero-shot encoder model** rather than
+loading a different specialized model for each. On a laptop, minimizing
+the number of distinct model weights loaded into memory matters more than
+it would with API calls, and it keeps the total download footprint small
+(Section 4).
+
 ### Stage 1 — Segmentation
 
-Use scispaCy's sentencizer (`en_core_sci_lg`), not a generic one — it
-handles clinical abbreviations ("pt.", "hx.", "Dr.") that break naive
-sentence splitters. Optional but useful: a per-sentence LLM tag for
-narrative phase (presentation / history / exam / tests / diagnosis /
-treatment / outcome) — cheap to add and gives relation extraction a
-temporal backbone ("reveals" should attach a test-phase sentence to a
-diagnosis-phase entity).
+scispaCy's sentencizer (`en_core_sci_lg`) handles clinical abbreviations
+("pt.", "hx.", "Dr.") that break generic sentence splitters — this part is
+unchanged from the earlier design and isn't LLM-dependent either way.
+Optional: tag each sentence with a narrative phase (presentation / history
+/ exam / tests / diagnosis / treatment / outcome) using the same zero-shot
+NLI model as Stage 5, reformulated as "this sentence describes the
+{phase}" hypotheses — cheap to add, gives relation typing a temporal
+backbone, and costs no extra model download since it reuses Stage 5's
+model.
 
-### Stage 2 — Candidate NER + grounding (classical)
+### Stage 2 — Candidate NER
 
-**Framework: scispaCy** (`en_core_sci_lg` or the narrower
-`en_ner_bc5cdr_md` for disease/chemical, `en_ner_bionlp13cg_md` for
-anatomy/cell) with the `scispacy.linking` UMLS `EntityLinker`. CPU-only,
-free, deterministic, and grounds every hit to a UMLS CUI + preferred term +
-semantic type — which is what makes later cross-case entity resolution
-possible.
+**Model: `d4data/biomedical-ner-all`** — a DistilBERT-base model (66.4M
+params, verified on the Hugging Face hub), fine-tuned on MACCROBAT, a
+corpus of annotated **clinical case reports** — a close genre match to
+MultiCaRe's `case_text`. It recognizes 107 fine-grained entity types
+including Sign_symptom, Disease_disorder, Medication, Diagnostic_procedure,
+Biological_structure, and Lab_value, which map fairly directly onto the
+activity's six categories (Section 3 gives the mapping). Small and
+DistilBERT-based, so CPU inference over a few hundred cases takes minutes,
+not hours.
 
-This pass is a *recall net*, not the final answer: it catches well-known
-terminology reliably but misses paraphrased or implicit mentions ("the
-antibiotic" without naming it, a lab value expressed as a sentence).
+**Heavier alternative, if accuracy matters more than speed:**
+`Clinical-AI-Apollo/Medical-NER`, a DeBERTa-v3-base model (~0.2B params,
+verified on the hub), 41 medical entity labels, trained on PubMed-derived
+text. Worth a side-by-side comparison against the DistilBERT model on the
+pilot sample (Section 7) before committing to one.
 
-### Stage 3 — Negation / assertion
+Neither model's label set was designed around this activity's six
+categories, so a manual label-mapping table (native label → activity
+category) is real, unavoidable work — see Section 3. Labels that don't map
+cleanly (e.g. MACCROBAT's `Duration`, `Frequency`, `Severity`, `History`)
+are worth keeping as edge/node attributes rather than discarding, since
+they're useful qualifiers on drug and symptom nodes.
 
-**Framework: negspacy** (NegEx algorithm) layered on the scispaCy pipeline.
-Clinical text is full of negated findings ("no signs of pneumonia", "denies
-fever") — without this stage, a naive pipeline will assert the opposite of
-what the case actually says. Tag each entity `affirmed` / `negated` /
-`possible` / `family_history` (a category the LREC scheme also calls out as
-a "negation modifier").
+### Stage 3 — Entity grounding / normalization
 
-### Stage 4 — LLM joint extraction (the quality-driving stage)
+**Model: SapBERT** (`cambridgeltl/SapBERT-from-PubMedBERT-fulltext`,
+verified on the hub) — a PubMedBERT-base model fine-tuned via
+self-alignment pretraining specifically to embed biomedical entity
+mentions so that synonyms land close together in embedding space (trained
+on UMLS 2020AA synonym pairs). Embed each NER span and each UMLS concept's
+preferred term/synonyms, then assign the nearest UMLS CUI by cosine
+similarity above a threshold. This is the encoder-native replacement for
+what an API-based pipeline would otherwise lean on an LLM's world
+knowledge for.
 
-**Model: Claude Opus 5**, called once per case with the *full* `case_text`
-(cases run 9–79,243 chars, median ~2,543 — well within context, so no
-chunking needed, which also sidesteps most coreference problems: "she",
-"the patient", "it" resolve naturally when the model sees the whole case).
-Feed it the Stage 2/3 candidate entities as hints, not as ground truth, and
-constrain the output via a Pydantic schema passed as a tool/function
-definition:
+**Lightweight complement:** scispaCy's own `EntityLinker` (TF-IDF
+character n-gram nearest neighbor over UMLS terms) is not a neural model
+at all, but it's essentially free to run and catches exact/near-exact
+string matches SapBERT's embedding search might rank lower — worth running
+both and taking the union, or falling back to it when SapBERT similarity
+is below threshold.
 
-- entity type ∈ the activity plan's six categories
-- relation type ∈ a small controlled vocabulary (`has_symptom`, `treats`,
-  `reveals`, `diagnosed_with`, `underwent`, `located_in`,
-  `administered_at_dose`, `has_lab_result`, `ruled_out`) extendable but kept
-  small deliberately, so the resulting graph stays legible for the "compare
-  to your manual triples" discussion later
-- each entity carries the negation/assertion status from Stage 3 where
-  applicable
+### Stage 4 — Negation / assertion
 
-Why an LLM here rather than a trained relation-extraction model: there is
-no off-the-shelf RE model for this exact schema, and training one needs
-labeled data that doesn't exist for this corpus. An instruction-following
-LLM with a schema-constrained tool call gets both entities scispaCy missed
-and multi-sentence relations ("CT scan reveals pulmonary infiltrate")
-without needing training data.
+**Primary: negspacy** (NegEx algorithm) — rule-based, no model download,
+proven in clinical NLP, unchanged from the earlier design. Tags each
+entity `affirmed` / `negated` / `possible` / `family_history`.
 
-**Cost-effective fallback:** Claude Sonnet 5 if running the full ~150–300
-case sample at Opus pricing is a concern — quality drop is real but modest
-for this kind of structured extraction. **Zero-API-cost fallback:** an
-open-weight instruct model (Llama 3.3 70B, Qwen2.5-72B-Instruct) served via
-vLLM or Ollama, if the instructor wants a fully local/reproducible run —
-worth doing once as a comparison point, since "closed frontier model vs.
-open local model" is itself a nice thing to show students later in the
-semester.
+**Optional BERT-based upgrade:** `bvanaken/clinical-assertion-negation-bert`
+(verified on the hub) — a Bio+Discharge Summary ClinicalBERT model
+(Alsentzer et al. base) fine-tuned on 2010 i2b2 assertion data, classifying
+a marked entity as `PRESENT` / `ABSENT` / `POSSIBLE`. Its label set is
+narrower than NegEx's (no explicit family-history class), so treat it as a
+second opinion to combine with negspacy rather than a full replacement —
+e.g. flag disagreements for the pilot-sample review in Section 7.
 
-### Stage 5 — Merge and re-ground
+### Stage 5 — Relation candidate generation and typing
 
-Reconcile the Stage 2 (scispaCy+UMLS) and Stage 4 (LLM) entity sets by
-string + CUI match. Where the LLM surfaces an entity scispaCy missed, run
-it back through the UMLS linker's candidate generator alone so it also gets
-a CUI where one exists. Entities with no UMLS match at all are kept but
-flagged ungrounded — informative in itself (shows where structured
-vocabularies fall short of free text).
+This is the stage that most directly replaces the earlier design's
+generative LLM call, and it has to be split into two steps because an
+encoder can't generate a triple from scratch — it can only score whether a
+*given* candidate is right.
+
+**Step 5a — candidate generation (rule-based, not a model).** For each
+pair of entities co-occurring in the same sentence (or adjacent sentences,
+within a token-distance window), generate a candidate triple using
+scispaCy's dependency parse: keep the pair if a verb or preposition cue
+from a small controlled lexicon (`treat*`, `reveal*`, `diagnos*`,
+`undergo/underwent`, `show*`, `administer*`, `indicate*`, …) sits on the
+shortest dependency path between them. This is the same kind of pattern
+matching classical relation extraction has always used — cheap, fast,
+fully local, and it bounds the number of pairs the next step has to score.
+
+**Step 5b — typing via zero-shot NLI (the encoder-based "reasoning"
+step).** For each candidate pair, verbalize each relation in the
+controlled vocabulary as a hypothesis ("this sentence implies that
+{subject} {relation} {object}") and score entailment with a compact
+zero-shot NLI encoder — e.g. a DeBERTa-v3-base zero-shot checkpoint in the
+`MoritzLaurer/deberta-v3-*-zeroshot-*` family (~0.2B params, verified on
+the hub; check the model card for the commercially-friendly `-c` variant
+if license terms matter for redistributing course materials). Assign the
+highest-scoring relation above a confidence threshold; below threshold,
+drop the candidate rather than forcing a label.
+
+**If relation quality after this still isn't good enough, and there's
+time to invest:** fine-tune a small BioClinicalBERT/PubMedBERT relation
+classifier (entity-marker sentence classification, `[E1]`/`[E2]` special
+tokens around subject/object) on the same ~20-case pilot annotation set
+already needed for evaluation (Section 7). This directly reuses annotation
+work the instructor is doing anyway, rather than being extra effort — the
+natural "if you want better local RE, this is the upgrade path" note.
 
 ### Stage 6 — Cross-case entity resolution
 
-Nodes with the same CUI collapse automatically. For ungrounded entities
-(and near-synonyms UMLS didn't unify), cluster by embedding similarity
-using **SapBERT** (purpose-built for biomedical synonym/entity-linking
-similarity — meaningfully better here than a generic sentence-embedding
-model) and merge above a similarity threshold, e.g. unifying "myocardial
-infarction" / "heart attack" / "MI" mentioned in different cases into one
-node.
+Unchanged in spirit from the earlier design, and it was already
+encoder-based: nodes sharing a UMLS CUI (Stage 3) collapse automatically;
+ungrounded or near-synonym entities are clustered by SapBERT embedding
+cosine similarity (reusing the same embeddings computed in Stage 3, no
+extra model or pass needed) — e.g. unifying "myocardial infarction" /
+"heart attack" / "MI" mentioned in different cases into one node.
 
-### Stage 7 — LLM-as-judge faithfulness filter
+### Stage 7 — Faithfulness filter
 
-A second, cheaper LLM call (Sonnet or Haiku 4.5 is enough) re-reads each
-(source sentence, extracted triple) pair and flags triples not actually
-supported by the text. This is the main defense against LLM hallucination
-in Stage 4 — important for drug names and dosages specifically, where a
-confident-sounding wrong extraction is easy to miss by eye. Drop or
-down-weight flagged triples rather than silently keeping them.
+The encoder-native replacement for the earlier "LLM-as-judge" stage: reuse
+the **same** zero-shot NLI model from Stage 5b. For each surviving
+candidate triple, score entailment between the source sentence and the
+verbalized triple; drop triples below a (possibly stricter) threshold than
+the one used for relation typing. Because Stage 5b already computes this
+score to pick the relation label, this filter is close to free — it's
+mostly a matter of choosing where to set the threshold, and is a good
+target for the pilot-sample calibration in Section 7.
 
 ### Stage 8 — Graph construction, storage, visualization
 
-Two complementary outputs, not a single choice:
+Same two complementary outputs as before, with the cloud option removed:
 
 - **NetworkX + pyvis**, serialized alongside the notebook — zero
-  infrastructure, renders inline, good for the "here's the KG for this one
-  case" walkthroughs during class.
-- **Neo4j** (local Docker instance or Neo4j Aura free tier, loaded via the
-  `neo4j` Python driver), for an interactive Cypher-query demo — this is
-  the "wow, this is what a real KG deployment looks like" moment, and
-  supports live queries in class ("show me every case where drug X treats
-  disease Y"). Not Binder-compatible, which is fine since this pipeline
-  isn't meant to run there.
-
-Optional third output for a later-semester tie-in: export as RDF via
-`rdflib`, mapped loosely to the UMLS Semantic Network / Biolink Model, to
-illustrate the property-graph-vs-RDF/OWL distinction when the course
-reaches formal semantics.
+  infrastructure, renders inline, good for per-case walkthroughs in class.
+- **Neo4j Community Edition, running locally** (Docker container or native
+  install on the same laptop — not Neo4j Aura, which is a cloud service
+  and would violate the fully-local constraint). Loaded via the `neo4j`
+  Python driver, for an interactive Cypher-query demo in class.
 
 ## 3. Entity and relation schema
 
-Kept identical to the activity plan's Step 3/4 categories, with UMLS
-semantic types as the grounding target for each:
+Same target categories as before; the new column is the mapping from each
+NER model's native labels into them (fill in against the actual model card
+before implementation — label names above are indicative, not final):
 
-| Activity category | UMLS semantic type(s) |
-|---|---|
-| Symptom | Sign or Symptom (T184) |
-| Disease | Disease or Syndrome (T047) |
-| Drug | Pharmacologic Substance (T121), Clinical Drug (T200) |
-| Laboratory Test | Laboratory Procedure (T059), Lab or Test Result (T034) |
-| Anatomy | Body Part, Organ, or Organ Component (T023) |
-| Procedure | Therapeutic or Preventive Procedure (T061), Diagnostic Procedure (T060) |
+| Activity category | UMLS semantic type(s) | `d4data/biomedical-ner-all` native label(s) (indicative) |
+|---|---|---|
+| Symptom | Sign or Symptom (T184) | Sign_symptom |
+| Disease | Disease or Syndrome (T047) | Disease_disorder |
+| Drug | Pharmacologic Substance (T121), Clinical Drug (T200) | Medication |
+| Laboratory Test | Laboratory Procedure (T059), Lab or Test Result (T034) | Lab_value, Diagnostic_procedure (subset) |
+| Anatomy | Body Part, Organ, or Organ Component (T023) | Biological_structure |
+| Procedure | Therapeutic/Preventive Procedure (T061), Diagnostic Procedure (T060) | Diagnostic_procedure, Therapeutic_procedure |
 
-Relation vocabulary: `has_symptom`, `treats`, `reveals`, `diagnosed_with`,
-`underwent`, `located_in`, `administered_at_dose`, `has_lab_result`,
-`ruled_out` (from a negated finding), `family_history_of`.
+Relation vocabulary (used as NLI hypothesis templates in Stage 5b):
+`has_symptom`, `treats`, `reveals`, `diagnosed_with`, `underwent`,
+`located_in`, `administered_at_dose`, `has_lab_result`, `ruled_out` (from a
+negated finding), `family_history_of`.
 
-## 4. Sampling strategy
+## 4. Laptop resource budget
 
-Do not run over all 98,641 cases. Stratify a sample of ~150–300 cases
-across `metadata.mesh_terms` / `major_mesh_terms` (specialty diversity),
-`age`, and `gender` (already computed in `01_data_preparation.ipynb`,
-Section 4) so the resulting graph shows cross-specialty hub structure
-rather than one narrow topic. This also keeps LLM API cost and manual spot
-review (Section 6) tractable.
+Since there's no per-call API cost, the limiting factor shifts from
+"dollars per case" to "CPU wall-clock time and disk space on one laptop":
 
-## 5. What makes this "best possible" rather than "automatic but shallow"
+- **Total model download, one-time:** roughly 66M (NER) + ~110–180M
+  (SapBERT/PubMedBERT-base) + ~0.2B (zero-shot NLI) params ≈ under 2GB of
+  weights combined — comfortable on a laptop, fully offline afterward.
+- **Inference:** NER + grounding over a few hundred cases (median
+  ~2,543 chars each) is a few minutes on CPU with the DistilBERT NER
+  model; the NLI relation-typing pass runs once per candidate entity pair
+  (typically single-digit pairs per case), also feasible in minutes at
+  this scale. A GPU (including a laptop's integrated/Apple Silicon MPS
+  backend) speeds this up further but isn't required.
+- **RAM:** if the laptop has 8GB or less, load models one stage at a time
+  rather than all simultaneously, or use quantized/ONNX versions (via
+  `optimum`) for a further speedup.
+- **Sample size:** the earlier ~150–300 stratified cases (across
+  `metadata.mesh_terms`, age, gender) is still a reasonable target — not
+  because of cost anymore, but because a convincing illustrative graph
+  needs specialty diversity more than raw scale, and because the pilot
+  gold-sample review (Section 7) has to stay a size a human can actually
+  check by hand.
 
-The quality gain over a single-pass "run an NER model, run an RE model"
-approach comes specifically from:
+## 5. Quality trade-offs versus a remote generative-LLM pipeline
 
-1. Grounding to UMLS CUIs (Stage 2/5) — without this, "MI", "myocardial
-   infarction", and "heart attack" are three unrelated graph nodes.
-2. Negation handling (Stage 3) — without this, the graph asserts findings
-   the case text explicitly rules out.
-3. Whole-case-text LLM extraction (Stage 4) — avoids brittle
-   sentence-by-sentence coreference failures and catches implicit/
-   multi-sentence relations pattern-based RE would miss.
-4. A faithfulness filter (Stage 7) — the one stage that directly guards
-   against the main new failure mode LLM extraction introduces
-   (fluent-sounding but unsupported triples).
+Worth stating plainly, since this is a deliberate trade rather than a free
+lunch:
 
-Any of these four can be dropped to produce a cheaper, shallower pipeline —
-which is exactly the knob to turn when designing the backward-simplified
-pedagogical labs.
+**What's given up:**
+- Implicit or multi-sentence relation understanding — a generative LLM
+  reading the whole case can connect an entity pair across three sentences
+  of narrative; the dependency+NLI approach here is bounded by what
+  co-occurs within a sentence/window and by a pre-enumerated relation
+  vocabulary rather than one that can be extended on the fly.
+- World-knowledge disambiguation — an LLM can use general medical
+  knowledge to resolve an ambiguous mention; SapBERT/UMLS grounding only
+  goes as far as string/embedding similarity to known UMLS terms.
+- Graceful handling of paraphrase and novel phrasing outside training
+  distribution.
 
-## 6. Evaluation given no gold KG exists
+**What's gained:**
+- Zero marginal cost, no API key, no rate limits — the sample size is
+  bounded by laptop time, not budget.
+- No case text (even though it's public/de-identified case-report text)
+  ever leaves the laptop.
+- Full reproducibility: fixed model weights and thresholds give the exact
+  same graph on every run, with no model-version drift from a hosted API
+  changing behavior between runs.
+- Every intermediate decision is inspectable: the NLI entailment scores
+  and hypothesis templates driving Stage 5/7 are transparent numbers a
+  student can read and question, rather than a black-box generation. This
+  is arguably a *better* teaching artifact for showing students how
+  automatic relation extraction actually reasons — see Section 8.
 
-- **Pilot gold sample.** Hand-annotate ~20 cases from the stratified sample
-  using the LREC 2020 category/relation scheme as guideline (the same
+## 6. What still makes this the best achievable under these constraints
+
+The quality gain over a naive "just run an NER model and connect
+co-occurring entities" approach still comes from the same four levers as
+before, adapted to encoder-only tooling:
+
+1. UMLS grounding via SapBERT (Stage 3) — without it, "MI", "myocardial
+   infarction", and "heart attack" stay three unrelated nodes.
+2. Negation handling (Stage 4) — without it, the graph asserts findings
+   the text explicitly rules out.
+3. Dependency-seeded, NLI-typed relation extraction (Stage 5) instead of
+   raw co-occurrence — a co-occurrence-only graph produces edges with no
+   semantic label at all; this at least assigns a typed, scored relation.
+4. An NLI-based faithfulness filter (Stage 7) reusing Stage 5's model at
+   near-zero extra cost — the main defense against low-confidence,
+   spurious candidate triples surviving into the final graph.
+
+## 7. Evaluation given no gold KG exists
+
+Unchanged in approach from the earlier design:
+
+- **Pilot gold sample.** Hand-annotate ~20 cases from the stratified
+  sample using the LREC 2020 category/relation scheme as guideline (the
   scheme `docs/data_source.md` already identifies as the intended
-  annotation guide). Compute precision/recall of the automatic pipeline's
-  output against this pilot set. This pilot set doubles as instructor
-  material for Steps 3–5 of the activity plan.
-- **LLM-as-judge** (Stage 7) as a continuous, cheap sanity filter across
-  the full sample, not just the pilot.
+  annotation guide). Compute precision/recall of the pipeline's output
+  against it — and use it to calibrate the Stage 5b/7 NLI thresholds,
+  which otherwise have no principled default. This pilot set doubles as
+  instructor material for Steps 3–5 of the activity plan, and as training
+  data for the optional fine-tuned RE upgrade (Stage 5).
 - **Ontology consistency checks.** A triple like `Drug X treats Disease Y`
-  should have both endpoints grounded to UMLS CUIs of the expected semantic
-  type (Section 3) — flag triples that violate this as a mechanical,
-  non-LLM quality signal.
+  should have both endpoints grounded to UMLS CUIs of the expected
+  semantic type (Section 3) — a mechanical, model-free quality signal.
 
-## 7. Mapping back to the pedagogical activity plan
+## 8. Mapping back to the pedagogical activity plan
 
-This pipeline is not a replacement for
-[Activity_Plan_Clinical_Cases_to_Knowledge_Graphs.md](../Activity_Plan_Clinical_Cases_to_Knowledge_Graphs.md)
-— it's the "answer key" that motivates and later validates it.
+Same role as before — this pipeline is the "answer key" that motivates and
+later validates
+[Activity_Plan_Clinical_Cases_to_Knowledge_Graphs.md](../Activity_Plan_Clinical_Cases_to_Knowledge_Graphs.md),
+not a replacement for it.
 
-- **New Step 0 (motivation).** Before Step 1, show the finished Neo4j graph
-  live (Cypher query demo) or a pyvis rendering of one case's subgraph:
-  "this is what we're building toward, by hand, this semester."
-- **Steps 3–5 (manual NER/RE/KG) stay manual**, but each can now be
-  followed by "compare your group's triples for this case to the automatic
-  pipeline's triples for the same case" — using the automatic output as a
-  discussion prompt about annotation ambiguity and inter-annotator
-  agreement (already listed as a discussion point in Step 5), not as
-  ground truth to defer to.
-- **Step 7 (transition to statistical/neural NLP)** already gestures at
-  "automatic NLP models" — this pipeline gives that step concrete content
-  to unpack incrementally across the semester:
-  - manual NER (Step 3) → scispaCy + UMLS linking (Stage 2)
-  - manual RE (Step 4) → LLM structured extraction (Stage 4)
-  - manual KG (Step 5) → the pre-built Neo4j graph (Stage 8)
-  - embeddings (Step 6/7) → SapBERT embeddings used for entity resolution
-    (Stage 6), reused later for vector-space/IR material
+- **New Step 0 (motivation).** Show the finished local Neo4j graph live
+  (Cypher query demo) or a pyvis rendering of one case's subgraph before
+  Step 1: "this is what we're building toward, by hand, this semester —
+  and it ran entirely on this laptop."
+- **Steps 3–5 (manual NER/RE/KG) stay manual**, followed by "compare your
+  group's triples for this case to the pipeline's triples for the same
+  case" — a genuinely useful comparison now, since the pipeline's relation
+  decisions (an NLI entailment score against a specific hypothesis) are
+  simple enough to walk through on a whiteboard, unlike a generative LLM's
+  reasoning.
+- **Step 7 (transition to statistical/neural NLP)** gets the same
+  incremental unpacking as before, now grounded in classifiers students
+  can inspect:
+  - manual NER (Step 3) → the BERT-family token classifier (Stage 2)
+  - manual RE (Step 4) → dependency-seeded candidate generation + NLI
+    typing (Stage 5) — a natural bridge to later units on NLI and
+    zero-shot classification specifically
+  - manual KG (Step 5) → the pre-built local Neo4j graph (Stage 8)
+  - embeddings (Step 6/7) → SapBERT embeddings used for grounding and
+    entity resolution (Stages 3 and 6), reused later for vector-space/IR
+    material
 
-## 8. Implementation footprint (not yet done)
+## 9. Implementation footprint (not yet done)
 
-If this gets implemented as an instructor-run notebook (outside Binder, or
-in a Binder variant with secrets support for the API key), new dependencies
-not currently in `environment.yml` would include: `spacy`, `scispacy` (+ a
-scispaCy model download), `negspacy`, `anthropic`, `pydantic`, `networkx`,
-`pyvis`, and optionally `neo4j` (driver) and `rdflib`. An `ANTHROPIC_API_KEY`
-would be required and should never be committed — pass via environment
-variable, matching how `data/` is already gitignored for downloaded
-artifacts.
+If implemented as an instructor-run local notebook, new dependencies not
+currently in `environment.yml` would include: `torch` (CPU wheel),
+`transformers`, `spacy`, `scispacy` (+ a scispaCy model download),
+`negspacy`, `networkx`, `pyvis`, and optionally the `neo4j` Python driver
+for the local Cypher demo. No API keys or network access required at
+inference time — only for the one-time model downloads from the Hugging
+Face hub. Given the models above are downloaded from third-party hub
+repos rather than official model cards, worth a quick license check
+(model card "License" field) before bundling any of their weights into
+distributed course material, even though running them locally for
+in-class use carries no such restriction.
