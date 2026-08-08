@@ -49,6 +49,8 @@ container restarts. Stop with `docker compose down`.
 to-kg/
 ├── Activity_Plan_Clinical_Cases_to_Knowledge_Graphs.md
 ├── README.md
+├── docs/
+│   └── data_source.md        # Zenodo provenance, file selection, DuckDB schema reference
 ├── data/                     # downloaded parquet files + clinical_cases.duckdb (gitignored)
 └── notebooks/
     └── 01_data_preparation.ipynb   # download source files, build the DuckDB database, example queries
@@ -67,3 +69,11 @@ activity connect directly to that database file:
 import duckdb
 con = duckdb.connect("../data/clinical_cases.duckdb")
 ```
+
+See [docs/data_source.md](docs/data_source.md) for the full analysis behind
+these decisions: why this DOI's paper differs from the one cited in the
+activity plan, why each file was included or skipped, and — most
+importantly — the exact DuckDB table schemas (`cases`, `metadata`,
+`data_dictionary`), including the nested-vs-flat schema drift discovered
+while building this notebook. Treat that document as the reference for
+column names in later notebooks.
