@@ -1,0 +1,6 @@
+jupyterlab
+duckdb>=1.0.0
+pandas
+pyarrow
+requests
+tqdm

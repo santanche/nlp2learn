@@ -1,6 +1,7 @@
 # Methodology Proposal: Local, Encoder-Based KG Extraction from MultiCaRe Cases
 
-**Purpose of this document.** This is a proposal, not an implemented pipeline.
+**Purpose of this document.** This is the design behind
+[`notebooks/02_kg_extraction.ipynb`](../notebooks/02_kg_extraction.ipynb).
 It answers: *given a hard constraint of running entirely on a local laptop,
 with no remote LLM APIs and encoder-only (BERT-family) models rather than
 generative ones, what's the best KG-extraction pipeline achievable?* This
@@ -16,9 +17,8 @@ It is meant to be run once by the instructor to produce an illustrative KG
 and then reverse-engineered into the simplified, manual steps students
 already work through in
 [Activity_Plan_Clinical_Cases_to_Knowledge_Graphs.md](../Activity_Plan_Clinical_Cases_to_Knowledge_Graphs.md).
-See Section 8 for that mapping. Nothing here has been added to
-`environment.yml` or implemented in a notebook yet — Section 9 lists what
-implementation would require.
+See Section 8 for that mapping and Section 9 for how the implementation
+maps onto this design.
 
 ## 1. Design goals and constraints
 
@@ -347,16 +347,32 @@ not a replacement for it.
     entity resolution (Stages 3 and 6), reused later for vector-space/IR
     material
 
-## 9. Implementation footprint (not yet done)
+## 9. Implementation footprint
 
-If implemented as an instructor-run local notebook, new dependencies not
-currently in `environment.yml` would include: `torch` (CPU wheel),
-`transformers`, `spacy`, `scispacy` (+ a scispaCy model download),
-`negspacy`, `networkx`, `pyvis`, and optionally the `neo4j` Python driver
-for the local Cypher demo. No API keys or network access required at
-inference time — only for the one-time model downloads from the Hugging
-Face hub. Given the models above are downloaded from third-party hub
-repos rather than official model cards, worth a quick license check
+Implemented in [`notebooks/02_kg_extraction.ipynb`](../notebooks/02_kg_extraction.ipynb),
+against [`env/kg-extraction/requirements.txt`](../env/kg-extraction/requirements.txt)
+(`torch` CPU wheel, `transformers`, `spacy`, `scispacy==0.5.4` + the
+`en_core_sci_lg` model, `negspacy`, `networkx`, `pyvis`, and the `neo4j`
+Python driver for the optional local Cypher demo — see
+[`../README.md`](../README.md) for the Docker and `uv` setup paths, both
+driving off that same requirements file). No API keys or network access
+required at inference time — only for the one-time model downloads from
+the Hugging Face hub, cached locally afterward.
+
+The notebook implements every stage exactly as described above, with one
+deliberate simplification worth flagging: Stage 3 grounding relies solely
+on scispaCy's bundled UMLS linker (no separate SapBERT-against-UMLS
+lookup, since that would require indexing a licensed UMLS synonym dump
+locally) — SapBERT is used only for Stage 6 (cross-case resolution of
+entities the linker didn't confidently ground), not as a second grounding
+path. Grounding is also best-effort end to end: if `scispacy`/`nmslib`
+isn't installed or fails to build (a known friction point, see the
+README), the notebook degrades gracefully — entities keep their surface
+form and category without a CUI, and Stage 6 falls back to embedding-only
+resolution for everything.
+
+Given the models above are downloaded from third-party hub repos rather
+than official model cards, worth a quick license check
 (model card "License" field) before bundling any of their weights into
 distributed course material, even though running them locally for
 in-class use carries no such restriction.

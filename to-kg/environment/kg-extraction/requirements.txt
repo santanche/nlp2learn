@@ -1,0 +1,30 @@
+# CPU-only PyTorch build — laptop-friendly, avoids pulling multi-GB CUDA
+# libraries you don't need. If this machine has an NVIDIA GPU and you want
+# CUDA acceleration, delete this line and reinstall torch per
+# https://pytorch.org/get-started/locally/
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+jupyterlab
+duckdb>=1.0.0
+pandas
+pyarrow
+numpy
+scikit-learn
+networkx
+pyvis
+tqdm
+
+torch>=2.2
+transformers>=4.40
+sentencepiece
+protobuf
+
+# scispaCy pulls in a compatible spaCy version automatically; do not pin
+# spacy independently or the resolver may find no compatible combination.
+spacy
+scispacy==0.5.4
+https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_core_sci_lg-0.5.4.tar.gz
+negspacy
+
+# Optional: only used if you also run the local Neo4j demo (see docker-compose.yml).
+neo4j>=5.0
