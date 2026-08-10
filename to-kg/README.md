@@ -118,9 +118,12 @@ to-kg/
 │       ├── requirements.txt
 │       └── Dockerfile
 ├── data/                     # downloaded parquet files + clinical_cases.duckdb (gitignored)
-└── notebooks/
-    ├── 01_data_preparation.ipynb   # download source files, build the DuckDB database
-    └── 02_kg_extraction.ipynb      # local, encoder-only KG extraction over a configurable sample
+├── notebooks/
+│   ├── 01_data_preparation.ipynb   # download source files, build the DuckDB database
+│   └── 02_kg_extraction.ipynb      # local, encoder-only KG extraction over a configurable sample
+└── viewer/
+    ├── graph_viewer.html           # versioned KG viewer — loads data/kg_extraction/graph_data.js
+    └── lib/vis-network.min.js      # vendored (offline, no CDN dependency)
 ```
 
 ## Data preparation
@@ -147,6 +150,41 @@ notebook does not download anything) and runs the local, encoder-only
 pipeline proposed in
 [docs/kg_extraction_methodology.md](docs/kg_extraction_methodology.md) over
 a configurable sample of cases (`SAMPLE_SIZE`, set in the notebook's first
-config cell). It produces an illustrative knowledge graph — exported as an
-inline pyvis visualization and, optionally, loaded into a local Neo4j
-instance for Cypher querying.
+config cell). Its last cell (Section 16) writes everything to
+`data/kg_extraction/` (gitignored) as **CSV**, not Parquet — nothing about
+these outputs needs Parquet's columnar/typed storage, and CSV is what both
+Cytoscape and the viewer below actually want:
+
+- `entities.csv`, `qualifiers.csv`, `triples.csv` — raw per-mention /
+  per-candidate tables, for pandas-side inspection.
+- `nodes.csv`, `edges.csv` — a graph interchange pair (columns
+  `source`/`target`/`interaction` on the edge side) with case nodes and
+  case→entity "mentions" edges included, ready for Cytoscape: **File →
+  Import → Network from File → `edges.csv`**, then **File → Import →
+  Table from File → `nodes.csv`** (key column `id`). `kg.graphml` (same
+  graph) works as a one-step alternative import.
+- `graph_data.js` — the same nodes/edges as a JS object literal, consumed
+  by `viewer/graph_viewer.html` below.
+
+It also still writes a quick inline pyvis preview (`kg_preview.html`,
+entity-only, no case nodes) for a fast sanity check inside the notebook,
+and can optionally load the graph into a local Neo4j instance for Cypher
+querying.
+
+## KG viewer
+
+`viewer/graph_viewer.html` is a standalone, versioned page (not
+regenerated per run — edit and commit it like any other file) that
+auto-loads `../data/kg_extraction/graph_data.js` on open — just run the
+notebook once, then open this file in a browser. Everything runs
+offline (`vis-network` is vendored in `viewer/lib/`, no CDN).
+
+- A **case nodes** toggle shows/hides one node per clinical case, each
+  connected to every entity extracted from it.
+- With case nodes shown, clicking one applies the selected mode:
+  **None** (no action), **Highlight** (fades everything the case didn't
+  directly or indirectly extract, without hiding it), or **Filter** (hides
+  it outright). Click the same case again, or empty canvas, to reset.
+- If `graph_data.js` isn't found (e.g. viewing an older/different export),
+  a drag-and-drop / browse fallback accepts `nodes.csv` + `edges.csv`
+  directly.
