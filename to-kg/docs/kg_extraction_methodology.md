@@ -171,6 +171,22 @@ if license terms matter for redistributing course materials). Assign the
 highest-scoring relation above a confidence threshold; below threshold,
 drop the candidate rather than forcing a label.
 
+**Practical refinement found during implementation, not in the original
+design:** scoring all ten relation labels for every candidate measured at
+~8s/candidate on one CPU-only laptop — untenable at any real sample size
+(a single ~1,800-character case generated 25+ candidates, i.e. minutes per
+case). The fix is a category-plausibility table — e.g. only `located_in`
+makes sense for an Anatomy/Symptom pair, only `treats` for a Drug/Disease
+pair — that restricts each candidate to the 1–3 labels actually plausible
+for its pair of entity *categories* before the NLI call, dropping
+candidates with no plausible label at all. Measured effect on the same
+case: ~197s → ~15s. This is also a precision win, not just speed: it stops
+the model from ever being asked to score nonsensical combinations like
+"Anatomy administered_at_dose Symptom." A per-case cap on the number of
+candidates (default 30) is applied alongside it as a safety valve, since
+`case_text` length ranges from 9 to 79,243 characters in this corpus and
+one outlier case could otherwise dominate a run.
+
 **If relation quality after this still isn't good enough, and there's
 time to invest:** fine-tune a small BioClinicalBERT/PubMedBERT relation
 classifier (entity-marker sentence classification, `[E1]`/`[E2]` special
@@ -201,14 +217,34 @@ target for the pilot-sample calibration in Section 7.
 
 ### Stage 8 — Graph construction, storage, visualization
 
-Same two complementary outputs as before, with the cloud option removed:
+Two graphs are built, not one — a distinction that only emerged once a
+case-centric view became a separate requirement from the entity-relation
+view:
 
-- **NetworkX + pyvis**, serialized alongside the notebook — zero
-  infrastructure, renders inline, good for per-case walkthroughs in class.
-- **Neo4j Community Edition, running locally** (Docker container or native
-  install on the same laptop — not Neo4j Aura, which is a cloud service
-  and would violate the fully-local constraint). Loaded via the `neo4j`
-  Python driver, for an interactive Cypher-query demo in class.
+- **`G`, entity-only** (nodes = resolved entities from Stage 6, edges =
+  accepted relation triples from Stage 7). This is what the notebook's
+  own inline **NetworkX + pyvis** preview renders — zero infrastructure,
+  renders inline, good for a fast per-case sanity check while iterating in
+  the notebook. It's also what gets loaded into **Neo4j Community
+  Edition, running locally** (Docker container or native install on the
+  same laptop — not Neo4j Aura, which is a cloud service and would
+  violate the fully-local constraint), via the `neo4j` Python driver, for
+  an interactive Cypher-query demo in class.
+- **`G_export`, entity graph plus one node per case**, each connected by a
+  `mentions` edge to every entity extracted from it. This is the graph
+  behind every *exported* artifact: `nodes.csv`/`edges.csv` (Cytoscape's
+  own default column names — `source`/`target`/`interaction` — so
+  Cytoscape auto-detects them on import), `kg.graphml` as a one-step
+  alternative import, and `graph_data.js` for the dedicated
+  [KG viewer](kg_viewer.md) (`viewer/graph_viewer.html`) — a versioned,
+  hand-editable page, not something the notebook regenerates from
+  scratch, that lets a case node be toggled on/off and clicked to
+  highlight or filter down to everything it directly or indirectly
+  extracted. See `kg_viewer.md` for the full design of that page.
+
+Export format is CSV, not Parquet: nothing about these outputs (a few
+thousand rows at most) needs Parquet's columnar/typed storage, and CSV is
+what both Cytoscape and the viewer's fallback CSV loader actually want.
 
 ## 3. Entity and relation schema
 
@@ -238,11 +274,15 @@ Since there's no per-call API cost, the limiting factor shifts from
 - **Total model download, one-time:** roughly 66M (NER) + ~110–180M
   (SapBERT/PubMedBERT-base) + ~0.2B (zero-shot NLI) params ≈ under 2GB of
   weights combined — comfortable on a laptop, fully offline afterward.
-- **Inference:** NER + grounding over a few hundred cases (median
-  ~2,543 chars each) is a few minutes on CPU with the DistilBERT NER
-  model; the NLI relation-typing pass runs once per candidate entity pair
-  (typically single-digit pairs per case), also feasible in minutes at
-  this scale. A GPU (including a laptop's integrated/Apple Silicon MPS
+- **Inference:** NER + grounding themselves are fast (well under a second
+  per case). The real cost is Stage 5b's NLI relation typing — measured
+  at **~19s/case on average** (range 1–57s across 8 real, varied-length
+  cases) on one CPU-only laptop, *after* the category-plausibility
+  restriction described in Stage 5 above (roughly 11x slower without it).
+  That's ~16 minutes for a 50-case sample, not "a few minutes" as
+  originally guessed here before this was actually measured — extrapolate
+  linearly for larger samples and budget accordingly rather than assuming
+  it stays cheap. A GPU (including a laptop's integrated/Apple Silicon MPS
   backend) speeds this up further but isn't required.
 - **RAM:** if the laptop has 8GB or less, load models one stage at a time
   rather than all simultaneously, or use quantized/ONNX versions (via
@@ -325,10 +365,12 @@ later validates
 [Activity_Plan_Clinical_Cases_to_Knowledge_Graphs.md](../Activity_Plan_Clinical_Cases_to_Knowledge_Graphs.md),
 not a replacement for it.
 
-- **New Step 0 (motivation).** Show the finished local Neo4j graph live
-  (Cypher query demo) or a pyvis rendering of one case's subgraph before
-  Step 1: "this is what we're building toward, by hand, this semester —
-  and it ran entirely on this laptop."
+- **New Step 0 (motivation).** Show the [KG viewer](kg_viewer.md) live
+  before Step 1 — toggle case nodes on, click one, and let the class watch
+  it highlight everything that one case contributed: "this is what we're
+  building toward, by hand, this semester — and it ran entirely on this
+  laptop." The Neo4j Cypher demo or the notebook's inline pyvis preview
+  work as lighter-weight alternatives if the viewer isn't set up.
 - **Steps 3–5 (manual NER/RE/KG) stay manual**, followed by "compare your
   group's triples for this case to the pipeline's triples for the same
   case" — a genuinely useful comparison now, since the pipeline's relation
@@ -342,7 +384,8 @@ not a replacement for it.
   - manual RE (Step 4) → dependency-seeded candidate generation + NLI
     typing (Stage 5) — a natural bridge to later units on NLI and
     zero-shot classification specifically
-  - manual KG (Step 5) → the pre-built local Neo4j graph (Stage 8)
+  - manual KG (Step 5) → the pre-built graph, explored either in the
+    [KG viewer](kg_viewer.md) or the local Neo4j graph (Stage 8)
   - embeddings (Step 6/7) → SapBERT embeddings used for grounding and
     entity resolution (Stages 3 and 6), reused later for vector-space/IR
     material
@@ -350,7 +393,7 @@ not a replacement for it.
 ## 9. Implementation footprint
 
 Implemented in [`notebooks/02_kg_extraction.ipynb`](../notebooks/02_kg_extraction.ipynb),
-against [`env/kg-extraction/requirements.txt`](../env/kg-extraction/requirements.txt)
+against [`environment/kg-extraction/requirements.txt`](../environment/kg-extraction/requirements.txt)
 (`torch` CPU wheel, `transformers`, `spacy`, `scispacy==0.5.4` + the
 `en_core_sci_lg` model, `negspacy`, `networkx`, `pyvis`, and the `neo4j`
 Python driver for the optional local Cypher demo — see
@@ -359,17 +402,42 @@ driving off that same requirements file). No API keys or network access
 required at inference time — only for the one-time model downloads from
 the Hugging Face hub, cached locally afterward.
 
-The notebook implements every stage exactly as described above, with one
-deliberate simplification worth flagging: Stage 3 grounding relies solely
-on scispaCy's bundled UMLS linker (no separate SapBERT-against-UMLS
-lookup, since that would require indexing a licensed UMLS synonym dump
-locally) — SapBERT is used only for Stage 6 (cross-case resolution of
-entities the linker didn't confidently ground), not as a second grounding
-path. Grounding is also best-effort end to end: if `scispacy`/`nmslib`
-isn't installed or fails to build (a known friction point, see the
-README), the notebook degrades gracefully — entities keep their surface
-form and category without a CUI, and Stage 6 falls back to embedding-only
-resolution for everything.
+The notebook implements every stage exactly as described above, with two
+deliberate simplifications worth flagging:
+
+- Stage 3 grounding relies solely on scispaCy's bundled UMLS linker (no
+  separate SapBERT-against-UMLS lookup, since that would require indexing
+  a licensed UMLS synonym dump locally) — SapBERT is used only for Stage 6
+  (cross-case resolution of entities the linker didn't confidently
+  ground), not as a second grounding path.
+- Stage 5b's relation typing is category-restricted, not a straight
+  ten-label zero-shot call — see the "practical refinement" note under
+  Stage 5 above. This was discovered as a hard performance requirement
+  during implementation, not chosen up front; the notebook's Section 9
+  markdown carries the same before/after measurements as this document.
+
+Grounding is also best-effort end to end: if `scispacy`/`nmslib` isn't
+installed or fails to build (a known friction point, see the README), the
+notebook degrades gracefully — entities keep their surface form and
+category without a CUI, and Stage 6 falls back to embedding-only
+resolution for everything. Similarly, Stage 5's dependency-path candidate
+generation requires an entity's *entire* span to fall inside one
+scispaCy-segmented sentence — checking only the start token let entities
+whose span straddles a sentence boundary (e.g. a lab value like
+"1.100 x 10^9/L" split by scispaCy's segmentation) crash the run with a
+`NodeNotFound` error partway through a batch; the fix, plus a broadened
+exception net around the same call, is a correctness detail rather than a
+methodology choice, so it isn't elaborated above.
+
+**Viewer and export footprint.** [`viewer/graph_viewer.html`](../viewer/graph_viewer.html)
+adds no new Python dependency — `vis-network` is vendored as a plain JS
+file (`viewer/lib/vis-network.min.js`, copied from `pyvis`'s own bundled
+copy, Apache-2.0/MIT) rather than pulled from a CDN, keeping the "fully
+offline" property intact for the viewer as well as the notebook. See
+[`kg_viewer.md`](kg_viewer.md) for its design. `entities.csv`,
+`qualifiers.csv`, `triples.csv`, `nodes.csv`, `edges.csv`, `kg.graphml`,
+and `graph_data.js` are all written by the notebook's Section 16 into
+`data/kg_extraction/` (gitignored, regenerated per run).
 
 Given the models above are downloaded from third-party hub repos rather
 than official model cards, worth a quick license check

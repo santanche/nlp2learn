@@ -1,9 +1,11 @@
 # From Clinical Case Reports to Knowledge Graphs
 
 See [Activity_Plan_Clinical_Cases_to_Knowledge_Graphs.md](Activity_Plan_Clinical_Cases_to_Knowledge_Graphs.md)
-for the full pedagogical plan, and
+for the full pedagogical plan,
 [docs/kg_extraction_methodology.md](docs/kg_extraction_methodology.md) for
-the design behind `02_kg_extraction.ipynb`.
+the design behind `02_kg_extraction.ipynb`, and
+[docs/kg_viewer.md](docs/kg_viewer.md) for the design behind
+`viewer/graph_viewer.html`.
 
 The corpus is the **MultiCaRe** clinical case dataset
 ([Zenodo, concept DOI 10.5281/zenodo.10079369](https://doi.org/10.5281/zenodo.10079369);
@@ -20,16 +22,18 @@ each gets its own environment rather than one shared one:
 
 | Environment | Notebook | What it needs |
 |---|---|---|
-| `env/data-prep` | `01_data_preparation.ipynb` | DuckDB, pandas, requests — lightweight, runs anywhere |
-| `env/kg-extraction` | `02_kg_extraction.ipynb` | PyTorch, transformers, spaCy/scispaCy — local encoder models, heavier, laptop-scale |
+| `environment/data-prep` | `01_data_preparation.ipynb` | DuckDB, pandas, requests — lightweight, runs anywhere |
+| `environment/kg-extraction` | `02_kg_extraction.ipynb` | PyTorch, transformers, spaCy/scispaCy — local encoder models, heavier, laptop-scale |
 
 Both are offered two ways: a **Docker image** (no local Python setup at all)
 or a **local `uv` virtual environment** (faster iteration, no container
 overhead). Pick whichever fits; both install from the same
-`env/<name>/requirements.txt`, so behavior matches between the two paths.
-This project no longer targets Binder — if you need that again later, a
-root-level `environment.yml` + `repo2docker` build would need to be
-reintroduced.
+`environment/<name>/requirements.txt`, so behavior matches between the two
+paths. The directory is named `environment/`, not the shorter `env/`, because
+the root `.gitignore` has a generic Python `env/` pattern (for virtualenvs)
+that would otherwise silently exclude it from version control. This project
+no longer targets Binder — if you need that again later, a root-level
+`environment.yml` + `repo2docker` build would need to be reintroduced.
 
 ## Option A — Docker
 
@@ -69,7 +73,7 @@ Requires [uv](https://docs.astral.sh/uv/) installed. From `to-kg/`:
 
 ```bash
 # data preparation
-cd env/data-prep
+cd environment/data-prep
 uv venv
 source .venv/bin/activate       # .venv\Scripts\activate on Windows
 uv pip install -r requirements.txt
@@ -79,7 +83,7 @@ jupyter lab 01_data_preparation.ipynb
 
 ```bash
 # kg extraction (separate environment — open a new shell, or deactivate first)
-cd to-kg/env/kg-extraction
+cd to-kg/environment/kg-extraction
 uv venv
 source .venv/bin/activate
 uv pip install -r requirements.txt
@@ -87,8 +91,8 @@ cd ../../notebooks
 jupyter lab 02_kg_extraction.ipynb
 ```
 
-Each `.venv` lives inside its own `env/<name>/` folder and is already
-covered by the repo's `.gitignore` (`.venv` pattern).
+Each `.venv` lives inside its own `environment/<name>/` folder and is
+already covered by the repo's `.gitignore` (`.venv` pattern).
 
 **Known friction point:** `scispacy`'s UMLS entity linker depends on
 `nmslib`, which sometimes has no prebuilt wheel for your platform/Python
@@ -109,8 +113,9 @@ to-kg/
 ├── docker-compose.yml
 ├── docs/
 │   ├── data_source.md                  # Zenodo provenance, DuckDB schema reference
-│   └── kg_extraction_methodology.md    # design behind 02_kg_extraction.ipynb
-├── env/
+│   ├── kg_extraction_methodology.md    # design behind 02_kg_extraction.ipynb
+│   └── kg_viewer.md                    # design behind viewer/graph_viewer.html
+├── environment/
 │   ├── data-prep/
 │   │   ├── requirements.txt
 │   │   └── Dockerfile
