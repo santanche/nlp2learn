@@ -139,6 +139,72 @@ reference design. Hop distance controls opacity for highlighted nodes
 full strength, then fade), matching the reference's own hop-decay
 convention.
 
+### Case tree pane
+
+Clicking a case node also (re)draws a second, alternative view of the same
+reachability trace in a permanent pane on the right side of the graph area:
+a collapsible tree, rooted at the case, of everything it directly or
+indirectly extracted. It updates on every case click regardless of which
+Highlight/Filter/None mode is active — the tree isn't a mode, it's always
+in sync with whichever case was last clicked (or empty, with a hint, until
+the first case is clicked). Clicking empty canvas or the same case again
+clears it back to that placeholder, same as it clears the highlight/filter
+state.
+
+**Why a separate pane instead of a toggle on the graph itself.** The
+subgraph reachable from a case is a DAG, not a tree — an entity can be
+reached from the case via more than one path (e.g. two different clusters
+both `treats`-linked to the same lab test). A force-directed graph already
+draws that correctly (one node, multiple incoming edges); a tree cannot
+represent it without a choice: either draw it as a DAG too (defeating the
+point of a "tree view") or replicate the shared node once per path. This
+pane takes the second option — every distinct path from the case gets its
+own copy of the node it ends at — which only makes sense as a drawing
+alongside the real graph, not as a replacement for it, since the
+replication is a deliberate distortion for readability, not the actual
+graph structure.
+
+**Building the tree: `buildCaseTree`.** A depth-first walk from the case
+node over the same `edge_type: "mentions"` / `"relation"` edges the
+highlight/filter BFS uses (via a sibling map, `edgesFromMap`, built
+alongside `successorsMap` in `buildDatasets`), except it walks per-path
+instead of per-node — so a node reached three ways becomes three separate
+tree nodes, each keeping the edge label (`interaction`, or `"mentions"`)
+that led to it. A per-path `ancestors` `Set` guards against cycles: if a
+path would revisit a node already on that same path, the edge is skipped
+rather than followed (relation edges, unlike `mentions` edges, aren't
+guaranteed acyclic). Two caps bound the replication, since it can grow
+unlike the BFS reachability set (which visits each node once regardless of
+how many paths reach it):
+
+| Cap | Constant | Effect when hit |
+|---|---|---|
+| Depth | `MAX_TREE_DEPTH = 4` | Stops descending past 4 hops from the case — the same range `HOP_ALPHA` already fades to near-invisible in Highlight mode, so a deeper tree wouldn't correspond to anything visible on the graph anyway. |
+| Total rendered rows | `MAX_TREE_ROWS = 500` | Stops expanding once the tree (case-wide, not per-branch) hits this many rows; whichever branch was mid-expansion gets a `"+N more"` placeholder instead of silently stopping. A warning banner appears above the tree when this triggers. |
+
+On the actual ~50-case sample this was built against, no case comes close
+to either cap (max depth reached is 4, max rows is 227 of the 500 budget)
+— the caps exist as a safety net for a denser or larger export, not
+because they bite on typical data.
+
+**Rendering.** Each tree node is a plain `<details>`/`<summary>` pair (a
+leaf with no children renders as a plain row, no `<details>` wrapper) —
+free collapse/expand from the browser, no custom toggle logic needed,
+consistent with the rest of the file's "no build step" design. The
+category-color swatch and case/entity shape (circle vs. box) mirror the
+graph's own styling. "Expand all" / "Collapse all" buttons above the tree
+operate on every `<details>` at once (Collapse all leaves the root open).
+
+**Cross-pane sync.** Clicking a row in the tree calls the same `showInfo`
+the graph uses, then pans/selects the corresponding node in the graph via
+`network.focus()`/`selectNodes()` — the graph's own Highlight/Filter/None
+state is left untouched, exactly like clicking a regular entity node
+directly on the graph already does. The reverse also holds: clicking a
+node on the graph highlights every tree row that maps to that node's id
+(there can be more than one, since a node can appear several times in the
+tree), auto-expanding any collapsed ancestor `<details>` so the
+highlighted row is never hidden, and scrolls the first match into view.
+
 ### Legend, labels, and layout
 
 - The category legend lists node counts for the six activity categories
@@ -196,6 +262,14 @@ convention.
   design goal (exploring what one case contributed) — clicking a regular
   entity node never triggers a reachability trace, even though the same
   BFS machinery could in principle run from any node.
+- The case tree pane has a fixed 380px width — there's no drag-to-resize
+  divider between it and the graph. Long entity labels are ellipsized
+  rather than wrapped.
+- The tree's depth/row caps (`MAX_TREE_DEPTH`, `MAX_TREE_ROWS`) are
+  hard-coded, not exposed in the sidebar. They were sized against the
+  ~50-case sample (see Section 3, "Case tree pane"); a much larger or
+  denser export may hit them more often and would need the constants
+  raised (or the sample filtered) rather than a UI control.
 - The CSV fallback path re-parses and re-normalizes on every load; there's
   no persistence across page reloads (reload the page, re-load the CSVs
   or re-run the notebook so `graph_data.js` picks back up automatically).
@@ -219,5 +293,9 @@ convention.
 3. Toggle "Show clinical case nodes" on.
 4. Click a case node. With "Highlight" selected (the default), everything
    it didn't touch fades out; switch to "Filter" to hide it outright, or
-   "None" to just inspect the case's details in the info panel.
-5. Click the same case again, or empty canvas, to reset.
+   "None" to just inspect the case's details in the info panel. The same
+   click also fills in the case tree pane on the right with a collapsible
+   tree view of the same case, root at top.
+5. Click a row in the tree to jump to and inspect that node on the graph;
+   click a node on the graph to highlight its row(s) in the tree.
+6. Click the same case again, or empty canvas, to reset both panes.

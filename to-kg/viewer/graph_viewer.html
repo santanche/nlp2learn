@@ -122,7 +122,8 @@
   #infoContent .breakdown { margin-top: 8px; border-top: 1px solid var(--border); padding-top: 8px; }
   #infoContent .breakdown-title { font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: .03em; margin-bottom: 4px; }
 
-  .graph-area { flex: 1; position: relative; }
+  .graph-area { flex: 1; position: relative; display: flex; }
+  .graph-pane { flex: 1; position: relative; min-width: 0; }
   #network { width: 100%; height: 100%; }
   .placeholder {
     position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
@@ -134,6 +135,39 @@
     background: var(--panel-bg); border: 1px solid var(--border); border-radius: 6px;
     padding: 4px 8px; pointer-events: none; max-width: 320px; text-align: right;
   }
+
+  /* Case tree pane: permanent right-hand split, populated on case click */
+  .tree-pane {
+    width: 380px; flex-shrink: 0; display: flex; flex-direction: column;
+    border-left: 1px solid var(--border); background: var(--panel-bg);
+  }
+  .tree-pane[hidden] { display: none; }
+  .tree-pane-header { padding: 12px 14px 10px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+  .tree-pane-header h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--text-muted); margin: 0; }
+  .tree-pane-body { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 8px 8px 20px; }
+  .tree-placeholder { color: var(--text-muted); font-size: 12px; padding: 14px 6px; line-height: 1.5; }
+
+  .tree-node { margin: 0; }
+  .tree-children { margin-left: 13px; padding-left: 10px; border-left: 1px dashed var(--border); }
+  summary.tree-row { list-style: none; }
+  summary.tree-row::-webkit-details-marker { display: none; }
+  summary.tree-row::marker { content: ""; }
+  .tree-row {
+    display: flex; align-items: center; gap: 6px; min-width: 0; cursor: pointer;
+    padding: 3px 4px; border-radius: 4px; font-size: 12.5px;
+  }
+  .tree-row:hover { background: rgba(52,87,213,0.08); }
+  .tree-row.selected { background: rgba(52,87,213,0.18); outline: 1px solid var(--accent); outline-offset: -1px; }
+  .tree-row-root .tree-node-label { font-weight: 700; font-size: 13.5px; }
+  .tree-toggle, .tree-toggle-spacer { width: 12px; flex-shrink: 0; text-align: center; font-size: 10px; color: var(--text-muted); }
+  .tree-toggle::before { content: "\25B8"; display: inline-block; transition: transform .12s ease; }
+  details[open] > summary .tree-toggle::before { transform: rotate(90deg); }
+  .tree-swatch { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .tree-swatch.box { border-radius: 2px; }
+  .tree-rel { color: var(--text-muted); font-style: italic; flex-shrink: 0; }
+  .tree-node-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+  .tree-meta { color: var(--text-muted); flex-shrink: 0; }
+  .tree-more { color: var(--text-muted); font-style: italic; font-size: 11.5px; padding: 3px 4px 3px 18px; }
 </style>
 </head>
 <body>
@@ -205,9 +239,24 @@
 
   <main class="graph-area">
     <button id="sidebarToggleBtn" class="sidebar-toggle" title="Collapse sidebar" aria-label="Collapse sidebar" aria-expanded="true">&#10094;</button>
-    <div id="network"></div>
-    <div id="placeholder" class="placeholder">Waiting for graph data — run Section 16 of <code>02_kg_extraction.ipynb</code>, then reload this page.</div>
-    <div id="zoomHint" class="zoom-hint" hidden>Scroll / pinch to zoom · drag to pan · click a case node per the mode above</div>
+    <div class="graph-pane">
+      <div id="network"></div>
+      <div id="placeholder" class="placeholder">Waiting for graph data — run Section 16 of <code>02_kg_extraction.ipynb</code>, then reload this page.</div>
+      <div id="zoomHint" class="zoom-hint" hidden>Scroll / pinch to zoom · drag to pan · click a case node per the mode above</div>
+    </div>
+    <aside class="tree-pane" id="treePane" hidden>
+      <div class="tree-pane-header">
+        <h2>Case tree</h2>
+        <div class="btn-row" style="margin-top:6px">
+          <button id="treeExpandAllBtn" type="button">Expand all</button>
+          <button id="treeCollapseAllBtn" type="button">Collapse all</button>
+        </div>
+      </div>
+      <div id="treeWarning" class="warning" style="margin:10px 12px 0" hidden></div>
+      <div class="tree-pane-body" id="treePaneBody">
+        <div class="tree-placeholder">Click a case node to see it here as a tree — nodes reached by more than one path are replicated, one copy per path.</div>
+      </div>
+    </aside>
   </main>
 </div>
 
@@ -237,6 +286,14 @@
   const MIN_NODE_SIZE = 8;
   const MAX_NODE_SIZE = 26;
   const LABEL_SIZE = 12;
+  // Case tree pane: DAG->tree replication is capped two ways — MAX_TREE_DEPTH
+  // bounds hops from the case root (matches HOP_ALPHA's range, past which the
+  // highlight view is already faded to near-invisible), MAX_TREE_ROWS bounds
+  // total replicated rows as a hard safety net against a single densely
+  // connected case blowing up the DOM. Whichever cap bites first truncates
+  // the branch with a "+N more" placeholder rather than failing silently.
+  const MAX_TREE_DEPTH = 4;
+  const MAX_TREE_ROWS = 500;
 
   // ------------------------------------------------------------
   // Tiny RFC4180-ish CSV parser (handles quoted fields containing
@@ -323,6 +380,8 @@
   let network = null, nodesDataset = null, edgesDataset = null;
   let nodeById = new Map();          // over the currently-visible node set
   let successorsMap = new Map();     // id -> [target ids], over the currently-visible edge set
+  let edgesFromMap = new Map();      // id -> [{target, interaction, edge_type}], over the currently-visible edge set
+  let treeRowsByNodeId = new Map();  // id -> [row elements] for the currently-rendered case tree (duplicates map to several rows)
   let showCaseNodes = true;
   let clickMode = "highlight";       // 'none' | 'highlight' | 'filter'
   let allLabelsShown = false;
@@ -346,6 +405,9 @@
   const zoomHint = document.getElementById("zoomHint");
   const sidebar = document.querySelector(".sidebar");
   const sidebarToggleBtn = document.getElementById("sidebarToggleBtn");
+  const treePane = document.getElementById("treePane");
+  const treePaneBody = document.getElementById("treePaneBody");
+  const treeWarning = document.getElementById("treeWarning");
 
   function showWarning(msg) { loadWarning.textContent = msg; loadWarning.hidden = false; }
   function clearWarning() { loadWarning.hidden = true; loadWarning.textContent = ""; }
@@ -523,6 +585,13 @@
     zoomHint.hidden = false;
     legendPanel.hidden = false;
     controlsPanel.hidden = false;
+    const treePaneWasHidden = treePane.hidden;
+    treePane.hidden = false;
+    if (treePaneWasHidden) {
+      // the pane taking up flex width shrinks #network's container after vis-network
+      // already measured it once — force a resize so the canvas isn't left too wide.
+      requestAnimationFrame(() => { if (network) network.redraw(); });
+    }
   }
 
   function buildDatasets() {
@@ -534,10 +603,12 @@
 
     const degree = new Map(visibleNodes.map(n => [n.id, 0]));
     successorsMap = new Map(visibleNodes.map(n => [n.id, []]));
+    edgesFromMap = new Map(visibleNodes.map(n => [n.id, []]));
     visibleEdges.forEach(e => {
       degree.set(e.source, (degree.get(e.source) || 0) + 1);
       degree.set(e.target, (degree.get(e.target) || 0) + 1);
       successorsMap.get(e.source).push(e.target);
+      edgesFromMap.get(e.source).push({ target: e.target, interaction: e.interaction, edge_type: e.edge_type });
     });
     const maxDegree = Math.max(1, ...degree.values());
 
@@ -630,6 +701,207 @@
     return dist; // Map(id -> hop distance from the case), case itself excluded
   }
 
+  // ------------------------------------------------------------
+  // Case tree pane: an alternative, tree-shaped view of the same
+  // reachability a case click already computes. The underlying subgraph is
+  // a DAG, not a tree (an entity can be reached via more than one path from
+  // the case) — this builds a genuine tree by replicating a node once per
+  // distinct path into it, capped by MAX_TREE_DEPTH/MAX_TREE_ROWS.
+  // ------------------------------------------------------------
+  function buildCaseTree(caseId) {
+    const budget = { rows: 1 }; // counts the root
+    let capped = false;
+
+    function expand(id, depth, ancestors) {
+      if (depth >= MAX_TREE_DEPTH) return { children: [], more: 0 };
+      const outs = edgesFromMap.get(id) || [];
+      const children = [];
+      let more = 0;
+      for (let i = 0; i < outs.length; i++) {
+        const e = outs[i];
+        if (ancestors.has(e.target)) continue; // cycle guard: never replicate back into this path's own ancestors
+        const childNode = nodeById.get(e.target);
+        if (!childNode) continue;
+        if (budget.rows >= MAX_TREE_ROWS) { capped = true; more += outs.length - i; break; }
+        budget.rows++;
+        const nextAncestors = new Set(ancestors);
+        nextAncestors.add(e.target);
+        const sub = expand(e.target, depth + 1, nextAncestors);
+        children.push({
+          id: e.target, node: childNode, hop: depth + 1,
+          edgeLabel: e.interaction || (e.edge_type === "mentions" ? "mentions" : ""),
+          children: sub.children, more: sub.more,
+        });
+      }
+      children.sort((a, b) => (a.node.category || "").localeCompare(b.node.category || "") || a.node.label.localeCompare(b.node.label));
+      return { children, more };
+    }
+
+    const caseNode = nodeById.get(caseId);
+    const top = expand(caseId, 0, new Set([caseId]));
+    return { id: caseId, node: caseNode, hop: 0, edgeLabel: "", children: top.children, more: top.more, capped, totalRows: budget.rows };
+  }
+
+  function registerTreeRow(id, el) {
+    if (!treeRowsByNodeId.has(id)) treeRowsByNodeId.set(id, []);
+    treeRowsByNodeId.get(id).push(el);
+  }
+
+  function buildTreeRowContent(t, isRoot) {
+    const wrap = document.createElement("span");
+    wrap.className = "tree-row-content";
+    wrap.style.display = "flex";
+    wrap.style.alignItems = "center";
+    wrap.style.gap = "6px";
+    wrap.style.minWidth = "0";
+
+    const isCase = t.node.node_type === "case";
+    const swatch = document.createElement("span");
+    swatch.className = "tree-swatch" + (isCase ? " box" : "");
+    swatch.style.background = CATEGORY_COLORS[t.node.category] || DEFAULT_COLOR;
+    wrap.appendChild(swatch);
+
+    if (!isRoot && t.edgeLabel) {
+      const rel = document.createElement("span");
+      rel.className = "tree-rel";
+      rel.textContent = t.edgeLabel;
+      wrap.appendChild(rel);
+    }
+
+    const label = document.createElement("span");
+    label.className = "tree-node-label";
+    label.textContent = t.node.label;
+    wrap.appendChild(label);
+
+    if (isRoot) {
+      const parts = [];
+      if (t.node.age !== null) parts.push(`age ${t.node.age}`);
+      if (t.node.gender) parts.push(t.node.gender);
+      if (parts.length) {
+        const meta = document.createElement("span");
+        meta.className = "tree-meta";
+        meta.textContent = `(${parts.join(", ")})`;
+        wrap.appendChild(meta);
+      }
+    }
+    return wrap;
+  }
+
+  function renderTreeNode(t, isRoot, depth) {
+    const hasKids = t.children && t.children.length > 0;
+    const hasMore = t.more > 0;
+    if (hasKids || hasMore) {
+      const details = document.createElement("details");
+      details.className = "tree-node";
+      if (isRoot || depth <= 1) details.open = true;
+
+      const summary = document.createElement("summary");
+      summary.className = "tree-row" + (isRoot ? " tree-row-root" : "");
+      summary.dataset.id = t.id;
+      const toggle = document.createElement("span");
+      toggle.className = "tree-toggle";
+      summary.appendChild(toggle);
+      summary.appendChild(buildTreeRowContent(t, isRoot));
+      details.appendChild(summary);
+      registerTreeRow(t.id, summary);
+
+      const childrenWrap = document.createElement("div");
+      childrenWrap.className = "tree-children";
+      t.children.forEach(c => childrenWrap.appendChild(renderTreeNode(c, false, depth + 1)));
+      if (hasMore) {
+        const more = document.createElement("div");
+        more.className = "tree-row tree-more";
+        more.textContent = `+${t.more} more not shown (depth or size limit reached)`;
+        childrenWrap.appendChild(more);
+      }
+      details.appendChild(childrenWrap);
+      return details;
+    }
+    const row = document.createElement("div");
+    row.className = "tree-row tree-leaf" + (isRoot ? " tree-row-root" : "");
+    row.dataset.id = t.id;
+    const spacer = document.createElement("span");
+    spacer.className = "tree-toggle-spacer";
+    row.appendChild(spacer);
+    row.appendChild(buildTreeRowContent(t, isRoot));
+    registerTreeRow(t.id, row);
+    return row;
+  }
+
+  function renderCaseTree(caseId) {
+    const tree = buildCaseTree(caseId);
+    treeRowsByNodeId = new Map();
+    treePaneBody.innerHTML = "";
+    treePaneBody.appendChild(renderTreeNode(tree, true, 0));
+    if (tree.capped) {
+      treeWarning.textContent = `Tree limited to ${MAX_TREE_ROWS} nodes at depth ≤ ${MAX_TREE_DEPTH}; some branches are truncated. Switch to Filter mode on the graph to inspect the rest.`;
+      treeWarning.hidden = false;
+    } else {
+      treeWarning.hidden = true;
+    }
+  }
+
+  function clearTreePane() {
+    treeRowsByNodeId = new Map();
+    treeWarning.hidden = true;
+    treePaneBody.innerHTML = '<div class="tree-placeholder">Click a case node to see it here as a tree — nodes reached by more than one path are replicated, one copy per path.</div>';
+  }
+
+  function highlightTreeRows(id, opts) {
+    treePaneBody.querySelectorAll(".tree-row.selected").forEach(el => el.classList.remove("selected"));
+    const rows = treeRowsByNodeId.get(id);
+    if (!rows || !rows.length) return;
+    rows.forEach(el => {
+      el.classList.add("selected");
+      let details = el.closest("details");
+      // walk up through ancestor <details> so a selected row is never hidden inside a collapsed branch
+      while (details) {
+        details.open = true;
+        details = details.parentElement && details.parentElement.closest("details");
+      }
+    });
+    if (!opts || opts.scroll !== false) rows[0].scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+
+  function focusGraphNode(id) {
+    if (!network || !nodesDataset || !nodesDataset.get(id)) return;
+    network.selectNodes([id]);
+    network.focus(id, { scale: Math.max(network.getScale(), 0.9), animation: { duration: 300, easingFunction: "easeInOutQuad" } });
+  }
+
+  function handleTreeRowClick(id) {
+    const node = nodeById.get(id);
+    if (!node) return;
+    if (node.node_type === "case") {
+      showInfo(node, selectedCaseId === id ? computeReachable(id) : null);
+    } else {
+      showInfo(node, null);
+    }
+    highlightTreeRows(id, { scroll: false });
+    focusGraphNode(id);
+  }
+
+  treePaneBody.addEventListener("click", e => {
+    const toggle = e.target.closest(".tree-toggle");
+    const row = e.target.closest(".tree-row");
+    if (!row) return;
+    if (toggle) {
+      e.preventDefault();
+      const details = row.closest("details");
+      if (details) details.open = !details.open;
+      return;
+    }
+    e.preventDefault(); // suppress the native <summary> toggle; a row click selects, not expands
+    if (row.dataset.id) handleTreeRowClick(row.dataset.id);
+  });
+
+  document.getElementById("treeExpandAllBtn").addEventListener("click", () => {
+    treePaneBody.querySelectorAll("details").forEach(d => { d.open = true; });
+  });
+  document.getElementById("treeCollapseAllBtn").addEventListener("click", () => {
+    treePaneBody.querySelectorAll("details").forEach((d, i) => { d.open = (i === 0); }); // keep the root open
+  });
+
   function onNetworkClick(params) {
     if (params.nodes.length === 0) { clearCaseSelection(); return; }
     const nodeId = params.nodes[0];
@@ -638,11 +910,13 @@
 
     if (node.node_type !== "case") {
       showInfo(node, null);
+      highlightTreeRows(nodeId);
       return;
     }
     if (selectedCaseId === nodeId) { clearCaseSelection(); return; } // click again to deselect
     selectedCaseId = nodeId;
     const reachable = computeReachable(nodeId);
+    renderCaseTree(nodeId);
     if (clickMode === "none") {
       showInfo(node, reachable);
     } else if (clickMode === "highlight") {
@@ -717,6 +991,7 @@
 
   function clearCaseSelection() {
     selectedCaseId = null;
+    clearTreePane();
     if (!nodesDataset) return;
     nodesDataset.update(nodesDataset.getIds().map(id => ({ id, hidden: false, ...defaultNodeStyle(nodeById.get(id)) })));
     edgesDataset.update(edgesDataset.get().map(e => ({ id: e.id, hidden: false, ...defaultEdgeStyle(e) })));
