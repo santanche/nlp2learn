@@ -2,7 +2,7 @@ services:
   data-prep:
     build:
       context: .
-      dockerfile: env/data-prep/Dockerfile
+      dockerfile: environment/data-prep/Dockerfile
     ports:
       - "127.0.0.1:8888:8888"
     volumes:
@@ -11,7 +11,7 @@ services:
   kg-extraction:
     build:
       context: .
-      dockerfile: env/kg-extraction/Dockerfile
+      dockerfile: environment/kg-extraction/Dockerfile
     ports:
       - "127.0.0.1:8889:8888"
     volumes:
