@@ -1,0 +1,16 @@
+name: nlp2learn
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - jupyter
+  - numpy
+  - pandas
+  - matplotlib
+  - seaborn
+  - scikit-learn
+  - nltk
+  - pip
+  - pip:
+    - notebook
