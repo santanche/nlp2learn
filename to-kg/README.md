@@ -23,7 +23,7 @@ each gets its own environment rather than one shared one:
 | Environment | Notebook | What it needs |
 |---|---|---|
 | `environment/data-prep` | `01_data_preparation.ipynb` | DuckDB, pandas, requests — lightweight, runs anywhere |
-| `environment/kg-extraction` | `02_kg_extraction.ipynb` | PyTorch, transformers, spaCy/scispaCy — local encoder models, heavier, laptop-scale |
+| `environment/kg-extraction` | `02_tokenization.ipynb`, `02_kg_extraction.ipynb` | PyTorch, transformers, spaCy/scispaCy (+ NLTK, unidecode for `02_tokenization.ipynb`) — local encoder models, heavier, laptop-scale |
 
 Both are offered two ways: a **Docker image** (no local Python setup at all)
 or a **local `uv` virtual environment** (faster iteration, no container
@@ -125,6 +125,7 @@ to-kg/
 ├── data/                     # downloaded parquet files + clinical_cases.duckdb (gitignored)
 ├── notebooks/
 │   ├── 01_data_preparation.ipynb   # download source files, build the DuckDB database
+│   ├── 02_tokenization.ipynb       # tokenization/normalization tour (IIR Lecture 2) over real case text
 │   └── 02_kg_extraction.ipynb      # local, encoder-only KG extraction over a configurable sample
 └── viewer/
     ├── graph_viewer.html           # versioned KG viewer — loads data/kg_extraction/graph_data.js
@@ -146,6 +147,19 @@ con = duckdb.connect("../data/clinical_cases.duckdb")
 See [docs/data_source.md](docs/data_source.md) for the full analysis behind
 these decisions, and the exact DuckDB table schemas (`cases`, `metadata`,
 `data_dictionary`).
+
+## Tokenization
+
+`notebooks/02_tokenization.ipynb` connects read-only to the same DuckDB
+database and walks through the term-vocabulary concepts from *Introduction
+to Information Retrieval*, Lecture 2 (normalization, hyphen/whitespace
+tokenization problems, accents, case folding, stop words, lemmatization,
+stemming) using real examples mined from `cases`/`metadata`, then extends
+the lecture into modern subword tokenization (a from-scratch BPE trainer,
+plus real WordPiece/SentencePiece tokenizers via `transformers`). It's a
+diagnostic precursor to `02_kg_extraction.ipynb`, not a separate pipeline —
+run it in the `kg-extraction` environment (it needs spaCy/scispaCy and
+`transformers`, not just DuckDB).
 
 ## KG extraction
 

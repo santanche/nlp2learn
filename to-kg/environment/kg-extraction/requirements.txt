@@ -26,5 +26,11 @@ scispacy==0.5.4
 https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_core_sci_lg-0.5.4.tar.gz
 negspacy
 
+# 02_tokenization.ipynb: classic stemmers (Porter/Snowball/Lancaster) have no
+# spaCy equivalent by design (spaCy favors lemmatization), and unidecode
+# covers accent-stripping cases unicodedata's NFKD can't (e.g. Ł, đ).
+nltk
+unidecode
+
 # Optional: only used if you also run the local Neo4j demo (see docker-compose.yml).
 neo4j>=5.0
