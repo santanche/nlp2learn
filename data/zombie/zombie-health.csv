@@ -1,9 +1,9 @@
-Name,Diagnostic,Symptom 1,Symptom 2,Symptom 3,Blood Analysis,History
+Name,Diagnosis,Symptom 1,Symptom 2,Symptom 3,Blood Analysis,Previous Diagnosis
 Rot Donnadd,bacterial infection,paralysis,yellow tong,,,
 Pid Mught,bacterial infection,yellow tong,,,Cyanobacterium zumbi,
 Thulk Lebbimp,bite deficit,yellow tong,trembling on the little finger,,,bacterial infection
 Bouvossam Damme,bite deficit,member loss,yellow tong,trembling on the little finger,,
-Pirg Zall,viral infection,chest pain,member loss (right hand),,Deltaretrovirus zumbi,
+Pirg Zall,viral infection,chest pain,member loss,,Deltaretrovirus zumbi,
 Nullon Rackindock,fights,member loss,severe anger,,,
 Shor Splitturch,nothing,severe anger,,,,
 Ger Ackeng,bite deficit,trembling on the little finger,,,,
@@ -14,7 +14,7 @@ Read Rait,bacterial infection,paralysis,yellow tong,,,
 Dallun Whadder,viral infection,chest pain,,,,bacterial infection
 Eapplar Thorg,fights,member loss,,,,
 Blottork Patter,bite deficit,yellow tong,trembling on the little finger,,,bacterial infection
-Darrutt Bottall,bite deficit,member loss,yellow tong,trembling ...,,
+Darrutt Bottall,bite deficit,member loss,yellow tong,trembling on the little finger,,
 Gallir Shauch,fights,chest pain,,,,
 Dirpe Polnay,bacterial infection,yellow tong,,,,
-Harrimp Fottiem,bite deficit,trembling ...,,,,
+Harrimp Fottiem,bite deficit,trembling on the little finger,,,,
