@@ -25,6 +25,10 @@ A equipe deve refletir e propor uma abordagem para os seguintes pontos:
 
 Para este estágio de trabalho, não poderão ser usados modelos de linguagem para a extração dos dados. A equipe deve explorar as técnicas tradicionais de modo que entenda cada algoritmo que foi usado e seu impacto na geração final do grafo.
 
+Recomendo a leitura deste artigo para a compreensão sobre conceitos de base de grafos de conhecimento:
+
+> Ji, S., Pan, S., Cambria, E., Marttinen, P., & Yu, P. S. (2022). A Survey on Knowledge Graphs: Representation, Acquisition, and Applications. IEEE Transactions on Neural Networks and Learning Systems, 33(2), 494–514. https://doi.org/10.1109/TNNLS.2021.3070843
+
 ## Formato de extração do grafo de conhecimento
 
 O grafo extraído de cada caso deve ser representado em duas tabelas simples:
