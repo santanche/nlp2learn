@@ -2,7 +2,7 @@
 
 **Purpose of this document.** This is the reference for
 [`viewer/graph_viewer.html`](../viewer/graph_viewer.html) — a standalone
-page for exploring the knowledge graph `02_kg_extraction.ipynb` produces.
+page for exploring the knowledge graph `10_kg_extraction.ipynb` produces.
 It covers what the viewer does, how data gets into it, the two features
 that motivated building it (case nodes, and click-to-highlight/filter),
 and the non-obvious implementation decisions, so a future edit doesn't
@@ -10,7 +10,7 @@ accidentally undo one of them.
 
 ## 1. Why a separate, versioned viewer
 
-`02_kg_extraction.ipynb` already writes an inline pyvis preview
+`10_kg_extraction.ipynb` already writes an inline pyvis preview
 (`kg_preview.html`, Stage 8 / Section 13) as a fast sanity check while
 iterating in the notebook. That preview is regenerated from scratch on
 every run, lives in the gitignored `data/` directory, and only shows the
@@ -35,7 +35,7 @@ viewer is what actually makes that case-level structure explorable.
 ## 2. Data flow
 
 ```
-02_kg_extraction.ipynb (Section 16)
+10_kg_extraction.ipynb (Section 16)
     │
     │  builds G_export = G + case nodes + "mentions" edges
     ▼
@@ -287,7 +287,7 @@ highlighted row is never hidden, and scrolls the first match into view.
 
 ## 6. Quick usage
 
-1. Run `02_kg_extraction.ipynb` through Section 16 (Export).
+1. Run `10_kg_extraction.ipynb` through Section 16 (Export).
 2. Open `viewer/graph_viewer.html` in a browser (double-click works — no
    server needed).
 3. Toggle "Show clinical case nodes" on.

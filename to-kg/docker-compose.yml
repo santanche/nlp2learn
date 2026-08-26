@@ -21,7 +21,7 @@ services:
       # (docker compose --profile graph up kg-extraction neo4j).
       - NEO4J_URI=bolt://localhost:7687
 
-  # Optional local Cypher demo for Stage 8 of 02_kg_extraction.ipynb. Not
+  # Optional local Cypher demo for Stage 8 of 10_kg_extraction.ipynb. Not
   # started by `docker compose up` on its own — needs the "graph" profile:
   #   docker compose --profile graph up neo4j
   neo4j:

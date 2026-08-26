@@ -1,11 +1,14 @@
 # From Clinical Case Reports to Knowledge Graphs
 
 See [Activity_Plan_Clinical_Cases_to_Knowledge_Graphs.md](Activity_Plan_Clinical_Cases_to_Knowledge_Graphs.md)
-for the full pedagogical plan,
-[docs/kg_extraction_methodology.md](docs/kg_extraction_methodology.md) for
-the design behind `02_kg_extraction.ipynb`, and
-[docs/kg_viewer.md](docs/kg_viewer.md) for the design behind
-`viewer/graph_viewer.html`.
+for the full pedagogical plan and
+[docs/notebooks_overview.md](docs/notebooks_overview.md) for a map of what
+every notebook in `notebooks/` does and how they depend on each other.
+Deeper design docs: [docs/data_source.md](docs/data_source.md) (Zenodo
+provenance, DuckDB/CSV schema), [docs/kg_extraction_methodology.md](docs/kg_extraction_methodology.md)
+(design behind `10_kg_extraction.ipynb`), and
+[docs/kg_viewer.md](docs/kg_viewer.md) (design behind
+`viewer/graph_viewer.html`).
 
 The corpus is the **MultiCaRe** clinical case dataset
 ([Zenodo, concept DOI 10.5281/zenodo.10079369](https://doi.org/10.5281/zenodo.10079369);
@@ -23,7 +26,7 @@ each gets its own environment rather than one shared one:
 | Environment | Notebook | What it needs |
 |---|---|---|
 | `environment/data-prep` | `01_data_preparation.ipynb` | DuckDB, pandas, requests — lightweight, runs anywhere |
-| `environment/kg-extraction` | `02_tokenization.ipynb`, `02_kg_extraction.ipynb` | PyTorch, transformers, spaCy/scispaCy (+ NLTK, unidecode for `02_tokenization.ipynb`) — local encoder models, heavier, laptop-scale |
+| `environment/kg-extraction` | `02_tokenization.ipynb`, `10_kg_extraction.ipynb` | PyTorch, transformers, spaCy/scispaCy (+ NLTK, unidecode for `02_tokenization.ipynb`) — local encoder models, heavier, laptop-scale |
 
 Both are offered two ways: a **Docker image** (no local Python setup at all)
 or a **local `uv` virtual environment** (faster iteration, no container
@@ -54,7 +57,7 @@ Both containers bind-mount the whole `to-kg/` directory into
 across restarts (`data/` is gitignored). Check `docker compose logs
 <service>` for the token if you missed it. Stop with `docker compose down`.
 
-Optional: `02_kg_extraction.ipynb` can push the resulting graph into a
+Optional: `10_kg_extraction.ipynb` can push the resulting graph into a
 local Neo4j instance for an interactive Cypher demo (Stage 8). Neo4j isn't
 started by default — bring it up explicitly alongside `kg-extraction`:
 
@@ -88,7 +91,7 @@ uv venv
 source .venv/bin/activate
 uv pip install -r requirements.txt
 cd ../../notebooks
-jupyter lab 02_kg_extraction.ipynb
+jupyter lab 10_kg_extraction.ipynb
 ```
 
 Each `.venv` lives inside its own `environment/<name>/` folder and is
@@ -112,8 +115,9 @@ to-kg/
 ├── README.md
 ├── docker-compose.yml
 ├── docs/
-│   ├── data_source.md                  # Zenodo provenance, DuckDB schema reference
-│   ├── kg_extraction_methodology.md    # design behind 02_kg_extraction.ipynb
+│   ├── notebooks_overview.md            # map of every notebook: role, I/O, dependencies
+│   ├── data_source.md                  # Zenodo provenance, DuckDB/CSV schema reference
+│   ├── kg_extraction_methodology.md    # design behind 10_kg_extraction.ipynb
 │   └── kg_viewer.md                    # design behind viewer/graph_viewer.html
 ├── environment/
 │   ├── data-prep/
@@ -134,7 +138,7 @@ to-kg/
 │   ├── 02b_csv_data_exploraton_full.ipynb    # example queries over the full CSV export
 │   ├── 03_duckdb_data_exploraton.ipynb       # example queries over the DuckDB database
 │   ├── 02_tokenization.ipynb       # tokenization/normalization tour (IIR Lecture 2) over real case text
-│   └── 02_kg_extraction.ipynb      # local, encoder-only KG extraction over a configurable sample
+│   └── 10_kg_extraction.ipynb      # local, encoder-only KG extraction over a configurable sample
 └── viewer/
     ├── graph_viewer.html           # versioned KG viewer — loads data/kg_extraction/graph_data.js
     └── lib/vis-network.min.js      # vendored (offline, no CDN dependency)
@@ -177,13 +181,13 @@ tokenization problems, accents, case folding, stop words, lemmatization,
 stemming) using real examples mined from `cases`/`metadata`, then extends
 the lecture into modern subword tokenization (a from-scratch BPE trainer,
 plus real WordPiece/SentencePiece tokenizers via `transformers`). It's a
-diagnostic precursor to `02_kg_extraction.ipynb`, not a separate pipeline —
+diagnostic precursor to `10_kg_extraction.ipynb`, not a separate pipeline —
 run it in the `kg-extraction` environment (it needs spaCy/scispaCy and
 `transformers`, not just DuckDB).
 
 ## KG extraction
 
-`notebooks/02_kg_extraction.ipynb` connects to the same DuckDB database
+`notebooks/10_kg_extraction.ipynb` connects to the same DuckDB database
 (built by `01_data_preparation.ipynb`, assumed to already exist — this
 notebook does not download anything) and runs the local, encoder-only
 pipeline proposed in

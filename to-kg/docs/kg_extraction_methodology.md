@@ -1,7 +1,7 @@
 # Methodology Proposal: Local, Encoder-Based KG Extraction from MultiCaRe Cases
 
 **Purpose of this document.** This is the design behind
-[`notebooks/02_kg_extraction.ipynb`](../notebooks/02_kg_extraction.ipynb).
+[`notebooks/10_kg_extraction.ipynb`](../notebooks/10_kg_extraction.ipynb).
 It answers: *given a hard constraint of running entirely on a local laptop,
 with no remote LLM APIs and encoder-only (BERT-family) models rather than
 generative ones, what's the best KG-extraction pipeline achievable?* This
@@ -392,7 +392,7 @@ not a replacement for it.
 
 ## 9. Implementation footprint
 
-Implemented in [`notebooks/02_kg_extraction.ipynb`](../notebooks/02_kg_extraction.ipynb),
+Implemented in [`notebooks/10_kg_extraction.ipynb`](../notebooks/10_kg_extraction.ipynb),
 against [`environment/kg-extraction/requirements.txt`](../environment/kg-extraction/requirements.txt)
 (`torch` CPU wheel, `transformers`, `spacy`, `scispacy==0.5.4` + the
 `en_core_sci_lg` model, `negspacy`, `networkx`, `pyvis`, and the `neo4j`
