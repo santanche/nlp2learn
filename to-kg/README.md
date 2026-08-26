@@ -122,9 +122,17 @@ to-kg/
 │   └── kg-extraction/
 │       ├── requirements.txt
 │       └── Dockerfile
-├── data/                     # downloaded parquet files + clinical_cases.duckdb (gitignored)
+├── data/                     # gitignored
+│   ├── raw/                        # downloaded Zenodo files
+│   ├── duckdb/                     # clinical_cases.duckdb
+│   └── csv/
+│       ├── full/                   # CSV export of every table, all rows
+│       └── sample/                 # CSV export, fixed 50-article random sample
 ├── notebooks/
-│   ├── 01_data_preparation.ipynb   # download source files, build the DuckDB database
+│   ├── 01_data_preparation.ipynb           # download source files, build DuckDB + CSV exports
+│   ├── 02a_csv_data_exploraton_sample.ipynb  # example queries over the CSV sample
+│   ├── 02b_csv_data_exploraton_full.ipynb    # example queries over the full CSV export
+│   ├── 03_duckdb_data_exploraton.ipynb       # example queries over the DuckDB database
 │   ├── 02_tokenization.ipynb       # tokenization/normalization tour (IIR Lecture 2) over real case text
 │   └── 02_kg_extraction.ipynb      # local, encoder-only KG extraction over a configurable sample
 └── viewer/
@@ -136,13 +144,25 @@ to-kg/
 
 `notebooks/01_data_preparation.ipynb` downloads three files from the latest
 version of the Zenodo record (`cases.parquet`, `metadata.parquet`,
-`data_dictionary.csv`) and loads them into a single DuckDB database at
-`data/clinical_cases.duckdb`:
+`data_dictionary.csv`) into `data/raw/`, loads them into a DuckDB database at
+`data/duckdb/clinical_cases.duckdb`:
 
 ```python
 import duckdb
-con = duckdb.connect("../data/clinical_cases.duckdb")
+con = duckdb.connect("../data/duckdb/clinical_cases.duckdb")
 ```
+
+and exports the same tables as CSV — `data/csv/full/` (every row) and
+`data/csv/sample/` (a fixed, seeded 50-article sample) — for notebooks that
+prefer plain CSV over a database file.
+
+Three exploration notebooks then run the same set of example queries
+against each form, so the query logic is directly comparable across sample
+vs. full and CSV vs. DuckDB:
+
+- `notebooks/02a_csv_data_exploraton_sample.ipynb` — `data/csv/sample/`
+- `notebooks/02b_csv_data_exploraton_full.ipynb` — `data/csv/full/`
+- `notebooks/03_duckdb_data_exploraton.ipynb` — `data/duckdb/clinical_cases.duckdb`
 
 See [docs/data_source.md](docs/data_source.md) for the full analysis behind
 these decisions, and the exact DuckDB table schemas (`cases`, `metadata`,

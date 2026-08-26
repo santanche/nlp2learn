@@ -2,8 +2,9 @@
 
 **Purpose of this document.** This is the reference for where the corpus
 comes from, which files were selected (and why), and the exact schema that
-ends up in `data/clinical_cases.duckdb` after `01_data_preparation.ipynb`
-runs. Later notebooks (manual NER/RE, knowledge graph construction, vector
+ends up in `data/duckdb/clinical_cases.duckdb` (plus `data/csv/full/` and
+`data/csv/sample/`) after `01_data_preparation.ipynb` runs. Later notebooks
+(exploration, manual NER/RE, knowledge graph construction, vector
 representations) should treat this file — not `data_dictionary.csv` alone —
 as the source of truth for column names and layout, because the raw files
 turned out to be more nested than `data_dictionary.csv` documents (Section 3).
@@ -55,11 +56,12 @@ never touches images or abstracts.
 | `case_images.parquet` | 55 MB | Skipped | Image metadata — same reason |
 | `PMC1.zip` … `PMC9.zip` | ~2.66 GB total | Skipped | Raw PMC image archives — by far the largest part of the record, entirely unused here |
 
-Files are downloaded at notebook runtime into `data/` (gitignored) rather
-than committed to git, via Zenodo's `versions/latest` API endpoint keyed on
-the concept id `10079369` — so the notebook always tracks the current
-version instead of a version pinned at authoring time. Re-running the
-notebook later may therefore show different row counts than this document.
+Files are downloaded at notebook runtime into `data/raw/` (gitignored)
+rather than committed to git, via Zenodo's `versions/latest` API endpoint
+keyed on the concept id `10079369` — so the notebook always tracks the
+current version instead of a version pinned at authoring time. Re-running
+the notebook later may therefore show different row counts than this
+document.
 
 ## 3. Schema drift: `data_dictionary.csv` vs. the actual Parquet files
 
@@ -81,7 +83,25 @@ so the tables described in Section 4 match what `data_dictionary.csv`
 implies — but a naive `SELECT * FROM read_parquet(...)` on the raw files
 will not.
 
-## 4. Resulting DuckDB schema (`data/clinical_cases.duckdb`)
+## 4. Resulting DuckDB schema (`data/duckdb/clinical_cases.duckdb`)
+
+The same three tables are also exported as CSV in two forms (Section 6 of
+`01_data_preparation.ipynb`):
+
+- `data/csv/full/{cases,metadata,data_dictionary}.csv` — every row.
+- `data/csv/sample/{cases,metadata,data_dictionary}.csv` — a fixed sample of
+  50 `article_id`s (seed `42`, drawn from the sorted list of all article
+  ids), applied to `cases` and `metadata`; `metadata` ends up with exactly
+  50 rows, `cases` with slightly more (some articles contribute several
+  cases). `data_dictionary` is copied over unfiltered in both forms.
+
+CSV has no array type, so `authors`, `mesh_terms`, `major_mesh_terms`, and
+`keywords` (all `VARCHAR[]` below) round-trip through the CSV export as
+bracketed text (e.g. `[Female]`) and are read back as plain `VARCHAR` —
+worth knowing before comparing a `DESCRIBE` against the CSV tables with one
+against the DuckDB tables. `year` shows the opposite drift: `VARCHAR` here,
+but inferred as `BIGINT` when the CSV is read back, since every value in
+this dataset happens to look numeric.
 
 ### `cases` — one row per patient case
 
