@@ -25,6 +25,10 @@ A equipe deve refletir e propor uma abordagem para os seguintes pontos:
 
 Para este estágio de trabalho, não poderão ser usados modelos de linguagem para a extração dos dados. A equipe deve explorar as técnicas tradicionais de modo que entenda cada algoritmo que foi usado e seu impacto na geração final do grafo.
 
+Algumas estratégias interessantes que podem ser investigadas:
+* Unificação de formas diferentes de escrever um mesmo conceito usando, por exemplo, dicionários, tesauros ou ontologias.
+* Expressões regulares e modelos de regras para decompor o texto em elementos do grafo e relacionar estes componentes.
+
 Recomendo a leitura deste artigo para a compreensão sobre conceitos de base de grafos de conhecimento:
 
 > Ji, S., Pan, S., Cambria, E., Marttinen, P., & Yu, P. S. (2022). A Survey on Knowledge Graphs: Representation, Acquisition, and Applications. IEEE Transactions on Neural Networks and Learning Systems, 33(2), 494–514. https://doi.org/10.1109/TNNLS.2021.3070843
@@ -47,3 +51,28 @@ Dois exemplos ilustrativos (em inglês, no estilo dos casos do MultiCaRe), cada 
 - **[example2.md](example2.md)** — mesmo caso clínico do Exemplo 1, mas levando a decomposição mais longe, ao estilo RDF: atributos que no Exemplo 1 eram texto dentro de `attributes` (por exemplo, o valor `850` e a unidade `U/L` de um resultado de exame) viram nós próprios, ligados por arestas (`HAS_VALUE`, `HAS_UNIT`, ...). Também mostra como ligar sintomas, tipos de exame e diagnósticos a vocabulários controlados/ontologias (SNOMED CT, LOINC, ICD-10, MeSH).
 
 Os dois exemplos são ilustrativos — a equipe não precisa seguir exatamente estes tipos de nó/aresta, nem replicar o nível de decomposição de nenhum dos dois; pode escolher (ou combinar) o que fizer mais sentido para o projeto.
+
+## Apresentação do Grafo
+
+O grafo resultante pode ser apresentado visualmente (em uma interface em Python ou Web) e isto será considerado como ponto positivo do projeto. Por não ser objeto específico da disciplina, a construção da apresentação visual pode ser feita inteiramente com assistência de modelos de linguagem.
+
+## Diferenciais do Projeto
+
+Serão valorizados diferenciais do projeto como:
+* criatividade
+* originalidade
+* audácia em propostas desafiadoras;
+* recursos de visualização de dados do grafo
+* busca por soluções diferenciais na literatura
+
+É muito importante considerar que serão valorizadas equipes que arrisquem em análises ousadas, nas quais não se saiba se se alcançará o resultado esperado. Equipes podem obter nota máxima, mesmo que não alcancem o resultado esperado, considerando que apresentem um trabalho bem fundamentado, audacioso, que demonstre integração entre os componentes.
+
+## Diretrizes para montagem dos slides
+
+* Explore diagramas e ilustrações na apresentação.
+* Não coloque muito texto, utilize apenas tópicos indicativos para guiar a apresentação
+* Não há espaço para mostrar todos os detalhes; selecione aquilo que você acha mais importante e enfatize. Se vai mostrar um código, não mostre inteiro, apenas a parte que se destaca.
+
+## Parte Escrita
+
+O projeto tem uma parte escrita. Cada equipe deve criar um projeto no GitHub do qual todos os membros participam e devem colocar a parte escrita lá. Nos slides de apresentação deve ser colocado o endereço do GitHub.
