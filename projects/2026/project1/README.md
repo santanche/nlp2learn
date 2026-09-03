@@ -75,4 +75,4 @@ Serão valorizados diferenciais do projeto como:
 
 ## Parte Escrita
 
-O projeto tem uma parte escrita. Cada equipe deve criar um projeto no GitHub do qual todos os membros participam e devem colocar a parte escrita lá. Nos slides de apresentação deve ser colocado o endereço do GitHub.
+O projeto tem uma parte escrita seguindo o [template](../template/project1/README.md). Cada equipe deve criar um projeto no GitHub do qual todos os membros participam e devem colocar a parte escrita lá. Nos slides de apresentação deve ser colocado o endereço do GitHub.
