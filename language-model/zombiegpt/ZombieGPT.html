@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZombieGPT — Probabilistic Language Model</title>
+<style>
+    * { box-sizing: border-box; }
+    body {
+        margin: 0;
+        font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #17191c;
+        color: #e8eaed;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+    }
+    .app {
+        width: min(1000px, 100%);
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background: #202327;
+        border-left: 1px solid #30343a;
+        border-right: 1px solid #30343a;
+    }
+    header {
+        padding: 16px 20px;
+        border-bottom: 1px solid #34383e;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        background: #1d2024;
+    }
+    .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .zombie {
+        font-size: 30px;
+        line-height: 1;
+    }
+    h1 {
+        font-size: 21px;
+        margin: 0;
+        letter-spacing: .2px;
+    }
+    .subtitle {
+        color: #9da3aa;
+        font-size: 12px;
+        margin-top: 3px;
+    }
+    .controls {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    select, input, button {
+        font: inherit;
+    }
+    select {
+        background: #292d32;
+        color: #e8eaed;
+        border: 1px solid #484d54;
+        border-radius: 8px;
+        padding: 9px 11px;
+        outline: none;
+    }
+    .chat {
+        flex: 1;
+        overflow-y: auto;
+        padding: 26px 22px 110px;
+    }
+    .welcome {
+        max-width: 650px;
+        margin: 8vh auto 0;
+        text-align: center;
+        color: #aeb4bb;
+    }
+    .welcome h2 {
+        color: #e8eaed;
+        font-size: 27px;
+        margin-bottom: 8px;
+    }
+    .welcome p { line-height: 1.55; }
+    .message {
+        max-width: 760px;
+        margin: 0 auto 18px;
+        display: flex;
+        gap: 11px;
+        align-items: flex-start;
+    }
+    .message.user { justify-content: flex-end; }
+    .bubble {
+        padding: 11px 14px;
+        border-radius: 14px;
+        line-height: 1.55;
+        white-space: pre-wrap;
+        word-break: break-word;
+    }
+    .user .bubble {
+        background: #394049;
+        color: #f3f4f5;
+        border-bottom-right-radius: 4px;
+        max-width: 75%;
+    }
+    .bot .bubble {
+        background: #292d32;
+        border: 1px solid #383d43;
+        border-bottom-left-radius: 4px;
+        min-width: 180px;
+    }
+    .avatar {
+        width: 32px;
+        height: 32px;
+        flex: 0 0 32px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: #30353b;
+        font-size: 17px;
+    }
+    .token {
+        display: inline-block;
+        animation: appear .25s ease-out;
+        margin-right: 5px;
+    }
+    @keyframes appear {
+        from { opacity: 0; transform: translateY(5px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .thinking {
+        display: inline-flex;
+        gap: 4px;
+        padding: 6px 0;
+    }
+    .dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: #aeb4bb;
+        animation: blink 1s infinite;
+    }
+    .dot:nth-child(2) { animation-delay: .15s; }
+    .dot:nth-child(3) { animation-delay: .3s; }
+    @keyframes blink {
+        0%, 60%, 100% { opacity: .3; }
+        30% { opacity: 1; }
+    }
+    .input-area {
+        position: fixed;
+        bottom: 0;
+        width: min(998px, 100%);
+        padding: 14px 18px 18px;
+        background: linear-gradient(transparent, #202327 22%);
+    }
+    .composer {
+        max-width: 760px;
+        margin: 0 auto;
+        display: flex;
+        gap: 9px;
+        background: #292d32;
+        border: 1px solid #484d54;
+        border-radius: 13px;
+        padding: 7px;
+    }
+    #prompt {
+        flex: 1;
+        min-width: 0;
+        background: transparent;
+        color: #f0f1f2;
+        border: 0;
+        outline: 0;
+        padding: 8px 10px;
+        font-size: 16px;
+    }
+    #send {
+        border: 0;
+        border-radius: 9px;
+        padding: 8px 15px;
+        background: #e3e5e7;
+        color: #17191c;
+        font-weight: 650;
+        cursor: pointer;
+    }
+    #send:disabled { opacity: .4; cursor: default; }
+    .hint {
+        text-align: center;
+        color: #7f868e;
+        font-size: 11px;
+        margin-top: 7px;
+    }
+    .error {
+        color: #ffb4b4;
+    }
+    .status {
+        font-size: 11px;
+        color: #8f969e;
+        margin-top: 7px;
+    }
+    @media (max-width: 650px) {
+        header { align-items: flex-start; flex-direction: column; }
+        .controls, select { width: 100%; }
+        select { width: 100%; }
+        .chat { padding-left: 12px; padding-right: 12px; }
+    }
+</style>
+</head>
+<body>
+<div class="app">
+    <header>
+        <div class="brand">
+            <div class="zombie">🧟</div>
+            <div>
+                <h1>ZombieGPT</h1>
+                <div class="subtitle">A tiny probabilistic language model</div>
+            </div>
+        </div>
+        <div class="controls">
+            <select id="model" aria-label="Probability model">
+                <option value="">Select probability CSV…</option>
+                <option value="probabilities-2-gram.csv">2-gram</option>
+                <option value="probabilities-3-gram.csv">3-gram</option>
+                <option value="probabilities-4-gram.csv">4-gram</option>
+                <option value="probabilities-prefix.csv">Full prefix</option>
+            </select>
+        </div>
+    </header>
+
+    <main class="chat" id="chat">
+        <div class="welcome" id="welcome">
+            <h2>Welcome to ZombieGPT</h2>
+            <p>Select a probability model, then type a prefix such as <b>s</b>, <b>sr</b>, or <b>srr</b>.</p>
+            <p>ZombieGPT will reproduce your prefix and sample the remaining tokens one at a time.</p>
+            <div class="status" id="status">No probability model loaded.</div>
+        </div>
+    </main>
+
+    <div class="input-area">
+        <div class="composer">
+            <input id="prompt" autocomplete="off" spellcheck="false"
+                   placeholder="Type a prefix without spaces, e.g. srr">
+            <button id="send">Send</button>
+        </div>
+        <div class="hint">Tokens are displayed one at a time to make the probabilistic generation visible.</div>
+    </div>
+</div>
+
+<script>
+const chat = document.getElementById("chat");
+const welcome = document.getElementById("welcome");
+const promptInput = document.getElementById("prompt");
+const sendButton = document.getElementById("send");
+const modelSelect = document.getElementById("model");
+const status = document.getElementById("status");
+
+let transitions = new Map();
+let loadedFile = "";
+let busy = false;
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function parseCSV(text) {
+    const rows = [];
+    let row = [], field = "", quoted = false;
+
+    for (let i = 0; i < text.length; i++) {
+        const c = text[i];
+        const next = text[i + 1];
+
+        if (c === '"') {
+            if (quoted && next === '"') {
+                field += '"';
+                i++;
+            } else {
+                quoted = !quoted;
+            }
+        } else if (c === "," && !quoted) {
+            row.push(field);
+            field = "";
+        } else if ((c === "\n" || c === "\r") && !quoted) {
+            if (c === "\r" && next === "\n") i++;
+            row.push(field);
+            if (row.some(x => x.trim() !== "")) rows.push(row);
+            row = [];
+            field = "";
+        } else {
+            field += c;
+        }
+    }
+    if (field !== "" || row.length) {
+        row.push(field);
+        if (row.some(x => x.trim() !== "")) rows.push(row);
+    }
+
+    if (!rows.length) return [];
+    const headers = rows[0].map(x => x.trim());
+    return rows.slice(1).map(r => {
+        const obj = {};
+        headers.forEach((h, i) => obj[h] = (r[i] ?? "").trim());
+        return obj;
+    });
+}
+
+function normalizeHistory(s) {
+    return s.trim().split(/\s+/).filter(Boolean).join(" ");
+}
+
+async function loadModel(filename) {
+    transitions = new Map();
+    loadedFile = "";
+
+    if (!filename) {
+        status.textContent = "No probability model loaded.";
+        return;
+    }
+
+    try {
+        const response = await fetch(filename);
+        if (!response.ok) throw new Error(`Could not load ${filename}`);
+        const text = await response.text();
+        const rows = parseCSV(text);
+
+        if (!rows.length || !("history" in rows[0]) ||
+            !("next_token" in rows[0]) || !("probability" in rows[0])) {
+            throw new Error("The CSV must contain history, next_token, and probability columns.");
+        }
+
+        for (const row of rows) {
+            const history = normalizeHistory(row.history);
+            const token = row.next_token;
+            const probability = Number(row.probability);
+
+            if (!history || !token || !Number.isFinite(probability)) continue;
+
+            if (!transitions.has(history)) transitions.set(history, []);
+            transitions.get(history).push({ token, probability });
+        }
+
+        loadedFile = filename;
+        status.textContent =
+            `${filename}: ${transitions.size} histories loaded.`;
+    } catch (err) {
+        status.textContent = err.message;
+        transitions = new Map();
+    }
+}
+
+function sample(options) {
+    const total = options.reduce((sum, x) => sum + x.probability, 0);
+    let r = Math.random() * total;
+
+    for (const option of options) {
+        r -= option.probability;
+        if (r <= 0) return option.token;
+    }
+    return options[options.length - 1].token;
+}
+
+function tokenizePrefix(raw) {
+    // The user intentionally enters a sequence without spaces.
+    // Our vocabulary consists of single-character tokens.
+    return [...raw.trim()];
+}
+
+function historyFor(tokens, filename) {
+    if (filename.includes("prefix")) {
+        return ["<s>", ...tokens].join(" ");
+    }
+
+    const n = Number(filename.match(/(\d+)-gram/)?.[1]);
+    if (!n || n < 2) return tokens.join(" ");
+
+    const stateSize = n - 1;
+    const state = tokens.slice(-stateSize);
+
+    // Training used <s> at sentence start. Pad short prefixes.
+    while (state.length < stateSize) state.unshift("<s>");
+
+    return state.join(" ");
+}
+
+function addMessage(type, text) {
+    const message = document.createElement("div");
+    message.className = `message ${type}`;
+
+    if (type === "bot") {
+        const avatar = document.createElement("div");
+        avatar.className = "avatar";
+        avatar.textContent = "🧟";
+        message.appendChild(avatar);
+    }
+
+    const bubble = document.createElement("div");
+    bubble.className = "bubble";
+    bubble.textContent = text;
+    message.appendChild(bubble);
+
+    chat.appendChild(message);
+    chat.scrollTop = chat.scrollHeight;
+    return { message, bubble };
+}
+
+async function generate(rawPrefix) {
+    if (busy) return;
+
+    const prefix = rawPrefix.trim();
+    if (!prefix) return;
+
+    if (!loadedFile) {
+        addMessage("bot", "Please select a probability CSV first.");
+        return;
+    }
+
+    busy = true;
+    sendButton.disabled = true;
+    promptInput.disabled = true;
+
+    if (welcome) welcome.style.display = "none";
+
+    // User message: show exactly what was typed.
+    addMessage("user", prefix);
+
+    const bot = addMessage("bot", "");
+    const bubble = bot.bubble;
+
+    const tokens = tokenizePrefix(prefix);
+    let generated = [...tokens];
+
+    // Display the initial prefix immediately, one token at a time as a visual sequence.
+    for (const token of tokens) {
+        const span = document.createElement("span");
+        span.className = "token";
+        span.textContent = token;
+        bubble.appendChild(span);
+    }
+
+    let finished = false;
+
+    // The generated sentence is bounded by the finite grammar.
+    for (let step = 0; step < 20; step++) {
+        const history = historyFor(generated, loadedFile);
+        const options = transitions.get(history);
+
+        if (!options) {
+            const note = document.createElement("div");
+            note.className = "status error";
+            note.textContent = `No learned continuation for history: ${history}`;
+            bubble.appendChild(note);
+            break;
+        }
+
+        await sleep(650);
+
+        const next = sample(options);
+
+        if (next === "</s>") {
+            finished = true;
+            break;
+        }
+
+        const span = document.createElement("span");
+        span.className = "token";
+        span.textContent = next;
+        bubble.appendChild(span);
+        generated.push(next);
+
+        chat.scrollTop = chat.scrollHeight;
+    }
+
+    if (finished) {
+        const end = document.createElement("span");
+        end.className = "status";
+        end.textContent = "  ✓";
+        bubble.appendChild(end);
+    }
+
+    busy = false;
+    sendButton.disabled = false;
+    promptInput.disabled = false;
+    promptInput.focus();
+}
+
+modelSelect.addEventListener("change", () => loadModel(modelSelect.value));
+
+sendButton.addEventListener("click", () => {
+    const value = promptInput.value;
+    promptInput.value = "";
+    generate(value);
+});
+
+promptInput.addEventListener("keydown", e => {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        sendButton.click();
+    }
+});
+
+loadModel("");
+</script>
+</body>
+</html>
