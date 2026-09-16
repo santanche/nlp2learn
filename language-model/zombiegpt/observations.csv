@@ -1,0 +1,851 @@
+id,sentence
+1,s f e
+2,s l l f e
+3,s f e
+4,s r r f e
+5,s f e
+6,s r r f e
+7,s p e
+8,s r r f e
+9,i l l
+10,s p e
+11,s l l r r p e
+12,s l l r r f e
+13,s l l r r f e
+14,s r r r r p e
+15,s r r f e
+16,s r r f e
+17,s l l f e
+18,s r r f e
+19,i l l l l
+20,s p e
+21,s r r e
+22,s r r r r f e
+23,s l l f e
+24,s r r f e
+25,s l l r r p e
+26,s l l f e
+27,i l l
+28,s r r f e
+29,s r r r r p e
+30,s r r e
+31,s f e
+32,s l l p e
+33,s f e
+34,i l l l l
+35,i l l l l
+36,s l l f e
+37,s r r f e
+38,s r r r r f e
+39,i l l l l
+40,s r r r r f e
+41,i l l l l
+42,s l l f e
+43,s l l f e
+44,s r r r r f e
+45,s e
+46,s l l r r f e
+47,s l l r r e
+48,s r r r r f e
+49,s l l f e
+50,s r r r r f e
+51,s r r r r f e
+52,s l l f e
+53,s l l r r f e
+54,s r r r r f e
+55,s r r f e
+56,s r r f e
+57,s r r e
+58,s f e
+59,s r r f e
+60,i l l l l
+61,s l l p e
+62,s f e
+63,s r r r r p e
+64,s l l r r f e
+65,s r r p e
+66,s f e
+67,s r r f e
+68,i l l
+69,s r r r r f e
+70,i l l l l
+71,i l l l l
+72,s f e
+73,s r r r r f e
+74,s l l r r f e
+75,s r r r r f e
+76,i l l l l
+77,s l l f e
+78,s l l r r f e
+79,s l l f e
+80,s r r r r p e
+81,s l l r r f e
+82,s r r r r f e
+83,s p e
+84,s r r r r f e
+85,s r r r r f e
+86,i l l
+87,s r r f e
+88,s r r f e
+89,s f e
+90,i l l l l
+91,s r r f e
+92,i l l l l
+93,s r r f e
+94,s l l f e
+95,i l l l l
+96,s l l r r f e
+97,s l l r r f e
+98,s f e
+99,s l l p e
+100,s l l f e
+101,s l l r r p e
+102,s r r r r f e
+103,s l l f e
+104,s l l f e
+105,s f e
+106,s l l r r f e
+107,s r r r r f e
+108,s r r p e
+109,s l l r r p e
+110,s r r f e
+111,s l l r r f e
+112,s e
+113,s l l r r p e
+114,s p e
+115,s l l r r p e
+116,s l l r r f e
+117,s p e
+118,s r r p e
+119,s r r p e
+120,s f e
+121,s l l r r e
+122,s l l f e
+123,i l l l l
+124,i l l
+125,i l l
+126,i l l
+127,s r r r r p e
+128,s l l f e
+129,s r r r r f e
+130,s e
+131,s l l p e
+132,s r r f e
+133,s r r f e
+134,s l l f e
+135,s r r r r f e
+136,s f e
+137,i l l l l
+138,i l l l l
+139,s r r r r f e
+140,s r r r r f e
+141,s r r r r f e
+142,s r r r r e
+143,s f e
+144,s l l f e
+145,s l l f e
+146,s f e
+147,s r r r r p e
+148,s r r r r f e
+149,s l l f e
+150,s l l f e
+151,s l l f e
+152,s e
+153,s f e
+154,s r r r r p e
+155,s l l r r f e
+156,i l l l l
+157,s l l f e
+158,s r r r r p e
+159,s r r r r f e
+160,s l l p e
+161,s l l f e
+162,s r r f e
+163,s r r r r f e
+164,s l l p e
+165,s r r r r f e
+166,s r r f e
+167,i l l l l
+168,s l l r r p e
+169,s f e
+170,s l l r r e
+171,s l l f e
+172,s r r f e
+173,s f e
+174,s r r r r f e
+175,s f e
+176,s r r f e
+177,s l l f e
+178,s f e
+179,s r r p e
+180,s l l p e
+181,s f e
+182,s l l r r f e
+183,s l l f e
+184,s l l r r f e
+185,s f e
+186,s r r r r f e
+187,s l l f e
+188,s l l f e
+189,s l l r r f e
+190,s r r f e
+191,i l l
+192,s f e
+193,s p e
+194,s l l f e
+195,i l l l l
+196,s r r r r f e
+197,s r r p e
+198,s e
+199,s l l r r p e
+200,s l l e
+201,s l l r r f e
+202,s r r r r p e
+203,s l l r r p e
+204,s l l r r f e
+205,s l l f e
+206,s l l r r f e
+207,s l l f e
+208,s l l f e
+209,s l l r r f e
+210,s r r r r p e
+211,s l l f e
+212,s f e
+213,s r r f e
+214,s r r r r f e
+215,s r r p e
+216,s r r f e
+217,s f e
+218,s f e
+219,s l l e
+220,s r r f e
+221,s r r f e
+222,s r r r r f e
+223,i l l l l
+224,s p e
+225,s l l r r f e
+226,s r r r r f e
+227,s l l r r f e
+228,s r r r r f e
+229,s f e
+230,s r r e
+231,s l l f e
+232,s r r f e
+233,s r r r r p e
+234,i l l
+235,s l l p e
+236,i l l
+237,s l l f e
+238,s f e
+239,s r r r r f e
+240,s l l p e
+241,s l l e
+242,s l l f e
+243,i l l
+244,s l l e
+245,s f e
+246,s l l f e
+247,s f e
+248,s l l r r f e
+249,s f e
+250,s r r f e
+251,s l l r r p e
+252,s l l r r e
+253,s r r f e
+254,s r r r r f e
+255,i l l
+256,s l l f e
+257,s r r f e
+258,s l l r r f e
+259,s r r e
+260,s r r r r f e
+261,s r r e
+262,s r r r r e
+263,s r r r r f e
+264,s r r p e
+265,s l l f e
+266,s l l r r f e
+267,s e
+268,s r r f e
+269,s r r r r f e
+270,i l l l l
+271,s p e
+272,s l l f e
+273,s l l r r e
+274,s r r r r f e
+275,i l l l l
+276,s l l r r f e
+277,s r r r r e
+278,s l l r r f e
+279,s r r r r e
+280,s f e
+281,s r r r r f e
+282,s r r f e
+283,s r r r r f e
+284,s p e
+285,s l l r r f e
+286,s l l r r e
+287,s f e
+288,s l l r r p e
+289,s r r r r f e
+290,s r r r r f e
+291,s r r r r e
+292,s l l f e
+293,s l l r r p e
+294,s r r p e
+295,s l l r r f e
+296,s l l e
+297,i l l l l
+298,s f e
+299,s r r r r f e
+300,i l l
+301,s r r f e
+302,s r r r r f e
+303,s f e
+304,s l l f e
+305,i l l
+306,s r r f e
+307,s l l r r e
+308,s f e
+309,s r r r r f e
+310,s r r p e
+311,s r r f e
+312,s r r r r f e
+313,i l l
+314,i l l l l
+315,s r r r r f e
+316,s f e
+317,s l l r r f e
+318,s l l f e
+319,s l l f e
+320,s l l p e
+321,s l l r r f e
+322,s r r r r f e
+323,s f e
+324,s f e
+325,s l l r r f e
+326,i l l l l
+327,s l l r r f e
+328,s l l f e
+329,s l l r r f e
+330,i l l l l
+331,s l l r r e
+332,s r r p e
+333,s r r r r f e
+334,s l l f e
+335,s l l r r f e
+336,s p e
+337,s l l r r f e
+338,s l l r r e
+339,s r r r r f e
+340,i l l
+341,s p e
+342,s r r r r f e
+343,s l l r r f e
+344,s f e
+345,s r r r r f e
+346,i l l
+347,s r r r r e
+348,s f e
+349,s l l r r f e
+350,s f e
+351,s r r r r f e
+352,s r r r r f e
+353,s r r f e
+354,s p e
+355,s r r p e
+356,s e
+357,s l l r r f e
+358,s r r f e
+359,s f e
+360,s r r f e
+361,s p e
+362,s l l f e
+363,s r r r r f e
+364,s l l r r f e
+365,s l l r r f e
+366,s l l r r f e
+367,s r r r r f e
+368,s l l r r f e
+369,s l l f e
+370,s l l f e
+371,s l l r r f e
+372,s l l f e
+373,s l l r r f e
+374,s l l f e
+375,s r r f e
+376,s r r r r f e
+377,s l l f e
+378,s l l r r f e
+379,s f e
+380,s l l r r f e
+381,s r r r r f e
+382,s r r f e
+383,s l l r r p e
+384,i l l l l
+385,s r r r r f e
+386,s r r f e
+387,s r r p e
+388,s l l r r p e
+389,i l l l l
+390,s l l f e
+391,i l l l l
+392,s p e
+393,s r r f e
+394,s r r r r f e
+395,s l l f e
+396,s r r f e
+397,s r r p e
+398,s r r r r f e
+399,s f e
+400,s r r f e
+401,s r r r r f e
+402,s f e
+403,s l l f e
+404,s f e
+405,s f e
+406,s f e
+407,s p e
+408,s r r p e
+409,s l l r r p e
+410,s l l r r f e
+411,s l l r r p e
+412,s r r r r p e
+413,s f e
+414,s l l r r f e
+415,s l l r r f e
+416,s r r f e
+417,s r r f e
+418,s r r f e
+419,s f e
+420,i l l
+421,s l l r r p e
+422,s f e
+423,s l l f e
+424,s l l f e
+425,s l l f e
+426,i l l l l
+427,s l l p e
+428,s f e
+429,s r r f e
+430,s r r r r f e
+431,s p e
+432,s l l r r p e
+433,s r r r r f e
+434,s l l p e
+435,s l l r r f e
+436,s r r r r f e
+437,s p e
+438,s l l f e
+439,s r r f e
+440,s r r r r f e
+441,s r r f e
+442,s r r r r p e
+443,s f e
+444,s r r p e
+445,s l l r r p e
+446,s r r r r f e
+447,s l l r r f e
+448,s r r r r e
+449,s r r p e
+450,s l l p e
+451,s l l f e
+452,s r r r r f e
+453,s f e
+454,i l l
+455,s f e
+456,s p e
+457,s l l r r f e
+458,s l l f e
+459,s p e
+460,s l l r r f e
+461,s r r r r f e
+462,s r r r r f e
+463,s r r r r f e
+464,s l l r r f e
+465,s r r e
+466,i l l
+467,s r r f e
+468,i l l l l
+469,s f e
+470,s l l r r f e
+471,s l l r r p e
+472,s l l f e
+473,i l l
+474,s l l r r f e
+475,s r r f e
+476,s r r r r f e
+477,i l l
+478,s l l r r p e
+479,s l l f e
+480,s l l r r f e
+481,s l l f e
+482,s f e
+483,s r r r r p e
+484,s f e
+485,s f e
+486,s r r r r f e
+487,i l l l l
+488,s r r r r f e
+489,s r r r r f e
+490,s r r r r f e
+491,s l l r r f e
+492,s r r r r e
+493,s r r f e
+494,s l l r r f e
+495,s l l f e
+496,s l l p e
+497,s r r f e
+498,s l l r r f e
+499,s r r r r f e
+500,s l l r r f e
+501,s r r r r f e
+502,s f e
+503,i l l l l
+504,i l l l l
+505,s l l f e
+506,s l l p e
+507,s f e
+508,s l l p e
+509,s l l r r f e
+510,s l l r r f e
+511,s l l f e
+512,s l l r r f e
+513,s f e
+514,s l l f e
+515,s r r f e
+516,s r r e
+517,s l l r r e
+518,s l l f e
+519,s l l e
+520,s l l p e
+521,s p e
+522,s r r f e
+523,s l l e
+524,s l l f e
+525,s r r f e
+526,s p e
+527,s r r f e
+528,s r r f e
+529,i l l
+530,i l l
+531,s l l r r f e
+532,s r r r r f e
+533,s l l r r f e
+534,s f e
+535,s l l r r p e
+536,i l l l l
+537,s r r r r f e
+538,s p e
+539,s r r r r f e
+540,s r r r r f e
+541,s r r e
+542,s r r r r p e
+543,s e
+544,s r r r r f e
+545,s l l r r p e
+546,s e
+547,s l l r r f e
+548,s f e
+549,s l l f e
+550,i l l l l
+551,s r r f e
+552,s f e
+553,s r r r r f e
+554,i l l
+555,s l l f e
+556,s r r r r p e
+557,s f e
+558,s l l p e
+559,s l l f e
+560,s r r e
+561,s l l r r f e
+562,s f e
+563,s r r r r f e
+564,s r r p e
+565,s l l r r e
+566,s r r f e
+567,s r r r r f e
+568,s f e
+569,s l l f e
+570,s f e
+571,s r r p e
+572,s r r r r f e
+573,s e
+574,s l l r r f e
+575,s f e
+576,s l l f e
+577,s l l r r f e
+578,s l l p e
+579,s r r r r f e
+580,s r r r r f e
+581,s l l f e
+582,i l l l l
+583,s l l r r f e
+584,s r r e
+585,s f e
+586,s f e
+587,s r r r r f e
+588,s r r r r f e
+589,s e
+590,s r r f e
+591,s r r r r p e
+592,s l l r r f e
+593,s l l r r f e
+594,s l l f e
+595,s r r r r e
+596,s l l f e
+597,s r r r r f e
+598,s l l p e
+599,s l l f e
+600,i l l
+601,s r r f e
+602,s r r r r p e
+603,i l l l l
+604,s f e
+605,s r r f e
+606,s r r f e
+607,i l l
+608,s l l p e
+609,s l l f e
+610,s r r f e
+611,s l l r r f e
+612,s r r p e
+613,s r r e
+614,s r r f e
+615,s r r e
+616,s l l r r p e
+617,s r r p e
+618,s r r r r f e
+619,s r r f e
+620,i l l l l
+621,s l l f e
+622,s l l f e
+623,s f e
+624,s p e
+625,s r r r r e
+626,s l l r r p e
+627,s e
+628,s l l e
+629,s r r r r f e
+630,s l l r r e
+631,s l l r r f e
+632,i l l l l
+633,s r r r r e
+634,i l l l l
+635,s f e
+636,s l l r r f e
+637,i l l l l
+638,s l l r r p e
+639,s f e
+640,s r r r r f e
+641,s l l p e
+642,s l l f e
+643,s l l r r p e
+644,s f e
+645,s f e
+646,s r r f e
+647,s l l r r f e
+648,s f e
+649,s f e
+650,s r r r r f e
+651,s l l f e
+652,s l l r r f e
+653,s r r f e
+654,s l l f e
+655,s r r r r f e
+656,s l l f e
+657,s l l p e
+658,s r r r r p e
+659,s r r r r f e
+660,s r r r r f e
+661,s r r f e
+662,s r r f e
+663,s r r r r p e
+664,s r r r r f e
+665,s r r r r p e
+666,s r r p e
+667,s r r r r f e
+668,s e
+669,i l l
+670,i l l
+671,s l l p e
+672,i l l l l
+673,s l l r r f e
+674,s l l r r f e
+675,s l l f e
+676,s r r f e
+677,s r r r r p e
+678,s f e
+679,s l l f e
+680,s l l r r f e
+681,s r r e
+682,s p e
+683,s l l p e
+684,s r r f e
+685,s r r r r p e
+686,s l l f e
+687,s r r p e
+688,s r r r r f e
+689,s l l f e
+690,s l l f e
+691,s f e
+692,s r r f e
+693,i l l l l
+694,i l l l l
+695,s r r r r e
+696,i l l l l
+697,s r r f e
+698,s r r p e
+699,s l l r r f e
+700,s l l r r e
+701,s l l r r f e
+702,s r r f e
+703,s l l r r p e
+704,s l l f e
+705,s l l f e
+706,s p e
+707,s r r r r f e
+708,s r r e
+709,s l l r r e
+710,s l l r r f e
+711,s l l f e
+712,i l l l l
+713,s r r f e
+714,s r r f e
+715,s e
+716,s l l r r e
+717,s r r r r f e
+718,s f e
+719,i l l l l
+720,s f e
+721,s l l r r f e
+722,s l l f e
+723,s l l r r f e
+724,s p e
+725,s l l f e
+726,i l l l l
+727,s f e
+728,s l l r r f e
+729,s r r r r p e
+730,s l l f e
+731,s r r f e
+732,s l l f e
+733,s f e
+734,s r r r r f e
+735,i l l
+736,s l l p e
+737,i l l
+738,s f e
+739,s l l r r f e
+740,s r r f e
+741,s l l r r f e
+742,s l l r r f e
+743,s l l f e
+744,s r r r r f e
+745,s f e
+746,s l l f e
+747,s f e
+748,s r r p e
+749,s r r r r f e
+750,s l l r r p e
+751,s e
+752,s l l r r f e
+753,s l l f e
+754,s f e
+755,s r r p e
+756,s l l f e
+757,i l l l l
+758,s l l r r f e
+759,s l l r r f e
+760,s l l r r f e
+761,s f e
+762,i l l
+763,s l l r r f e
+764,s l l f e
+765,s l l p e
+766,s p e
+767,s l l f e
+768,s f e
+769,s r r f e
+770,s r r r r f e
+771,s f e
+772,s r r r r f e
+773,s r r f e
+774,s l l r r e
+775,i l l l l
+776,s r r f e
+777,s r r r r f e
+778,s r r r r f e
+779,s r r f e
+780,s r r r r f e
+781,s r r e
+782,s l l p e
+783,s r r p e
+784,s l l r r f e
+785,s l l r r f e
+786,s l l r r e
+787,s l l f e
+788,s r r f e
+789,s r r f e
+790,s r r r r f e
+791,s r r r r e
+792,s l l f e
+793,s l l p e
+794,s r r r r f e
+795,s r r f e
+796,s l l f e
+797,i l l
+798,s r r r r e
+799,s r r r r p e
+800,s l l r r f e
+801,s p e
+802,s r r f e
+803,s l l r r f e
+804,s l l e
+805,s f e
+806,s r r r r f e
+807,s r r r r f e
+808,s r r r r f e
+809,s f e
+810,s l l r r f e
+811,i l l
+812,s r r r r f e
+813,s r r r r f e
+814,s r r f e
+815,s p e
+816,s l l f e
+817,i l l
+818,s f e
+819,i l l
+820,s f e
+821,s f e
+822,s r r r r f e
+823,s r r p e
+824,s f e
+825,s f e
+826,s r r p e
+827,s l l f e
+828,s r r r r f e
+829,s l l p e
+830,s r r f e
+831,s f e
+832,s f e
+833,s r r r r f e
+834,s f e
+835,s l l e
+836,s r r r r f e
+837,s r r r r f e
+838,s f e
+839,s l l r r f e
+840,s l l f e
+841,s r r r r f e
+842,s l l f e
+843,s r r r r f e
+844,s l l p e
+845,s f e
+846,s l l r r f e
+847,s p e
+848,s l l r r f e
+849,s l l f e
+850,i l l
