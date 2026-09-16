@@ -36,11 +36,13 @@
     .brand {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
     }
-    .zombie {
-        font-size: 30px;
-        line-height: 1;
+    .brand-head {
+        height: 38px;
+        width: auto;
+        flex: 0 0 auto;
+        filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .4));
     }
     h1 {
         font-size: 21px;
@@ -51,6 +53,21 @@
         color: #9da3aa;
         font-size: 12px;
         margin-top: 3px;
+    }
+    .mascot-line {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 5px;
+    }
+    .mascot-badge {
+        height: 20px;
+        width: auto;
+    }
+    .mascot-line .mascot {
+        font-style: italic;
+        color: #b9c9b5;
+        font-size: 11px;
     }
     .controls {
         display: flex;
@@ -71,7 +88,7 @@
     .chat {
         flex: 1;
         overflow-y: auto;
-        padding: 26px 22px 110px;
+        padding: 26px 22px 140px;
     }
     .welcome {
         max-width: 650px;
@@ -151,7 +168,7 @@
     }
     .input-area {
         position: fixed;
-        bottom: 0;
+        bottom: 30px;
         width: min(998px, 100%);
         padding: 14px 18px 18px;
         background: linear-gradient(transparent, #202327 22%);
@@ -200,11 +217,37 @@
         color: #8f969e;
         margin-top: 7px;
     }
+    footer {
+        position: fixed;
+        bottom: 0;
+        width: min(998px, 100%);
+        height: 30px;
+        box-sizing: border-box;
+        border-top: 1px solid #34383e;
+        background: #1d2024;
+        padding: 6px 20px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 4px 14px;
+        overflow: hidden;
+    }
+    footer p {
+        margin: 0;
+        font-size: 10px;
+        line-height: 1.5;
+        color: #676c73;
+    }
+    footer a {
+        color: #8a9199;
+    }
     @media (max-width: 650px) {
         header { align-items: flex-start; flex-direction: column; }
         .controls, select { width: 100%; }
         select { width: 100%; }
-        .chat { padding-left: 12px; padding-right: 12px; }
+        .chat { padding-left: 12px; padding-right: 12px; padding-bottom: 170px; }
+        footer { height: auto; flex-direction: column; align-items: flex-start; gap: 1px; padding: 4px 12px; }
+        .input-area { bottom: 46px; }
     }
 </style>
 </head>
@@ -212,11 +255,16 @@
 <div class="app">
     <header>
         <div class="brand">
-            <div class="zombie">🧟</div>
+            <img class="brand-head" src="zombie-head-1.svg" alt="Zombie head illustration 1">
             <div>
                 <h1>ZombieGPT</h1>
                 <div class="subtitle">A tiny probabilistic language model</div>
+                <div class="mascot-line">
+                    <img class="mascot-badge" src="zombienella-importunus.svg" alt="Zombienella importunus">
+                    <span class="mascot">Zombienella importunus</span>
+                </div>
             </div>
+            <img class="brand-head" src="zombie-head-2.svg" alt="Zombie head illustration 2">
         </div>
         <div class="controls">
             <select id="model" aria-label="Probability model">
@@ -246,6 +294,17 @@
         </div>
         <div class="hint">Tokens are displayed one at a time to make the probabilistic generation visible.</div>
     </div>
+
+    <footer>
+        <p>
+            Zombie head, by quadrochave,
+            <a href="https://openclipart.org/detail/201838/zombie-head" target="_blank" rel="noopener">openclipart.org/detail/201838</a>
+        </p>
+        <p>
+            Zombie Head, by GDJ,
+            <a href="https://openclipart.org/detail/285106/zombie-head" target="_blank" rel="noopener">openclipart.org/detail/285106</a>
+        </p>
+    </footer>
 </div>
 
 <script>
