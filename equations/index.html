@@ -7,6 +7,7 @@
   <script>
     window.MathJax = {
       loader: { load: ['input/tex', 'output/svg'] },
+      options: { enableAssistiveMml: false },
       tex: {
         inlineMath: [['\\(', '\\)']],
         displayMath: [['\\[', '\\]'], ['$$', '$$']]
@@ -213,6 +214,10 @@
       margin: 0;
     }
 
+    .equation-surface mjx-assistive-mml {
+      display: none;
+    }
+
     .error {
       color: var(--danger);
       font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
@@ -357,6 +362,7 @@
       try {
         await waitForMathJax();
         const node = await MathJax.tex2svgPromise(equation.math, { display: equation.display });
+        node.querySelectorAll('mjx-assistive-mml').forEach((assistiveNode) => assistiveNode.remove());
         surface.replaceChildren(node);
         updateDimensions();
         setStatus('Rendered');
