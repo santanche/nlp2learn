@@ -1,0 +1,35 @@
+title: NLP2Learn
+description: >-
+  Examples, laboratories, and exercises to learn Natural Language Processing.
+baseurl: "/nlp2learn"
+url: "https://santanche.github.io"
+
+theme: minima
+
+minima:
+  skin: dark
+
+plugins:
+  - jekyll-feed
+
+# Keep the build focused on the homepage: large data corpora, notebook
+# environments, and generated artifacts are served as plain files by
+# GitHub Pages but don't need to be processed/copied by Jekyll itself.
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - LICENSE
+  - "**/.venv"
+  - "**/venv"
+  - "**/__pycache__"
+  - "**/node_modules"
+  - binder
+  - cell
+  - equations
+  - data
+  - to-kg
+  - projects
+  - information-extraction
+  - information-retrieval
+  - language-model/README.md
