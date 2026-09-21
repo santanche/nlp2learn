@@ -58,10 +58,10 @@ O grafo resultante pode ser apresentado visualmente (em uma interface em Python 
 
 ## Diferenciais do Projeto
 
-Serão valorizados diferenciais do projeto como:
+Serão valorizados diferenciais do projeto, como:
 * criatividade
 * originalidade
-* audácia em propostas desafiadoras;
+* audácia em propostas desafiadoras
 * recursos de visualização de dados do grafo
 * busca por soluções diferenciais na literatura
 

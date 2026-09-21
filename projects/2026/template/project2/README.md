@@ -1,4 +1,4 @@
-# P1 - Template da Primeira Entrega
+# P2 - Template da Primeira Entrega
 *2026.2 Processamento de Línguas Naturais*
 
 # Estrutura de sua pasta de projeto
@@ -10,7 +10,7 @@ A estrutura aqui apresentada é uma simplificação daquela proposta pelo [Cooki
 ~~~
 ...
 │
-└── project1
+└── project2
     |
     ├── README.md  <- texto da Entrega 1 do projeto
     │
@@ -56,7 +56,7 @@ Qualquer mídia usada no seu projeto: vídeo, imagens, animações, slides etc. 
 
 -----
 
-## `README.md` da raiz do `project1`
+## `README.md` da raiz do `project2`
 
 Segue abaixo o modelo de como deve ser apresentado e documentado o projeto. Há partes do modelo a seguir que têm uma marcação específica indicando que **não devem ser literalmente transcritas**:
 
@@ -72,7 +72,7 @@ No modelo a seguir são colocados exemplos ilustrativos, que serão substituído
 
 ## Slides
 
-> Coloque aqui o link para o PDF da apresentação da parte 3.
+> Coloque aqui o link para o PDF da apresentação da parte 2.
 
 ## Metodologia
 > Descreva aqui a metodologia que foi usada para a extração do grafo de conhecimento. Você pode apresentar um diagrama, com estágios e descrever cada um deles.
