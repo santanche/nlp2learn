@@ -74,6 +74,10 @@ No modelo a seguir são colocados exemplos ilustrativos, que serão substituído
 
 > Coloque aqui o link para o PDF da apresentação da parte 2.
 
+## Demonstração Executável
+
+> Coloque aqui um link para uma demonstração executável do seu código. Pode ser um Jupyter notebook (rodando no Binder ou no Colab) e/ou uma página Web que apresente visualmente seus resultados.
+
 ## Metodologia
 > Descreva aqui a metodologia que foi usada para a extração do grafo de conhecimento. Você pode apresentar um diagrama, com estágios e descrever cada um deles.
 
@@ -87,6 +91,10 @@ sns.set(color_codes=True);
 sns.distplot(df.Hemoglobin);
 plt.show();
 ~~~
+
+### Confronto com Trabalho Anterior
+
+> Apresente dentro desta subseção um texto confrontando esta versão com a anterior. O confronto pode ser qualitativo ou baseado em comparações experimentais.
 
 ## Trabalhos Estudados
 
