@@ -1,0 +1,54 @@
+report_id,sentence_id,word,context
+ZH-001,ZH-001-S03,limb,normal finding
+ZH-001,ZH-001-S07,anger,everyday
+ZH-002,ZH-002-S02,chest,normal finding
+ZH-002,ZH-002-S07,control,everyday
+ZH-003,ZH-003-S03,pain,normal finding
+ZH-003,ZH-003-S07,fight,everyday
+ZH-004,ZH-004-S04,anger,normal finding
+ZH-004,ZH-004-S05,chest,normal finding
+ZH-004,ZH-004-S09,viral,everyday
+ZH-004,ZH-004-S10,infection,everyday
+ZH-005,ZH-005-S03,finger,normal finding
+ZH-005,ZH-005-S04,limbs,normal finding
+ZH-005,ZH-005-S09,finger,everyday
+ZH-005,ZH-005-S10,member,everyday
+ZH-006,ZH-006-S03,pain,normal finding
+ZH-006,ZH-006-S08,infection,everyday
+ZH-007,ZH-007-S02,control,normal finding
+ZH-007,ZH-007-S07,control,everyday
+ZH-007,ZH-007-S08,member,everyday
+ZH-008,ZH-008-S02,limb,normal finding
+ZH-008,ZH-008-S07,anger,everyday
+ZH-008,ZH-008-S08,viral,everyday
+ZH-009,ZH-009-S03,finger,normal finding
+ZH-009,ZH-009-S04,limb,normal finding
+ZH-009,ZH-009-S08,infection,everyday
+ZH-010,ZH-010-S02,tongue,normal finding
+ZH-010,ZH-010-S03,anger,normal finding
+ZH-010,ZH-010-S07,tongue,everyday
+ZH-010,ZH-010-S08,yellow,everyday
+ZH-011,ZH-011-S03,control,normal finding
+ZH-011,ZH-011-S08,yellow,everyday
+ZH-011,ZH-011-S09,finger,everyday
+ZH-012,ZH-012-S03,bite,normal finding
+ZH-012,ZH-012-S04,limb,normal finding
+ZH-012,ZH-012-S08,fight,everyday
+ZH-013,ZH-013-S02,limbs,normal finding
+ZH-013,ZH-013-S03,bite,normal finding
+ZH-013,ZH-013-S08,anger,everyday
+ZH-014,ZH-014-S02,control,normal finding
+ZH-014,ZH-014-S03,chest,normal finding
+ZH-014,ZH-014-S08,yellow,everyday
+ZH-014,ZH-014-S09,pain,everyday
+ZH-015,ZH-015-S03,anger,normal finding
+ZH-015,ZH-015-S08,yellow,everyday
+ZH-016,ZH-016-S04,anger,normal finding
+ZH-016,ZH-016-S08,member,everyday
+ZH-017,ZH-017-S02,anger,normal finding
+ZH-017,ZH-017-S06,control,everyday
+ZH-018,ZH-018-S02,limb,normal finding
+ZH-018,ZH-018-S06,fight,everyday
+ZH-018,ZH-018-S07,finger,everyday
+ZH-019,ZH-019-S02,control,normal finding
+ZH-019,ZH-019-S07,chest,everyday

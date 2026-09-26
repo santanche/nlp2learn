@@ -6,14 +6,20 @@
 ## Presentation
 Signs of yellowish tongue are evident.
 
+## General Examination
+Each limb is firmly attached.
+
 ## Negative Findings
-The patient denies shaking of the pinky finger.
+The patient presents without chest pain.
 
 ## Laboratory Analysis
-Blood analysis identified Cyanobacterium zumbi.
+Laboratory tests isolated Cyanobacterium zumbi.
 
 ## Clinical History
-The patient denies previous infection of viral origin.
+No history of altercation injury.
+
+## Social History
+The patient watched a pillow fight in the waiting room. Favorite snack: finger food.
 
 ## Assessment
-Diagnosis: bacterial infectious process.
+Diagnosis: infection of bacterial origin. No evidence of bite related deficit.

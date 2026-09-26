@@ -6,14 +6,20 @@
 ## Presentation
 The patient reports yellow tinted tongue. The patient presents with tremor in the little finger.
 
+## General Examination
+The patient feels little pain, as usual for zombies.
+
 ## Negative Findings
-The patient denies thoracic discomfort.
+The patient presents without member loss.
 
 ## Laboratory Analysis
-Blood analysis returned no relevant findings.
+Laboratory tests did not identify any pathogen.
 
 ## Clinical History
-History of bacterial infection.
+History of infection of bacterial origin.
+
+## Social History
+The patient watched a pillow fight in the waiting room.
 
 ## Assessment
-The patient was diagnosed with bite related deficit.
+The patient was diagnosed with deficit caused by bite.

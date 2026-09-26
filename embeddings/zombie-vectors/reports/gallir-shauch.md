@@ -6,14 +6,20 @@
 ## Presentation
 Signs of thoracic discomfort are evident.
 
+## General Examination
+Anger level is low for a zombie.
+
 ## Negative Findings
-Absence of acute rage attacks.
+Absence of severe anger.
 
 ## Laboratory Analysis
-Blood analysis returned no relevant findings.
+Laboratory tests did not identify any pathogen.
 
 ## Clinical History
 No previous diagnosis was recorded.
 
+## Social History
+The patient escaped from animal control twice.
+
 ## Assessment
-Diagnosis: altercation injury.
+The patient was diagnosed with altercation injury. Negative for bacterial infectious process.

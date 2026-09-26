@@ -6,14 +6,20 @@
 ## Presentation
 Examination reveals limb loss.
 
+## General Examination
+Motor control is preserved. Stethoscope on the chest detects no heartbeat, as expected.
+
 ## Negative Findings
-The patient presents without paralysis. Absence of pain in the chest.
+The patient is free of shaking of the pinky finger. No signs of yellow tongue.
 
 ## Laboratory Analysis
-Laboratory tests did not identify any pathogen.
+No pathogen was isolated in the blood analysis.
 
 ## Clinical History
-No previous diagnosis was recorded.
+Clinical history is unremarkable.
+
+## Social History
+The patient arrived wearing a yellow raincoat. The caretaker says the patient is a pain to feed.
 
 ## Assessment
-Diagnosis: fight injury. Negative for infection of viral origin.
+The patient was diagnosed with fight related trauma. Negative for viral infectious process.

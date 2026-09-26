@@ -6,14 +6,20 @@
 ## Presentation
 The patient reports tremor in the little finger.
 
+## General Examination
+Motor control is preserved.
+
 ## Negative Findings
-The patient presents without paralysis.
+The patient is free of loss of motor control. No signs of missing limb.
 
 ## Laboratory Analysis
-No pathogen was isolated in the blood analysis.
+Laboratory tests did not identify any pathogen.
 
 ## Clinical History
-The patient has a history of infection of bacterial origin.
+History of infection of bacterial origin.
+
+## Social History
+The patient keeps spare brains in a wooden chest.
 
 ## Assessment
-Diagnosis: deficit caused by bite. Negative for bacterial infection.
+Clinical impression: bite related deficit. Negative for bacterial infectious process.

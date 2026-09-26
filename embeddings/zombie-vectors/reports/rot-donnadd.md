@@ -6,14 +6,20 @@
 ## Presentation
 The patient presents with paralysis. Findings include yellow tinted tongue.
 
+## General Examination
+Each limb is firmly attached.
+
 ## Negative Findings
-The patient denies missing limb.
+The patient denies trembling on the little finger.
 
 ## Laboratory Analysis
 Blood analysis identified Cyanobacterium zumbi.
 
 ## Clinical History
-No previous diagnosis was recorded.
+The patient denies previous viral infectious process.
+
+## Social History
+The caretaker expressed anger over the parking fees.
 
 ## Assessment
-Diagnosis: bacterial infection.
+Clinical impression: infection of bacterial origin. No evidence of bite deficit.

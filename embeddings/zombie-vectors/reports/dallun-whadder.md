@@ -6,14 +6,20 @@
 ## Presentation
 Findings include pain in the chest.
 
+## General Examination
+Limbs move slowly, as usual for zombies. Bite force is normal for the species.
+
 ## Negative Findings
-Examination reveals no paralyzed limbs. Absence of acute rage attacks.
+Absence of missing limb. The patient denies tremor in the little finger.
 
 ## Laboratory Analysis
-Blood culture is positive for Deltaretrovirus zumbi.
+Laboratory tests isolated Deltaretrovirus zumbi.
 
 ## Clinical History
-The patient denies previous fight related trauma.
+The patient denies previous bacterial infection.
+
+## Social History
+The caretaker expressed anger over the parking fees.
 
 ## Assessment
 The patient was diagnosed with viral infection.

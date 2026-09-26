@@ -6,14 +6,20 @@
 ## Presentation
 Examination reveals missing limb. The patient reports yellow tongue. Findings include shaking of the pinky finger.
 
+## General Examination
+Anger level is low for a zombie.
+
 ## Negative Findings
-No signs of intense anger episodes.
+Absence of paralysis.
 
 ## Laboratory Analysis
-No pathogen was isolated in the blood analysis.
+Blood analysis returned no relevant findings.
 
 ## Clinical History
-History of bacterial infection.
+The patient has a history of bacterial infection.
+
+## Social History
+The patient is a member of the downtown horde.
 
 ## Assessment
-Findings are consistent with deficit caused by bite.
+Findings are consistent with bite deficit. The team ruled out viral infection.

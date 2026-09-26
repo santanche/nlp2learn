@@ -6,14 +6,20 @@
 ## Presentation
 Findings include yellowish tongue.
 
+## General Examination
+Stethoscope on the chest detects no heartbeat, as expected.
+
 ## Negative Findings
-Examination reveals no limb loss.
+The patient denies intense anger episodes. Examination reveals no pain in the chest.
 
 ## Laboratory Analysis
 Laboratory tests isolated Cyanobacterium zumbi.
 
 ## Clinical History
-The patient denies previous bite deficit.
+No history of deficit caused by bite.
+
+## Social History
+The patient escaped from animal control twice.
 
 ## Assessment
-Findings are consistent with infection of bacterial origin. The team ruled out bite deficit.
+Clinical impression: bacterial infectious process.

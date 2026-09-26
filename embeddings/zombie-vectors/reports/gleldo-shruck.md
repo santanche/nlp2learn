@@ -6,14 +6,20 @@
 ## Presentation
 The patient reports yellow tinted tongue. Findings include thoracic discomfort.
 
+## General Examination
+The little finger is stiff and grey. Each limb is firmly attached.
+
 ## Negative Findings
-No signs of shaking of the pinky finger. The patient denies loss of motor control.
+The patient presents without paralyzed limbs.
 
 ## Laboratory Analysis
-Blood analysis identified Cyanobacterium zumbi.
+Blood culture is positive for Cyanobacterium zumbi.
 
 ## Clinical History
-Clinical history is unremarkable.
+The patient denies previous bite related deficit.
+
+## Social History
+The caretaker received a leaflet about infection prevention.
 
 ## Assessment
-Findings are consistent with infection of bacterial origin. The team ruled out bite deficit.
+Findings are consistent with bacterial infectious process.

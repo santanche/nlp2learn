@@ -6,14 +6,20 @@
 ## Presentation
 Findings include yellow tongue. The patient presents with trembling on the little finger.
 
+## General Examination
+Mild anger when hungry, which is normal.
+
 ## Negative Findings
-Absence of severe anger.
+No signs of intense anger episodes. The patient presents without limb loss.
 
 ## Laboratory Analysis
-Blood analysis returned no relevant findings.
+Laboratory tests did not identify any pathogen.
 
 ## Clinical History
-Previous diagnosis of infection of bacterial origin.
+Previous diagnosis of bacterial infectious process.
+
+## Social History
+The patient arrived wearing a yellow raincoat.
 
 ## Assessment
-Diagnosis: bite related deficit. The team ruled out bacterial infectious process.
+Findings are consistent with bite related deficit. No evidence of bacterial infection.

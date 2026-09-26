@@ -6,14 +6,20 @@
 ## Presentation
 The patient reports limb loss. The patient presents with intense anger episodes.
 
+## General Examination
+The patient feels little pain, as usual for zombies.
+
 ## Negative Findings
-The patient presents without shaking of the pinky finger.
+Absence of shaking of the pinky finger. Examination reveals no pain in the chest.
 
 ## Laboratory Analysis
-Laboratory tests did not identify any pathogen.
+No pathogen was isolated in the blood analysis.
 
 ## Clinical History
-Clinical history is unremarkable.
+The patient denies previous bite related deficit.
+
+## Social History
+The caretaker received a leaflet about infection prevention.
 
 ## Assessment
-Findings are consistent with altercation injury. The team ruled out bacterial infection.
+The patient was diagnosed with fight injury.

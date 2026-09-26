@@ -6,14 +6,20 @@
 ## Presentation
 Signs of pain in the chest are evident.
 
+## General Examination
+Tongue color: green. Mild anger when hungry, which is normal.
+
 ## Negative Findings
-The patient denies paralyzed limbs. The patient is free of severe anger.
+The patient denies acute rage attacks.
 
 ## Laboratory Analysis
-Blood analysis identified Deltaretrovirus zumbi.
+Blood culture is positive for Deltaretrovirus zumbi.
 
 ## Clinical History
-The patient denies previous bacterial infection.
+No previous diagnosis was recorded.
+
+## Social History
+The patient speaks in a strange tongue. The patient arrived wearing a yellow raincoat.
 
 ## Assessment
-Diagnosis: viral infection. No evidence of bite deficit.
+Findings are consistent with infection of viral origin.
