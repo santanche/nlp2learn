@@ -1,0 +1,44 @@
+surface,canonical,type
+paralysis,paralysis,symptom
+paralyzed limbs,paralysis,symptom
+loss of motor control,paralysis,symptom
+yellow tongue,yellow tongue,symptom
+yellowish tongue,yellow tongue,symptom
+yellow tinted tongue,yellow tongue,symptom
+trembling on the little finger,trembling on the little finger,symptom
+tremor in the little finger,trembling on the little finger,symptom
+shaking of the pinky finger,trembling on the little finger,symptom
+member loss,member loss,symptom
+limb loss,member loss,symptom
+missing limb,member loss,symptom
+chest pain,chest pain,symptom
+pain in the chest,chest pain,symptom
+thoracic discomfort,chest pain,symptom
+severe anger,severe anger,symptom
+intense anger episodes,severe anger,symptom
+acute rage attacks,severe anger,symptom
+bacterial infection,bacterial infection,disease
+infection of bacterial origin,bacterial infection,disease
+bacterial infectious process,bacterial infection,disease
+viral infection,viral infection,disease
+infection of viral origin,viral infection,disease
+viral infectious process,viral infection,disease
+bite deficit,bite deficit,disease
+bite related deficit,bite deficit,disease
+deficit caused by bite,bite deficit,disease
+fight injury,fights,disease
+fight related trauma,fights,disease
+altercation injury,fights,disease
+cyanobacterium zumbi,Cyanobacterium zumbi,pathogen
+deltaretrovirus zumbi,Deltaretrovirus zumbi,pathogen
+no,no,negation
+not,not,negation
+denies,denies,negation
+without,without,negation
+absence,absence,negation
+negative,negative,negation
+free of,free of,negation
+ruled out,ruled out,negation
+absent,absent,negation
+but,but,terminator
+however,however,terminator

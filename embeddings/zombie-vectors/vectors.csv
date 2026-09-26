@@ -1,0 +1,2385 @@
+report_id,sentence_id,section,start,n,ngram,f1_disease,f2_symptom,f3_negation,f4_neg_scope
+ZH-001,ZH-001-S01,Presentation,0,1,the,0,0,0,0
+ZH-001,ZH-001-S01,Presentation,1,1,patient,0,0,0,0
+ZH-001,ZH-001-S01,Presentation,2,1,presents,0,0,0,0
+ZH-001,ZH-001-S01,Presentation,3,1,with,0,0,0,0
+ZH-001,ZH-001-S01,Presentation,4,1,paralysis,0,1,0,0
+ZH-001,ZH-001-S01,Presentation,0,2,the patient,0,0,0,0
+ZH-001,ZH-001-S01,Presentation,1,2,patient presents,0,0,0,0
+ZH-001,ZH-001-S01,Presentation,2,2,presents with,0,0,0,0
+ZH-001,ZH-001-S01,Presentation,3,2,with paralysis,0,0,0,0
+ZH-001,ZH-001-S01,Presentation,0,3,the patient presents,0,0,0,0
+ZH-001,ZH-001-S01,Presentation,1,3,patient presents with,0,0,0,0
+ZH-001,ZH-001-S01,Presentation,2,3,presents with paralysis,0,0,0,0
+ZH-001,ZH-001-S01,Presentation,0,4,the patient presents with,0,0,0,0
+ZH-001,ZH-001-S01,Presentation,1,4,patient presents with paralysis,0,0,0,0
+ZH-001,ZH-001-S01,Presentation,0,5,the patient presents with paralysis,0,0,0,0
+ZH-001,ZH-001-S02,Presentation,0,1,findings,0,0,0,0
+ZH-001,ZH-001-S02,Presentation,1,1,include,0,0,0,0
+ZH-001,ZH-001-S02,Presentation,2,1,yellow,0,0,0,0
+ZH-001,ZH-001-S02,Presentation,3,1,tinted,0,0,0,0
+ZH-001,ZH-001-S02,Presentation,4,1,tongue,0,0,0,0
+ZH-001,ZH-001-S02,Presentation,0,2,findings include,0,0,0,0
+ZH-001,ZH-001-S02,Presentation,1,2,include yellow,0,0,0,0
+ZH-001,ZH-001-S02,Presentation,2,2,yellow tinted,0,0,0,0
+ZH-001,ZH-001-S02,Presentation,3,2,tinted tongue,0,0,0,0
+ZH-001,ZH-001-S02,Presentation,0,3,findings include yellow,0,0,0,0
+ZH-001,ZH-001-S02,Presentation,1,3,include yellow tinted,0,0,0,0
+ZH-001,ZH-001-S02,Presentation,2,3,yellow tinted tongue,0,1,0,0
+ZH-001,ZH-001-S02,Presentation,0,4,findings include yellow tinted,0,0,0,0
+ZH-001,ZH-001-S02,Presentation,1,4,include yellow tinted tongue,0,0,0,0
+ZH-001,ZH-001-S02,Presentation,0,5,findings include yellow tinted tongue,0,0,0,0
+ZH-001,ZH-001-S03,Negative Findings,0,1,the,0,0,0,0
+ZH-001,ZH-001-S03,Negative Findings,1,1,patient,0,0,0,0
+ZH-001,ZH-001-S03,Negative Findings,2,1,denies,0,0,1,0
+ZH-001,ZH-001-S03,Negative Findings,3,1,missing,0,0,0,1
+ZH-001,ZH-001-S03,Negative Findings,4,1,limb,0,0,0,1
+ZH-001,ZH-001-S03,Negative Findings,0,2,the patient,0,0,0,0
+ZH-001,ZH-001-S03,Negative Findings,1,2,patient denies,0,0,0,0
+ZH-001,ZH-001-S03,Negative Findings,2,2,denies missing,0,0,0,0
+ZH-001,ZH-001-S03,Negative Findings,3,2,missing limb,0,1,0,1
+ZH-001,ZH-001-S03,Negative Findings,0,3,the patient denies,0,0,0,0
+ZH-001,ZH-001-S03,Negative Findings,1,3,patient denies missing,0,0,0,0
+ZH-001,ZH-001-S03,Negative Findings,2,3,denies missing limb,0,0,0,0
+ZH-001,ZH-001-S03,Negative Findings,0,4,the patient denies missing,0,0,0,0
+ZH-001,ZH-001-S03,Negative Findings,1,4,patient denies missing limb,0,0,0,0
+ZH-001,ZH-001-S03,Negative Findings,0,5,the patient denies missing limb,0,0,0,0
+ZH-001,ZH-001-S04,Laboratory Analysis,0,1,blood,0,0,0,0
+ZH-001,ZH-001-S04,Laboratory Analysis,1,1,analysis,0,0,0,0
+ZH-001,ZH-001-S04,Laboratory Analysis,2,1,identified,0,0,0,0
+ZH-001,ZH-001-S04,Laboratory Analysis,3,1,cyanobacterium,0,0,0,0
+ZH-001,ZH-001-S04,Laboratory Analysis,4,1,zumbi,0,0,0,0
+ZH-001,ZH-001-S04,Laboratory Analysis,0,2,blood analysis,0,0,0,0
+ZH-001,ZH-001-S04,Laboratory Analysis,1,2,analysis identified,0,0,0,0
+ZH-001,ZH-001-S04,Laboratory Analysis,2,2,identified cyanobacterium,0,0,0,0
+ZH-001,ZH-001-S04,Laboratory Analysis,3,2,cyanobacterium zumbi,0,0,0,0
+ZH-001,ZH-001-S04,Laboratory Analysis,0,3,blood analysis identified,0,0,0,0
+ZH-001,ZH-001-S04,Laboratory Analysis,1,3,analysis identified cyanobacterium,0,0,0,0
+ZH-001,ZH-001-S04,Laboratory Analysis,2,3,identified cyanobacterium zumbi,0,0,0,0
+ZH-001,ZH-001-S04,Laboratory Analysis,0,4,blood analysis identified cyanobacterium,0,0,0,0
+ZH-001,ZH-001-S04,Laboratory Analysis,1,4,analysis identified cyanobacterium zumbi,0,0,0,0
+ZH-001,ZH-001-S04,Laboratory Analysis,0,5,blood analysis identified cyanobacterium zumbi,0,0,0,0
+ZH-001,ZH-001-S05,Clinical History,0,1,no,0,0,1,0
+ZH-001,ZH-001-S05,Clinical History,1,1,previous,0,0,0,1
+ZH-001,ZH-001-S05,Clinical History,2,1,diagnosis,0,0,0,1
+ZH-001,ZH-001-S05,Clinical History,3,1,was,0,0,0,1
+ZH-001,ZH-001-S05,Clinical History,4,1,recorded,0,0,0,1
+ZH-001,ZH-001-S05,Clinical History,0,2,no previous,0,0,0,0
+ZH-001,ZH-001-S05,Clinical History,1,2,previous diagnosis,0,0,0,1
+ZH-001,ZH-001-S05,Clinical History,2,2,diagnosis was,0,0,0,1
+ZH-001,ZH-001-S05,Clinical History,3,2,was recorded,0,0,0,1
+ZH-001,ZH-001-S05,Clinical History,0,3,no previous diagnosis,0,0,0,0
+ZH-001,ZH-001-S05,Clinical History,1,3,previous diagnosis was,0,0,0,1
+ZH-001,ZH-001-S05,Clinical History,2,3,diagnosis was recorded,0,0,0,1
+ZH-001,ZH-001-S05,Clinical History,0,4,no previous diagnosis was,0,0,0,0
+ZH-001,ZH-001-S05,Clinical History,1,4,previous diagnosis was recorded,0,0,0,1
+ZH-001,ZH-001-S05,Clinical History,0,5,no previous diagnosis was recorded,0,0,0,0
+ZH-001,ZH-001-S06,Assessment,0,1,diagnosis,0,0,0,0
+ZH-001,ZH-001-S06,Assessment,1,1,bacterial,0,0,0,0
+ZH-001,ZH-001-S06,Assessment,2,1,infection,0,0,0,0
+ZH-001,ZH-001-S06,Assessment,0,2,diagnosis bacterial,0,0,0,0
+ZH-001,ZH-001-S06,Assessment,1,2,bacterial infection,1,0,0,0
+ZH-001,ZH-001-S06,Assessment,0,3,diagnosis bacterial infection,0,0,0,0
+ZH-002,ZH-002-S01,Presentation,0,1,findings,0,0,0,0
+ZH-002,ZH-002-S01,Presentation,1,1,include,0,0,0,0
+ZH-002,ZH-002-S01,Presentation,2,1,yellowish,0,0,0,0
+ZH-002,ZH-002-S01,Presentation,3,1,tongue,0,0,0,0
+ZH-002,ZH-002-S01,Presentation,0,2,findings include,0,0,0,0
+ZH-002,ZH-002-S01,Presentation,1,2,include yellowish,0,0,0,0
+ZH-002,ZH-002-S01,Presentation,2,2,yellowish tongue,0,1,0,0
+ZH-002,ZH-002-S01,Presentation,0,3,findings include yellowish,0,0,0,0
+ZH-002,ZH-002-S01,Presentation,1,3,include yellowish tongue,0,0,0,0
+ZH-002,ZH-002-S01,Presentation,0,4,findings include yellowish tongue,0,0,0,0
+ZH-002,ZH-002-S02,Negative Findings,0,1,examination,0,0,0,0
+ZH-002,ZH-002-S02,Negative Findings,1,1,reveals,0,0,0,0
+ZH-002,ZH-002-S02,Negative Findings,2,1,no,0,0,1,0
+ZH-002,ZH-002-S02,Negative Findings,3,1,limb,0,0,0,1
+ZH-002,ZH-002-S02,Negative Findings,4,1,loss,0,0,0,1
+ZH-002,ZH-002-S02,Negative Findings,0,2,examination reveals,0,0,0,0
+ZH-002,ZH-002-S02,Negative Findings,1,2,reveals no,0,0,0,0
+ZH-002,ZH-002-S02,Negative Findings,2,2,no limb,0,0,0,0
+ZH-002,ZH-002-S02,Negative Findings,3,2,limb loss,0,1,0,1
+ZH-002,ZH-002-S02,Negative Findings,0,3,examination reveals no,0,0,0,0
+ZH-002,ZH-002-S02,Negative Findings,1,3,reveals no limb,0,0,0,0
+ZH-002,ZH-002-S02,Negative Findings,2,3,no limb loss,0,0,0,0
+ZH-002,ZH-002-S02,Negative Findings,0,4,examination reveals no limb,0,0,0,0
+ZH-002,ZH-002-S02,Negative Findings,1,4,reveals no limb loss,0,0,0,0
+ZH-002,ZH-002-S02,Negative Findings,0,5,examination reveals no limb loss,0,0,0,0
+ZH-002,ZH-002-S03,Laboratory Analysis,0,1,laboratory,0,0,0,0
+ZH-002,ZH-002-S03,Laboratory Analysis,1,1,tests,0,0,0,0
+ZH-002,ZH-002-S03,Laboratory Analysis,2,1,isolated,0,0,0,0
+ZH-002,ZH-002-S03,Laboratory Analysis,3,1,cyanobacterium,0,0,0,0
+ZH-002,ZH-002-S03,Laboratory Analysis,4,1,zumbi,0,0,0,0
+ZH-002,ZH-002-S03,Laboratory Analysis,0,2,laboratory tests,0,0,0,0
+ZH-002,ZH-002-S03,Laboratory Analysis,1,2,tests isolated,0,0,0,0
+ZH-002,ZH-002-S03,Laboratory Analysis,2,2,isolated cyanobacterium,0,0,0,0
+ZH-002,ZH-002-S03,Laboratory Analysis,3,2,cyanobacterium zumbi,0,0,0,0
+ZH-002,ZH-002-S03,Laboratory Analysis,0,3,laboratory tests isolated,0,0,0,0
+ZH-002,ZH-002-S03,Laboratory Analysis,1,3,tests isolated cyanobacterium,0,0,0,0
+ZH-002,ZH-002-S03,Laboratory Analysis,2,3,isolated cyanobacterium zumbi,0,0,0,0
+ZH-002,ZH-002-S03,Laboratory Analysis,0,4,laboratory tests isolated cyanobacterium,0,0,0,0
+ZH-002,ZH-002-S03,Laboratory Analysis,1,4,tests isolated cyanobacterium zumbi,0,0,0,0
+ZH-002,ZH-002-S03,Laboratory Analysis,0,5,laboratory tests isolated cyanobacterium zumbi,0,0,0,0
+ZH-002,ZH-002-S04,Clinical History,0,1,the,0,0,0,0
+ZH-002,ZH-002-S04,Clinical History,1,1,patient,0,0,0,0
+ZH-002,ZH-002-S04,Clinical History,2,1,denies,0,0,1,0
+ZH-002,ZH-002-S04,Clinical History,3,1,previous,0,0,0,1
+ZH-002,ZH-002-S04,Clinical History,4,1,bite,0,0,0,1
+ZH-002,ZH-002-S04,Clinical History,5,1,deficit,0,0,0,1
+ZH-002,ZH-002-S04,Clinical History,0,2,the patient,0,0,0,0
+ZH-002,ZH-002-S04,Clinical History,1,2,patient denies,0,0,0,0
+ZH-002,ZH-002-S04,Clinical History,2,2,denies previous,0,0,0,0
+ZH-002,ZH-002-S04,Clinical History,3,2,previous bite,0,0,0,1
+ZH-002,ZH-002-S04,Clinical History,4,2,bite deficit,1,0,0,1
+ZH-002,ZH-002-S04,Clinical History,0,3,the patient denies,0,0,0,0
+ZH-002,ZH-002-S04,Clinical History,1,3,patient denies previous,0,0,0,0
+ZH-002,ZH-002-S04,Clinical History,2,3,denies previous bite,0,0,0,0
+ZH-002,ZH-002-S04,Clinical History,3,3,previous bite deficit,0,0,0,1
+ZH-002,ZH-002-S04,Clinical History,0,4,the patient denies previous,0,0,0,0
+ZH-002,ZH-002-S04,Clinical History,1,4,patient denies previous bite,0,0,0,0
+ZH-002,ZH-002-S04,Clinical History,2,4,denies previous bite deficit,0,0,0,0
+ZH-002,ZH-002-S04,Clinical History,0,5,the patient denies previous bite,0,0,0,0
+ZH-002,ZH-002-S04,Clinical History,1,5,patient denies previous bite deficit,0,0,0,0
+ZH-002,ZH-002-S05,Assessment,0,1,findings,0,0,0,0
+ZH-002,ZH-002-S05,Assessment,1,1,are,0,0,0,0
+ZH-002,ZH-002-S05,Assessment,2,1,consistent,0,0,0,0
+ZH-002,ZH-002-S05,Assessment,3,1,with,0,0,0,0
+ZH-002,ZH-002-S05,Assessment,4,1,infection,0,0,0,0
+ZH-002,ZH-002-S05,Assessment,5,1,of,0,0,0,0
+ZH-002,ZH-002-S05,Assessment,6,1,bacterial,0,0,0,0
+ZH-002,ZH-002-S05,Assessment,7,1,origin,0,0,0,0
+ZH-002,ZH-002-S05,Assessment,0,2,findings are,0,0,0,0
+ZH-002,ZH-002-S05,Assessment,1,2,are consistent,0,0,0,0
+ZH-002,ZH-002-S05,Assessment,2,2,consistent with,0,0,0,0
+ZH-002,ZH-002-S05,Assessment,3,2,with infection,0,0,0,0
+ZH-002,ZH-002-S05,Assessment,4,2,infection of,0,0,0,0
+ZH-002,ZH-002-S05,Assessment,5,2,of bacterial,0,0,0,0
+ZH-002,ZH-002-S05,Assessment,6,2,bacterial origin,0,0,0,0
+ZH-002,ZH-002-S05,Assessment,0,3,findings are consistent,0,0,0,0
+ZH-002,ZH-002-S05,Assessment,1,3,are consistent with,0,0,0,0
+ZH-002,ZH-002-S05,Assessment,2,3,consistent with infection,0,0,0,0
+ZH-002,ZH-002-S05,Assessment,3,3,with infection of,0,0,0,0
+ZH-002,ZH-002-S05,Assessment,4,3,infection of bacterial,0,0,0,0
+ZH-002,ZH-002-S05,Assessment,5,3,of bacterial origin,0,0,0,0
+ZH-002,ZH-002-S05,Assessment,0,4,findings are consistent with,0,0,0,0
+ZH-002,ZH-002-S05,Assessment,1,4,are consistent with infection,0,0,0,0
+ZH-002,ZH-002-S05,Assessment,2,4,consistent with infection of,0,0,0,0
+ZH-002,ZH-002-S05,Assessment,3,4,with infection of bacterial,0,0,0,0
+ZH-002,ZH-002-S05,Assessment,4,4,infection of bacterial origin,1,0,0,0
+ZH-002,ZH-002-S05,Assessment,0,5,findings are consistent with infection,0,0,0,0
+ZH-002,ZH-002-S05,Assessment,1,5,are consistent with infection of,0,0,0,0
+ZH-002,ZH-002-S05,Assessment,2,5,consistent with infection of bacterial,0,0,0,0
+ZH-002,ZH-002-S05,Assessment,3,5,with infection of bacterial origin,0,0,0,0
+ZH-002,ZH-002-S06,Assessment,0,1,the,0,0,0,0
+ZH-002,ZH-002-S06,Assessment,1,1,team,0,0,0,0
+ZH-002,ZH-002-S06,Assessment,2,1,ruled,0,0,0,0
+ZH-002,ZH-002-S06,Assessment,3,1,out,0,0,0,0
+ZH-002,ZH-002-S06,Assessment,4,1,bite,0,0,0,1
+ZH-002,ZH-002-S06,Assessment,5,1,deficit,0,0,0,1
+ZH-002,ZH-002-S06,Assessment,0,2,the team,0,0,0,0
+ZH-002,ZH-002-S06,Assessment,1,2,team ruled,0,0,0,0
+ZH-002,ZH-002-S06,Assessment,2,2,ruled out,0,0,1,0
+ZH-002,ZH-002-S06,Assessment,3,2,out bite,0,0,0,0
+ZH-002,ZH-002-S06,Assessment,4,2,bite deficit,1,0,0,1
+ZH-002,ZH-002-S06,Assessment,0,3,the team ruled,0,0,0,0
+ZH-002,ZH-002-S06,Assessment,1,3,team ruled out,0,0,0,0
+ZH-002,ZH-002-S06,Assessment,2,3,ruled out bite,0,0,0,0
+ZH-002,ZH-002-S06,Assessment,3,3,out bite deficit,0,0,0,0
+ZH-002,ZH-002-S06,Assessment,0,4,the team ruled out,0,0,0,0
+ZH-002,ZH-002-S06,Assessment,1,4,team ruled out bite,0,0,0,0
+ZH-002,ZH-002-S06,Assessment,2,4,ruled out bite deficit,0,0,0,0
+ZH-002,ZH-002-S06,Assessment,0,5,the team ruled out bite,0,0,0,0
+ZH-002,ZH-002-S06,Assessment,1,5,team ruled out bite deficit,0,0,0,0
+ZH-003,ZH-003-S01,Presentation,0,1,the,0,0,0,0
+ZH-003,ZH-003-S01,Presentation,1,1,patient,0,0,0,0
+ZH-003,ZH-003-S01,Presentation,2,1,reports,0,0,0,0
+ZH-003,ZH-003-S01,Presentation,3,1,yellow,0,0,0,0
+ZH-003,ZH-003-S01,Presentation,4,1,tinted,0,0,0,0
+ZH-003,ZH-003-S01,Presentation,5,1,tongue,0,0,0,0
+ZH-003,ZH-003-S01,Presentation,0,2,the patient,0,0,0,0
+ZH-003,ZH-003-S01,Presentation,1,2,patient reports,0,0,0,0
+ZH-003,ZH-003-S01,Presentation,2,2,reports yellow,0,0,0,0
+ZH-003,ZH-003-S01,Presentation,3,2,yellow tinted,0,0,0,0
+ZH-003,ZH-003-S01,Presentation,4,2,tinted tongue,0,0,0,0
+ZH-003,ZH-003-S01,Presentation,0,3,the patient reports,0,0,0,0
+ZH-003,ZH-003-S01,Presentation,1,3,patient reports yellow,0,0,0,0
+ZH-003,ZH-003-S01,Presentation,2,3,reports yellow tinted,0,0,0,0
+ZH-003,ZH-003-S01,Presentation,3,3,yellow tinted tongue,0,1,0,0
+ZH-003,ZH-003-S01,Presentation,0,4,the patient reports yellow,0,0,0,0
+ZH-003,ZH-003-S01,Presentation,1,4,patient reports yellow tinted,0,0,0,0
+ZH-003,ZH-003-S01,Presentation,2,4,reports yellow tinted tongue,0,0,0,0
+ZH-003,ZH-003-S01,Presentation,0,5,the patient reports yellow tinted,0,0,0,0
+ZH-003,ZH-003-S01,Presentation,1,5,patient reports yellow tinted tongue,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,0,1,the,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,1,1,patient,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,2,1,presents,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,3,1,with,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,4,1,tremor,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,5,1,in,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,6,1,the,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,7,1,little,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,8,1,finger,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,0,2,the patient,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,1,2,patient presents,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,2,2,presents with,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,3,2,with tremor,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,4,2,tremor in,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,5,2,in the,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,6,2,the little,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,7,2,little finger,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,0,3,the patient presents,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,1,3,patient presents with,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,2,3,presents with tremor,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,3,3,with tremor in,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,4,3,tremor in the,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,5,3,in the little,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,6,3,the little finger,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,0,4,the patient presents with,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,1,4,patient presents with tremor,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,2,4,presents with tremor in,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,3,4,with tremor in the,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,4,4,tremor in the little,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,5,4,in the little finger,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,0,5,the patient presents with tremor,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,1,5,patient presents with tremor in,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,2,5,presents with tremor in the,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,3,5,with tremor in the little,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,4,5,tremor in the little finger,0,1,0,0
+ZH-003,ZH-003-S03,Negative Findings,0,1,the,0,0,0,0
+ZH-003,ZH-003-S03,Negative Findings,1,1,patient,0,0,0,0
+ZH-003,ZH-003-S03,Negative Findings,2,1,denies,0,0,1,0
+ZH-003,ZH-003-S03,Negative Findings,3,1,thoracic,0,0,0,1
+ZH-003,ZH-003-S03,Negative Findings,4,1,discomfort,0,0,0,1
+ZH-003,ZH-003-S03,Negative Findings,0,2,the patient,0,0,0,0
+ZH-003,ZH-003-S03,Negative Findings,1,2,patient denies,0,0,0,0
+ZH-003,ZH-003-S03,Negative Findings,2,2,denies thoracic,0,0,0,0
+ZH-003,ZH-003-S03,Negative Findings,3,2,thoracic discomfort,0,1,0,1
+ZH-003,ZH-003-S03,Negative Findings,0,3,the patient denies,0,0,0,0
+ZH-003,ZH-003-S03,Negative Findings,1,3,patient denies thoracic,0,0,0,0
+ZH-003,ZH-003-S03,Negative Findings,2,3,denies thoracic discomfort,0,0,0,0
+ZH-003,ZH-003-S03,Negative Findings,0,4,the patient denies thoracic,0,0,0,0
+ZH-003,ZH-003-S03,Negative Findings,1,4,patient denies thoracic discomfort,0,0,0,0
+ZH-003,ZH-003-S03,Negative Findings,0,5,the patient denies thoracic discomfort,0,0,0,0
+ZH-003,ZH-003-S04,Laboratory Analysis,0,1,blood,0,0,0,0
+ZH-003,ZH-003-S04,Laboratory Analysis,1,1,analysis,0,0,0,0
+ZH-003,ZH-003-S04,Laboratory Analysis,2,1,returned,0,0,0,0
+ZH-003,ZH-003-S04,Laboratory Analysis,3,1,no,0,0,1,0
+ZH-003,ZH-003-S04,Laboratory Analysis,4,1,relevant,0,0,0,1
+ZH-003,ZH-003-S04,Laboratory Analysis,5,1,findings,0,0,0,1
+ZH-003,ZH-003-S04,Laboratory Analysis,0,2,blood analysis,0,0,0,0
+ZH-003,ZH-003-S04,Laboratory Analysis,1,2,analysis returned,0,0,0,0
+ZH-003,ZH-003-S04,Laboratory Analysis,2,2,returned no,0,0,0,0
+ZH-003,ZH-003-S04,Laboratory Analysis,3,2,no relevant,0,0,0,0
+ZH-003,ZH-003-S04,Laboratory Analysis,4,2,relevant findings,0,0,0,1
+ZH-003,ZH-003-S04,Laboratory Analysis,0,3,blood analysis returned,0,0,0,0
+ZH-003,ZH-003-S04,Laboratory Analysis,1,3,analysis returned no,0,0,0,0
+ZH-003,ZH-003-S04,Laboratory Analysis,2,3,returned no relevant,0,0,0,0
+ZH-003,ZH-003-S04,Laboratory Analysis,3,3,no relevant findings,0,0,0,0
+ZH-003,ZH-003-S04,Laboratory Analysis,0,4,blood analysis returned no,0,0,0,0
+ZH-003,ZH-003-S04,Laboratory Analysis,1,4,analysis returned no relevant,0,0,0,0
+ZH-003,ZH-003-S04,Laboratory Analysis,2,4,returned no relevant findings,0,0,0,0
+ZH-003,ZH-003-S04,Laboratory Analysis,0,5,blood analysis returned no relevant,0,0,0,0
+ZH-003,ZH-003-S04,Laboratory Analysis,1,5,analysis returned no relevant findings,0,0,0,0
+ZH-003,ZH-003-S05,Clinical History,0,1,history,0,0,0,0
+ZH-003,ZH-003-S05,Clinical History,1,1,of,0,0,0,0
+ZH-003,ZH-003-S05,Clinical History,2,1,bacterial,0,0,0,0
+ZH-003,ZH-003-S05,Clinical History,3,1,infection,0,0,0,0
+ZH-003,ZH-003-S05,Clinical History,0,2,history of,0,0,0,0
+ZH-003,ZH-003-S05,Clinical History,1,2,of bacterial,0,0,0,0
+ZH-003,ZH-003-S05,Clinical History,2,2,bacterial infection,1,0,0,0
+ZH-003,ZH-003-S05,Clinical History,0,3,history of bacterial,0,0,0,0
+ZH-003,ZH-003-S05,Clinical History,1,3,of bacterial infection,0,0,0,0
+ZH-003,ZH-003-S05,Clinical History,0,4,history of bacterial infection,0,0,0,0
+ZH-003,ZH-003-S06,Assessment,0,1,the,0,0,0,0
+ZH-003,ZH-003-S06,Assessment,1,1,patient,0,0,0,0
+ZH-003,ZH-003-S06,Assessment,2,1,was,0,0,0,0
+ZH-003,ZH-003-S06,Assessment,3,1,diagnosed,0,0,0,0
+ZH-003,ZH-003-S06,Assessment,4,1,with,0,0,0,0
+ZH-003,ZH-003-S06,Assessment,5,1,bite,0,0,0,0
+ZH-003,ZH-003-S06,Assessment,6,1,related,0,0,0,0
+ZH-003,ZH-003-S06,Assessment,7,1,deficit,0,0,0,0
+ZH-003,ZH-003-S06,Assessment,0,2,the patient,0,0,0,0
+ZH-003,ZH-003-S06,Assessment,1,2,patient was,0,0,0,0
+ZH-003,ZH-003-S06,Assessment,2,2,was diagnosed,0,0,0,0
+ZH-003,ZH-003-S06,Assessment,3,2,diagnosed with,0,0,0,0
+ZH-003,ZH-003-S06,Assessment,4,2,with bite,0,0,0,0
+ZH-003,ZH-003-S06,Assessment,5,2,bite related,0,0,0,0
+ZH-003,ZH-003-S06,Assessment,6,2,related deficit,0,0,0,0
+ZH-003,ZH-003-S06,Assessment,0,3,the patient was,0,0,0,0
+ZH-003,ZH-003-S06,Assessment,1,3,patient was diagnosed,0,0,0,0
+ZH-003,ZH-003-S06,Assessment,2,3,was diagnosed with,0,0,0,0
+ZH-003,ZH-003-S06,Assessment,3,3,diagnosed with bite,0,0,0,0
+ZH-003,ZH-003-S06,Assessment,4,3,with bite related,0,0,0,0
+ZH-003,ZH-003-S06,Assessment,5,3,bite related deficit,1,0,0,0
+ZH-003,ZH-003-S06,Assessment,0,4,the patient was diagnosed,0,0,0,0
+ZH-003,ZH-003-S06,Assessment,1,4,patient was diagnosed with,0,0,0,0
+ZH-003,ZH-003-S06,Assessment,2,4,was diagnosed with bite,0,0,0,0
+ZH-003,ZH-003-S06,Assessment,3,4,diagnosed with bite related,0,0,0,0
+ZH-003,ZH-003-S06,Assessment,4,4,with bite related deficit,0,0,0,0
+ZH-003,ZH-003-S06,Assessment,0,5,the patient was diagnosed with,0,0,0,0
+ZH-003,ZH-003-S06,Assessment,1,5,patient was diagnosed with bite,0,0,0,0
+ZH-003,ZH-003-S06,Assessment,2,5,was diagnosed with bite related,0,0,0,0
+ZH-003,ZH-003-S06,Assessment,3,5,diagnosed with bite related deficit,0,0,0,0
+ZH-004,ZH-004-S01,Presentation,0,1,findings,0,0,0,0
+ZH-004,ZH-004-S01,Presentation,1,1,include,0,0,0,0
+ZH-004,ZH-004-S01,Presentation,2,1,member,0,0,0,0
+ZH-004,ZH-004-S01,Presentation,3,1,loss,0,0,0,0
+ZH-004,ZH-004-S01,Presentation,0,2,findings include,0,0,0,0
+ZH-004,ZH-004-S01,Presentation,1,2,include member,0,0,0,0
+ZH-004,ZH-004-S01,Presentation,2,2,member loss,0,1,0,0
+ZH-004,ZH-004-S01,Presentation,0,3,findings include member,0,0,0,0
+ZH-004,ZH-004-S01,Presentation,1,3,include member loss,0,0,0,0
+ZH-004,ZH-004-S01,Presentation,0,4,findings include member loss,0,0,0,0
+ZH-004,ZH-004-S02,Presentation,0,1,examination,0,0,0,0
+ZH-004,ZH-004-S02,Presentation,1,1,reveals,0,0,0,0
+ZH-004,ZH-004-S02,Presentation,2,1,yellowish,0,0,0,0
+ZH-004,ZH-004-S02,Presentation,3,1,tongue,0,0,0,0
+ZH-004,ZH-004-S02,Presentation,0,2,examination reveals,0,0,0,0
+ZH-004,ZH-004-S02,Presentation,1,2,reveals yellowish,0,0,0,0
+ZH-004,ZH-004-S02,Presentation,2,2,yellowish tongue,0,1,0,0
+ZH-004,ZH-004-S02,Presentation,0,3,examination reveals yellowish,0,0,0,0
+ZH-004,ZH-004-S02,Presentation,1,3,reveals yellowish tongue,0,0,0,0
+ZH-004,ZH-004-S02,Presentation,0,4,examination reveals yellowish tongue,0,0,0,0
+ZH-004,ZH-004-S03,Presentation,0,1,findings,0,0,0,0
+ZH-004,ZH-004-S03,Presentation,1,1,include,0,0,0,0
+ZH-004,ZH-004-S03,Presentation,2,1,shaking,0,0,0,0
+ZH-004,ZH-004-S03,Presentation,3,1,of,0,0,0,0
+ZH-004,ZH-004-S03,Presentation,4,1,the,0,0,0,0
+ZH-004,ZH-004-S03,Presentation,5,1,pinky,0,0,0,0
+ZH-004,ZH-004-S03,Presentation,6,1,finger,0,0,0,0
+ZH-004,ZH-004-S03,Presentation,0,2,findings include,0,0,0,0
+ZH-004,ZH-004-S03,Presentation,1,2,include shaking,0,0,0,0
+ZH-004,ZH-004-S03,Presentation,2,2,shaking of,0,0,0,0
+ZH-004,ZH-004-S03,Presentation,3,2,of the,0,0,0,0
+ZH-004,ZH-004-S03,Presentation,4,2,the pinky,0,0,0,0
+ZH-004,ZH-004-S03,Presentation,5,2,pinky finger,0,0,0,0
+ZH-004,ZH-004-S03,Presentation,0,3,findings include shaking,0,0,0,0
+ZH-004,ZH-004-S03,Presentation,1,3,include shaking of,0,0,0,0
+ZH-004,ZH-004-S03,Presentation,2,3,shaking of the,0,0,0,0
+ZH-004,ZH-004-S03,Presentation,3,3,of the pinky,0,0,0,0
+ZH-004,ZH-004-S03,Presentation,4,3,the pinky finger,0,0,0,0
+ZH-004,ZH-004-S03,Presentation,0,4,findings include shaking of,0,0,0,0
+ZH-004,ZH-004-S03,Presentation,1,4,include shaking of the,0,0,0,0
+ZH-004,ZH-004-S03,Presentation,2,4,shaking of the pinky,0,0,0,0
+ZH-004,ZH-004-S03,Presentation,3,4,of the pinky finger,0,0,0,0
+ZH-004,ZH-004-S03,Presentation,0,5,findings include shaking of the,0,0,0,0
+ZH-004,ZH-004-S03,Presentation,1,5,include shaking of the pinky,0,0,0,0
+ZH-004,ZH-004-S03,Presentation,2,5,shaking of the pinky finger,0,1,0,0
+ZH-004,ZH-004-S04,Negative Findings,0,1,the,0,0,0,0
+ZH-004,ZH-004-S04,Negative Findings,1,1,patient,0,0,0,0
+ZH-004,ZH-004-S04,Negative Findings,2,1,denies,0,0,1,0
+ZH-004,ZH-004-S04,Negative Findings,3,1,severe,0,0,0,1
+ZH-004,ZH-004-S04,Negative Findings,4,1,anger,0,0,0,1
+ZH-004,ZH-004-S04,Negative Findings,0,2,the patient,0,0,0,0
+ZH-004,ZH-004-S04,Negative Findings,1,2,patient denies,0,0,0,0
+ZH-004,ZH-004-S04,Negative Findings,2,2,denies severe,0,0,0,0
+ZH-004,ZH-004-S04,Negative Findings,3,2,severe anger,0,1,0,1
+ZH-004,ZH-004-S04,Negative Findings,0,3,the patient denies,0,0,0,0
+ZH-004,ZH-004-S04,Negative Findings,1,3,patient denies severe,0,0,0,0
+ZH-004,ZH-004-S04,Negative Findings,2,3,denies severe anger,0,0,0,0
+ZH-004,ZH-004-S04,Negative Findings,0,4,the patient denies severe,0,0,0,0
+ZH-004,ZH-004-S04,Negative Findings,1,4,patient denies severe anger,0,0,0,0
+ZH-004,ZH-004-S04,Negative Findings,0,5,the patient denies severe anger,0,0,0,0
+ZH-004,ZH-004-S05,Negative Findings,0,1,no,0,0,1,0
+ZH-004,ZH-004-S05,Negative Findings,1,1,signs,0,0,0,1
+ZH-004,ZH-004-S05,Negative Findings,2,1,of,0,0,0,1
+ZH-004,ZH-004-S05,Negative Findings,3,1,thoracic,0,0,0,1
+ZH-004,ZH-004-S05,Negative Findings,4,1,discomfort,0,0,0,1
+ZH-004,ZH-004-S05,Negative Findings,0,2,no signs,0,0,0,0
+ZH-004,ZH-004-S05,Negative Findings,1,2,signs of,0,0,0,1
+ZH-004,ZH-004-S05,Negative Findings,2,2,of thoracic,0,0,0,1
+ZH-004,ZH-004-S05,Negative Findings,3,2,thoracic discomfort,0,1,0,1
+ZH-004,ZH-004-S05,Negative Findings,0,3,no signs of,0,0,0,0
+ZH-004,ZH-004-S05,Negative Findings,1,3,signs of thoracic,0,0,0,1
+ZH-004,ZH-004-S05,Negative Findings,2,3,of thoracic discomfort,0,0,0,1
+ZH-004,ZH-004-S05,Negative Findings,0,4,no signs of thoracic,0,0,0,0
+ZH-004,ZH-004-S05,Negative Findings,1,4,signs of thoracic discomfort,0,0,0,1
+ZH-004,ZH-004-S05,Negative Findings,0,5,no signs of thoracic discomfort,0,0,0,0
+ZH-004,ZH-004-S06,Laboratory Analysis,0,1,blood,0,0,0,0
+ZH-004,ZH-004-S06,Laboratory Analysis,1,1,analysis,0,0,0,0
+ZH-004,ZH-004-S06,Laboratory Analysis,2,1,returned,0,0,0,0
+ZH-004,ZH-004-S06,Laboratory Analysis,3,1,no,0,0,1,0
+ZH-004,ZH-004-S06,Laboratory Analysis,4,1,relevant,0,0,0,1
+ZH-004,ZH-004-S06,Laboratory Analysis,5,1,findings,0,0,0,1
+ZH-004,ZH-004-S06,Laboratory Analysis,0,2,blood analysis,0,0,0,0
+ZH-004,ZH-004-S06,Laboratory Analysis,1,2,analysis returned,0,0,0,0
+ZH-004,ZH-004-S06,Laboratory Analysis,2,2,returned no,0,0,0,0
+ZH-004,ZH-004-S06,Laboratory Analysis,3,2,no relevant,0,0,0,0
+ZH-004,ZH-004-S06,Laboratory Analysis,4,2,relevant findings,0,0,0,1
+ZH-004,ZH-004-S06,Laboratory Analysis,0,3,blood analysis returned,0,0,0,0
+ZH-004,ZH-004-S06,Laboratory Analysis,1,3,analysis returned no,0,0,0,0
+ZH-004,ZH-004-S06,Laboratory Analysis,2,3,returned no relevant,0,0,0,0
+ZH-004,ZH-004-S06,Laboratory Analysis,3,3,no relevant findings,0,0,0,0
+ZH-004,ZH-004-S06,Laboratory Analysis,0,4,blood analysis returned no,0,0,0,0
+ZH-004,ZH-004-S06,Laboratory Analysis,1,4,analysis returned no relevant,0,0,0,0
+ZH-004,ZH-004-S06,Laboratory Analysis,2,4,returned no relevant findings,0,0,0,0
+ZH-004,ZH-004-S06,Laboratory Analysis,0,5,blood analysis returned no relevant,0,0,0,0
+ZH-004,ZH-004-S06,Laboratory Analysis,1,5,analysis returned no relevant findings,0,0,0,0
+ZH-004,ZH-004-S07,Clinical History,0,1,history,0,0,0,0
+ZH-004,ZH-004-S07,Clinical History,1,1,of,0,0,0,0
+ZH-004,ZH-004-S07,Clinical History,2,1,bacterial,0,0,0,0
+ZH-004,ZH-004-S07,Clinical History,3,1,infectious,0,0,0,0
+ZH-004,ZH-004-S07,Clinical History,4,1,process,0,0,0,0
+ZH-004,ZH-004-S07,Clinical History,0,2,history of,0,0,0,0
+ZH-004,ZH-004-S07,Clinical History,1,2,of bacterial,0,0,0,0
+ZH-004,ZH-004-S07,Clinical History,2,2,bacterial infectious,0,0,0,0
+ZH-004,ZH-004-S07,Clinical History,3,2,infectious process,0,0,0,0
+ZH-004,ZH-004-S07,Clinical History,0,3,history of bacterial,0,0,0,0
+ZH-004,ZH-004-S07,Clinical History,1,3,of bacterial infectious,0,0,0,0
+ZH-004,ZH-004-S07,Clinical History,2,3,bacterial infectious process,1,0,0,0
+ZH-004,ZH-004-S07,Clinical History,0,4,history of bacterial infectious,0,0,0,0
+ZH-004,ZH-004-S07,Clinical History,1,4,of bacterial infectious process,0,0,0,0
+ZH-004,ZH-004-S07,Clinical History,0,5,history of bacterial infectious process,0,0,0,0
+ZH-004,ZH-004-S08,Assessment,0,1,diagnosis,0,0,0,0
+ZH-004,ZH-004-S08,Assessment,1,1,deficit,0,0,0,0
+ZH-004,ZH-004-S08,Assessment,2,1,caused,0,0,0,0
+ZH-004,ZH-004-S08,Assessment,3,1,by,0,0,0,0
+ZH-004,ZH-004-S08,Assessment,4,1,bite,0,0,0,0
+ZH-004,ZH-004-S08,Assessment,0,2,diagnosis deficit,0,0,0,0
+ZH-004,ZH-004-S08,Assessment,1,2,deficit caused,0,0,0,0
+ZH-004,ZH-004-S08,Assessment,2,2,caused by,0,0,0,0
+ZH-004,ZH-004-S08,Assessment,3,2,by bite,0,0,0,0
+ZH-004,ZH-004-S08,Assessment,0,3,diagnosis deficit caused,0,0,0,0
+ZH-004,ZH-004-S08,Assessment,1,3,deficit caused by,0,0,0,0
+ZH-004,ZH-004-S08,Assessment,2,3,caused by bite,0,0,0,0
+ZH-004,ZH-004-S08,Assessment,0,4,diagnosis deficit caused by,0,0,0,0
+ZH-004,ZH-004-S08,Assessment,1,4,deficit caused by bite,1,0,0,0
+ZH-004,ZH-004-S08,Assessment,0,5,diagnosis deficit caused by bite,0,0,0,0
+ZH-005,ZH-005-S01,Presentation,0,1,findings,0,0,0,0
+ZH-005,ZH-005-S01,Presentation,1,1,include,0,0,0,0
+ZH-005,ZH-005-S01,Presentation,2,1,pain,0,0,0,0
+ZH-005,ZH-005-S01,Presentation,3,1,in,0,0,0,0
+ZH-005,ZH-005-S01,Presentation,4,1,the,0,0,0,0
+ZH-005,ZH-005-S01,Presentation,5,1,chest,0,0,0,0
+ZH-005,ZH-005-S01,Presentation,0,2,findings include,0,0,0,0
+ZH-005,ZH-005-S01,Presentation,1,2,include pain,0,0,0,0
+ZH-005,ZH-005-S01,Presentation,2,2,pain in,0,0,0,0
+ZH-005,ZH-005-S01,Presentation,3,2,in the,0,0,0,0
+ZH-005,ZH-005-S01,Presentation,4,2,the chest,0,0,0,0
+ZH-005,ZH-005-S01,Presentation,0,3,findings include pain,0,0,0,0
+ZH-005,ZH-005-S01,Presentation,1,3,include pain in,0,0,0,0
+ZH-005,ZH-005-S01,Presentation,2,3,pain in the,0,0,0,0
+ZH-005,ZH-005-S01,Presentation,3,3,in the chest,0,0,0,0
+ZH-005,ZH-005-S01,Presentation,0,4,findings include pain in,0,0,0,0
+ZH-005,ZH-005-S01,Presentation,1,4,include pain in the,0,0,0,0
+ZH-005,ZH-005-S01,Presentation,2,4,pain in the chest,0,1,0,0
+ZH-005,ZH-005-S01,Presentation,0,5,findings include pain in the,0,0,0,0
+ZH-005,ZH-005-S01,Presentation,1,5,include pain in the chest,0,0,0,0
+ZH-005,ZH-005-S02,Presentation,0,1,the,0,0,0,0
+ZH-005,ZH-005-S02,Presentation,1,1,patient,0,0,0,0
+ZH-005,ZH-005-S02,Presentation,2,1,reports,0,0,0,0
+ZH-005,ZH-005-S02,Presentation,3,1,missing,0,0,0,0
+ZH-005,ZH-005-S02,Presentation,4,1,limb,0,0,0,0
+ZH-005,ZH-005-S02,Presentation,0,2,the patient,0,0,0,0
+ZH-005,ZH-005-S02,Presentation,1,2,patient reports,0,0,0,0
+ZH-005,ZH-005-S02,Presentation,2,2,reports missing,0,0,0,0
+ZH-005,ZH-005-S02,Presentation,3,2,missing limb,0,1,0,0
+ZH-005,ZH-005-S02,Presentation,0,3,the patient reports,0,0,0,0
+ZH-005,ZH-005-S02,Presentation,1,3,patient reports missing,0,0,0,0
+ZH-005,ZH-005-S02,Presentation,2,3,reports missing limb,0,0,0,0
+ZH-005,ZH-005-S02,Presentation,0,4,the patient reports missing,0,0,0,0
+ZH-005,ZH-005-S02,Presentation,1,4,patient reports missing limb,0,0,0,0
+ZH-005,ZH-005-S02,Presentation,0,5,the patient reports missing limb,0,0,0,0
+ZH-005,ZH-005-S03,Negative Findings,0,1,the,0,0,0,0
+ZH-005,ZH-005-S03,Negative Findings,1,1,patient,0,0,0,0
+ZH-005,ZH-005-S03,Negative Findings,2,1,presents,0,0,0,0
+ZH-005,ZH-005-S03,Negative Findings,3,1,without,0,0,1,0
+ZH-005,ZH-005-S03,Negative Findings,4,1,yellowish,0,0,0,1
+ZH-005,ZH-005-S03,Negative Findings,5,1,tongue,0,0,0,1
+ZH-005,ZH-005-S03,Negative Findings,0,2,the patient,0,0,0,0
+ZH-005,ZH-005-S03,Negative Findings,1,2,patient presents,0,0,0,0
+ZH-005,ZH-005-S03,Negative Findings,2,2,presents without,0,0,0,0
+ZH-005,ZH-005-S03,Negative Findings,3,2,without yellowish,0,0,0,0
+ZH-005,ZH-005-S03,Negative Findings,4,2,yellowish tongue,0,1,0,1
+ZH-005,ZH-005-S03,Negative Findings,0,3,the patient presents,0,0,0,0
+ZH-005,ZH-005-S03,Negative Findings,1,3,patient presents without,0,0,0,0
+ZH-005,ZH-005-S03,Negative Findings,2,3,presents without yellowish,0,0,0,0
+ZH-005,ZH-005-S03,Negative Findings,3,3,without yellowish tongue,0,0,0,0
+ZH-005,ZH-005-S03,Negative Findings,0,4,the patient presents without,0,0,0,0
+ZH-005,ZH-005-S03,Negative Findings,1,4,patient presents without yellowish,0,0,0,0
+ZH-005,ZH-005-S03,Negative Findings,2,4,presents without yellowish tongue,0,0,0,0
+ZH-005,ZH-005-S03,Negative Findings,0,5,the patient presents without yellowish,0,0,0,0
+ZH-005,ZH-005-S03,Negative Findings,1,5,patient presents without yellowish tongue,0,0,0,0
+ZH-005,ZH-005-S04,Negative Findings,0,1,the,0,0,0,0
+ZH-005,ZH-005-S04,Negative Findings,1,1,patient,0,0,0,0
+ZH-005,ZH-005-S04,Negative Findings,2,1,presents,0,0,0,0
+ZH-005,ZH-005-S04,Negative Findings,3,1,without,0,0,1,0
+ZH-005,ZH-005-S04,Negative Findings,4,1,paralyzed,0,0,0,1
+ZH-005,ZH-005-S04,Negative Findings,5,1,limbs,0,0,0,1
+ZH-005,ZH-005-S04,Negative Findings,0,2,the patient,0,0,0,0
+ZH-005,ZH-005-S04,Negative Findings,1,2,patient presents,0,0,0,0
+ZH-005,ZH-005-S04,Negative Findings,2,2,presents without,0,0,0,0
+ZH-005,ZH-005-S04,Negative Findings,3,2,without paralyzed,0,0,0,0
+ZH-005,ZH-005-S04,Negative Findings,4,2,paralyzed limbs,0,1,0,1
+ZH-005,ZH-005-S04,Negative Findings,0,3,the patient presents,0,0,0,0
+ZH-005,ZH-005-S04,Negative Findings,1,3,patient presents without,0,0,0,0
+ZH-005,ZH-005-S04,Negative Findings,2,3,presents without paralyzed,0,0,0,0
+ZH-005,ZH-005-S04,Negative Findings,3,3,without paralyzed limbs,0,0,0,0
+ZH-005,ZH-005-S04,Negative Findings,0,4,the patient presents without,0,0,0,0
+ZH-005,ZH-005-S04,Negative Findings,1,4,patient presents without paralyzed,0,0,0,0
+ZH-005,ZH-005-S04,Negative Findings,2,4,presents without paralyzed limbs,0,0,0,0
+ZH-005,ZH-005-S04,Negative Findings,0,5,the patient presents without paralyzed,0,0,0,0
+ZH-005,ZH-005-S04,Negative Findings,1,5,patient presents without paralyzed limbs,0,0,0,0
+ZH-005,ZH-005-S05,Laboratory Analysis,0,1,blood,0,0,0,0
+ZH-005,ZH-005-S05,Laboratory Analysis,1,1,culture,0,0,0,0
+ZH-005,ZH-005-S05,Laboratory Analysis,2,1,is,0,0,0,0
+ZH-005,ZH-005-S05,Laboratory Analysis,3,1,positive,0,0,0,0
+ZH-005,ZH-005-S05,Laboratory Analysis,4,1,for,0,0,0,0
+ZH-005,ZH-005-S05,Laboratory Analysis,5,1,deltaretrovirus,0,0,0,0
+ZH-005,ZH-005-S05,Laboratory Analysis,6,1,zumbi,0,0,0,0
+ZH-005,ZH-005-S05,Laboratory Analysis,0,2,blood culture,0,0,0,0
+ZH-005,ZH-005-S05,Laboratory Analysis,1,2,culture is,0,0,0,0
+ZH-005,ZH-005-S05,Laboratory Analysis,2,2,is positive,0,0,0,0
+ZH-005,ZH-005-S05,Laboratory Analysis,3,2,positive for,0,0,0,0
+ZH-005,ZH-005-S05,Laboratory Analysis,4,2,for deltaretrovirus,0,0,0,0
+ZH-005,ZH-005-S05,Laboratory Analysis,5,2,deltaretrovirus zumbi,0,0,0,0
+ZH-005,ZH-005-S05,Laboratory Analysis,0,3,blood culture is,0,0,0,0
+ZH-005,ZH-005-S05,Laboratory Analysis,1,3,culture is positive,0,0,0,0
+ZH-005,ZH-005-S05,Laboratory Analysis,2,3,is positive for,0,0,0,0
+ZH-005,ZH-005-S05,Laboratory Analysis,3,3,positive for deltaretrovirus,0,0,0,0
+ZH-005,ZH-005-S05,Laboratory Analysis,4,3,for deltaretrovirus zumbi,0,0,0,0
+ZH-005,ZH-005-S05,Laboratory Analysis,0,4,blood culture is positive,0,0,0,0
+ZH-005,ZH-005-S05,Laboratory Analysis,1,4,culture is positive for,0,0,0,0
+ZH-005,ZH-005-S05,Laboratory Analysis,2,4,is positive for deltaretrovirus,0,0,0,0
+ZH-005,ZH-005-S05,Laboratory Analysis,3,4,positive for deltaretrovirus zumbi,0,0,0,0
+ZH-005,ZH-005-S05,Laboratory Analysis,0,5,blood culture is positive for,0,0,0,0
+ZH-005,ZH-005-S05,Laboratory Analysis,1,5,culture is positive for deltaretrovirus,0,0,0,0
+ZH-005,ZH-005-S05,Laboratory Analysis,2,5,is positive for deltaretrovirus zumbi,0,0,0,0
+ZH-005,ZH-005-S06,Clinical History,0,1,no,0,0,1,0
+ZH-005,ZH-005-S06,Clinical History,1,1,history,0,0,0,1
+ZH-005,ZH-005-S06,Clinical History,2,1,of,0,0,0,1
+ZH-005,ZH-005-S06,Clinical History,3,1,altercation,0,0,0,1
+ZH-005,ZH-005-S06,Clinical History,4,1,injury,0,0,0,1
+ZH-005,ZH-005-S06,Clinical History,0,2,no history,0,0,0,0
+ZH-005,ZH-005-S06,Clinical History,1,2,history of,0,0,0,1
+ZH-005,ZH-005-S06,Clinical History,2,2,of altercation,0,0,0,1
+ZH-005,ZH-005-S06,Clinical History,3,2,altercation injury,1,0,0,1
+ZH-005,ZH-005-S06,Clinical History,0,3,no history of,0,0,0,0
+ZH-005,ZH-005-S06,Clinical History,1,3,history of altercation,0,0,0,1
+ZH-005,ZH-005-S06,Clinical History,2,3,of altercation injury,0,0,0,1
+ZH-005,ZH-005-S06,Clinical History,0,4,no history of altercation,0,0,0,0
+ZH-005,ZH-005-S06,Clinical History,1,4,history of altercation injury,0,0,0,1
+ZH-005,ZH-005-S06,Clinical History,0,5,no history of altercation injury,0,0,0,0
+ZH-005,ZH-005-S07,Assessment,0,1,diagnosis,0,0,0,0
+ZH-005,ZH-005-S07,Assessment,1,1,infection,0,0,0,0
+ZH-005,ZH-005-S07,Assessment,2,1,of,0,0,0,0
+ZH-005,ZH-005-S07,Assessment,3,1,viral,0,0,0,0
+ZH-005,ZH-005-S07,Assessment,4,1,origin,0,0,0,0
+ZH-005,ZH-005-S07,Assessment,0,2,diagnosis infection,0,0,0,0
+ZH-005,ZH-005-S07,Assessment,1,2,infection of,0,0,0,0
+ZH-005,ZH-005-S07,Assessment,2,2,of viral,0,0,0,0
+ZH-005,ZH-005-S07,Assessment,3,2,viral origin,0,0,0,0
+ZH-005,ZH-005-S07,Assessment,0,3,diagnosis infection of,0,0,0,0
+ZH-005,ZH-005-S07,Assessment,1,3,infection of viral,0,0,0,0
+ZH-005,ZH-005-S07,Assessment,2,3,of viral origin,0,0,0,0
+ZH-005,ZH-005-S07,Assessment,0,4,diagnosis infection of viral,0,0,0,0
+ZH-005,ZH-005-S07,Assessment,1,4,infection of viral origin,1,0,0,0
+ZH-005,ZH-005-S07,Assessment,0,5,diagnosis infection of viral origin,0,0,0,0
+ZH-006,ZH-006-S01,Presentation,0,1,the,0,0,0,0
+ZH-006,ZH-006-S01,Presentation,1,1,patient,0,0,0,0
+ZH-006,ZH-006-S01,Presentation,2,1,reports,0,0,0,0
+ZH-006,ZH-006-S01,Presentation,3,1,limb,0,0,0,0
+ZH-006,ZH-006-S01,Presentation,4,1,loss,0,0,0,0
+ZH-006,ZH-006-S01,Presentation,0,2,the patient,0,0,0,0
+ZH-006,ZH-006-S01,Presentation,1,2,patient reports,0,0,0,0
+ZH-006,ZH-006-S01,Presentation,2,2,reports limb,0,0,0,0
+ZH-006,ZH-006-S01,Presentation,3,2,limb loss,0,1,0,0
+ZH-006,ZH-006-S01,Presentation,0,3,the patient reports,0,0,0,0
+ZH-006,ZH-006-S01,Presentation,1,3,patient reports limb,0,0,0,0
+ZH-006,ZH-006-S01,Presentation,2,3,reports limb loss,0,0,0,0
+ZH-006,ZH-006-S01,Presentation,0,4,the patient reports limb,0,0,0,0
+ZH-006,ZH-006-S01,Presentation,1,4,patient reports limb loss,0,0,0,0
+ZH-006,ZH-006-S01,Presentation,0,5,the patient reports limb loss,0,0,0,0
+ZH-006,ZH-006-S02,Presentation,0,1,the,0,0,0,0
+ZH-006,ZH-006-S02,Presentation,1,1,patient,0,0,0,0
+ZH-006,ZH-006-S02,Presentation,2,1,presents,0,0,0,0
+ZH-006,ZH-006-S02,Presentation,3,1,with,0,0,0,0
+ZH-006,ZH-006-S02,Presentation,4,1,intense,0,0,0,0
+ZH-006,ZH-006-S02,Presentation,5,1,anger,0,0,0,0
+ZH-006,ZH-006-S02,Presentation,6,1,episodes,0,0,0,0
+ZH-006,ZH-006-S02,Presentation,0,2,the patient,0,0,0,0
+ZH-006,ZH-006-S02,Presentation,1,2,patient presents,0,0,0,0
+ZH-006,ZH-006-S02,Presentation,2,2,presents with,0,0,0,0
+ZH-006,ZH-006-S02,Presentation,3,2,with intense,0,0,0,0
+ZH-006,ZH-006-S02,Presentation,4,2,intense anger,0,0,0,0
+ZH-006,ZH-006-S02,Presentation,5,2,anger episodes,0,0,0,0
+ZH-006,ZH-006-S02,Presentation,0,3,the patient presents,0,0,0,0
+ZH-006,ZH-006-S02,Presentation,1,3,patient presents with,0,0,0,0
+ZH-006,ZH-006-S02,Presentation,2,3,presents with intense,0,0,0,0
+ZH-006,ZH-006-S02,Presentation,3,3,with intense anger,0,0,0,0
+ZH-006,ZH-006-S02,Presentation,4,3,intense anger episodes,0,1,0,0
+ZH-006,ZH-006-S02,Presentation,0,4,the patient presents with,0,0,0,0
+ZH-006,ZH-006-S02,Presentation,1,4,patient presents with intense,0,0,0,0
+ZH-006,ZH-006-S02,Presentation,2,4,presents with intense anger,0,0,0,0
+ZH-006,ZH-006-S02,Presentation,3,4,with intense anger episodes,0,0,0,0
+ZH-006,ZH-006-S02,Presentation,0,5,the patient presents with intense,0,0,0,0
+ZH-006,ZH-006-S02,Presentation,1,5,patient presents with intense anger,0,0,0,0
+ZH-006,ZH-006-S02,Presentation,2,5,presents with intense anger episodes,0,0,0,0
+ZH-006,ZH-006-S03,Negative Findings,0,1,the,0,0,0,0
+ZH-006,ZH-006-S03,Negative Findings,1,1,patient,0,0,0,0
+ZH-006,ZH-006-S03,Negative Findings,2,1,presents,0,0,0,0
+ZH-006,ZH-006-S03,Negative Findings,3,1,without,0,0,1,0
+ZH-006,ZH-006-S03,Negative Findings,4,1,shaking,0,0,0,1
+ZH-006,ZH-006-S03,Negative Findings,5,1,of,0,0,0,1
+ZH-006,ZH-006-S03,Negative Findings,6,1,the,0,0,0,1
+ZH-006,ZH-006-S03,Negative Findings,7,1,pinky,0,0,0,1
+ZH-006,ZH-006-S03,Negative Findings,8,1,finger,0,0,0,1
+ZH-006,ZH-006-S03,Negative Findings,0,2,the patient,0,0,0,0
+ZH-006,ZH-006-S03,Negative Findings,1,2,patient presents,0,0,0,0
+ZH-006,ZH-006-S03,Negative Findings,2,2,presents without,0,0,0,0
+ZH-006,ZH-006-S03,Negative Findings,3,2,without shaking,0,0,0,0
+ZH-006,ZH-006-S03,Negative Findings,4,2,shaking of,0,0,0,1
+ZH-006,ZH-006-S03,Negative Findings,5,2,of the,0,0,0,1
+ZH-006,ZH-006-S03,Negative Findings,6,2,the pinky,0,0,0,1
+ZH-006,ZH-006-S03,Negative Findings,7,2,pinky finger,0,0,0,1
+ZH-006,ZH-006-S03,Negative Findings,0,3,the patient presents,0,0,0,0
+ZH-006,ZH-006-S03,Negative Findings,1,3,patient presents without,0,0,0,0
+ZH-006,ZH-006-S03,Negative Findings,2,3,presents without shaking,0,0,0,0
+ZH-006,ZH-006-S03,Negative Findings,3,3,without shaking of,0,0,0,0
+ZH-006,ZH-006-S03,Negative Findings,4,3,shaking of the,0,0,0,1
+ZH-006,ZH-006-S03,Negative Findings,5,3,of the pinky,0,0,0,1
+ZH-006,ZH-006-S03,Negative Findings,6,3,the pinky finger,0,0,0,1
+ZH-006,ZH-006-S03,Negative Findings,0,4,the patient presents without,0,0,0,0
+ZH-006,ZH-006-S03,Negative Findings,1,4,patient presents without shaking,0,0,0,0
+ZH-006,ZH-006-S03,Negative Findings,2,4,presents without shaking of,0,0,0,0
+ZH-006,ZH-006-S03,Negative Findings,3,4,without shaking of the,0,0,0,0
+ZH-006,ZH-006-S03,Negative Findings,4,4,shaking of the pinky,0,0,0,1
+ZH-006,ZH-006-S03,Negative Findings,5,4,of the pinky finger,0,0,0,1
+ZH-006,ZH-006-S03,Negative Findings,0,5,the patient presents without shaking,0,0,0,0
+ZH-006,ZH-006-S03,Negative Findings,1,5,patient presents without shaking of,0,0,0,0
+ZH-006,ZH-006-S03,Negative Findings,2,5,presents without shaking of the,0,0,0,0
+ZH-006,ZH-006-S03,Negative Findings,3,5,without shaking of the pinky,0,0,0,0
+ZH-006,ZH-006-S03,Negative Findings,4,5,shaking of the pinky finger,0,1,0,1
+ZH-006,ZH-006-S04,Laboratory Analysis,0,1,laboratory,0,0,0,0
+ZH-006,ZH-006-S04,Laboratory Analysis,1,1,tests,0,0,0,0
+ZH-006,ZH-006-S04,Laboratory Analysis,2,1,did,0,0,0,0
+ZH-006,ZH-006-S04,Laboratory Analysis,3,1,not,0,0,1,0
+ZH-006,ZH-006-S04,Laboratory Analysis,4,1,identify,0,0,0,1
+ZH-006,ZH-006-S04,Laboratory Analysis,5,1,any,0,0,0,1
+ZH-006,ZH-006-S04,Laboratory Analysis,6,1,pathogen,0,0,0,1
+ZH-006,ZH-006-S04,Laboratory Analysis,0,2,laboratory tests,0,0,0,0
+ZH-006,ZH-006-S04,Laboratory Analysis,1,2,tests did,0,0,0,0
+ZH-006,ZH-006-S04,Laboratory Analysis,2,2,did not,0,0,0,0
+ZH-006,ZH-006-S04,Laboratory Analysis,3,2,not identify,0,0,0,0
+ZH-006,ZH-006-S04,Laboratory Analysis,4,2,identify any,0,0,0,1
+ZH-006,ZH-006-S04,Laboratory Analysis,5,2,any pathogen,0,0,0,1
+ZH-006,ZH-006-S04,Laboratory Analysis,0,3,laboratory tests did,0,0,0,0
+ZH-006,ZH-006-S04,Laboratory Analysis,1,3,tests did not,0,0,0,0
+ZH-006,ZH-006-S04,Laboratory Analysis,2,3,did not identify,0,0,0,0
+ZH-006,ZH-006-S04,Laboratory Analysis,3,3,not identify any,0,0,0,0
+ZH-006,ZH-006-S04,Laboratory Analysis,4,3,identify any pathogen,0,0,0,1
+ZH-006,ZH-006-S04,Laboratory Analysis,0,4,laboratory tests did not,0,0,0,0
+ZH-006,ZH-006-S04,Laboratory Analysis,1,4,tests did not identify,0,0,0,0
+ZH-006,ZH-006-S04,Laboratory Analysis,2,4,did not identify any,0,0,0,0
+ZH-006,ZH-006-S04,Laboratory Analysis,3,4,not identify any pathogen,0,0,0,0
+ZH-006,ZH-006-S04,Laboratory Analysis,0,5,laboratory tests did not identify,0,0,0,0
+ZH-006,ZH-006-S04,Laboratory Analysis,1,5,tests did not identify any,0,0,0,0
+ZH-006,ZH-006-S04,Laboratory Analysis,2,5,did not identify any pathogen,0,0,0,0
+ZH-006,ZH-006-S05,Clinical History,0,1,clinical,0,0,0,0
+ZH-006,ZH-006-S05,Clinical History,1,1,history,0,0,0,0
+ZH-006,ZH-006-S05,Clinical History,2,1,is,0,0,0,0
+ZH-006,ZH-006-S05,Clinical History,3,1,unremarkable,0,0,0,0
+ZH-006,ZH-006-S05,Clinical History,0,2,clinical history,0,0,0,0
+ZH-006,ZH-006-S05,Clinical History,1,2,history is,0,0,0,0
+ZH-006,ZH-006-S05,Clinical History,2,2,is unremarkable,0,0,0,0
+ZH-006,ZH-006-S05,Clinical History,0,3,clinical history is,0,0,0,0
+ZH-006,ZH-006-S05,Clinical History,1,3,history is unremarkable,0,0,0,0
+ZH-006,ZH-006-S05,Clinical History,0,4,clinical history is unremarkable,0,0,0,0
+ZH-006,ZH-006-S06,Assessment,0,1,findings,0,0,0,0
+ZH-006,ZH-006-S06,Assessment,1,1,are,0,0,0,0
+ZH-006,ZH-006-S06,Assessment,2,1,consistent,0,0,0,0
+ZH-006,ZH-006-S06,Assessment,3,1,with,0,0,0,0
+ZH-006,ZH-006-S06,Assessment,4,1,altercation,0,0,0,0
+ZH-006,ZH-006-S06,Assessment,5,1,injury,0,0,0,0
+ZH-006,ZH-006-S06,Assessment,0,2,findings are,0,0,0,0
+ZH-006,ZH-006-S06,Assessment,1,2,are consistent,0,0,0,0
+ZH-006,ZH-006-S06,Assessment,2,2,consistent with,0,0,0,0
+ZH-006,ZH-006-S06,Assessment,3,2,with altercation,0,0,0,0
+ZH-006,ZH-006-S06,Assessment,4,2,altercation injury,1,0,0,0
+ZH-006,ZH-006-S06,Assessment,0,3,findings are consistent,0,0,0,0
+ZH-006,ZH-006-S06,Assessment,1,3,are consistent with,0,0,0,0
+ZH-006,ZH-006-S06,Assessment,2,3,consistent with altercation,0,0,0,0
+ZH-006,ZH-006-S06,Assessment,3,3,with altercation injury,0,0,0,0
+ZH-006,ZH-006-S06,Assessment,0,4,findings are consistent with,0,0,0,0
+ZH-006,ZH-006-S06,Assessment,1,4,are consistent with altercation,0,0,0,0
+ZH-006,ZH-006-S06,Assessment,2,4,consistent with altercation injury,0,0,0,0
+ZH-006,ZH-006-S06,Assessment,0,5,findings are consistent with altercation,0,0,0,0
+ZH-006,ZH-006-S06,Assessment,1,5,are consistent with altercation injury,0,0,0,0
+ZH-006,ZH-006-S07,Assessment,0,1,the,0,0,0,0
+ZH-006,ZH-006-S07,Assessment,1,1,team,0,0,0,0
+ZH-006,ZH-006-S07,Assessment,2,1,ruled,0,0,0,0
+ZH-006,ZH-006-S07,Assessment,3,1,out,0,0,0,0
+ZH-006,ZH-006-S07,Assessment,4,1,bacterial,0,0,0,1
+ZH-006,ZH-006-S07,Assessment,5,1,infection,0,0,0,1
+ZH-006,ZH-006-S07,Assessment,0,2,the team,0,0,0,0
+ZH-006,ZH-006-S07,Assessment,1,2,team ruled,0,0,0,0
+ZH-006,ZH-006-S07,Assessment,2,2,ruled out,0,0,1,0
+ZH-006,ZH-006-S07,Assessment,3,2,out bacterial,0,0,0,0
+ZH-006,ZH-006-S07,Assessment,4,2,bacterial infection,1,0,0,1
+ZH-006,ZH-006-S07,Assessment,0,3,the team ruled,0,0,0,0
+ZH-006,ZH-006-S07,Assessment,1,3,team ruled out,0,0,0,0
+ZH-006,ZH-006-S07,Assessment,2,3,ruled out bacterial,0,0,0,0
+ZH-006,ZH-006-S07,Assessment,3,3,out bacterial infection,0,0,0,0
+ZH-006,ZH-006-S07,Assessment,0,4,the team ruled out,0,0,0,0
+ZH-006,ZH-006-S07,Assessment,1,4,team ruled out bacterial,0,0,0,0
+ZH-006,ZH-006-S07,Assessment,2,4,ruled out bacterial infection,0,0,0,0
+ZH-006,ZH-006-S07,Assessment,0,5,the team ruled out bacterial,0,0,0,0
+ZH-006,ZH-006-S07,Assessment,1,5,team ruled out bacterial infection,0,0,0,0
+ZH-007,ZH-007-S01,Presentation,0,1,findings,0,0,0,0
+ZH-007,ZH-007-S01,Presentation,1,1,include,0,0,0,0
+ZH-007,ZH-007-S01,Presentation,2,1,severe,0,0,0,0
+ZH-007,ZH-007-S01,Presentation,3,1,anger,0,0,0,0
+ZH-007,ZH-007-S01,Presentation,0,2,findings include,0,0,0,0
+ZH-007,ZH-007-S01,Presentation,1,2,include severe,0,0,0,0
+ZH-007,ZH-007-S01,Presentation,2,2,severe anger,0,1,0,0
+ZH-007,ZH-007-S01,Presentation,0,3,findings include severe,0,0,0,0
+ZH-007,ZH-007-S01,Presentation,1,3,include severe anger,0,0,0,0
+ZH-007,ZH-007-S01,Presentation,0,4,findings include severe anger,0,0,0,0
+ZH-007,ZH-007-S02,Negative Findings,0,1,the,0,0,0,0
+ZH-007,ZH-007-S02,Negative Findings,1,1,patient,0,0,0,0
+ZH-007,ZH-007-S02,Negative Findings,2,1,is,0,0,0,0
+ZH-007,ZH-007-S02,Negative Findings,3,1,free,0,0,0,0
+ZH-007,ZH-007-S02,Negative Findings,4,1,of,0,0,0,0
+ZH-007,ZH-007-S02,Negative Findings,5,1,loss,0,0,0,1
+ZH-007,ZH-007-S02,Negative Findings,6,1,of,0,0,0,1
+ZH-007,ZH-007-S02,Negative Findings,7,1,motor,0,0,0,1
+ZH-007,ZH-007-S02,Negative Findings,8,1,control,0,0,0,1
+ZH-007,ZH-007-S02,Negative Findings,0,2,the patient,0,0,0,0
+ZH-007,ZH-007-S02,Negative Findings,1,2,patient is,0,0,0,0
+ZH-007,ZH-007-S02,Negative Findings,2,2,is free,0,0,0,0
+ZH-007,ZH-007-S02,Negative Findings,3,2,free of,0,0,1,0
+ZH-007,ZH-007-S02,Negative Findings,4,2,of loss,0,0,0,0
+ZH-007,ZH-007-S02,Negative Findings,5,2,loss of,0,0,0,1
+ZH-007,ZH-007-S02,Negative Findings,6,2,of motor,0,0,0,1
+ZH-007,ZH-007-S02,Negative Findings,7,2,motor control,0,0,0,1
+ZH-007,ZH-007-S02,Negative Findings,0,3,the patient is,0,0,0,0
+ZH-007,ZH-007-S02,Negative Findings,1,3,patient is free,0,0,0,0
+ZH-007,ZH-007-S02,Negative Findings,2,3,is free of,0,0,0,0
+ZH-007,ZH-007-S02,Negative Findings,3,3,free of loss,0,0,0,0
+ZH-007,ZH-007-S02,Negative Findings,4,3,of loss of,0,0,0,0
+ZH-007,ZH-007-S02,Negative Findings,5,3,loss of motor,0,0,0,1
+ZH-007,ZH-007-S02,Negative Findings,6,3,of motor control,0,0,0,1
+ZH-007,ZH-007-S02,Negative Findings,0,4,the patient is free,0,0,0,0
+ZH-007,ZH-007-S02,Negative Findings,1,4,patient is free of,0,0,0,0
+ZH-007,ZH-007-S02,Negative Findings,2,4,is free of loss,0,0,0,0
+ZH-007,ZH-007-S02,Negative Findings,3,4,free of loss of,0,0,0,0
+ZH-007,ZH-007-S02,Negative Findings,4,4,of loss of motor,0,0,0,0
+ZH-007,ZH-007-S02,Negative Findings,5,4,loss of motor control,0,1,0,1
+ZH-007,ZH-007-S02,Negative Findings,0,5,the patient is free of,0,0,0,0
+ZH-007,ZH-007-S02,Negative Findings,1,5,patient is free of loss,0,0,0,0
+ZH-007,ZH-007-S02,Negative Findings,2,5,is free of loss of,0,0,0,0
+ZH-007,ZH-007-S02,Negative Findings,3,5,free of loss of motor,0,0,0,0
+ZH-007,ZH-007-S02,Negative Findings,4,5,of loss of motor control,0,0,0,0
+ZH-007,ZH-007-S03,Laboratory Analysis,0,1,no,0,0,1,0
+ZH-007,ZH-007-S03,Laboratory Analysis,1,1,pathogen,0,0,0,1
+ZH-007,ZH-007-S03,Laboratory Analysis,2,1,was,0,0,0,1
+ZH-007,ZH-007-S03,Laboratory Analysis,3,1,isolated,0,0,0,1
+ZH-007,ZH-007-S03,Laboratory Analysis,4,1,in,0,0,0,1
+ZH-007,ZH-007-S03,Laboratory Analysis,5,1,the,0,0,0,1
+ZH-007,ZH-007-S03,Laboratory Analysis,6,1,blood,0,0,0,1
+ZH-007,ZH-007-S03,Laboratory Analysis,7,1,analysis,0,0,0,1
+ZH-007,ZH-007-S03,Laboratory Analysis,0,2,no pathogen,0,0,0,0
+ZH-007,ZH-007-S03,Laboratory Analysis,1,2,pathogen was,0,0,0,1
+ZH-007,ZH-007-S03,Laboratory Analysis,2,2,was isolated,0,0,0,1
+ZH-007,ZH-007-S03,Laboratory Analysis,3,2,isolated in,0,0,0,1
+ZH-007,ZH-007-S03,Laboratory Analysis,4,2,in the,0,0,0,1
+ZH-007,ZH-007-S03,Laboratory Analysis,5,2,the blood,0,0,0,1
+ZH-007,ZH-007-S03,Laboratory Analysis,6,2,blood analysis,0,0,0,1
+ZH-007,ZH-007-S03,Laboratory Analysis,0,3,no pathogen was,0,0,0,0
+ZH-007,ZH-007-S03,Laboratory Analysis,1,3,pathogen was isolated,0,0,0,1
+ZH-007,ZH-007-S03,Laboratory Analysis,2,3,was isolated in,0,0,0,1
+ZH-007,ZH-007-S03,Laboratory Analysis,3,3,isolated in the,0,0,0,1
+ZH-007,ZH-007-S03,Laboratory Analysis,4,3,in the blood,0,0,0,1
+ZH-007,ZH-007-S03,Laboratory Analysis,5,3,the blood analysis,0,0,0,1
+ZH-007,ZH-007-S03,Laboratory Analysis,0,4,no pathogen was isolated,0,0,0,0
+ZH-007,ZH-007-S03,Laboratory Analysis,1,4,pathogen was isolated in,0,0,0,1
+ZH-007,ZH-007-S03,Laboratory Analysis,2,4,was isolated in the,0,0,0,1
+ZH-007,ZH-007-S03,Laboratory Analysis,3,4,isolated in the blood,0,0,0,1
+ZH-007,ZH-007-S03,Laboratory Analysis,4,4,in the blood analysis,0,0,0,1
+ZH-007,ZH-007-S03,Laboratory Analysis,0,5,no pathogen was isolated in,0,0,0,0
+ZH-007,ZH-007-S03,Laboratory Analysis,1,5,pathogen was isolated in the,0,0,0,1
+ZH-007,ZH-007-S03,Laboratory Analysis,2,5,was isolated in the blood,0,0,0,1
+ZH-007,ZH-007-S03,Laboratory Analysis,3,5,isolated in the blood analysis,0,0,0,1
+ZH-007,ZH-007-S04,Clinical History,0,1,no,0,0,1,0
+ZH-007,ZH-007-S04,Clinical History,1,1,history,0,0,0,1
+ZH-007,ZH-007-S04,Clinical History,2,1,of,0,0,0,1
+ZH-007,ZH-007-S04,Clinical History,3,1,fight,0,0,0,1
+ZH-007,ZH-007-S04,Clinical History,4,1,injury,0,0,0,1
+ZH-007,ZH-007-S04,Clinical History,0,2,no history,0,0,0,0
+ZH-007,ZH-007-S04,Clinical History,1,2,history of,0,0,0,1
+ZH-007,ZH-007-S04,Clinical History,2,2,of fight,0,0,0,1
+ZH-007,ZH-007-S04,Clinical History,3,2,fight injury,1,0,0,1
+ZH-007,ZH-007-S04,Clinical History,0,3,no history of,0,0,0,0
+ZH-007,ZH-007-S04,Clinical History,1,3,history of fight,0,0,0,1
+ZH-007,ZH-007-S04,Clinical History,2,3,of fight injury,0,0,0,1
+ZH-007,ZH-007-S04,Clinical History,0,4,no history of fight,0,0,0,0
+ZH-007,ZH-007-S04,Clinical History,1,4,history of fight injury,0,0,0,1
+ZH-007,ZH-007-S04,Clinical History,0,5,no history of fight injury,0,0,0,0
+ZH-007,ZH-007-S05,Assessment,0,1,no,0,0,1,0
+ZH-007,ZH-007-S05,Assessment,1,1,disease,0,0,0,1
+ZH-007,ZH-007-S05,Assessment,2,1,was,0,0,0,1
+ZH-007,ZH-007-S05,Assessment,3,1,identified,0,0,0,1
+ZH-007,ZH-007-S05,Assessment,0,2,no disease,0,0,0,0
+ZH-007,ZH-007-S05,Assessment,1,2,disease was,0,0,0,1
+ZH-007,ZH-007-S05,Assessment,2,2,was identified,0,0,0,1
+ZH-007,ZH-007-S05,Assessment,0,3,no disease was,0,0,0,0
+ZH-007,ZH-007-S05,Assessment,1,3,disease was identified,0,0,0,1
+ZH-007,ZH-007-S05,Assessment,0,4,no disease was identified,0,0,0,0
+ZH-008,ZH-008-S01,Presentation,0,1,examination,0,0,0,0
+ZH-008,ZH-008-S01,Presentation,1,1,reveals,0,0,0,0
+ZH-008,ZH-008-S01,Presentation,2,1,tremor,0,0,0,0
+ZH-008,ZH-008-S01,Presentation,3,1,in,0,0,0,0
+ZH-008,ZH-008-S01,Presentation,4,1,the,0,0,0,0
+ZH-008,ZH-008-S01,Presentation,5,1,little,0,0,0,0
+ZH-008,ZH-008-S01,Presentation,6,1,finger,0,0,0,0
+ZH-008,ZH-008-S01,Presentation,0,2,examination reveals,0,0,0,0
+ZH-008,ZH-008-S01,Presentation,1,2,reveals tremor,0,0,0,0
+ZH-008,ZH-008-S01,Presentation,2,2,tremor in,0,0,0,0
+ZH-008,ZH-008-S01,Presentation,3,2,in the,0,0,0,0
+ZH-008,ZH-008-S01,Presentation,4,2,the little,0,0,0,0
+ZH-008,ZH-008-S01,Presentation,5,2,little finger,0,0,0,0
+ZH-008,ZH-008-S01,Presentation,0,3,examination reveals tremor,0,0,0,0
+ZH-008,ZH-008-S01,Presentation,1,3,reveals tremor in,0,0,0,0
+ZH-008,ZH-008-S01,Presentation,2,3,tremor in the,0,0,0,0
+ZH-008,ZH-008-S01,Presentation,3,3,in the little,0,0,0,0
+ZH-008,ZH-008-S01,Presentation,4,3,the little finger,0,0,0,0
+ZH-008,ZH-008-S01,Presentation,0,4,examination reveals tremor in,0,0,0,0
+ZH-008,ZH-008-S01,Presentation,1,4,reveals tremor in the,0,0,0,0
+ZH-008,ZH-008-S01,Presentation,2,4,tremor in the little,0,0,0,0
+ZH-008,ZH-008-S01,Presentation,3,4,in the little finger,0,0,0,0
+ZH-008,ZH-008-S01,Presentation,0,5,examination reveals tremor in the,0,0,0,0
+ZH-008,ZH-008-S01,Presentation,1,5,reveals tremor in the little,0,0,0,0
+ZH-008,ZH-008-S01,Presentation,2,5,tremor in the little finger,0,1,0,0
+ZH-008,ZH-008-S02,Negative Findings,0,1,the,0,0,0,0
+ZH-008,ZH-008-S02,Negative Findings,1,1,patient,0,0,0,0
+ZH-008,ZH-008-S02,Negative Findings,2,1,denies,0,0,1,0
+ZH-008,ZH-008-S02,Negative Findings,3,1,missing,0,0,0,1
+ZH-008,ZH-008-S02,Negative Findings,4,1,limb,0,0,0,1
+ZH-008,ZH-008-S02,Negative Findings,0,2,the patient,0,0,0,0
+ZH-008,ZH-008-S02,Negative Findings,1,2,patient denies,0,0,0,0
+ZH-008,ZH-008-S02,Negative Findings,2,2,denies missing,0,0,0,0
+ZH-008,ZH-008-S02,Negative Findings,3,2,missing limb,0,1,0,1
+ZH-008,ZH-008-S02,Negative Findings,0,3,the patient denies,0,0,0,0
+ZH-008,ZH-008-S02,Negative Findings,1,3,patient denies missing,0,0,0,0
+ZH-008,ZH-008-S02,Negative Findings,2,3,denies missing limb,0,0,0,0
+ZH-008,ZH-008-S02,Negative Findings,0,4,the patient denies missing,0,0,0,0
+ZH-008,ZH-008-S02,Negative Findings,1,4,patient denies missing limb,0,0,0,0
+ZH-008,ZH-008-S02,Negative Findings,0,5,the patient denies missing limb,0,0,0,0
+ZH-008,ZH-008-S03,Laboratory Analysis,0,1,laboratory,0,0,0,0
+ZH-008,ZH-008-S03,Laboratory Analysis,1,1,tests,0,0,0,0
+ZH-008,ZH-008-S03,Laboratory Analysis,2,1,did,0,0,0,0
+ZH-008,ZH-008-S03,Laboratory Analysis,3,1,not,0,0,1,0
+ZH-008,ZH-008-S03,Laboratory Analysis,4,1,identify,0,0,0,1
+ZH-008,ZH-008-S03,Laboratory Analysis,5,1,any,0,0,0,1
+ZH-008,ZH-008-S03,Laboratory Analysis,6,1,pathogen,0,0,0,1
+ZH-008,ZH-008-S03,Laboratory Analysis,0,2,laboratory tests,0,0,0,0
+ZH-008,ZH-008-S03,Laboratory Analysis,1,2,tests did,0,0,0,0
+ZH-008,ZH-008-S03,Laboratory Analysis,2,2,did not,0,0,0,0
+ZH-008,ZH-008-S03,Laboratory Analysis,3,2,not identify,0,0,0,0
+ZH-008,ZH-008-S03,Laboratory Analysis,4,2,identify any,0,0,0,1
+ZH-008,ZH-008-S03,Laboratory Analysis,5,2,any pathogen,0,0,0,1
+ZH-008,ZH-008-S03,Laboratory Analysis,0,3,laboratory tests did,0,0,0,0
+ZH-008,ZH-008-S03,Laboratory Analysis,1,3,tests did not,0,0,0,0
+ZH-008,ZH-008-S03,Laboratory Analysis,2,3,did not identify,0,0,0,0
+ZH-008,ZH-008-S03,Laboratory Analysis,3,3,not identify any,0,0,0,0
+ZH-008,ZH-008-S03,Laboratory Analysis,4,3,identify any pathogen,0,0,0,1
+ZH-008,ZH-008-S03,Laboratory Analysis,0,4,laboratory tests did not,0,0,0,0
+ZH-008,ZH-008-S03,Laboratory Analysis,1,4,tests did not identify,0,0,0,0
+ZH-008,ZH-008-S03,Laboratory Analysis,2,4,did not identify any,0,0,0,0
+ZH-008,ZH-008-S03,Laboratory Analysis,3,4,not identify any pathogen,0,0,0,0
+ZH-008,ZH-008-S03,Laboratory Analysis,0,5,laboratory tests did not identify,0,0,0,0
+ZH-008,ZH-008-S03,Laboratory Analysis,1,5,tests did not identify any,0,0,0,0
+ZH-008,ZH-008-S03,Laboratory Analysis,2,5,did not identify any pathogen,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,0,1,the,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,1,1,patient,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,2,1,has,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,3,1,a,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,4,1,history,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,5,1,of,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,6,1,infection,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,7,1,of,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,8,1,bacterial,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,9,1,origin,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,0,2,the patient,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,1,2,patient has,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,2,2,has a,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,3,2,a history,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,4,2,history of,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,5,2,of infection,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,6,2,infection of,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,7,2,of bacterial,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,8,2,bacterial origin,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,0,3,the patient has,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,1,3,patient has a,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,2,3,has a history,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,3,3,a history of,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,4,3,history of infection,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,5,3,of infection of,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,6,3,infection of bacterial,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,7,3,of bacterial origin,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,0,4,the patient has a,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,1,4,patient has a history,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,2,4,has a history of,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,3,4,a history of infection,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,4,4,history of infection of,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,5,4,of infection of bacterial,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,6,4,infection of bacterial origin,1,0,0,0
+ZH-008,ZH-008-S04,Clinical History,0,5,the patient has a history,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,1,5,patient has a history of,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,2,5,has a history of infection,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,3,5,a history of infection of,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,4,5,history of infection of bacterial,0,0,0,0
+ZH-008,ZH-008-S04,Clinical History,5,5,of infection of bacterial origin,0,0,0,0
+ZH-008,ZH-008-S05,Assessment,0,1,clinical,0,0,0,0
+ZH-008,ZH-008-S05,Assessment,1,1,impression,0,0,0,0
+ZH-008,ZH-008-S05,Assessment,2,1,bite,0,0,0,0
+ZH-008,ZH-008-S05,Assessment,3,1,deficit,0,0,0,0
+ZH-008,ZH-008-S05,Assessment,0,2,clinical impression,0,0,0,0
+ZH-008,ZH-008-S05,Assessment,1,2,impression bite,0,0,0,0
+ZH-008,ZH-008-S05,Assessment,2,2,bite deficit,1,0,0,0
+ZH-008,ZH-008-S05,Assessment,0,3,clinical impression bite,0,0,0,0
+ZH-008,ZH-008-S05,Assessment,1,3,impression bite deficit,0,0,0,0
+ZH-008,ZH-008-S05,Assessment,0,4,clinical impression bite deficit,0,0,0,0
+ZH-009,ZH-009-S01,Presentation,0,1,the,0,0,0,0
+ZH-009,ZH-009-S01,Presentation,1,1,patient,0,0,0,0
+ZH-009,ZH-009-S01,Presentation,2,1,reports,0,0,0,0
+ZH-009,ZH-009-S01,Presentation,3,1,yellow,0,0,0,0
+ZH-009,ZH-009-S01,Presentation,4,1,tinted,0,0,0,0
+ZH-009,ZH-009-S01,Presentation,5,1,tongue,0,0,0,0
+ZH-009,ZH-009-S01,Presentation,0,2,the patient,0,0,0,0
+ZH-009,ZH-009-S01,Presentation,1,2,patient reports,0,0,0,0
+ZH-009,ZH-009-S01,Presentation,2,2,reports yellow,0,0,0,0
+ZH-009,ZH-009-S01,Presentation,3,2,yellow tinted,0,0,0,0
+ZH-009,ZH-009-S01,Presentation,4,2,tinted tongue,0,0,0,0
+ZH-009,ZH-009-S01,Presentation,0,3,the patient reports,0,0,0,0
+ZH-009,ZH-009-S01,Presentation,1,3,patient reports yellow,0,0,0,0
+ZH-009,ZH-009-S01,Presentation,2,3,reports yellow tinted,0,0,0,0
+ZH-009,ZH-009-S01,Presentation,3,3,yellow tinted tongue,0,1,0,0
+ZH-009,ZH-009-S01,Presentation,0,4,the patient reports yellow,0,0,0,0
+ZH-009,ZH-009-S01,Presentation,1,4,patient reports yellow tinted,0,0,0,0
+ZH-009,ZH-009-S01,Presentation,2,4,reports yellow tinted tongue,0,0,0,0
+ZH-009,ZH-009-S01,Presentation,0,5,the patient reports yellow tinted,0,0,0,0
+ZH-009,ZH-009-S01,Presentation,1,5,patient reports yellow tinted tongue,0,0,0,0
+ZH-009,ZH-009-S02,Presentation,0,1,findings,0,0,0,0
+ZH-009,ZH-009-S02,Presentation,1,1,include,0,0,0,0
+ZH-009,ZH-009-S02,Presentation,2,1,thoracic,0,0,0,0
+ZH-009,ZH-009-S02,Presentation,3,1,discomfort,0,0,0,0
+ZH-009,ZH-009-S02,Presentation,0,2,findings include,0,0,0,0
+ZH-009,ZH-009-S02,Presentation,1,2,include thoracic,0,0,0,0
+ZH-009,ZH-009-S02,Presentation,2,2,thoracic discomfort,0,1,0,0
+ZH-009,ZH-009-S02,Presentation,0,3,findings include thoracic,0,0,0,0
+ZH-009,ZH-009-S02,Presentation,1,3,include thoracic discomfort,0,0,0,0
+ZH-009,ZH-009-S02,Presentation,0,4,findings include thoracic discomfort,0,0,0,0
+ZH-009,ZH-009-S03,Negative Findings,0,1,no,0,0,1,0
+ZH-009,ZH-009-S03,Negative Findings,1,1,signs,0,0,0,1
+ZH-009,ZH-009-S03,Negative Findings,2,1,of,0,0,0,1
+ZH-009,ZH-009-S03,Negative Findings,3,1,shaking,0,0,0,1
+ZH-009,ZH-009-S03,Negative Findings,4,1,of,0,0,0,1
+ZH-009,ZH-009-S03,Negative Findings,5,1,the,0,0,0,1
+ZH-009,ZH-009-S03,Negative Findings,6,1,pinky,0,0,0,1
+ZH-009,ZH-009-S03,Negative Findings,7,1,finger,0,0,0,1
+ZH-009,ZH-009-S03,Negative Findings,0,2,no signs,0,0,0,0
+ZH-009,ZH-009-S03,Negative Findings,1,2,signs of,0,0,0,1
+ZH-009,ZH-009-S03,Negative Findings,2,2,of shaking,0,0,0,1
+ZH-009,ZH-009-S03,Negative Findings,3,2,shaking of,0,0,0,1
+ZH-009,ZH-009-S03,Negative Findings,4,2,of the,0,0,0,1
+ZH-009,ZH-009-S03,Negative Findings,5,2,the pinky,0,0,0,1
+ZH-009,ZH-009-S03,Negative Findings,6,2,pinky finger,0,0,0,1
+ZH-009,ZH-009-S03,Negative Findings,0,3,no signs of,0,0,0,0
+ZH-009,ZH-009-S03,Negative Findings,1,3,signs of shaking,0,0,0,1
+ZH-009,ZH-009-S03,Negative Findings,2,3,of shaking of,0,0,0,1
+ZH-009,ZH-009-S03,Negative Findings,3,3,shaking of the,0,0,0,1
+ZH-009,ZH-009-S03,Negative Findings,4,3,of the pinky,0,0,0,1
+ZH-009,ZH-009-S03,Negative Findings,5,3,the pinky finger,0,0,0,1
+ZH-009,ZH-009-S03,Negative Findings,0,4,no signs of shaking,0,0,0,0
+ZH-009,ZH-009-S03,Negative Findings,1,4,signs of shaking of,0,0,0,1
+ZH-009,ZH-009-S03,Negative Findings,2,4,of shaking of the,0,0,0,1
+ZH-009,ZH-009-S03,Negative Findings,3,4,shaking of the pinky,0,0,0,1
+ZH-009,ZH-009-S03,Negative Findings,4,4,of the pinky finger,0,0,0,1
+ZH-009,ZH-009-S03,Negative Findings,0,5,no signs of shaking of,0,0,0,0
+ZH-009,ZH-009-S03,Negative Findings,1,5,signs of shaking of the,0,0,0,1
+ZH-009,ZH-009-S03,Negative Findings,2,5,of shaking of the pinky,0,0,0,1
+ZH-009,ZH-009-S03,Negative Findings,3,5,shaking of the pinky finger,0,1,0,1
+ZH-009,ZH-009-S04,Negative Findings,0,1,the,0,0,0,0
+ZH-009,ZH-009-S04,Negative Findings,1,1,patient,0,0,0,0
+ZH-009,ZH-009-S04,Negative Findings,2,1,denies,0,0,1,0
+ZH-009,ZH-009-S04,Negative Findings,3,1,loss,0,0,0,1
+ZH-009,ZH-009-S04,Negative Findings,4,1,of,0,0,0,1
+ZH-009,ZH-009-S04,Negative Findings,5,1,motor,0,0,0,1
+ZH-009,ZH-009-S04,Negative Findings,6,1,control,0,0,0,1
+ZH-009,ZH-009-S04,Negative Findings,0,2,the patient,0,0,0,0
+ZH-009,ZH-009-S04,Negative Findings,1,2,patient denies,0,0,0,0
+ZH-009,ZH-009-S04,Negative Findings,2,2,denies loss,0,0,0,0
+ZH-009,ZH-009-S04,Negative Findings,3,2,loss of,0,0,0,1
+ZH-009,ZH-009-S04,Negative Findings,4,2,of motor,0,0,0,1
+ZH-009,ZH-009-S04,Negative Findings,5,2,motor control,0,0,0,1
+ZH-009,ZH-009-S04,Negative Findings,0,3,the patient denies,0,0,0,0
+ZH-009,ZH-009-S04,Negative Findings,1,3,patient denies loss,0,0,0,0
+ZH-009,ZH-009-S04,Negative Findings,2,3,denies loss of,0,0,0,0
+ZH-009,ZH-009-S04,Negative Findings,3,3,loss of motor,0,0,0,1
+ZH-009,ZH-009-S04,Negative Findings,4,3,of motor control,0,0,0,1
+ZH-009,ZH-009-S04,Negative Findings,0,4,the patient denies loss,0,0,0,0
+ZH-009,ZH-009-S04,Negative Findings,1,4,patient denies loss of,0,0,0,0
+ZH-009,ZH-009-S04,Negative Findings,2,4,denies loss of motor,0,0,0,0
+ZH-009,ZH-009-S04,Negative Findings,3,4,loss of motor control,0,1,0,1
+ZH-009,ZH-009-S04,Negative Findings,0,5,the patient denies loss of,0,0,0,0
+ZH-009,ZH-009-S04,Negative Findings,1,5,patient denies loss of motor,0,0,0,0
+ZH-009,ZH-009-S04,Negative Findings,2,5,denies loss of motor control,0,0,0,0
+ZH-009,ZH-009-S05,Laboratory Analysis,0,1,blood,0,0,0,0
+ZH-009,ZH-009-S05,Laboratory Analysis,1,1,analysis,0,0,0,0
+ZH-009,ZH-009-S05,Laboratory Analysis,2,1,identified,0,0,0,0
+ZH-009,ZH-009-S05,Laboratory Analysis,3,1,cyanobacterium,0,0,0,0
+ZH-009,ZH-009-S05,Laboratory Analysis,4,1,zumbi,0,0,0,0
+ZH-009,ZH-009-S05,Laboratory Analysis,0,2,blood analysis,0,0,0,0
+ZH-009,ZH-009-S05,Laboratory Analysis,1,2,analysis identified,0,0,0,0
+ZH-009,ZH-009-S05,Laboratory Analysis,2,2,identified cyanobacterium,0,0,0,0
+ZH-009,ZH-009-S05,Laboratory Analysis,3,2,cyanobacterium zumbi,0,0,0,0
+ZH-009,ZH-009-S05,Laboratory Analysis,0,3,blood analysis identified,0,0,0,0
+ZH-009,ZH-009-S05,Laboratory Analysis,1,3,analysis identified cyanobacterium,0,0,0,0
+ZH-009,ZH-009-S05,Laboratory Analysis,2,3,identified cyanobacterium zumbi,0,0,0,0
+ZH-009,ZH-009-S05,Laboratory Analysis,0,4,blood analysis identified cyanobacterium,0,0,0,0
+ZH-009,ZH-009-S05,Laboratory Analysis,1,4,analysis identified cyanobacterium zumbi,0,0,0,0
+ZH-009,ZH-009-S05,Laboratory Analysis,0,5,blood analysis identified cyanobacterium zumbi,0,0,0,0
+ZH-009,ZH-009-S06,Clinical History,0,1,clinical,0,0,0,0
+ZH-009,ZH-009-S06,Clinical History,1,1,history,0,0,0,0
+ZH-009,ZH-009-S06,Clinical History,2,1,is,0,0,0,0
+ZH-009,ZH-009-S06,Clinical History,3,1,unremarkable,0,0,0,0
+ZH-009,ZH-009-S06,Clinical History,0,2,clinical history,0,0,0,0
+ZH-009,ZH-009-S06,Clinical History,1,2,history is,0,0,0,0
+ZH-009,ZH-009-S06,Clinical History,2,2,is unremarkable,0,0,0,0
+ZH-009,ZH-009-S06,Clinical History,0,3,clinical history is,0,0,0,0
+ZH-009,ZH-009-S06,Clinical History,1,3,history is unremarkable,0,0,0,0
+ZH-009,ZH-009-S06,Clinical History,0,4,clinical history is unremarkable,0,0,0,0
+ZH-009,ZH-009-S07,Assessment,0,1,findings,0,0,0,0
+ZH-009,ZH-009-S07,Assessment,1,1,are,0,0,0,0
+ZH-009,ZH-009-S07,Assessment,2,1,consistent,0,0,0,0
+ZH-009,ZH-009-S07,Assessment,3,1,with,0,0,0,0
+ZH-009,ZH-009-S07,Assessment,4,1,infection,0,0,0,0
+ZH-009,ZH-009-S07,Assessment,5,1,of,0,0,0,0
+ZH-009,ZH-009-S07,Assessment,6,1,bacterial,0,0,0,0
+ZH-009,ZH-009-S07,Assessment,7,1,origin,0,0,0,0
+ZH-009,ZH-009-S07,Assessment,0,2,findings are,0,0,0,0
+ZH-009,ZH-009-S07,Assessment,1,2,are consistent,0,0,0,0
+ZH-009,ZH-009-S07,Assessment,2,2,consistent with,0,0,0,0
+ZH-009,ZH-009-S07,Assessment,3,2,with infection,0,0,0,0
+ZH-009,ZH-009-S07,Assessment,4,2,infection of,0,0,0,0
+ZH-009,ZH-009-S07,Assessment,5,2,of bacterial,0,0,0,0
+ZH-009,ZH-009-S07,Assessment,6,2,bacterial origin,0,0,0,0
+ZH-009,ZH-009-S07,Assessment,0,3,findings are consistent,0,0,0,0
+ZH-009,ZH-009-S07,Assessment,1,3,are consistent with,0,0,0,0
+ZH-009,ZH-009-S07,Assessment,2,3,consistent with infection,0,0,0,0
+ZH-009,ZH-009-S07,Assessment,3,3,with infection of,0,0,0,0
+ZH-009,ZH-009-S07,Assessment,4,3,infection of bacterial,0,0,0,0
+ZH-009,ZH-009-S07,Assessment,5,3,of bacterial origin,0,0,0,0
+ZH-009,ZH-009-S07,Assessment,0,4,findings are consistent with,0,0,0,0
+ZH-009,ZH-009-S07,Assessment,1,4,are consistent with infection,0,0,0,0
+ZH-009,ZH-009-S07,Assessment,2,4,consistent with infection of,0,0,0,0
+ZH-009,ZH-009-S07,Assessment,3,4,with infection of bacterial,0,0,0,0
+ZH-009,ZH-009-S07,Assessment,4,4,infection of bacterial origin,1,0,0,0
+ZH-009,ZH-009-S07,Assessment,0,5,findings are consistent with infection,0,0,0,0
+ZH-009,ZH-009-S07,Assessment,1,5,are consistent with infection of,0,0,0,0
+ZH-009,ZH-009-S07,Assessment,2,5,consistent with infection of bacterial,0,0,0,0
+ZH-009,ZH-009-S07,Assessment,3,5,with infection of bacterial origin,0,0,0,0
+ZH-009,ZH-009-S08,Assessment,0,1,the,0,0,0,0
+ZH-009,ZH-009-S08,Assessment,1,1,team,0,0,0,0
+ZH-009,ZH-009-S08,Assessment,2,1,ruled,0,0,0,0
+ZH-009,ZH-009-S08,Assessment,3,1,out,0,0,0,0
+ZH-009,ZH-009-S08,Assessment,4,1,bite,0,0,0,1
+ZH-009,ZH-009-S08,Assessment,5,1,deficit,0,0,0,1
+ZH-009,ZH-009-S08,Assessment,0,2,the team,0,0,0,0
+ZH-009,ZH-009-S08,Assessment,1,2,team ruled,0,0,0,0
+ZH-009,ZH-009-S08,Assessment,2,2,ruled out,0,0,1,0
+ZH-009,ZH-009-S08,Assessment,3,2,out bite,0,0,0,0
+ZH-009,ZH-009-S08,Assessment,4,2,bite deficit,1,0,0,1
+ZH-009,ZH-009-S08,Assessment,0,3,the team ruled,0,0,0,0
+ZH-009,ZH-009-S08,Assessment,1,3,team ruled out,0,0,0,0
+ZH-009,ZH-009-S08,Assessment,2,3,ruled out bite,0,0,0,0
+ZH-009,ZH-009-S08,Assessment,3,3,out bite deficit,0,0,0,0
+ZH-009,ZH-009-S08,Assessment,0,4,the team ruled out,0,0,0,0
+ZH-009,ZH-009-S08,Assessment,1,4,team ruled out bite,0,0,0,0
+ZH-009,ZH-009-S08,Assessment,2,4,ruled out bite deficit,0,0,0,0
+ZH-009,ZH-009-S08,Assessment,0,5,the team ruled out bite,0,0,0,0
+ZH-009,ZH-009-S08,Assessment,1,5,team ruled out bite deficit,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,0,1,signs,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,1,1,of,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,2,1,pain,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,3,1,in,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,4,1,the,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,5,1,chest,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,6,1,are,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,7,1,evident,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,0,2,signs of,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,1,2,of pain,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,2,2,pain in,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,3,2,in the,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,4,2,the chest,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,5,2,chest are,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,6,2,are evident,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,0,3,signs of pain,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,1,3,of pain in,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,2,3,pain in the,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,3,3,in the chest,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,4,3,the chest are,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,5,3,chest are evident,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,0,4,signs of pain in,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,1,4,of pain in the,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,2,4,pain in the chest,0,1,0,0
+ZH-010,ZH-010-S01,Presentation,3,4,in the chest are,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,4,4,the chest are evident,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,0,5,signs of pain in the,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,1,5,of pain in the chest,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,2,5,pain in the chest are,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,3,5,in the chest are evident,0,0,0,0
+ZH-010,ZH-010-S02,Negative Findings,0,1,the,0,0,0,0
+ZH-010,ZH-010-S02,Negative Findings,1,1,patient,0,0,0,0
+ZH-010,ZH-010-S02,Negative Findings,2,1,denies,0,0,1,0
+ZH-010,ZH-010-S02,Negative Findings,3,1,paralyzed,0,0,0,1
+ZH-010,ZH-010-S02,Negative Findings,4,1,limbs,0,0,0,1
+ZH-010,ZH-010-S02,Negative Findings,0,2,the patient,0,0,0,0
+ZH-010,ZH-010-S02,Negative Findings,1,2,patient denies,0,0,0,0
+ZH-010,ZH-010-S02,Negative Findings,2,2,denies paralyzed,0,0,0,0
+ZH-010,ZH-010-S02,Negative Findings,3,2,paralyzed limbs,0,1,0,1
+ZH-010,ZH-010-S02,Negative Findings,0,3,the patient denies,0,0,0,0
+ZH-010,ZH-010-S02,Negative Findings,1,3,patient denies paralyzed,0,0,0,0
+ZH-010,ZH-010-S02,Negative Findings,2,3,denies paralyzed limbs,0,0,0,0
+ZH-010,ZH-010-S02,Negative Findings,0,4,the patient denies paralyzed,0,0,0,0
+ZH-010,ZH-010-S02,Negative Findings,1,4,patient denies paralyzed limbs,0,0,0,0
+ZH-010,ZH-010-S02,Negative Findings,0,5,the patient denies paralyzed limbs,0,0,0,0
+ZH-010,ZH-010-S03,Negative Findings,0,1,the,0,0,0,0
+ZH-010,ZH-010-S03,Negative Findings,1,1,patient,0,0,0,0
+ZH-010,ZH-010-S03,Negative Findings,2,1,is,0,0,0,0
+ZH-010,ZH-010-S03,Negative Findings,3,1,free,0,0,0,0
+ZH-010,ZH-010-S03,Negative Findings,4,1,of,0,0,0,0
+ZH-010,ZH-010-S03,Negative Findings,5,1,severe,0,0,0,1
+ZH-010,ZH-010-S03,Negative Findings,6,1,anger,0,0,0,1
+ZH-010,ZH-010-S03,Negative Findings,0,2,the patient,0,0,0,0
+ZH-010,ZH-010-S03,Negative Findings,1,2,patient is,0,0,0,0
+ZH-010,ZH-010-S03,Negative Findings,2,2,is free,0,0,0,0
+ZH-010,ZH-010-S03,Negative Findings,3,2,free of,0,0,1,0
+ZH-010,ZH-010-S03,Negative Findings,4,2,of severe,0,0,0,0
+ZH-010,ZH-010-S03,Negative Findings,5,2,severe anger,0,1,0,1
+ZH-010,ZH-010-S03,Negative Findings,0,3,the patient is,0,0,0,0
+ZH-010,ZH-010-S03,Negative Findings,1,3,patient is free,0,0,0,0
+ZH-010,ZH-010-S03,Negative Findings,2,3,is free of,0,0,0,0
+ZH-010,ZH-010-S03,Negative Findings,3,3,free of severe,0,0,0,0
+ZH-010,ZH-010-S03,Negative Findings,4,3,of severe anger,0,0,0,0
+ZH-010,ZH-010-S03,Negative Findings,0,4,the patient is free,0,0,0,0
+ZH-010,ZH-010-S03,Negative Findings,1,4,patient is free of,0,0,0,0
+ZH-010,ZH-010-S03,Negative Findings,2,4,is free of severe,0,0,0,0
+ZH-010,ZH-010-S03,Negative Findings,3,4,free of severe anger,0,0,0,0
+ZH-010,ZH-010-S03,Negative Findings,0,5,the patient is free of,0,0,0,0
+ZH-010,ZH-010-S03,Negative Findings,1,5,patient is free of severe,0,0,0,0
+ZH-010,ZH-010-S03,Negative Findings,2,5,is free of severe anger,0,0,0,0
+ZH-010,ZH-010-S04,Laboratory Analysis,0,1,blood,0,0,0,0
+ZH-010,ZH-010-S04,Laboratory Analysis,1,1,analysis,0,0,0,0
+ZH-010,ZH-010-S04,Laboratory Analysis,2,1,identified,0,0,0,0
+ZH-010,ZH-010-S04,Laboratory Analysis,3,1,deltaretrovirus,0,0,0,0
+ZH-010,ZH-010-S04,Laboratory Analysis,4,1,zumbi,0,0,0,0
+ZH-010,ZH-010-S04,Laboratory Analysis,0,2,blood analysis,0,0,0,0
+ZH-010,ZH-010-S04,Laboratory Analysis,1,2,analysis identified,0,0,0,0
+ZH-010,ZH-010-S04,Laboratory Analysis,2,2,identified deltaretrovirus,0,0,0,0
+ZH-010,ZH-010-S04,Laboratory Analysis,3,2,deltaretrovirus zumbi,0,0,0,0
+ZH-010,ZH-010-S04,Laboratory Analysis,0,3,blood analysis identified,0,0,0,0
+ZH-010,ZH-010-S04,Laboratory Analysis,1,3,analysis identified deltaretrovirus,0,0,0,0
+ZH-010,ZH-010-S04,Laboratory Analysis,2,3,identified deltaretrovirus zumbi,0,0,0,0
+ZH-010,ZH-010-S04,Laboratory Analysis,0,4,blood analysis identified deltaretrovirus,0,0,0,0
+ZH-010,ZH-010-S04,Laboratory Analysis,1,4,analysis identified deltaretrovirus zumbi,0,0,0,0
+ZH-010,ZH-010-S04,Laboratory Analysis,0,5,blood analysis identified deltaretrovirus zumbi,0,0,0,0
+ZH-010,ZH-010-S05,Clinical History,0,1,the,0,0,0,0
+ZH-010,ZH-010-S05,Clinical History,1,1,patient,0,0,0,0
+ZH-010,ZH-010-S05,Clinical History,2,1,denies,0,0,1,0
+ZH-010,ZH-010-S05,Clinical History,3,1,previous,0,0,0,1
+ZH-010,ZH-010-S05,Clinical History,4,1,bacterial,0,0,0,1
+ZH-010,ZH-010-S05,Clinical History,5,1,infection,0,0,0,1
+ZH-010,ZH-010-S05,Clinical History,0,2,the patient,0,0,0,0
+ZH-010,ZH-010-S05,Clinical History,1,2,patient denies,0,0,0,0
+ZH-010,ZH-010-S05,Clinical History,2,2,denies previous,0,0,0,0
+ZH-010,ZH-010-S05,Clinical History,3,2,previous bacterial,0,0,0,1
+ZH-010,ZH-010-S05,Clinical History,4,2,bacterial infection,1,0,0,1
+ZH-010,ZH-010-S05,Clinical History,0,3,the patient denies,0,0,0,0
+ZH-010,ZH-010-S05,Clinical History,1,3,patient denies previous,0,0,0,0
+ZH-010,ZH-010-S05,Clinical History,2,3,denies previous bacterial,0,0,0,0
+ZH-010,ZH-010-S05,Clinical History,3,3,previous bacterial infection,0,0,0,1
+ZH-010,ZH-010-S05,Clinical History,0,4,the patient denies previous,0,0,0,0
+ZH-010,ZH-010-S05,Clinical History,1,4,patient denies previous bacterial,0,0,0,0
+ZH-010,ZH-010-S05,Clinical History,2,4,denies previous bacterial infection,0,0,0,0
+ZH-010,ZH-010-S05,Clinical History,0,5,the patient denies previous bacterial,0,0,0,0
+ZH-010,ZH-010-S05,Clinical History,1,5,patient denies previous bacterial infection,0,0,0,0
+ZH-010,ZH-010-S06,Assessment,0,1,diagnosis,0,0,0,0
+ZH-010,ZH-010-S06,Assessment,1,1,viral,0,0,0,0
+ZH-010,ZH-010-S06,Assessment,2,1,infection,0,0,0,0
+ZH-010,ZH-010-S06,Assessment,0,2,diagnosis viral,0,0,0,0
+ZH-010,ZH-010-S06,Assessment,1,2,viral infection,1,0,0,0
+ZH-010,ZH-010-S06,Assessment,0,3,diagnosis viral infection,0,0,0,0
+ZH-010,ZH-010-S07,Assessment,0,1,no,0,0,1,0
+ZH-010,ZH-010-S07,Assessment,1,1,evidence,0,0,0,1
+ZH-010,ZH-010-S07,Assessment,2,1,of,0,0,0,1
+ZH-010,ZH-010-S07,Assessment,3,1,bite,0,0,0,1
+ZH-010,ZH-010-S07,Assessment,4,1,deficit,0,0,0,1
+ZH-010,ZH-010-S07,Assessment,0,2,no evidence,0,0,0,0
+ZH-010,ZH-010-S07,Assessment,1,2,evidence of,0,0,0,1
+ZH-010,ZH-010-S07,Assessment,2,2,of bite,0,0,0,1
+ZH-010,ZH-010-S07,Assessment,3,2,bite deficit,1,0,0,1
+ZH-010,ZH-010-S07,Assessment,0,3,no evidence of,0,0,0,0
+ZH-010,ZH-010-S07,Assessment,1,3,evidence of bite,0,0,0,1
+ZH-010,ZH-010-S07,Assessment,2,3,of bite deficit,0,0,0,1
+ZH-010,ZH-010-S07,Assessment,0,4,no evidence of bite,0,0,0,0
+ZH-010,ZH-010-S07,Assessment,1,4,evidence of bite deficit,0,0,0,1
+ZH-010,ZH-010-S07,Assessment,0,5,no evidence of bite deficit,0,0,0,0
+ZH-011,ZH-011-S01,Presentation,0,1,signs,0,0,0,0
+ZH-011,ZH-011-S01,Presentation,1,1,of,0,0,0,0
+ZH-011,ZH-011-S01,Presentation,2,1,missing,0,0,0,0
+ZH-011,ZH-011-S01,Presentation,3,1,limb,0,0,0,0
+ZH-011,ZH-011-S01,Presentation,4,1,are,0,0,0,0
+ZH-011,ZH-011-S01,Presentation,5,1,evident,0,0,0,0
+ZH-011,ZH-011-S01,Presentation,0,2,signs of,0,0,0,0
+ZH-011,ZH-011-S01,Presentation,1,2,of missing,0,0,0,0
+ZH-011,ZH-011-S01,Presentation,2,2,missing limb,0,1,0,0
+ZH-011,ZH-011-S01,Presentation,3,2,limb are,0,0,0,0
+ZH-011,ZH-011-S01,Presentation,4,2,are evident,0,0,0,0
+ZH-011,ZH-011-S01,Presentation,0,3,signs of missing,0,0,0,0
+ZH-011,ZH-011-S01,Presentation,1,3,of missing limb,0,0,0,0
+ZH-011,ZH-011-S01,Presentation,2,3,missing limb are,0,0,0,0
+ZH-011,ZH-011-S01,Presentation,3,3,limb are evident,0,0,0,0
+ZH-011,ZH-011-S01,Presentation,0,4,signs of missing limb,0,0,0,0
+ZH-011,ZH-011-S01,Presentation,1,4,of missing limb are,0,0,0,0
+ZH-011,ZH-011-S01,Presentation,2,4,missing limb are evident,0,0,0,0
+ZH-011,ZH-011-S01,Presentation,0,5,signs of missing limb are,0,0,0,0
+ZH-011,ZH-011-S01,Presentation,1,5,of missing limb are evident,0,0,0,0
+ZH-011,ZH-011-S02,Presentation,0,1,the,0,0,0,0
+ZH-011,ZH-011-S02,Presentation,1,1,patient,0,0,0,0
+ZH-011,ZH-011-S02,Presentation,2,1,presents,0,0,0,0
+ZH-011,ZH-011-S02,Presentation,3,1,with,0,0,0,0
+ZH-011,ZH-011-S02,Presentation,4,1,yellow,0,0,0,0
+ZH-011,ZH-011-S02,Presentation,5,1,tongue,0,0,0,0
+ZH-011,ZH-011-S02,Presentation,0,2,the patient,0,0,0,0
+ZH-011,ZH-011-S02,Presentation,1,2,patient presents,0,0,0,0
+ZH-011,ZH-011-S02,Presentation,2,2,presents with,0,0,0,0
+ZH-011,ZH-011-S02,Presentation,3,2,with yellow,0,0,0,0
+ZH-011,ZH-011-S02,Presentation,4,2,yellow tongue,0,1,0,0
+ZH-011,ZH-011-S02,Presentation,0,3,the patient presents,0,0,0,0
+ZH-011,ZH-011-S02,Presentation,1,3,patient presents with,0,0,0,0
+ZH-011,ZH-011-S02,Presentation,2,3,presents with yellow,0,0,0,0
+ZH-011,ZH-011-S02,Presentation,3,3,with yellow tongue,0,0,0,0
+ZH-011,ZH-011-S02,Presentation,0,4,the patient presents with,0,0,0,0
+ZH-011,ZH-011-S02,Presentation,1,4,patient presents with yellow,0,0,0,0
+ZH-011,ZH-011-S02,Presentation,2,4,presents with yellow tongue,0,0,0,0
+ZH-011,ZH-011-S02,Presentation,0,5,the patient presents with yellow,0,0,0,0
+ZH-011,ZH-011-S02,Presentation,1,5,patient presents with yellow tongue,0,0,0,0
+ZH-011,ZH-011-S03,Negative Findings,0,1,the,0,0,0,0
+ZH-011,ZH-011-S03,Negative Findings,1,1,patient,0,0,0,0
+ZH-011,ZH-011-S03,Negative Findings,2,1,is,0,0,0,0
+ZH-011,ZH-011-S03,Negative Findings,3,1,free,0,0,0,0
+ZH-011,ZH-011-S03,Negative Findings,4,1,of,0,0,0,0
+ZH-011,ZH-011-S03,Negative Findings,5,1,loss,0,0,0,1
+ZH-011,ZH-011-S03,Negative Findings,6,1,of,0,0,0,1
+ZH-011,ZH-011-S03,Negative Findings,7,1,motor,0,0,0,1
+ZH-011,ZH-011-S03,Negative Findings,8,1,control,0,0,0,1
+ZH-011,ZH-011-S03,Negative Findings,0,2,the patient,0,0,0,0
+ZH-011,ZH-011-S03,Negative Findings,1,2,patient is,0,0,0,0
+ZH-011,ZH-011-S03,Negative Findings,2,2,is free,0,0,0,0
+ZH-011,ZH-011-S03,Negative Findings,3,2,free of,0,0,1,0
+ZH-011,ZH-011-S03,Negative Findings,4,2,of loss,0,0,0,0
+ZH-011,ZH-011-S03,Negative Findings,5,2,loss of,0,0,0,1
+ZH-011,ZH-011-S03,Negative Findings,6,2,of motor,0,0,0,1
+ZH-011,ZH-011-S03,Negative Findings,7,2,motor control,0,0,0,1
+ZH-011,ZH-011-S03,Negative Findings,0,3,the patient is,0,0,0,0
+ZH-011,ZH-011-S03,Negative Findings,1,3,patient is free,0,0,0,0
+ZH-011,ZH-011-S03,Negative Findings,2,3,is free of,0,0,0,0
+ZH-011,ZH-011-S03,Negative Findings,3,3,free of loss,0,0,0,0
+ZH-011,ZH-011-S03,Negative Findings,4,3,of loss of,0,0,0,0
+ZH-011,ZH-011-S03,Negative Findings,5,3,loss of motor,0,0,0,1
+ZH-011,ZH-011-S03,Negative Findings,6,3,of motor control,0,0,0,1
+ZH-011,ZH-011-S03,Negative Findings,0,4,the patient is free,0,0,0,0
+ZH-011,ZH-011-S03,Negative Findings,1,4,patient is free of,0,0,0,0
+ZH-011,ZH-011-S03,Negative Findings,2,4,is free of loss,0,0,0,0
+ZH-011,ZH-011-S03,Negative Findings,3,4,free of loss of,0,0,0,0
+ZH-011,ZH-011-S03,Negative Findings,4,4,of loss of motor,0,0,0,0
+ZH-011,ZH-011-S03,Negative Findings,5,4,loss of motor control,0,1,0,1
+ZH-011,ZH-011-S03,Negative Findings,0,5,the patient is free of,0,0,0,0
+ZH-011,ZH-011-S03,Negative Findings,1,5,patient is free of loss,0,0,0,0
+ZH-011,ZH-011-S03,Negative Findings,2,5,is free of loss of,0,0,0,0
+ZH-011,ZH-011-S03,Negative Findings,3,5,free of loss of motor,0,0,0,0
+ZH-011,ZH-011-S03,Negative Findings,4,5,of loss of motor control,0,0,0,0
+ZH-011,ZH-011-S04,Laboratory Analysis,0,1,no,0,0,1,0
+ZH-011,ZH-011-S04,Laboratory Analysis,1,1,pathogen,0,0,0,1
+ZH-011,ZH-011-S04,Laboratory Analysis,2,1,was,0,0,0,1
+ZH-011,ZH-011-S04,Laboratory Analysis,3,1,isolated,0,0,0,1
+ZH-011,ZH-011-S04,Laboratory Analysis,4,1,in,0,0,0,1
+ZH-011,ZH-011-S04,Laboratory Analysis,5,1,the,0,0,0,1
+ZH-011,ZH-011-S04,Laboratory Analysis,6,1,blood,0,0,0,1
+ZH-011,ZH-011-S04,Laboratory Analysis,7,1,analysis,0,0,0,1
+ZH-011,ZH-011-S04,Laboratory Analysis,0,2,no pathogen,0,0,0,0
+ZH-011,ZH-011-S04,Laboratory Analysis,1,2,pathogen was,0,0,0,1
+ZH-011,ZH-011-S04,Laboratory Analysis,2,2,was isolated,0,0,0,1
+ZH-011,ZH-011-S04,Laboratory Analysis,3,2,isolated in,0,0,0,1
+ZH-011,ZH-011-S04,Laboratory Analysis,4,2,in the,0,0,0,1
+ZH-011,ZH-011-S04,Laboratory Analysis,5,2,the blood,0,0,0,1
+ZH-011,ZH-011-S04,Laboratory Analysis,6,2,blood analysis,0,0,0,1
+ZH-011,ZH-011-S04,Laboratory Analysis,0,3,no pathogen was,0,0,0,0
+ZH-011,ZH-011-S04,Laboratory Analysis,1,3,pathogen was isolated,0,0,0,1
+ZH-011,ZH-011-S04,Laboratory Analysis,2,3,was isolated in,0,0,0,1
+ZH-011,ZH-011-S04,Laboratory Analysis,3,3,isolated in the,0,0,0,1
+ZH-011,ZH-011-S04,Laboratory Analysis,4,3,in the blood,0,0,0,1
+ZH-011,ZH-011-S04,Laboratory Analysis,5,3,the blood analysis,0,0,0,1
+ZH-011,ZH-011-S04,Laboratory Analysis,0,4,no pathogen was isolated,0,0,0,0
+ZH-011,ZH-011-S04,Laboratory Analysis,1,4,pathogen was isolated in,0,0,0,1
+ZH-011,ZH-011-S04,Laboratory Analysis,2,4,was isolated in the,0,0,0,1
+ZH-011,ZH-011-S04,Laboratory Analysis,3,4,isolated in the blood,0,0,0,1
+ZH-011,ZH-011-S04,Laboratory Analysis,4,4,in the blood analysis,0,0,0,1
+ZH-011,ZH-011-S04,Laboratory Analysis,0,5,no pathogen was isolated in,0,0,0,0
+ZH-011,ZH-011-S04,Laboratory Analysis,1,5,pathogen was isolated in the,0,0,0,1
+ZH-011,ZH-011-S04,Laboratory Analysis,2,5,was isolated in the blood,0,0,0,1
+ZH-011,ZH-011-S04,Laboratory Analysis,3,5,isolated in the blood analysis,0,0,0,1
+ZH-011,ZH-011-S05,Clinical History,0,1,previous,0,0,0,0
+ZH-011,ZH-011-S05,Clinical History,1,1,diagnosis,0,0,0,0
+ZH-011,ZH-011-S05,Clinical History,2,1,of,0,0,0,0
+ZH-011,ZH-011-S05,Clinical History,3,1,infection,0,0,0,0
+ZH-011,ZH-011-S05,Clinical History,4,1,of,0,0,0,0
+ZH-011,ZH-011-S05,Clinical History,5,1,bacterial,0,0,0,0
+ZH-011,ZH-011-S05,Clinical History,6,1,origin,0,0,0,0
+ZH-011,ZH-011-S05,Clinical History,0,2,previous diagnosis,0,0,0,0
+ZH-011,ZH-011-S05,Clinical History,1,2,diagnosis of,0,0,0,0
+ZH-011,ZH-011-S05,Clinical History,2,2,of infection,0,0,0,0
+ZH-011,ZH-011-S05,Clinical History,3,2,infection of,0,0,0,0
+ZH-011,ZH-011-S05,Clinical History,4,2,of bacterial,0,0,0,0
+ZH-011,ZH-011-S05,Clinical History,5,2,bacterial origin,0,0,0,0
+ZH-011,ZH-011-S05,Clinical History,0,3,previous diagnosis of,0,0,0,0
+ZH-011,ZH-011-S05,Clinical History,1,3,diagnosis of infection,0,0,0,0
+ZH-011,ZH-011-S05,Clinical History,2,3,of infection of,0,0,0,0
+ZH-011,ZH-011-S05,Clinical History,3,3,infection of bacterial,0,0,0,0
+ZH-011,ZH-011-S05,Clinical History,4,3,of bacterial origin,0,0,0,0
+ZH-011,ZH-011-S05,Clinical History,0,4,previous diagnosis of infection,0,0,0,0
+ZH-011,ZH-011-S05,Clinical History,1,4,diagnosis of infection of,0,0,0,0
+ZH-011,ZH-011-S05,Clinical History,2,4,of infection of bacterial,0,0,0,0
+ZH-011,ZH-011-S05,Clinical History,3,4,infection of bacterial origin,1,0,0,0
+ZH-011,ZH-011-S05,Clinical History,0,5,previous diagnosis of infection of,0,0,0,0
+ZH-011,ZH-011-S05,Clinical History,1,5,diagnosis of infection of bacterial,0,0,0,0
+ZH-011,ZH-011-S05,Clinical History,2,5,of infection of bacterial origin,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,0,1,the,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,1,1,patient,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,2,1,was,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,3,1,diagnosed,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,4,1,with,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,5,1,deficit,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,6,1,caused,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,7,1,by,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,8,1,bite,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,0,2,the patient,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,1,2,patient was,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,2,2,was diagnosed,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,3,2,diagnosed with,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,4,2,with deficit,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,5,2,deficit caused,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,6,2,caused by,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,7,2,by bite,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,0,3,the patient was,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,1,3,patient was diagnosed,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,2,3,was diagnosed with,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,3,3,diagnosed with deficit,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,4,3,with deficit caused,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,5,3,deficit caused by,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,6,3,caused by bite,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,0,4,the patient was diagnosed,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,1,4,patient was diagnosed with,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,2,4,was diagnosed with deficit,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,3,4,diagnosed with deficit caused,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,4,4,with deficit caused by,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,5,4,deficit caused by bite,1,0,0,0
+ZH-011,ZH-011-S06,Assessment,0,5,the patient was diagnosed with,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,1,5,patient was diagnosed with deficit,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,2,5,was diagnosed with deficit caused,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,3,5,diagnosed with deficit caused by,0,0,0,0
+ZH-011,ZH-011-S06,Assessment,4,5,with deficit caused by bite,0,0,0,0
+ZH-011,ZH-011-S07,Assessment,0,1,negative,0,0,1,0
+ZH-011,ZH-011-S07,Assessment,1,1,for,0,0,0,1
+ZH-011,ZH-011-S07,Assessment,2,1,bacterial,0,0,0,1
+ZH-011,ZH-011-S07,Assessment,3,1,infection,0,0,0,1
+ZH-011,ZH-011-S07,Assessment,0,2,negative for,0,0,0,0
+ZH-011,ZH-011-S07,Assessment,1,2,for bacterial,0,0,0,1
+ZH-011,ZH-011-S07,Assessment,2,2,bacterial infection,1,0,0,1
+ZH-011,ZH-011-S07,Assessment,0,3,negative for bacterial,0,0,0,0
+ZH-011,ZH-011-S07,Assessment,1,3,for bacterial infection,0,0,0,1
+ZH-011,ZH-011-S07,Assessment,0,4,negative for bacterial infection,0,0,0,0
+ZH-012,ZH-012-S01,Presentation,0,1,examination,0,0,0,0
+ZH-012,ZH-012-S01,Presentation,1,1,reveals,0,0,0,0
+ZH-012,ZH-012-S01,Presentation,2,1,loss,0,0,0,0
+ZH-012,ZH-012-S01,Presentation,3,1,of,0,0,0,0
+ZH-012,ZH-012-S01,Presentation,4,1,motor,0,0,0,0
+ZH-012,ZH-012-S01,Presentation,5,1,control,0,0,0,0
+ZH-012,ZH-012-S01,Presentation,0,2,examination reveals,0,0,0,0
+ZH-012,ZH-012-S01,Presentation,1,2,reveals loss,0,0,0,0
+ZH-012,ZH-012-S01,Presentation,2,2,loss of,0,0,0,0
+ZH-012,ZH-012-S01,Presentation,3,2,of motor,0,0,0,0
+ZH-012,ZH-012-S01,Presentation,4,2,motor control,0,0,0,0
+ZH-012,ZH-012-S01,Presentation,0,3,examination reveals loss,0,0,0,0
+ZH-012,ZH-012-S01,Presentation,1,3,reveals loss of,0,0,0,0
+ZH-012,ZH-012-S01,Presentation,2,3,loss of motor,0,0,0,0
+ZH-012,ZH-012-S01,Presentation,3,3,of motor control,0,0,0,0
+ZH-012,ZH-012-S01,Presentation,0,4,examination reveals loss of,0,0,0,0
+ZH-012,ZH-012-S01,Presentation,1,4,reveals loss of motor,0,0,0,0
+ZH-012,ZH-012-S01,Presentation,2,4,loss of motor control,0,1,0,0
+ZH-012,ZH-012-S01,Presentation,0,5,examination reveals loss of motor,0,0,0,0
+ZH-012,ZH-012-S01,Presentation,1,5,reveals loss of motor control,0,0,0,0
+ZH-012,ZH-012-S02,Presentation,0,1,examination,0,0,0,0
+ZH-012,ZH-012-S02,Presentation,1,1,reveals,0,0,0,0
+ZH-012,ZH-012-S02,Presentation,2,1,yellow,0,0,0,0
+ZH-012,ZH-012-S02,Presentation,3,1,tongue,0,0,0,0
+ZH-012,ZH-012-S02,Presentation,0,2,examination reveals,0,0,0,0
+ZH-012,ZH-012-S02,Presentation,1,2,reveals yellow,0,0,0,0
+ZH-012,ZH-012-S02,Presentation,2,2,yellow tongue,0,1,0,0
+ZH-012,ZH-012-S02,Presentation,0,3,examination reveals yellow,0,0,0,0
+ZH-012,ZH-012-S02,Presentation,1,3,reveals yellow tongue,0,0,0,0
+ZH-012,ZH-012-S02,Presentation,0,4,examination reveals yellow tongue,0,0,0,0
+ZH-012,ZH-012-S03,Negative Findings,0,1,the,0,0,0,0
+ZH-012,ZH-012-S03,Negative Findings,1,1,patient,0,0,0,0
+ZH-012,ZH-012-S03,Negative Findings,2,1,denies,0,0,1,0
+ZH-012,ZH-012-S03,Negative Findings,3,1,severe,0,0,0,1
+ZH-012,ZH-012-S03,Negative Findings,4,1,anger,0,0,0,1
+ZH-012,ZH-012-S03,Negative Findings,0,2,the patient,0,0,0,0
+ZH-012,ZH-012-S03,Negative Findings,1,2,patient denies,0,0,0,0
+ZH-012,ZH-012-S03,Negative Findings,2,2,denies severe,0,0,0,0
+ZH-012,ZH-012-S03,Negative Findings,3,2,severe anger,0,1,0,1
+ZH-012,ZH-012-S03,Negative Findings,0,3,the patient denies,0,0,0,0
+ZH-012,ZH-012-S03,Negative Findings,1,3,patient denies severe,0,0,0,0
+ZH-012,ZH-012-S03,Negative Findings,2,3,denies severe anger,0,0,0,0
+ZH-012,ZH-012-S03,Negative Findings,0,4,the patient denies severe,0,0,0,0
+ZH-012,ZH-012-S03,Negative Findings,1,4,patient denies severe anger,0,0,0,0
+ZH-012,ZH-012-S03,Negative Findings,0,5,the patient denies severe anger,0,0,0,0
+ZH-012,ZH-012-S04,Negative Findings,0,1,the,0,0,0,0
+ZH-012,ZH-012-S04,Negative Findings,1,1,patient,0,0,0,0
+ZH-012,ZH-012-S04,Negative Findings,2,1,presents,0,0,0,0
+ZH-012,ZH-012-S04,Negative Findings,3,1,without,0,0,1,0
+ZH-012,ZH-012-S04,Negative Findings,4,1,trembling,0,0,0,1
+ZH-012,ZH-012-S04,Negative Findings,5,1,on,0,0,0,1
+ZH-012,ZH-012-S04,Negative Findings,6,1,the,0,0,0,1
+ZH-012,ZH-012-S04,Negative Findings,7,1,little,0,0,0,1
+ZH-012,ZH-012-S04,Negative Findings,8,1,finger,0,0,0,1
+ZH-012,ZH-012-S04,Negative Findings,0,2,the patient,0,0,0,0
+ZH-012,ZH-012-S04,Negative Findings,1,2,patient presents,0,0,0,0
+ZH-012,ZH-012-S04,Negative Findings,2,2,presents without,0,0,0,0
+ZH-012,ZH-012-S04,Negative Findings,3,2,without trembling,0,0,0,0
+ZH-012,ZH-012-S04,Negative Findings,4,2,trembling on,0,0,0,1
+ZH-012,ZH-012-S04,Negative Findings,5,2,on the,0,0,0,1
+ZH-012,ZH-012-S04,Negative Findings,6,2,the little,0,0,0,1
+ZH-012,ZH-012-S04,Negative Findings,7,2,little finger,0,0,0,1
+ZH-012,ZH-012-S04,Negative Findings,0,3,the patient presents,0,0,0,0
+ZH-012,ZH-012-S04,Negative Findings,1,3,patient presents without,0,0,0,0
+ZH-012,ZH-012-S04,Negative Findings,2,3,presents without trembling,0,0,0,0
+ZH-012,ZH-012-S04,Negative Findings,3,3,without trembling on,0,0,0,0
+ZH-012,ZH-012-S04,Negative Findings,4,3,trembling on the,0,0,0,1
+ZH-012,ZH-012-S04,Negative Findings,5,3,on the little,0,0,0,1
+ZH-012,ZH-012-S04,Negative Findings,6,3,the little finger,0,0,0,1
+ZH-012,ZH-012-S04,Negative Findings,0,4,the patient presents without,0,0,0,0
+ZH-012,ZH-012-S04,Negative Findings,1,4,patient presents without trembling,0,0,0,0
+ZH-012,ZH-012-S04,Negative Findings,2,4,presents without trembling on,0,0,0,0
+ZH-012,ZH-012-S04,Negative Findings,3,4,without trembling on the,0,0,0,0
+ZH-012,ZH-012-S04,Negative Findings,4,4,trembling on the little,0,0,0,1
+ZH-012,ZH-012-S04,Negative Findings,5,4,on the little finger,0,0,0,1
+ZH-012,ZH-012-S04,Negative Findings,0,5,the patient presents without trembling,0,0,0,0
+ZH-012,ZH-012-S04,Negative Findings,1,5,patient presents without trembling on,0,0,0,0
+ZH-012,ZH-012-S04,Negative Findings,2,5,presents without trembling on the,0,0,0,0
+ZH-012,ZH-012-S04,Negative Findings,3,5,without trembling on the little,0,0,0,0
+ZH-012,ZH-012-S04,Negative Findings,4,5,trembling on the little finger,0,1,0,1
+ZH-012,ZH-012-S05,Laboratory Analysis,0,1,blood,0,0,0,0
+ZH-012,ZH-012-S05,Laboratory Analysis,1,1,analysis,0,0,0,0
+ZH-012,ZH-012-S05,Laboratory Analysis,2,1,identified,0,0,0,0
+ZH-012,ZH-012-S05,Laboratory Analysis,3,1,cyanobacterium,0,0,0,0
+ZH-012,ZH-012-S05,Laboratory Analysis,4,1,zumbi,0,0,0,0
+ZH-012,ZH-012-S05,Laboratory Analysis,0,2,blood analysis,0,0,0,0
+ZH-012,ZH-012-S05,Laboratory Analysis,1,2,analysis identified,0,0,0,0
+ZH-012,ZH-012-S05,Laboratory Analysis,2,2,identified cyanobacterium,0,0,0,0
+ZH-012,ZH-012-S05,Laboratory Analysis,3,2,cyanobacterium zumbi,0,0,0,0
+ZH-012,ZH-012-S05,Laboratory Analysis,0,3,blood analysis identified,0,0,0,0
+ZH-012,ZH-012-S05,Laboratory Analysis,1,3,analysis identified cyanobacterium,0,0,0,0
+ZH-012,ZH-012-S05,Laboratory Analysis,2,3,identified cyanobacterium zumbi,0,0,0,0
+ZH-012,ZH-012-S05,Laboratory Analysis,0,4,blood analysis identified cyanobacterium,0,0,0,0
+ZH-012,ZH-012-S05,Laboratory Analysis,1,4,analysis identified cyanobacterium zumbi,0,0,0,0
+ZH-012,ZH-012-S05,Laboratory Analysis,0,5,blood analysis identified cyanobacterium zumbi,0,0,0,0
+ZH-012,ZH-012-S06,Clinical History,0,1,the,0,0,0,0
+ZH-012,ZH-012-S06,Clinical History,1,1,patient,0,0,0,0
+ZH-012,ZH-012-S06,Clinical History,2,1,denies,0,0,1,0
+ZH-012,ZH-012-S06,Clinical History,3,1,previous,0,0,0,1
+ZH-012,ZH-012-S06,Clinical History,4,1,deficit,0,0,0,1
+ZH-012,ZH-012-S06,Clinical History,5,1,caused,0,0,0,1
+ZH-012,ZH-012-S06,Clinical History,6,1,by,0,0,0,1
+ZH-012,ZH-012-S06,Clinical History,7,1,bite,0,0,0,1
+ZH-012,ZH-012-S06,Clinical History,0,2,the patient,0,0,0,0
+ZH-012,ZH-012-S06,Clinical History,1,2,patient denies,0,0,0,0
+ZH-012,ZH-012-S06,Clinical History,2,2,denies previous,0,0,0,0
+ZH-012,ZH-012-S06,Clinical History,3,2,previous deficit,0,0,0,1
+ZH-012,ZH-012-S06,Clinical History,4,2,deficit caused,0,0,0,1
+ZH-012,ZH-012-S06,Clinical History,5,2,caused by,0,0,0,1
+ZH-012,ZH-012-S06,Clinical History,6,2,by bite,0,0,0,1
+ZH-012,ZH-012-S06,Clinical History,0,3,the patient denies,0,0,0,0
+ZH-012,ZH-012-S06,Clinical History,1,3,patient denies previous,0,0,0,0
+ZH-012,ZH-012-S06,Clinical History,2,3,denies previous deficit,0,0,0,0
+ZH-012,ZH-012-S06,Clinical History,3,3,previous deficit caused,0,0,0,1
+ZH-012,ZH-012-S06,Clinical History,4,3,deficit caused by,0,0,0,1
+ZH-012,ZH-012-S06,Clinical History,5,3,caused by bite,0,0,0,1
+ZH-012,ZH-012-S06,Clinical History,0,4,the patient denies previous,0,0,0,0
+ZH-012,ZH-012-S06,Clinical History,1,4,patient denies previous deficit,0,0,0,0
+ZH-012,ZH-012-S06,Clinical History,2,4,denies previous deficit caused,0,0,0,0
+ZH-012,ZH-012-S06,Clinical History,3,4,previous deficit caused by,0,0,0,1
+ZH-012,ZH-012-S06,Clinical History,4,4,deficit caused by bite,1,0,0,1
+ZH-012,ZH-012-S06,Clinical History,0,5,the patient denies previous deficit,0,0,0,0
+ZH-012,ZH-012-S06,Clinical History,1,5,patient denies previous deficit caused,0,0,0,0
+ZH-012,ZH-012-S06,Clinical History,2,5,denies previous deficit caused by,0,0,0,0
+ZH-012,ZH-012-S06,Clinical History,3,5,previous deficit caused by bite,0,0,0,1
+ZH-012,ZH-012-S07,Assessment,0,1,findings,0,0,0,0
+ZH-012,ZH-012-S07,Assessment,1,1,are,0,0,0,0
+ZH-012,ZH-012-S07,Assessment,2,1,consistent,0,0,0,0
+ZH-012,ZH-012-S07,Assessment,3,1,with,0,0,0,0
+ZH-012,ZH-012-S07,Assessment,4,1,bacterial,0,0,0,0
+ZH-012,ZH-012-S07,Assessment,5,1,infectious,0,0,0,0
+ZH-012,ZH-012-S07,Assessment,6,1,process,0,0,0,0
+ZH-012,ZH-012-S07,Assessment,0,2,findings are,0,0,0,0
+ZH-012,ZH-012-S07,Assessment,1,2,are consistent,0,0,0,0
+ZH-012,ZH-012-S07,Assessment,2,2,consistent with,0,0,0,0
+ZH-012,ZH-012-S07,Assessment,3,2,with bacterial,0,0,0,0
+ZH-012,ZH-012-S07,Assessment,4,2,bacterial infectious,0,0,0,0
+ZH-012,ZH-012-S07,Assessment,5,2,infectious process,0,0,0,0
+ZH-012,ZH-012-S07,Assessment,0,3,findings are consistent,0,0,0,0
+ZH-012,ZH-012-S07,Assessment,1,3,are consistent with,0,0,0,0
+ZH-012,ZH-012-S07,Assessment,2,3,consistent with bacterial,0,0,0,0
+ZH-012,ZH-012-S07,Assessment,3,3,with bacterial infectious,0,0,0,0
+ZH-012,ZH-012-S07,Assessment,4,3,bacterial infectious process,1,0,0,0
+ZH-012,ZH-012-S07,Assessment,0,4,findings are consistent with,0,0,0,0
+ZH-012,ZH-012-S07,Assessment,1,4,are consistent with bacterial,0,0,0,0
+ZH-012,ZH-012-S07,Assessment,2,4,consistent with bacterial infectious,0,0,0,0
+ZH-012,ZH-012-S07,Assessment,3,4,with bacterial infectious process,0,0,0,0
+ZH-012,ZH-012-S07,Assessment,0,5,findings are consistent with bacterial,0,0,0,0
+ZH-012,ZH-012-S07,Assessment,1,5,are consistent with bacterial infectious,0,0,0,0
+ZH-012,ZH-012-S07,Assessment,2,5,consistent with bacterial infectious process,0,0,0,0
+ZH-013,ZH-013-S01,Presentation,0,1,findings,0,0,0,0
+ZH-013,ZH-013-S01,Presentation,1,1,include,0,0,0,0
+ZH-013,ZH-013-S01,Presentation,2,1,pain,0,0,0,0
+ZH-013,ZH-013-S01,Presentation,3,1,in,0,0,0,0
+ZH-013,ZH-013-S01,Presentation,4,1,the,0,0,0,0
+ZH-013,ZH-013-S01,Presentation,5,1,chest,0,0,0,0
+ZH-013,ZH-013-S01,Presentation,0,2,findings include,0,0,0,0
+ZH-013,ZH-013-S01,Presentation,1,2,include pain,0,0,0,0
+ZH-013,ZH-013-S01,Presentation,2,2,pain in,0,0,0,0
+ZH-013,ZH-013-S01,Presentation,3,2,in the,0,0,0,0
+ZH-013,ZH-013-S01,Presentation,4,2,the chest,0,0,0,0
+ZH-013,ZH-013-S01,Presentation,0,3,findings include pain,0,0,0,0
+ZH-013,ZH-013-S01,Presentation,1,3,include pain in,0,0,0,0
+ZH-013,ZH-013-S01,Presentation,2,3,pain in the,0,0,0,0
+ZH-013,ZH-013-S01,Presentation,3,3,in the chest,0,0,0,0
+ZH-013,ZH-013-S01,Presentation,0,4,findings include pain in,0,0,0,0
+ZH-013,ZH-013-S01,Presentation,1,4,include pain in the,0,0,0,0
+ZH-013,ZH-013-S01,Presentation,2,4,pain in the chest,0,1,0,0
+ZH-013,ZH-013-S01,Presentation,0,5,findings include pain in the,0,0,0,0
+ZH-013,ZH-013-S01,Presentation,1,5,include pain in the chest,0,0,0,0
+ZH-013,ZH-013-S02,Negative Findings,0,1,examination,0,0,0,0
+ZH-013,ZH-013-S02,Negative Findings,1,1,reveals,0,0,0,0
+ZH-013,ZH-013-S02,Negative Findings,2,1,no,0,0,1,0
+ZH-013,ZH-013-S02,Negative Findings,3,1,paralyzed,0,0,0,1
+ZH-013,ZH-013-S02,Negative Findings,4,1,limbs,0,0,0,1
+ZH-013,ZH-013-S02,Negative Findings,0,2,examination reveals,0,0,0,0
+ZH-013,ZH-013-S02,Negative Findings,1,2,reveals no,0,0,0,0
+ZH-013,ZH-013-S02,Negative Findings,2,2,no paralyzed,0,0,0,0
+ZH-013,ZH-013-S02,Negative Findings,3,2,paralyzed limbs,0,1,0,1
+ZH-013,ZH-013-S02,Negative Findings,0,3,examination reveals no,0,0,0,0
+ZH-013,ZH-013-S02,Negative Findings,1,3,reveals no paralyzed,0,0,0,0
+ZH-013,ZH-013-S02,Negative Findings,2,3,no paralyzed limbs,0,0,0,0
+ZH-013,ZH-013-S02,Negative Findings,0,4,examination reveals no paralyzed,0,0,0,0
+ZH-013,ZH-013-S02,Negative Findings,1,4,reveals no paralyzed limbs,0,0,0,0
+ZH-013,ZH-013-S02,Negative Findings,0,5,examination reveals no paralyzed limbs,0,0,0,0
+ZH-013,ZH-013-S03,Negative Findings,0,1,absence,0,0,1,0
+ZH-013,ZH-013-S03,Negative Findings,1,1,of,0,0,0,1
+ZH-013,ZH-013-S03,Negative Findings,2,1,acute,0,0,0,1
+ZH-013,ZH-013-S03,Negative Findings,3,1,rage,0,0,0,1
+ZH-013,ZH-013-S03,Negative Findings,4,1,attacks,0,0,0,1
+ZH-013,ZH-013-S03,Negative Findings,0,2,absence of,0,0,0,0
+ZH-013,ZH-013-S03,Negative Findings,1,2,of acute,0,0,0,1
+ZH-013,ZH-013-S03,Negative Findings,2,2,acute rage,0,0,0,1
+ZH-013,ZH-013-S03,Negative Findings,3,2,rage attacks,0,0,0,1
+ZH-013,ZH-013-S03,Negative Findings,0,3,absence of acute,0,0,0,0
+ZH-013,ZH-013-S03,Negative Findings,1,3,of acute rage,0,0,0,1
+ZH-013,ZH-013-S03,Negative Findings,2,3,acute rage attacks,0,1,0,1
+ZH-013,ZH-013-S03,Negative Findings,0,4,absence of acute rage,0,0,0,0
+ZH-013,ZH-013-S03,Negative Findings,1,4,of acute rage attacks,0,0,0,1
+ZH-013,ZH-013-S03,Negative Findings,0,5,absence of acute rage attacks,0,0,0,0
+ZH-013,ZH-013-S04,Laboratory Analysis,0,1,blood,0,0,0,0
+ZH-013,ZH-013-S04,Laboratory Analysis,1,1,culture,0,0,0,0
+ZH-013,ZH-013-S04,Laboratory Analysis,2,1,is,0,0,0,0
+ZH-013,ZH-013-S04,Laboratory Analysis,3,1,positive,0,0,0,0
+ZH-013,ZH-013-S04,Laboratory Analysis,4,1,for,0,0,0,0
+ZH-013,ZH-013-S04,Laboratory Analysis,5,1,deltaretrovirus,0,0,0,0
+ZH-013,ZH-013-S04,Laboratory Analysis,6,1,zumbi,0,0,0,0
+ZH-013,ZH-013-S04,Laboratory Analysis,0,2,blood culture,0,0,0,0
+ZH-013,ZH-013-S04,Laboratory Analysis,1,2,culture is,0,0,0,0
+ZH-013,ZH-013-S04,Laboratory Analysis,2,2,is positive,0,0,0,0
+ZH-013,ZH-013-S04,Laboratory Analysis,3,2,positive for,0,0,0,0
+ZH-013,ZH-013-S04,Laboratory Analysis,4,2,for deltaretrovirus,0,0,0,0
+ZH-013,ZH-013-S04,Laboratory Analysis,5,2,deltaretrovirus zumbi,0,0,0,0
+ZH-013,ZH-013-S04,Laboratory Analysis,0,3,blood culture is,0,0,0,0
+ZH-013,ZH-013-S04,Laboratory Analysis,1,3,culture is positive,0,0,0,0
+ZH-013,ZH-013-S04,Laboratory Analysis,2,3,is positive for,0,0,0,0
+ZH-013,ZH-013-S04,Laboratory Analysis,3,3,positive for deltaretrovirus,0,0,0,0
+ZH-013,ZH-013-S04,Laboratory Analysis,4,3,for deltaretrovirus zumbi,0,0,0,0
+ZH-013,ZH-013-S04,Laboratory Analysis,0,4,blood culture is positive,0,0,0,0
+ZH-013,ZH-013-S04,Laboratory Analysis,1,4,culture is positive for,0,0,0,0
+ZH-013,ZH-013-S04,Laboratory Analysis,2,4,is positive for deltaretrovirus,0,0,0,0
+ZH-013,ZH-013-S04,Laboratory Analysis,3,4,positive for deltaretrovirus zumbi,0,0,0,0
+ZH-013,ZH-013-S04,Laboratory Analysis,0,5,blood culture is positive for,0,0,0,0
+ZH-013,ZH-013-S04,Laboratory Analysis,1,5,culture is positive for deltaretrovirus,0,0,0,0
+ZH-013,ZH-013-S04,Laboratory Analysis,2,5,is positive for deltaretrovirus zumbi,0,0,0,0
+ZH-013,ZH-013-S05,Clinical History,0,1,the,0,0,0,0
+ZH-013,ZH-013-S05,Clinical History,1,1,patient,0,0,0,0
+ZH-013,ZH-013-S05,Clinical History,2,1,denies,0,0,1,0
+ZH-013,ZH-013-S05,Clinical History,3,1,previous,0,0,0,1
+ZH-013,ZH-013-S05,Clinical History,4,1,fight,0,0,0,1
+ZH-013,ZH-013-S05,Clinical History,5,1,related,0,0,0,1
+ZH-013,ZH-013-S05,Clinical History,6,1,trauma,0,0,0,1
+ZH-013,ZH-013-S05,Clinical History,0,2,the patient,0,0,0,0
+ZH-013,ZH-013-S05,Clinical History,1,2,patient denies,0,0,0,0
+ZH-013,ZH-013-S05,Clinical History,2,2,denies previous,0,0,0,0
+ZH-013,ZH-013-S05,Clinical History,3,2,previous fight,0,0,0,1
+ZH-013,ZH-013-S05,Clinical History,4,2,fight related,0,0,0,1
+ZH-013,ZH-013-S05,Clinical History,5,2,related trauma,0,0,0,1
+ZH-013,ZH-013-S05,Clinical History,0,3,the patient denies,0,0,0,0
+ZH-013,ZH-013-S05,Clinical History,1,3,patient denies previous,0,0,0,0
+ZH-013,ZH-013-S05,Clinical History,2,3,denies previous fight,0,0,0,0
+ZH-013,ZH-013-S05,Clinical History,3,3,previous fight related,0,0,0,1
+ZH-013,ZH-013-S05,Clinical History,4,3,fight related trauma,1,0,0,1
+ZH-013,ZH-013-S05,Clinical History,0,4,the patient denies previous,0,0,0,0
+ZH-013,ZH-013-S05,Clinical History,1,4,patient denies previous fight,0,0,0,0
+ZH-013,ZH-013-S05,Clinical History,2,4,denies previous fight related,0,0,0,0
+ZH-013,ZH-013-S05,Clinical History,3,4,previous fight related trauma,0,0,0,1
+ZH-013,ZH-013-S05,Clinical History,0,5,the patient denies previous fight,0,0,0,0
+ZH-013,ZH-013-S05,Clinical History,1,5,patient denies previous fight related,0,0,0,0
+ZH-013,ZH-013-S05,Clinical History,2,5,denies previous fight related trauma,0,0,0,0
+ZH-013,ZH-013-S06,Assessment,0,1,the,0,0,0,0
+ZH-013,ZH-013-S06,Assessment,1,1,patient,0,0,0,0
+ZH-013,ZH-013-S06,Assessment,2,1,was,0,0,0,0
+ZH-013,ZH-013-S06,Assessment,3,1,diagnosed,0,0,0,0
+ZH-013,ZH-013-S06,Assessment,4,1,with,0,0,0,0
+ZH-013,ZH-013-S06,Assessment,5,1,viral,0,0,0,0
+ZH-013,ZH-013-S06,Assessment,6,1,infection,0,0,0,0
+ZH-013,ZH-013-S06,Assessment,0,2,the patient,0,0,0,0
+ZH-013,ZH-013-S06,Assessment,1,2,patient was,0,0,0,0
+ZH-013,ZH-013-S06,Assessment,2,2,was diagnosed,0,0,0,0
+ZH-013,ZH-013-S06,Assessment,3,2,diagnosed with,0,0,0,0
+ZH-013,ZH-013-S06,Assessment,4,2,with viral,0,0,0,0
+ZH-013,ZH-013-S06,Assessment,5,2,viral infection,1,0,0,0
+ZH-013,ZH-013-S06,Assessment,0,3,the patient was,0,0,0,0
+ZH-013,ZH-013-S06,Assessment,1,3,patient was diagnosed,0,0,0,0
+ZH-013,ZH-013-S06,Assessment,2,3,was diagnosed with,0,0,0,0
+ZH-013,ZH-013-S06,Assessment,3,3,diagnosed with viral,0,0,0,0
+ZH-013,ZH-013-S06,Assessment,4,3,with viral infection,0,0,0,0
+ZH-013,ZH-013-S06,Assessment,0,4,the patient was diagnosed,0,0,0,0
+ZH-013,ZH-013-S06,Assessment,1,4,patient was diagnosed with,0,0,0,0
+ZH-013,ZH-013-S06,Assessment,2,4,was diagnosed with viral,0,0,0,0
+ZH-013,ZH-013-S06,Assessment,3,4,diagnosed with viral infection,0,0,0,0
+ZH-013,ZH-013-S06,Assessment,0,5,the patient was diagnosed with,0,0,0,0
+ZH-013,ZH-013-S06,Assessment,1,5,patient was diagnosed with viral,0,0,0,0
+ZH-013,ZH-013-S06,Assessment,2,5,was diagnosed with viral infection,0,0,0,0
+ZH-014,ZH-014-S01,Presentation,0,1,examination,0,0,0,0
+ZH-014,ZH-014-S01,Presentation,1,1,reveals,0,0,0,0
+ZH-014,ZH-014-S01,Presentation,2,1,limb,0,0,0,0
+ZH-014,ZH-014-S01,Presentation,3,1,loss,0,0,0,0
+ZH-014,ZH-014-S01,Presentation,0,2,examination reveals,0,0,0,0
+ZH-014,ZH-014-S01,Presentation,1,2,reveals limb,0,0,0,0
+ZH-014,ZH-014-S01,Presentation,2,2,limb loss,0,1,0,0
+ZH-014,ZH-014-S01,Presentation,0,3,examination reveals limb,0,0,0,0
+ZH-014,ZH-014-S01,Presentation,1,3,reveals limb loss,0,0,0,0
+ZH-014,ZH-014-S01,Presentation,0,4,examination reveals limb loss,0,0,0,0
+ZH-014,ZH-014-S02,Negative Findings,0,1,the,0,0,0,0
+ZH-014,ZH-014-S02,Negative Findings,1,1,patient,0,0,0,0
+ZH-014,ZH-014-S02,Negative Findings,2,1,presents,0,0,0,0
+ZH-014,ZH-014-S02,Negative Findings,3,1,without,0,0,1,0
+ZH-014,ZH-014-S02,Negative Findings,4,1,paralysis,0,1,0,1
+ZH-014,ZH-014-S02,Negative Findings,0,2,the patient,0,0,0,0
+ZH-014,ZH-014-S02,Negative Findings,1,2,patient presents,0,0,0,0
+ZH-014,ZH-014-S02,Negative Findings,2,2,presents without,0,0,0,0
+ZH-014,ZH-014-S02,Negative Findings,3,2,without paralysis,0,0,0,0
+ZH-014,ZH-014-S02,Negative Findings,0,3,the patient presents,0,0,0,0
+ZH-014,ZH-014-S02,Negative Findings,1,3,patient presents without,0,0,0,0
+ZH-014,ZH-014-S02,Negative Findings,2,3,presents without paralysis,0,0,0,0
+ZH-014,ZH-014-S02,Negative Findings,0,4,the patient presents without,0,0,0,0
+ZH-014,ZH-014-S02,Negative Findings,1,4,patient presents without paralysis,0,0,0,0
+ZH-014,ZH-014-S02,Negative Findings,0,5,the patient presents without paralysis,0,0,0,0
+ZH-014,ZH-014-S03,Negative Findings,0,1,absence,0,0,1,0
+ZH-014,ZH-014-S03,Negative Findings,1,1,of,0,0,0,1
+ZH-014,ZH-014-S03,Negative Findings,2,1,pain,0,0,0,1
+ZH-014,ZH-014-S03,Negative Findings,3,1,in,0,0,0,1
+ZH-014,ZH-014-S03,Negative Findings,4,1,the,0,0,0,1
+ZH-014,ZH-014-S03,Negative Findings,5,1,chest,0,0,0,1
+ZH-014,ZH-014-S03,Negative Findings,0,2,absence of,0,0,0,0
+ZH-014,ZH-014-S03,Negative Findings,1,2,of pain,0,0,0,1
+ZH-014,ZH-014-S03,Negative Findings,2,2,pain in,0,0,0,1
+ZH-014,ZH-014-S03,Negative Findings,3,2,in the,0,0,0,1
+ZH-014,ZH-014-S03,Negative Findings,4,2,the chest,0,0,0,1
+ZH-014,ZH-014-S03,Negative Findings,0,3,absence of pain,0,0,0,0
+ZH-014,ZH-014-S03,Negative Findings,1,3,of pain in,0,0,0,1
+ZH-014,ZH-014-S03,Negative Findings,2,3,pain in the,0,0,0,1
+ZH-014,ZH-014-S03,Negative Findings,3,3,in the chest,0,0,0,1
+ZH-014,ZH-014-S03,Negative Findings,0,4,absence of pain in,0,0,0,0
+ZH-014,ZH-014-S03,Negative Findings,1,4,of pain in the,0,0,0,1
+ZH-014,ZH-014-S03,Negative Findings,2,4,pain in the chest,0,1,0,1
+ZH-014,ZH-014-S03,Negative Findings,0,5,absence of pain in the,0,0,0,0
+ZH-014,ZH-014-S03,Negative Findings,1,5,of pain in the chest,0,0,0,1
+ZH-014,ZH-014-S04,Laboratory Analysis,0,1,laboratory,0,0,0,0
+ZH-014,ZH-014-S04,Laboratory Analysis,1,1,tests,0,0,0,0
+ZH-014,ZH-014-S04,Laboratory Analysis,2,1,did,0,0,0,0
+ZH-014,ZH-014-S04,Laboratory Analysis,3,1,not,0,0,1,0
+ZH-014,ZH-014-S04,Laboratory Analysis,4,1,identify,0,0,0,1
+ZH-014,ZH-014-S04,Laboratory Analysis,5,1,any,0,0,0,1
+ZH-014,ZH-014-S04,Laboratory Analysis,6,1,pathogen,0,0,0,1
+ZH-014,ZH-014-S04,Laboratory Analysis,0,2,laboratory tests,0,0,0,0
+ZH-014,ZH-014-S04,Laboratory Analysis,1,2,tests did,0,0,0,0
+ZH-014,ZH-014-S04,Laboratory Analysis,2,2,did not,0,0,0,0
+ZH-014,ZH-014-S04,Laboratory Analysis,3,2,not identify,0,0,0,0
+ZH-014,ZH-014-S04,Laboratory Analysis,4,2,identify any,0,0,0,1
+ZH-014,ZH-014-S04,Laboratory Analysis,5,2,any pathogen,0,0,0,1
+ZH-014,ZH-014-S04,Laboratory Analysis,0,3,laboratory tests did,0,0,0,0
+ZH-014,ZH-014-S04,Laboratory Analysis,1,3,tests did not,0,0,0,0
+ZH-014,ZH-014-S04,Laboratory Analysis,2,3,did not identify,0,0,0,0
+ZH-014,ZH-014-S04,Laboratory Analysis,3,3,not identify any,0,0,0,0
+ZH-014,ZH-014-S04,Laboratory Analysis,4,3,identify any pathogen,0,0,0,1
+ZH-014,ZH-014-S04,Laboratory Analysis,0,4,laboratory tests did not,0,0,0,0
+ZH-014,ZH-014-S04,Laboratory Analysis,1,4,tests did not identify,0,0,0,0
+ZH-014,ZH-014-S04,Laboratory Analysis,2,4,did not identify any,0,0,0,0
+ZH-014,ZH-014-S04,Laboratory Analysis,3,4,not identify any pathogen,0,0,0,0
+ZH-014,ZH-014-S04,Laboratory Analysis,0,5,laboratory tests did not identify,0,0,0,0
+ZH-014,ZH-014-S04,Laboratory Analysis,1,5,tests did not identify any,0,0,0,0
+ZH-014,ZH-014-S04,Laboratory Analysis,2,5,did not identify any pathogen,0,0,0,0
+ZH-014,ZH-014-S05,Clinical History,0,1,no,0,0,1,0
+ZH-014,ZH-014-S05,Clinical History,1,1,previous,0,0,0,1
+ZH-014,ZH-014-S05,Clinical History,2,1,diagnosis,0,0,0,1
+ZH-014,ZH-014-S05,Clinical History,3,1,was,0,0,0,1
+ZH-014,ZH-014-S05,Clinical History,4,1,recorded,0,0,0,1
+ZH-014,ZH-014-S05,Clinical History,0,2,no previous,0,0,0,0
+ZH-014,ZH-014-S05,Clinical History,1,2,previous diagnosis,0,0,0,1
+ZH-014,ZH-014-S05,Clinical History,2,2,diagnosis was,0,0,0,1
+ZH-014,ZH-014-S05,Clinical History,3,2,was recorded,0,0,0,1
+ZH-014,ZH-014-S05,Clinical History,0,3,no previous diagnosis,0,0,0,0
+ZH-014,ZH-014-S05,Clinical History,1,3,previous diagnosis was,0,0,0,1
+ZH-014,ZH-014-S05,Clinical History,2,3,diagnosis was recorded,0,0,0,1
+ZH-014,ZH-014-S05,Clinical History,0,4,no previous diagnosis was,0,0,0,0
+ZH-014,ZH-014-S05,Clinical History,1,4,previous diagnosis was recorded,0,0,0,1
+ZH-014,ZH-014-S05,Clinical History,0,5,no previous diagnosis was recorded,0,0,0,0
+ZH-014,ZH-014-S06,Assessment,0,1,diagnosis,0,0,0,0
+ZH-014,ZH-014-S06,Assessment,1,1,fight,0,0,0,0
+ZH-014,ZH-014-S06,Assessment,2,1,injury,0,0,0,0
+ZH-014,ZH-014-S06,Assessment,0,2,diagnosis fight,0,0,0,0
+ZH-014,ZH-014-S06,Assessment,1,2,fight injury,1,0,0,0
+ZH-014,ZH-014-S06,Assessment,0,3,diagnosis fight injury,0,0,0,0
+ZH-014,ZH-014-S07,Assessment,0,1,negative,0,0,1,0
+ZH-014,ZH-014-S07,Assessment,1,1,for,0,0,0,1
+ZH-014,ZH-014-S07,Assessment,2,1,infection,0,0,0,1
+ZH-014,ZH-014-S07,Assessment,3,1,of,0,0,0,1
+ZH-014,ZH-014-S07,Assessment,4,1,viral,0,0,0,1
+ZH-014,ZH-014-S07,Assessment,5,1,origin,0,0,0,1
+ZH-014,ZH-014-S07,Assessment,0,2,negative for,0,0,0,0
+ZH-014,ZH-014-S07,Assessment,1,2,for infection,0,0,0,1
+ZH-014,ZH-014-S07,Assessment,2,2,infection of,0,0,0,1
+ZH-014,ZH-014-S07,Assessment,3,2,of viral,0,0,0,1
+ZH-014,ZH-014-S07,Assessment,4,2,viral origin,0,0,0,1
+ZH-014,ZH-014-S07,Assessment,0,3,negative for infection,0,0,0,0
+ZH-014,ZH-014-S07,Assessment,1,3,for infection of,0,0,0,1
+ZH-014,ZH-014-S07,Assessment,2,3,infection of viral,0,0,0,1
+ZH-014,ZH-014-S07,Assessment,3,3,of viral origin,0,0,0,1
+ZH-014,ZH-014-S07,Assessment,0,4,negative for infection of,0,0,0,0
+ZH-014,ZH-014-S07,Assessment,1,4,for infection of viral,0,0,0,1
+ZH-014,ZH-014-S07,Assessment,2,4,infection of viral origin,1,0,0,1
+ZH-014,ZH-014-S07,Assessment,0,5,negative for infection of viral,0,0,0,0
+ZH-014,ZH-014-S07,Assessment,1,5,for infection of viral origin,0,0,0,1
+ZH-015,ZH-015-S01,Presentation,0,1,findings,0,0,0,0
+ZH-015,ZH-015-S01,Presentation,1,1,include,0,0,0,0
+ZH-015,ZH-015-S01,Presentation,2,1,yellow,0,0,0,0
+ZH-015,ZH-015-S01,Presentation,3,1,tongue,0,0,0,0
+ZH-015,ZH-015-S01,Presentation,0,2,findings include,0,0,0,0
+ZH-015,ZH-015-S01,Presentation,1,2,include yellow,0,0,0,0
+ZH-015,ZH-015-S01,Presentation,2,2,yellow tongue,0,1,0,0
+ZH-015,ZH-015-S01,Presentation,0,3,findings include yellow,0,0,0,0
+ZH-015,ZH-015-S01,Presentation,1,3,include yellow tongue,0,0,0,0
+ZH-015,ZH-015-S01,Presentation,0,4,findings include yellow tongue,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,0,1,the,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,1,1,patient,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,2,1,presents,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,3,1,with,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,4,1,trembling,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,5,1,on,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,6,1,the,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,7,1,little,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,8,1,finger,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,0,2,the patient,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,1,2,patient presents,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,2,2,presents with,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,3,2,with trembling,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,4,2,trembling on,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,5,2,on the,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,6,2,the little,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,7,2,little finger,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,0,3,the patient presents,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,1,3,patient presents with,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,2,3,presents with trembling,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,3,3,with trembling on,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,4,3,trembling on the,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,5,3,on the little,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,6,3,the little finger,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,0,4,the patient presents with,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,1,4,patient presents with trembling,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,2,4,presents with trembling on,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,3,4,with trembling on the,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,4,4,trembling on the little,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,5,4,on the little finger,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,0,5,the patient presents with trembling,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,1,5,patient presents with trembling on,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,2,5,presents with trembling on the,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,3,5,with trembling on the little,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,4,5,trembling on the little finger,0,1,0,0
+ZH-015,ZH-015-S03,Negative Findings,0,1,absence,0,0,1,0
+ZH-015,ZH-015-S03,Negative Findings,1,1,of,0,0,0,1
+ZH-015,ZH-015-S03,Negative Findings,2,1,severe,0,0,0,1
+ZH-015,ZH-015-S03,Negative Findings,3,1,anger,0,0,0,1
+ZH-015,ZH-015-S03,Negative Findings,0,2,absence of,0,0,0,0
+ZH-015,ZH-015-S03,Negative Findings,1,2,of severe,0,0,0,1
+ZH-015,ZH-015-S03,Negative Findings,2,2,severe anger,0,1,0,1
+ZH-015,ZH-015-S03,Negative Findings,0,3,absence of severe,0,0,0,0
+ZH-015,ZH-015-S03,Negative Findings,1,3,of severe anger,0,0,0,1
+ZH-015,ZH-015-S03,Negative Findings,0,4,absence of severe anger,0,0,0,0
+ZH-015,ZH-015-S04,Laboratory Analysis,0,1,blood,0,0,0,0
+ZH-015,ZH-015-S04,Laboratory Analysis,1,1,analysis,0,0,0,0
+ZH-015,ZH-015-S04,Laboratory Analysis,2,1,returned,0,0,0,0
+ZH-015,ZH-015-S04,Laboratory Analysis,3,1,no,0,0,1,0
+ZH-015,ZH-015-S04,Laboratory Analysis,4,1,relevant,0,0,0,1
+ZH-015,ZH-015-S04,Laboratory Analysis,5,1,findings,0,0,0,1
+ZH-015,ZH-015-S04,Laboratory Analysis,0,2,blood analysis,0,0,0,0
+ZH-015,ZH-015-S04,Laboratory Analysis,1,2,analysis returned,0,0,0,0
+ZH-015,ZH-015-S04,Laboratory Analysis,2,2,returned no,0,0,0,0
+ZH-015,ZH-015-S04,Laboratory Analysis,3,2,no relevant,0,0,0,0
+ZH-015,ZH-015-S04,Laboratory Analysis,4,2,relevant findings,0,0,0,1
+ZH-015,ZH-015-S04,Laboratory Analysis,0,3,blood analysis returned,0,0,0,0
+ZH-015,ZH-015-S04,Laboratory Analysis,1,3,analysis returned no,0,0,0,0
+ZH-015,ZH-015-S04,Laboratory Analysis,2,3,returned no relevant,0,0,0,0
+ZH-015,ZH-015-S04,Laboratory Analysis,3,3,no relevant findings,0,0,0,0
+ZH-015,ZH-015-S04,Laboratory Analysis,0,4,blood analysis returned no,0,0,0,0
+ZH-015,ZH-015-S04,Laboratory Analysis,1,4,analysis returned no relevant,0,0,0,0
+ZH-015,ZH-015-S04,Laboratory Analysis,2,4,returned no relevant findings,0,0,0,0
+ZH-015,ZH-015-S04,Laboratory Analysis,0,5,blood analysis returned no relevant,0,0,0,0
+ZH-015,ZH-015-S04,Laboratory Analysis,1,5,analysis returned no relevant findings,0,0,0,0
+ZH-015,ZH-015-S05,Clinical History,0,1,previous,0,0,0,0
+ZH-015,ZH-015-S05,Clinical History,1,1,diagnosis,0,0,0,0
+ZH-015,ZH-015-S05,Clinical History,2,1,of,0,0,0,0
+ZH-015,ZH-015-S05,Clinical History,3,1,infection,0,0,0,0
+ZH-015,ZH-015-S05,Clinical History,4,1,of,0,0,0,0
+ZH-015,ZH-015-S05,Clinical History,5,1,bacterial,0,0,0,0
+ZH-015,ZH-015-S05,Clinical History,6,1,origin,0,0,0,0
+ZH-015,ZH-015-S05,Clinical History,0,2,previous diagnosis,0,0,0,0
+ZH-015,ZH-015-S05,Clinical History,1,2,diagnosis of,0,0,0,0
+ZH-015,ZH-015-S05,Clinical History,2,2,of infection,0,0,0,0
+ZH-015,ZH-015-S05,Clinical History,3,2,infection of,0,0,0,0
+ZH-015,ZH-015-S05,Clinical History,4,2,of bacterial,0,0,0,0
+ZH-015,ZH-015-S05,Clinical History,5,2,bacterial origin,0,0,0,0
+ZH-015,ZH-015-S05,Clinical History,0,3,previous diagnosis of,0,0,0,0
+ZH-015,ZH-015-S05,Clinical History,1,3,diagnosis of infection,0,0,0,0
+ZH-015,ZH-015-S05,Clinical History,2,3,of infection of,0,0,0,0
+ZH-015,ZH-015-S05,Clinical History,3,3,infection of bacterial,0,0,0,0
+ZH-015,ZH-015-S05,Clinical History,4,3,of bacterial origin,0,0,0,0
+ZH-015,ZH-015-S05,Clinical History,0,4,previous diagnosis of infection,0,0,0,0
+ZH-015,ZH-015-S05,Clinical History,1,4,diagnosis of infection of,0,0,0,0
+ZH-015,ZH-015-S05,Clinical History,2,4,of infection of bacterial,0,0,0,0
+ZH-015,ZH-015-S05,Clinical History,3,4,infection of bacterial origin,1,0,0,0
+ZH-015,ZH-015-S05,Clinical History,0,5,previous diagnosis of infection of,0,0,0,0
+ZH-015,ZH-015-S05,Clinical History,1,5,diagnosis of infection of bacterial,0,0,0,0
+ZH-015,ZH-015-S05,Clinical History,2,5,of infection of bacterial origin,0,0,0,0
+ZH-015,ZH-015-S06,Assessment,0,1,diagnosis,0,0,0,0
+ZH-015,ZH-015-S06,Assessment,1,1,bite,0,0,0,0
+ZH-015,ZH-015-S06,Assessment,2,1,related,0,0,0,0
+ZH-015,ZH-015-S06,Assessment,3,1,deficit,0,0,0,0
+ZH-015,ZH-015-S06,Assessment,0,2,diagnosis bite,0,0,0,0
+ZH-015,ZH-015-S06,Assessment,1,2,bite related,0,0,0,0
+ZH-015,ZH-015-S06,Assessment,2,2,related deficit,0,0,0,0
+ZH-015,ZH-015-S06,Assessment,0,3,diagnosis bite related,0,0,0,0
+ZH-015,ZH-015-S06,Assessment,1,3,bite related deficit,1,0,0,0
+ZH-015,ZH-015-S06,Assessment,0,4,diagnosis bite related deficit,0,0,0,0
+ZH-015,ZH-015-S07,Assessment,0,1,the,0,0,0,0
+ZH-015,ZH-015-S07,Assessment,1,1,team,0,0,0,0
+ZH-015,ZH-015-S07,Assessment,2,1,ruled,0,0,0,0
+ZH-015,ZH-015-S07,Assessment,3,1,out,0,0,0,0
+ZH-015,ZH-015-S07,Assessment,4,1,bacterial,0,0,0,1
+ZH-015,ZH-015-S07,Assessment,5,1,infectious,0,0,0,1
+ZH-015,ZH-015-S07,Assessment,6,1,process,0,0,0,1
+ZH-015,ZH-015-S07,Assessment,0,2,the team,0,0,0,0
+ZH-015,ZH-015-S07,Assessment,1,2,team ruled,0,0,0,0
+ZH-015,ZH-015-S07,Assessment,2,2,ruled out,0,0,1,0
+ZH-015,ZH-015-S07,Assessment,3,2,out bacterial,0,0,0,0
+ZH-015,ZH-015-S07,Assessment,4,2,bacterial infectious,0,0,0,1
+ZH-015,ZH-015-S07,Assessment,5,2,infectious process,0,0,0,1
+ZH-015,ZH-015-S07,Assessment,0,3,the team ruled,0,0,0,0
+ZH-015,ZH-015-S07,Assessment,1,3,team ruled out,0,0,0,0
+ZH-015,ZH-015-S07,Assessment,2,3,ruled out bacterial,0,0,0,0
+ZH-015,ZH-015-S07,Assessment,3,3,out bacterial infectious,0,0,0,0
+ZH-015,ZH-015-S07,Assessment,4,3,bacterial infectious process,1,0,0,1
+ZH-015,ZH-015-S07,Assessment,0,4,the team ruled out,0,0,0,0
+ZH-015,ZH-015-S07,Assessment,1,4,team ruled out bacterial,0,0,0,0
+ZH-015,ZH-015-S07,Assessment,2,4,ruled out bacterial infectious,0,0,0,0
+ZH-015,ZH-015-S07,Assessment,3,4,out bacterial infectious process,0,0,0,0
+ZH-015,ZH-015-S07,Assessment,0,5,the team ruled out bacterial,0,0,0,0
+ZH-015,ZH-015-S07,Assessment,1,5,team ruled out bacterial infectious,0,0,0,0
+ZH-015,ZH-015-S07,Assessment,2,5,ruled out bacterial infectious process,0,0,0,0
+ZH-016,ZH-016-S01,Presentation,0,1,examination,0,0,0,0
+ZH-016,ZH-016-S01,Presentation,1,1,reveals,0,0,0,0
+ZH-016,ZH-016-S01,Presentation,2,1,missing,0,0,0,0
+ZH-016,ZH-016-S01,Presentation,3,1,limb,0,0,0,0
+ZH-016,ZH-016-S01,Presentation,0,2,examination reveals,0,0,0,0
+ZH-016,ZH-016-S01,Presentation,1,2,reveals missing,0,0,0,0
+ZH-016,ZH-016-S01,Presentation,2,2,missing limb,0,1,0,0
+ZH-016,ZH-016-S01,Presentation,0,3,examination reveals missing,0,0,0,0
+ZH-016,ZH-016-S01,Presentation,1,3,reveals missing limb,0,0,0,0
+ZH-016,ZH-016-S01,Presentation,0,4,examination reveals missing limb,0,0,0,0
+ZH-016,ZH-016-S02,Presentation,0,1,the,0,0,0,0
+ZH-016,ZH-016-S02,Presentation,1,1,patient,0,0,0,0
+ZH-016,ZH-016-S02,Presentation,2,1,reports,0,0,0,0
+ZH-016,ZH-016-S02,Presentation,3,1,yellow,0,0,0,0
+ZH-016,ZH-016-S02,Presentation,4,1,tongue,0,0,0,0
+ZH-016,ZH-016-S02,Presentation,0,2,the patient,0,0,0,0
+ZH-016,ZH-016-S02,Presentation,1,2,patient reports,0,0,0,0
+ZH-016,ZH-016-S02,Presentation,2,2,reports yellow,0,0,0,0
+ZH-016,ZH-016-S02,Presentation,3,2,yellow tongue,0,1,0,0
+ZH-016,ZH-016-S02,Presentation,0,3,the patient reports,0,0,0,0
+ZH-016,ZH-016-S02,Presentation,1,3,patient reports yellow,0,0,0,0
+ZH-016,ZH-016-S02,Presentation,2,3,reports yellow tongue,0,0,0,0
+ZH-016,ZH-016-S02,Presentation,0,4,the patient reports yellow,0,0,0,0
+ZH-016,ZH-016-S02,Presentation,1,4,patient reports yellow tongue,0,0,0,0
+ZH-016,ZH-016-S02,Presentation,0,5,the patient reports yellow tongue,0,0,0,0
+ZH-016,ZH-016-S03,Presentation,0,1,findings,0,0,0,0
+ZH-016,ZH-016-S03,Presentation,1,1,include,0,0,0,0
+ZH-016,ZH-016-S03,Presentation,2,1,shaking,0,0,0,0
+ZH-016,ZH-016-S03,Presentation,3,1,of,0,0,0,0
+ZH-016,ZH-016-S03,Presentation,4,1,the,0,0,0,0
+ZH-016,ZH-016-S03,Presentation,5,1,pinky,0,0,0,0
+ZH-016,ZH-016-S03,Presentation,6,1,finger,0,0,0,0
+ZH-016,ZH-016-S03,Presentation,0,2,findings include,0,0,0,0
+ZH-016,ZH-016-S03,Presentation,1,2,include shaking,0,0,0,0
+ZH-016,ZH-016-S03,Presentation,2,2,shaking of,0,0,0,0
+ZH-016,ZH-016-S03,Presentation,3,2,of the,0,0,0,0
+ZH-016,ZH-016-S03,Presentation,4,2,the pinky,0,0,0,0
+ZH-016,ZH-016-S03,Presentation,5,2,pinky finger,0,0,0,0
+ZH-016,ZH-016-S03,Presentation,0,3,findings include shaking,0,0,0,0
+ZH-016,ZH-016-S03,Presentation,1,3,include shaking of,0,0,0,0
+ZH-016,ZH-016-S03,Presentation,2,3,shaking of the,0,0,0,0
+ZH-016,ZH-016-S03,Presentation,3,3,of the pinky,0,0,0,0
+ZH-016,ZH-016-S03,Presentation,4,3,the pinky finger,0,0,0,0
+ZH-016,ZH-016-S03,Presentation,0,4,findings include shaking of,0,0,0,0
+ZH-016,ZH-016-S03,Presentation,1,4,include shaking of the,0,0,0,0
+ZH-016,ZH-016-S03,Presentation,2,4,shaking of the pinky,0,0,0,0
+ZH-016,ZH-016-S03,Presentation,3,4,of the pinky finger,0,0,0,0
+ZH-016,ZH-016-S03,Presentation,0,5,findings include shaking of the,0,0,0,0
+ZH-016,ZH-016-S03,Presentation,1,5,include shaking of the pinky,0,0,0,0
+ZH-016,ZH-016-S03,Presentation,2,5,shaking of the pinky finger,0,1,0,0
+ZH-016,ZH-016-S04,Negative Findings,0,1,no,0,0,1,0
+ZH-016,ZH-016-S04,Negative Findings,1,1,signs,0,0,0,1
+ZH-016,ZH-016-S04,Negative Findings,2,1,of,0,0,0,1
+ZH-016,ZH-016-S04,Negative Findings,3,1,intense,0,0,0,1
+ZH-016,ZH-016-S04,Negative Findings,4,1,anger,0,0,0,1
+ZH-016,ZH-016-S04,Negative Findings,5,1,episodes,0,0,0,1
+ZH-016,ZH-016-S04,Negative Findings,0,2,no signs,0,0,0,0
+ZH-016,ZH-016-S04,Negative Findings,1,2,signs of,0,0,0,1
+ZH-016,ZH-016-S04,Negative Findings,2,2,of intense,0,0,0,1
+ZH-016,ZH-016-S04,Negative Findings,3,2,intense anger,0,0,0,1
+ZH-016,ZH-016-S04,Negative Findings,4,2,anger episodes,0,0,0,1
+ZH-016,ZH-016-S04,Negative Findings,0,3,no signs of,0,0,0,0
+ZH-016,ZH-016-S04,Negative Findings,1,3,signs of intense,0,0,0,1
+ZH-016,ZH-016-S04,Negative Findings,2,3,of intense anger,0,0,0,1
+ZH-016,ZH-016-S04,Negative Findings,3,3,intense anger episodes,0,1,0,1
+ZH-016,ZH-016-S04,Negative Findings,0,4,no signs of intense,0,0,0,0
+ZH-016,ZH-016-S04,Negative Findings,1,4,signs of intense anger,0,0,0,1
+ZH-016,ZH-016-S04,Negative Findings,2,4,of intense anger episodes,0,0,0,1
+ZH-016,ZH-016-S04,Negative Findings,0,5,no signs of intense anger,0,0,0,0
+ZH-016,ZH-016-S04,Negative Findings,1,5,signs of intense anger episodes,0,0,0,1
+ZH-016,ZH-016-S05,Laboratory Analysis,0,1,no,0,0,1,0
+ZH-016,ZH-016-S05,Laboratory Analysis,1,1,pathogen,0,0,0,1
+ZH-016,ZH-016-S05,Laboratory Analysis,2,1,was,0,0,0,1
+ZH-016,ZH-016-S05,Laboratory Analysis,3,1,isolated,0,0,0,1
+ZH-016,ZH-016-S05,Laboratory Analysis,4,1,in,0,0,0,1
+ZH-016,ZH-016-S05,Laboratory Analysis,5,1,the,0,0,0,1
+ZH-016,ZH-016-S05,Laboratory Analysis,6,1,blood,0,0,0,1
+ZH-016,ZH-016-S05,Laboratory Analysis,7,1,analysis,0,0,0,1
+ZH-016,ZH-016-S05,Laboratory Analysis,0,2,no pathogen,0,0,0,0
+ZH-016,ZH-016-S05,Laboratory Analysis,1,2,pathogen was,0,0,0,1
+ZH-016,ZH-016-S05,Laboratory Analysis,2,2,was isolated,0,0,0,1
+ZH-016,ZH-016-S05,Laboratory Analysis,3,2,isolated in,0,0,0,1
+ZH-016,ZH-016-S05,Laboratory Analysis,4,2,in the,0,0,0,1
+ZH-016,ZH-016-S05,Laboratory Analysis,5,2,the blood,0,0,0,1
+ZH-016,ZH-016-S05,Laboratory Analysis,6,2,blood analysis,0,0,0,1
+ZH-016,ZH-016-S05,Laboratory Analysis,0,3,no pathogen was,0,0,0,0
+ZH-016,ZH-016-S05,Laboratory Analysis,1,3,pathogen was isolated,0,0,0,1
+ZH-016,ZH-016-S05,Laboratory Analysis,2,3,was isolated in,0,0,0,1
+ZH-016,ZH-016-S05,Laboratory Analysis,3,3,isolated in the,0,0,0,1
+ZH-016,ZH-016-S05,Laboratory Analysis,4,3,in the blood,0,0,0,1
+ZH-016,ZH-016-S05,Laboratory Analysis,5,3,the blood analysis,0,0,0,1
+ZH-016,ZH-016-S05,Laboratory Analysis,0,4,no pathogen was isolated,0,0,0,0
+ZH-016,ZH-016-S05,Laboratory Analysis,1,4,pathogen was isolated in,0,0,0,1
+ZH-016,ZH-016-S05,Laboratory Analysis,2,4,was isolated in the,0,0,0,1
+ZH-016,ZH-016-S05,Laboratory Analysis,3,4,isolated in the blood,0,0,0,1
+ZH-016,ZH-016-S05,Laboratory Analysis,4,4,in the blood analysis,0,0,0,1
+ZH-016,ZH-016-S05,Laboratory Analysis,0,5,no pathogen was isolated in,0,0,0,0
+ZH-016,ZH-016-S05,Laboratory Analysis,1,5,pathogen was isolated in the,0,0,0,1
+ZH-016,ZH-016-S05,Laboratory Analysis,2,5,was isolated in the blood,0,0,0,1
+ZH-016,ZH-016-S05,Laboratory Analysis,3,5,isolated in the blood analysis,0,0,0,1
+ZH-016,ZH-016-S06,Clinical History,0,1,history,0,0,0,0
+ZH-016,ZH-016-S06,Clinical History,1,1,of,0,0,0,0
+ZH-016,ZH-016-S06,Clinical History,2,1,bacterial,0,0,0,0
+ZH-016,ZH-016-S06,Clinical History,3,1,infection,0,0,0,0
+ZH-016,ZH-016-S06,Clinical History,0,2,history of,0,0,0,0
+ZH-016,ZH-016-S06,Clinical History,1,2,of bacterial,0,0,0,0
+ZH-016,ZH-016-S06,Clinical History,2,2,bacterial infection,1,0,0,0
+ZH-016,ZH-016-S06,Clinical History,0,3,history of bacterial,0,0,0,0
+ZH-016,ZH-016-S06,Clinical History,1,3,of bacterial infection,0,0,0,0
+ZH-016,ZH-016-S06,Clinical History,0,4,history of bacterial infection,0,0,0,0
+ZH-016,ZH-016-S07,Assessment,0,1,findings,0,0,0,0
+ZH-016,ZH-016-S07,Assessment,1,1,are,0,0,0,0
+ZH-016,ZH-016-S07,Assessment,2,1,consistent,0,0,0,0
+ZH-016,ZH-016-S07,Assessment,3,1,with,0,0,0,0
+ZH-016,ZH-016-S07,Assessment,4,1,deficit,0,0,0,0
+ZH-016,ZH-016-S07,Assessment,5,1,caused,0,0,0,0
+ZH-016,ZH-016-S07,Assessment,6,1,by,0,0,0,0
+ZH-016,ZH-016-S07,Assessment,7,1,bite,0,0,0,0
+ZH-016,ZH-016-S07,Assessment,0,2,findings are,0,0,0,0
+ZH-016,ZH-016-S07,Assessment,1,2,are consistent,0,0,0,0
+ZH-016,ZH-016-S07,Assessment,2,2,consistent with,0,0,0,0
+ZH-016,ZH-016-S07,Assessment,3,2,with deficit,0,0,0,0
+ZH-016,ZH-016-S07,Assessment,4,2,deficit caused,0,0,0,0
+ZH-016,ZH-016-S07,Assessment,5,2,caused by,0,0,0,0
+ZH-016,ZH-016-S07,Assessment,6,2,by bite,0,0,0,0
+ZH-016,ZH-016-S07,Assessment,0,3,findings are consistent,0,0,0,0
+ZH-016,ZH-016-S07,Assessment,1,3,are consistent with,0,0,0,0
+ZH-016,ZH-016-S07,Assessment,2,3,consistent with deficit,0,0,0,0
+ZH-016,ZH-016-S07,Assessment,3,3,with deficit caused,0,0,0,0
+ZH-016,ZH-016-S07,Assessment,4,3,deficit caused by,0,0,0,0
+ZH-016,ZH-016-S07,Assessment,5,3,caused by bite,0,0,0,0
+ZH-016,ZH-016-S07,Assessment,0,4,findings are consistent with,0,0,0,0
+ZH-016,ZH-016-S07,Assessment,1,4,are consistent with deficit,0,0,0,0
+ZH-016,ZH-016-S07,Assessment,2,4,consistent with deficit caused,0,0,0,0
+ZH-016,ZH-016-S07,Assessment,3,4,with deficit caused by,0,0,0,0
+ZH-016,ZH-016-S07,Assessment,4,4,deficit caused by bite,1,0,0,0
+ZH-016,ZH-016-S07,Assessment,0,5,findings are consistent with deficit,0,0,0,0
+ZH-016,ZH-016-S07,Assessment,1,5,are consistent with deficit caused,0,0,0,0
+ZH-016,ZH-016-S07,Assessment,2,5,consistent with deficit caused by,0,0,0,0
+ZH-016,ZH-016-S07,Assessment,3,5,with deficit caused by bite,0,0,0,0
+ZH-017,ZH-017-S01,Presentation,0,1,signs,0,0,0,0
+ZH-017,ZH-017-S01,Presentation,1,1,of,0,0,0,0
+ZH-017,ZH-017-S01,Presentation,2,1,thoracic,0,0,0,0
+ZH-017,ZH-017-S01,Presentation,3,1,discomfort,0,0,0,0
+ZH-017,ZH-017-S01,Presentation,4,1,are,0,0,0,0
+ZH-017,ZH-017-S01,Presentation,5,1,evident,0,0,0,0
+ZH-017,ZH-017-S01,Presentation,0,2,signs of,0,0,0,0
+ZH-017,ZH-017-S01,Presentation,1,2,of thoracic,0,0,0,0
+ZH-017,ZH-017-S01,Presentation,2,2,thoracic discomfort,0,1,0,0
+ZH-017,ZH-017-S01,Presentation,3,2,discomfort are,0,0,0,0
+ZH-017,ZH-017-S01,Presentation,4,2,are evident,0,0,0,0
+ZH-017,ZH-017-S01,Presentation,0,3,signs of thoracic,0,0,0,0
+ZH-017,ZH-017-S01,Presentation,1,3,of thoracic discomfort,0,0,0,0
+ZH-017,ZH-017-S01,Presentation,2,3,thoracic discomfort are,0,0,0,0
+ZH-017,ZH-017-S01,Presentation,3,3,discomfort are evident,0,0,0,0
+ZH-017,ZH-017-S01,Presentation,0,4,signs of thoracic discomfort,0,0,0,0
+ZH-017,ZH-017-S01,Presentation,1,4,of thoracic discomfort are,0,0,0,0
+ZH-017,ZH-017-S01,Presentation,2,4,thoracic discomfort are evident,0,0,0,0
+ZH-017,ZH-017-S01,Presentation,0,5,signs of thoracic discomfort are,0,0,0,0
+ZH-017,ZH-017-S01,Presentation,1,5,of thoracic discomfort are evident,0,0,0,0
+ZH-017,ZH-017-S02,Negative Findings,0,1,absence,0,0,1,0
+ZH-017,ZH-017-S02,Negative Findings,1,1,of,0,0,0,1
+ZH-017,ZH-017-S02,Negative Findings,2,1,acute,0,0,0,1
+ZH-017,ZH-017-S02,Negative Findings,3,1,rage,0,0,0,1
+ZH-017,ZH-017-S02,Negative Findings,4,1,attacks,0,0,0,1
+ZH-017,ZH-017-S02,Negative Findings,0,2,absence of,0,0,0,0
+ZH-017,ZH-017-S02,Negative Findings,1,2,of acute,0,0,0,1
+ZH-017,ZH-017-S02,Negative Findings,2,2,acute rage,0,0,0,1
+ZH-017,ZH-017-S02,Negative Findings,3,2,rage attacks,0,0,0,1
+ZH-017,ZH-017-S02,Negative Findings,0,3,absence of acute,0,0,0,0
+ZH-017,ZH-017-S02,Negative Findings,1,3,of acute rage,0,0,0,1
+ZH-017,ZH-017-S02,Negative Findings,2,3,acute rage attacks,0,1,0,1
+ZH-017,ZH-017-S02,Negative Findings,0,4,absence of acute rage,0,0,0,0
+ZH-017,ZH-017-S02,Negative Findings,1,4,of acute rage attacks,0,0,0,1
+ZH-017,ZH-017-S02,Negative Findings,0,5,absence of acute rage attacks,0,0,0,0
+ZH-017,ZH-017-S03,Laboratory Analysis,0,1,blood,0,0,0,0
+ZH-017,ZH-017-S03,Laboratory Analysis,1,1,analysis,0,0,0,0
+ZH-017,ZH-017-S03,Laboratory Analysis,2,1,returned,0,0,0,0
+ZH-017,ZH-017-S03,Laboratory Analysis,3,1,no,0,0,1,0
+ZH-017,ZH-017-S03,Laboratory Analysis,4,1,relevant,0,0,0,1
+ZH-017,ZH-017-S03,Laboratory Analysis,5,1,findings,0,0,0,1
+ZH-017,ZH-017-S03,Laboratory Analysis,0,2,blood analysis,0,0,0,0
+ZH-017,ZH-017-S03,Laboratory Analysis,1,2,analysis returned,0,0,0,0
+ZH-017,ZH-017-S03,Laboratory Analysis,2,2,returned no,0,0,0,0
+ZH-017,ZH-017-S03,Laboratory Analysis,3,2,no relevant,0,0,0,0
+ZH-017,ZH-017-S03,Laboratory Analysis,4,2,relevant findings,0,0,0,1
+ZH-017,ZH-017-S03,Laboratory Analysis,0,3,blood analysis returned,0,0,0,0
+ZH-017,ZH-017-S03,Laboratory Analysis,1,3,analysis returned no,0,0,0,0
+ZH-017,ZH-017-S03,Laboratory Analysis,2,3,returned no relevant,0,0,0,0
+ZH-017,ZH-017-S03,Laboratory Analysis,3,3,no relevant findings,0,0,0,0
+ZH-017,ZH-017-S03,Laboratory Analysis,0,4,blood analysis returned no,0,0,0,0
+ZH-017,ZH-017-S03,Laboratory Analysis,1,4,analysis returned no relevant,0,0,0,0
+ZH-017,ZH-017-S03,Laboratory Analysis,2,4,returned no relevant findings,0,0,0,0
+ZH-017,ZH-017-S03,Laboratory Analysis,0,5,blood analysis returned no relevant,0,0,0,0
+ZH-017,ZH-017-S03,Laboratory Analysis,1,5,analysis returned no relevant findings,0,0,0,0
+ZH-017,ZH-017-S04,Clinical History,0,1,no,0,0,1,0
+ZH-017,ZH-017-S04,Clinical History,1,1,previous,0,0,0,1
+ZH-017,ZH-017-S04,Clinical History,2,1,diagnosis,0,0,0,1
+ZH-017,ZH-017-S04,Clinical History,3,1,was,0,0,0,1
+ZH-017,ZH-017-S04,Clinical History,4,1,recorded,0,0,0,1
+ZH-017,ZH-017-S04,Clinical History,0,2,no previous,0,0,0,0
+ZH-017,ZH-017-S04,Clinical History,1,2,previous diagnosis,0,0,0,1
+ZH-017,ZH-017-S04,Clinical History,2,2,diagnosis was,0,0,0,1
+ZH-017,ZH-017-S04,Clinical History,3,2,was recorded,0,0,0,1
+ZH-017,ZH-017-S04,Clinical History,0,3,no previous diagnosis,0,0,0,0
+ZH-017,ZH-017-S04,Clinical History,1,3,previous diagnosis was,0,0,0,1
+ZH-017,ZH-017-S04,Clinical History,2,3,diagnosis was recorded,0,0,0,1
+ZH-017,ZH-017-S04,Clinical History,0,4,no previous diagnosis was,0,0,0,0
+ZH-017,ZH-017-S04,Clinical History,1,4,previous diagnosis was recorded,0,0,0,1
+ZH-017,ZH-017-S04,Clinical History,0,5,no previous diagnosis was recorded,0,0,0,0
+ZH-017,ZH-017-S05,Assessment,0,1,diagnosis,0,0,0,0
+ZH-017,ZH-017-S05,Assessment,1,1,altercation,0,0,0,0
+ZH-017,ZH-017-S05,Assessment,2,1,injury,0,0,0,0
+ZH-017,ZH-017-S05,Assessment,0,2,diagnosis altercation,0,0,0,0
+ZH-017,ZH-017-S05,Assessment,1,2,altercation injury,1,0,0,0
+ZH-017,ZH-017-S05,Assessment,0,3,diagnosis altercation injury,0,0,0,0
+ZH-018,ZH-018-S01,Presentation,0,1,signs,0,0,0,0
+ZH-018,ZH-018-S01,Presentation,1,1,of,0,0,0,0
+ZH-018,ZH-018-S01,Presentation,2,1,yellowish,0,0,0,0
+ZH-018,ZH-018-S01,Presentation,3,1,tongue,0,0,0,0
+ZH-018,ZH-018-S01,Presentation,4,1,are,0,0,0,0
+ZH-018,ZH-018-S01,Presentation,5,1,evident,0,0,0,0
+ZH-018,ZH-018-S01,Presentation,0,2,signs of,0,0,0,0
+ZH-018,ZH-018-S01,Presentation,1,2,of yellowish,0,0,0,0
+ZH-018,ZH-018-S01,Presentation,2,2,yellowish tongue,0,1,0,0
+ZH-018,ZH-018-S01,Presentation,3,2,tongue are,0,0,0,0
+ZH-018,ZH-018-S01,Presentation,4,2,are evident,0,0,0,0
+ZH-018,ZH-018-S01,Presentation,0,3,signs of yellowish,0,0,0,0
+ZH-018,ZH-018-S01,Presentation,1,3,of yellowish tongue,0,0,0,0
+ZH-018,ZH-018-S01,Presentation,2,3,yellowish tongue are,0,0,0,0
+ZH-018,ZH-018-S01,Presentation,3,3,tongue are evident,0,0,0,0
+ZH-018,ZH-018-S01,Presentation,0,4,signs of yellowish tongue,0,0,0,0
+ZH-018,ZH-018-S01,Presentation,1,4,of yellowish tongue are,0,0,0,0
+ZH-018,ZH-018-S01,Presentation,2,4,yellowish tongue are evident,0,0,0,0
+ZH-018,ZH-018-S01,Presentation,0,5,signs of yellowish tongue are,0,0,0,0
+ZH-018,ZH-018-S01,Presentation,1,5,of yellowish tongue are evident,0,0,0,0
+ZH-018,ZH-018-S02,Negative Findings,0,1,the,0,0,0,0
+ZH-018,ZH-018-S02,Negative Findings,1,1,patient,0,0,0,0
+ZH-018,ZH-018-S02,Negative Findings,2,1,denies,0,0,1,0
+ZH-018,ZH-018-S02,Negative Findings,3,1,shaking,0,0,0,1
+ZH-018,ZH-018-S02,Negative Findings,4,1,of,0,0,0,1
+ZH-018,ZH-018-S02,Negative Findings,5,1,the,0,0,0,1
+ZH-018,ZH-018-S02,Negative Findings,6,1,pinky,0,0,0,1
+ZH-018,ZH-018-S02,Negative Findings,7,1,finger,0,0,0,1
+ZH-018,ZH-018-S02,Negative Findings,0,2,the patient,0,0,0,0
+ZH-018,ZH-018-S02,Negative Findings,1,2,patient denies,0,0,0,0
+ZH-018,ZH-018-S02,Negative Findings,2,2,denies shaking,0,0,0,0
+ZH-018,ZH-018-S02,Negative Findings,3,2,shaking of,0,0,0,1
+ZH-018,ZH-018-S02,Negative Findings,4,2,of the,0,0,0,1
+ZH-018,ZH-018-S02,Negative Findings,5,2,the pinky,0,0,0,1
+ZH-018,ZH-018-S02,Negative Findings,6,2,pinky finger,0,0,0,1
+ZH-018,ZH-018-S02,Negative Findings,0,3,the patient denies,0,0,0,0
+ZH-018,ZH-018-S02,Negative Findings,1,3,patient denies shaking,0,0,0,0
+ZH-018,ZH-018-S02,Negative Findings,2,3,denies shaking of,0,0,0,0
+ZH-018,ZH-018-S02,Negative Findings,3,3,shaking of the,0,0,0,1
+ZH-018,ZH-018-S02,Negative Findings,4,3,of the pinky,0,0,0,1
+ZH-018,ZH-018-S02,Negative Findings,5,3,the pinky finger,0,0,0,1
+ZH-018,ZH-018-S02,Negative Findings,0,4,the patient denies shaking,0,0,0,0
+ZH-018,ZH-018-S02,Negative Findings,1,4,patient denies shaking of,0,0,0,0
+ZH-018,ZH-018-S02,Negative Findings,2,4,denies shaking of the,0,0,0,0
+ZH-018,ZH-018-S02,Negative Findings,3,4,shaking of the pinky,0,0,0,1
+ZH-018,ZH-018-S02,Negative Findings,4,4,of the pinky finger,0,0,0,1
+ZH-018,ZH-018-S02,Negative Findings,0,5,the patient denies shaking of,0,0,0,0
+ZH-018,ZH-018-S02,Negative Findings,1,5,patient denies shaking of the,0,0,0,0
+ZH-018,ZH-018-S02,Negative Findings,2,5,denies shaking of the pinky,0,0,0,0
+ZH-018,ZH-018-S02,Negative Findings,3,5,shaking of the pinky finger,0,1,0,1
+ZH-018,ZH-018-S03,Laboratory Analysis,0,1,blood,0,0,0,0
+ZH-018,ZH-018-S03,Laboratory Analysis,1,1,analysis,0,0,0,0
+ZH-018,ZH-018-S03,Laboratory Analysis,2,1,identified,0,0,0,0
+ZH-018,ZH-018-S03,Laboratory Analysis,3,1,cyanobacterium,0,0,0,0
+ZH-018,ZH-018-S03,Laboratory Analysis,4,1,zumbi,0,0,0,0
+ZH-018,ZH-018-S03,Laboratory Analysis,0,2,blood analysis,0,0,0,0
+ZH-018,ZH-018-S03,Laboratory Analysis,1,2,analysis identified,0,0,0,0
+ZH-018,ZH-018-S03,Laboratory Analysis,2,2,identified cyanobacterium,0,0,0,0
+ZH-018,ZH-018-S03,Laboratory Analysis,3,2,cyanobacterium zumbi,0,0,0,0
+ZH-018,ZH-018-S03,Laboratory Analysis,0,3,blood analysis identified,0,0,0,0
+ZH-018,ZH-018-S03,Laboratory Analysis,1,3,analysis identified cyanobacterium,0,0,0,0
+ZH-018,ZH-018-S03,Laboratory Analysis,2,3,identified cyanobacterium zumbi,0,0,0,0
+ZH-018,ZH-018-S03,Laboratory Analysis,0,4,blood analysis identified cyanobacterium,0,0,0,0
+ZH-018,ZH-018-S03,Laboratory Analysis,1,4,analysis identified cyanobacterium zumbi,0,0,0,0
+ZH-018,ZH-018-S03,Laboratory Analysis,0,5,blood analysis identified cyanobacterium zumbi,0,0,0,0
+ZH-018,ZH-018-S04,Clinical History,0,1,the,0,0,0,0
+ZH-018,ZH-018-S04,Clinical History,1,1,patient,0,0,0,0
+ZH-018,ZH-018-S04,Clinical History,2,1,denies,0,0,1,0
+ZH-018,ZH-018-S04,Clinical History,3,1,previous,0,0,0,1
+ZH-018,ZH-018-S04,Clinical History,4,1,infection,0,0,0,1
+ZH-018,ZH-018-S04,Clinical History,5,1,of,0,0,0,1
+ZH-018,ZH-018-S04,Clinical History,6,1,viral,0,0,0,1
+ZH-018,ZH-018-S04,Clinical History,7,1,origin,0,0,0,1
+ZH-018,ZH-018-S04,Clinical History,0,2,the patient,0,0,0,0
+ZH-018,ZH-018-S04,Clinical History,1,2,patient denies,0,0,0,0
+ZH-018,ZH-018-S04,Clinical History,2,2,denies previous,0,0,0,0
+ZH-018,ZH-018-S04,Clinical History,3,2,previous infection,0,0,0,1
+ZH-018,ZH-018-S04,Clinical History,4,2,infection of,0,0,0,1
+ZH-018,ZH-018-S04,Clinical History,5,2,of viral,0,0,0,1
+ZH-018,ZH-018-S04,Clinical History,6,2,viral origin,0,0,0,1
+ZH-018,ZH-018-S04,Clinical History,0,3,the patient denies,0,0,0,0
+ZH-018,ZH-018-S04,Clinical History,1,3,patient denies previous,0,0,0,0
+ZH-018,ZH-018-S04,Clinical History,2,3,denies previous infection,0,0,0,0
+ZH-018,ZH-018-S04,Clinical History,3,3,previous infection of,0,0,0,1
+ZH-018,ZH-018-S04,Clinical History,4,3,infection of viral,0,0,0,1
+ZH-018,ZH-018-S04,Clinical History,5,3,of viral origin,0,0,0,1
+ZH-018,ZH-018-S04,Clinical History,0,4,the patient denies previous,0,0,0,0
+ZH-018,ZH-018-S04,Clinical History,1,4,patient denies previous infection,0,0,0,0
+ZH-018,ZH-018-S04,Clinical History,2,4,denies previous infection of,0,0,0,0
+ZH-018,ZH-018-S04,Clinical History,3,4,previous infection of viral,0,0,0,1
+ZH-018,ZH-018-S04,Clinical History,4,4,infection of viral origin,1,0,0,1
+ZH-018,ZH-018-S04,Clinical History,0,5,the patient denies previous infection,0,0,0,0
+ZH-018,ZH-018-S04,Clinical History,1,5,patient denies previous infection of,0,0,0,0
+ZH-018,ZH-018-S04,Clinical History,2,5,denies previous infection of viral,0,0,0,0
+ZH-018,ZH-018-S04,Clinical History,3,5,previous infection of viral origin,0,0,0,1
+ZH-018,ZH-018-S05,Assessment,0,1,diagnosis,0,0,0,0
+ZH-018,ZH-018-S05,Assessment,1,1,bacterial,0,0,0,0
+ZH-018,ZH-018-S05,Assessment,2,1,infectious,0,0,0,0
+ZH-018,ZH-018-S05,Assessment,3,1,process,0,0,0,0
+ZH-018,ZH-018-S05,Assessment,0,2,diagnosis bacterial,0,0,0,0
+ZH-018,ZH-018-S05,Assessment,1,2,bacterial infectious,0,0,0,0
+ZH-018,ZH-018-S05,Assessment,2,2,infectious process,0,0,0,0
+ZH-018,ZH-018-S05,Assessment,0,3,diagnosis bacterial infectious,0,0,0,0
+ZH-018,ZH-018-S05,Assessment,1,3,bacterial infectious process,1,0,0,0
+ZH-018,ZH-018-S05,Assessment,0,4,diagnosis bacterial infectious process,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,0,1,the,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,1,1,patient,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,2,1,reports,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,3,1,tremor,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,4,1,in,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,5,1,the,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,6,1,little,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,7,1,finger,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,0,2,the patient,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,1,2,patient reports,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,2,2,reports tremor,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,3,2,tremor in,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,4,2,in the,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,5,2,the little,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,6,2,little finger,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,0,3,the patient reports,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,1,3,patient reports tremor,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,2,3,reports tremor in,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,3,3,tremor in the,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,4,3,in the little,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,5,3,the little finger,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,0,4,the patient reports tremor,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,1,4,patient reports tremor in,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,2,4,reports tremor in the,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,3,4,tremor in the little,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,4,4,in the little finger,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,0,5,the patient reports tremor in,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,1,5,patient reports tremor in the,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,2,5,reports tremor in the little,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,3,5,tremor in the little finger,0,1,0,0
+ZH-019,ZH-019-S02,Negative Findings,0,1,the,0,0,0,0
+ZH-019,ZH-019-S02,Negative Findings,1,1,patient,0,0,0,0
+ZH-019,ZH-019-S02,Negative Findings,2,1,presents,0,0,0,0
+ZH-019,ZH-019-S02,Negative Findings,3,1,without,0,0,1,0
+ZH-019,ZH-019-S02,Negative Findings,4,1,paralysis,0,1,0,1
+ZH-019,ZH-019-S02,Negative Findings,0,2,the patient,0,0,0,0
+ZH-019,ZH-019-S02,Negative Findings,1,2,patient presents,0,0,0,0
+ZH-019,ZH-019-S02,Negative Findings,2,2,presents without,0,0,0,0
+ZH-019,ZH-019-S02,Negative Findings,3,2,without paralysis,0,0,0,0
+ZH-019,ZH-019-S02,Negative Findings,0,3,the patient presents,0,0,0,0
+ZH-019,ZH-019-S02,Negative Findings,1,3,patient presents without,0,0,0,0
+ZH-019,ZH-019-S02,Negative Findings,2,3,presents without paralysis,0,0,0,0
+ZH-019,ZH-019-S02,Negative Findings,0,4,the patient presents without,0,0,0,0
+ZH-019,ZH-019-S02,Negative Findings,1,4,patient presents without paralysis,0,0,0,0
+ZH-019,ZH-019-S02,Negative Findings,0,5,the patient presents without paralysis,0,0,0,0
+ZH-019,ZH-019-S03,Laboratory Analysis,0,1,no,0,0,1,0
+ZH-019,ZH-019-S03,Laboratory Analysis,1,1,pathogen,0,0,0,1
+ZH-019,ZH-019-S03,Laboratory Analysis,2,1,was,0,0,0,1
+ZH-019,ZH-019-S03,Laboratory Analysis,3,1,isolated,0,0,0,1
+ZH-019,ZH-019-S03,Laboratory Analysis,4,1,in,0,0,0,1
+ZH-019,ZH-019-S03,Laboratory Analysis,5,1,the,0,0,0,1
+ZH-019,ZH-019-S03,Laboratory Analysis,6,1,blood,0,0,0,1
+ZH-019,ZH-019-S03,Laboratory Analysis,7,1,analysis,0,0,0,1
+ZH-019,ZH-019-S03,Laboratory Analysis,0,2,no pathogen,0,0,0,0
+ZH-019,ZH-019-S03,Laboratory Analysis,1,2,pathogen was,0,0,0,1
+ZH-019,ZH-019-S03,Laboratory Analysis,2,2,was isolated,0,0,0,1
+ZH-019,ZH-019-S03,Laboratory Analysis,3,2,isolated in,0,0,0,1
+ZH-019,ZH-019-S03,Laboratory Analysis,4,2,in the,0,0,0,1
+ZH-019,ZH-019-S03,Laboratory Analysis,5,2,the blood,0,0,0,1
+ZH-019,ZH-019-S03,Laboratory Analysis,6,2,blood analysis,0,0,0,1
+ZH-019,ZH-019-S03,Laboratory Analysis,0,3,no pathogen was,0,0,0,0
+ZH-019,ZH-019-S03,Laboratory Analysis,1,3,pathogen was isolated,0,0,0,1
+ZH-019,ZH-019-S03,Laboratory Analysis,2,3,was isolated in,0,0,0,1
+ZH-019,ZH-019-S03,Laboratory Analysis,3,3,isolated in the,0,0,0,1
+ZH-019,ZH-019-S03,Laboratory Analysis,4,3,in the blood,0,0,0,1
+ZH-019,ZH-019-S03,Laboratory Analysis,5,3,the blood analysis,0,0,0,1
+ZH-019,ZH-019-S03,Laboratory Analysis,0,4,no pathogen was isolated,0,0,0,0
+ZH-019,ZH-019-S03,Laboratory Analysis,1,4,pathogen was isolated in,0,0,0,1
+ZH-019,ZH-019-S03,Laboratory Analysis,2,4,was isolated in the,0,0,0,1
+ZH-019,ZH-019-S03,Laboratory Analysis,3,4,isolated in the blood,0,0,0,1
+ZH-019,ZH-019-S03,Laboratory Analysis,4,4,in the blood analysis,0,0,0,1
+ZH-019,ZH-019-S03,Laboratory Analysis,0,5,no pathogen was isolated in,0,0,0,0
+ZH-019,ZH-019-S03,Laboratory Analysis,1,5,pathogen was isolated in the,0,0,0,1
+ZH-019,ZH-019-S03,Laboratory Analysis,2,5,was isolated in the blood,0,0,0,1
+ZH-019,ZH-019-S03,Laboratory Analysis,3,5,isolated in the blood analysis,0,0,0,1
+ZH-019,ZH-019-S04,Clinical History,0,1,the,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,1,1,patient,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,2,1,has,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,3,1,a,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,4,1,history,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,5,1,of,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,6,1,infection,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,7,1,of,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,8,1,bacterial,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,9,1,origin,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,0,2,the patient,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,1,2,patient has,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,2,2,has a,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,3,2,a history,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,4,2,history of,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,5,2,of infection,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,6,2,infection of,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,7,2,of bacterial,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,8,2,bacterial origin,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,0,3,the patient has,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,1,3,patient has a,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,2,3,has a history,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,3,3,a history of,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,4,3,history of infection,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,5,3,of infection of,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,6,3,infection of bacterial,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,7,3,of bacterial origin,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,0,4,the patient has a,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,1,4,patient has a history,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,2,4,has a history of,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,3,4,a history of infection,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,4,4,history of infection of,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,5,4,of infection of bacterial,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,6,4,infection of bacterial origin,1,0,0,0
+ZH-019,ZH-019-S04,Clinical History,0,5,the patient has a history,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,1,5,patient has a history of,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,2,5,has a history of infection,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,3,5,a history of infection of,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,4,5,history of infection of bacterial,0,0,0,0
+ZH-019,ZH-019-S04,Clinical History,5,5,of infection of bacterial origin,0,0,0,0
+ZH-019,ZH-019-S05,Assessment,0,1,diagnosis,0,0,0,0
+ZH-019,ZH-019-S05,Assessment,1,1,deficit,0,0,0,0
+ZH-019,ZH-019-S05,Assessment,2,1,caused,0,0,0,0
+ZH-019,ZH-019-S05,Assessment,3,1,by,0,0,0,0
+ZH-019,ZH-019-S05,Assessment,4,1,bite,0,0,0,0
+ZH-019,ZH-019-S05,Assessment,0,2,diagnosis deficit,0,0,0,0
+ZH-019,ZH-019-S05,Assessment,1,2,deficit caused,0,0,0,0
+ZH-019,ZH-019-S05,Assessment,2,2,caused by,0,0,0,0
+ZH-019,ZH-019-S05,Assessment,3,2,by bite,0,0,0,0
+ZH-019,ZH-019-S05,Assessment,0,3,diagnosis deficit caused,0,0,0,0
+ZH-019,ZH-019-S05,Assessment,1,3,deficit caused by,0,0,0,0
+ZH-019,ZH-019-S05,Assessment,2,3,caused by bite,0,0,0,0
+ZH-019,ZH-019-S05,Assessment,0,4,diagnosis deficit caused by,0,0,0,0
+ZH-019,ZH-019-S05,Assessment,1,4,deficit caused by bite,1,0,0,0
+ZH-019,ZH-019-S05,Assessment,0,5,diagnosis deficit caused by bite,0,0,0,0
+ZH-019,ZH-019-S06,Assessment,0,1,negative,0,0,1,0
+ZH-019,ZH-019-S06,Assessment,1,1,for,0,0,0,1
+ZH-019,ZH-019-S06,Assessment,2,1,bacterial,0,0,0,1
+ZH-019,ZH-019-S06,Assessment,3,1,infection,0,0,0,1
+ZH-019,ZH-019-S06,Assessment,0,2,negative for,0,0,0,0
+ZH-019,ZH-019-S06,Assessment,1,2,for bacterial,0,0,0,1
+ZH-019,ZH-019-S06,Assessment,2,2,bacterial infection,1,0,0,1
+ZH-019,ZH-019-S06,Assessment,0,3,negative for bacterial,0,0,0,0
+ZH-019,ZH-019-S06,Assessment,1,3,for bacterial infection,0,0,0,1
+ZH-019,ZH-019-S06,Assessment,0,4,negative for bacterial infection,0,0,0,0

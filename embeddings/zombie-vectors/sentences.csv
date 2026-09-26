@@ -1,0 +1,123 @@
+report_id,section,sentence_id,sentence
+ZH-001,Presentation,ZH-001-S01,The patient presents with paralysis.
+ZH-001,Presentation,ZH-001-S02,Findings include yellow tinted tongue.
+ZH-001,Negative Findings,ZH-001-S03,The patient denies missing limb.
+ZH-001,Laboratory Analysis,ZH-001-S04,Blood analysis identified Cyanobacterium zumbi.
+ZH-001,Clinical History,ZH-001-S05,No previous diagnosis was recorded.
+ZH-001,Assessment,ZH-001-S06,Diagnosis: bacterial infection.
+ZH-002,Presentation,ZH-002-S01,Findings include yellowish tongue.
+ZH-002,Negative Findings,ZH-002-S02,Examination reveals no limb loss.
+ZH-002,Laboratory Analysis,ZH-002-S03,Laboratory tests isolated Cyanobacterium zumbi.
+ZH-002,Clinical History,ZH-002-S04,The patient denies previous bite deficit.
+ZH-002,Assessment,ZH-002-S05,Findings are consistent with infection of bacterial origin.
+ZH-002,Assessment,ZH-002-S06,The team ruled out bite deficit.
+ZH-003,Presentation,ZH-003-S01,The patient reports yellow tinted tongue.
+ZH-003,Presentation,ZH-003-S02,The patient presents with tremor in the little finger.
+ZH-003,Negative Findings,ZH-003-S03,The patient denies thoracic discomfort.
+ZH-003,Laboratory Analysis,ZH-003-S04,Blood analysis returned no relevant findings.
+ZH-003,Clinical History,ZH-003-S05,History of bacterial infection.
+ZH-003,Assessment,ZH-003-S06,The patient was diagnosed with bite related deficit.
+ZH-004,Presentation,ZH-004-S01,Findings include member loss.
+ZH-004,Presentation,ZH-004-S02,Examination reveals yellowish tongue.
+ZH-004,Presentation,ZH-004-S03,Findings include shaking of the pinky finger.
+ZH-004,Negative Findings,ZH-004-S04,The patient denies severe anger.
+ZH-004,Negative Findings,ZH-004-S05,No signs of thoracic discomfort.
+ZH-004,Laboratory Analysis,ZH-004-S06,Blood analysis returned no relevant findings.
+ZH-004,Clinical History,ZH-004-S07,History of bacterial infectious process.
+ZH-004,Assessment,ZH-004-S08,Diagnosis: deficit caused by bite.
+ZH-005,Presentation,ZH-005-S01,Findings include pain in the chest.
+ZH-005,Presentation,ZH-005-S02,The patient reports missing limb.
+ZH-005,Negative Findings,ZH-005-S03,The patient presents without yellowish tongue.
+ZH-005,Negative Findings,ZH-005-S04,The patient presents without paralyzed limbs.
+ZH-005,Laboratory Analysis,ZH-005-S05,Blood culture is positive for Deltaretrovirus zumbi.
+ZH-005,Clinical History,ZH-005-S06,No history of altercation injury.
+ZH-005,Assessment,ZH-005-S07,Diagnosis: infection of viral origin.
+ZH-006,Presentation,ZH-006-S01,The patient reports limb loss.
+ZH-006,Presentation,ZH-006-S02,The patient presents with intense anger episodes.
+ZH-006,Negative Findings,ZH-006-S03,The patient presents without shaking of the pinky finger.
+ZH-006,Laboratory Analysis,ZH-006-S04,Laboratory tests did not identify any pathogen.
+ZH-006,Clinical History,ZH-006-S05,Clinical history is unremarkable.
+ZH-006,Assessment,ZH-006-S06,Findings are consistent with altercation injury.
+ZH-006,Assessment,ZH-006-S07,The team ruled out bacterial infection.
+ZH-007,Presentation,ZH-007-S01,Findings include severe anger.
+ZH-007,Negative Findings,ZH-007-S02,The patient is free of loss of motor control.
+ZH-007,Laboratory Analysis,ZH-007-S03,No pathogen was isolated in the blood analysis.
+ZH-007,Clinical History,ZH-007-S04,No history of fight injury.
+ZH-007,Assessment,ZH-007-S05,No disease was identified.
+ZH-008,Presentation,ZH-008-S01,Examination reveals tremor in the little finger.
+ZH-008,Negative Findings,ZH-008-S02,The patient denies missing limb.
+ZH-008,Laboratory Analysis,ZH-008-S03,Laboratory tests did not identify any pathogen.
+ZH-008,Clinical History,ZH-008-S04,The patient has a history of infection of bacterial origin.
+ZH-008,Assessment,ZH-008-S05,Clinical impression: bite deficit.
+ZH-009,Presentation,ZH-009-S01,The patient reports yellow tinted tongue.
+ZH-009,Presentation,ZH-009-S02,Findings include thoracic discomfort.
+ZH-009,Negative Findings,ZH-009-S03,No signs of shaking of the pinky finger.
+ZH-009,Negative Findings,ZH-009-S04,The patient denies loss of motor control.
+ZH-009,Laboratory Analysis,ZH-009-S05,Blood analysis identified Cyanobacterium zumbi.
+ZH-009,Clinical History,ZH-009-S06,Clinical history is unremarkable.
+ZH-009,Assessment,ZH-009-S07,Findings are consistent with infection of bacterial origin.
+ZH-009,Assessment,ZH-009-S08,The team ruled out bite deficit.
+ZH-010,Presentation,ZH-010-S01,Signs of pain in the chest are evident.
+ZH-010,Negative Findings,ZH-010-S02,The patient denies paralyzed limbs.
+ZH-010,Negative Findings,ZH-010-S03,The patient is free of severe anger.
+ZH-010,Laboratory Analysis,ZH-010-S04,Blood analysis identified Deltaretrovirus zumbi.
+ZH-010,Clinical History,ZH-010-S05,The patient denies previous bacterial infection.
+ZH-010,Assessment,ZH-010-S06,Diagnosis: viral infection.
+ZH-010,Assessment,ZH-010-S07,No evidence of bite deficit.
+ZH-011,Presentation,ZH-011-S01,Signs of missing limb are evident.
+ZH-011,Presentation,ZH-011-S02,The patient presents with yellow tongue.
+ZH-011,Negative Findings,ZH-011-S03,The patient is free of loss of motor control.
+ZH-011,Laboratory Analysis,ZH-011-S04,No pathogen was isolated in the blood analysis.
+ZH-011,Clinical History,ZH-011-S05,Previous diagnosis of infection of bacterial origin.
+ZH-011,Assessment,ZH-011-S06,The patient was diagnosed with deficit caused by bite.
+ZH-011,Assessment,ZH-011-S07,Negative for bacterial infection.
+ZH-012,Presentation,ZH-012-S01,Examination reveals loss of motor control.
+ZH-012,Presentation,ZH-012-S02,Examination reveals yellow tongue.
+ZH-012,Negative Findings,ZH-012-S03,The patient denies severe anger.
+ZH-012,Negative Findings,ZH-012-S04,The patient presents without trembling on the little finger.
+ZH-012,Laboratory Analysis,ZH-012-S05,Blood analysis identified Cyanobacterium zumbi.
+ZH-012,Clinical History,ZH-012-S06,The patient denies previous deficit caused by bite.
+ZH-012,Assessment,ZH-012-S07,Findings are consistent with bacterial infectious process.
+ZH-013,Presentation,ZH-013-S01,Findings include pain in the chest.
+ZH-013,Negative Findings,ZH-013-S02,Examination reveals no paralyzed limbs.
+ZH-013,Negative Findings,ZH-013-S03,Absence of acute rage attacks.
+ZH-013,Laboratory Analysis,ZH-013-S04,Blood culture is positive for Deltaretrovirus zumbi.
+ZH-013,Clinical History,ZH-013-S05,The patient denies previous fight related trauma.
+ZH-013,Assessment,ZH-013-S06,The patient was diagnosed with viral infection.
+ZH-014,Presentation,ZH-014-S01,Examination reveals limb loss.
+ZH-014,Negative Findings,ZH-014-S02,The patient presents without paralysis.
+ZH-014,Negative Findings,ZH-014-S03,Absence of pain in the chest.
+ZH-014,Laboratory Analysis,ZH-014-S04,Laboratory tests did not identify any pathogen.
+ZH-014,Clinical History,ZH-014-S05,No previous diagnosis was recorded.
+ZH-014,Assessment,ZH-014-S06,Diagnosis: fight injury.
+ZH-014,Assessment,ZH-014-S07,Negative for infection of viral origin.
+ZH-015,Presentation,ZH-015-S01,Findings include yellow tongue.
+ZH-015,Presentation,ZH-015-S02,The patient presents with trembling on the little finger.
+ZH-015,Negative Findings,ZH-015-S03,Absence of severe anger.
+ZH-015,Laboratory Analysis,ZH-015-S04,Blood analysis returned no relevant findings.
+ZH-015,Clinical History,ZH-015-S05,Previous diagnosis of infection of bacterial origin.
+ZH-015,Assessment,ZH-015-S06,Diagnosis: bite related deficit.
+ZH-015,Assessment,ZH-015-S07,The team ruled out bacterial infectious process.
+ZH-016,Presentation,ZH-016-S01,Examination reveals missing limb.
+ZH-016,Presentation,ZH-016-S02,The patient reports yellow tongue.
+ZH-016,Presentation,ZH-016-S03,Findings include shaking of the pinky finger.
+ZH-016,Negative Findings,ZH-016-S04,No signs of intense anger episodes.
+ZH-016,Laboratory Analysis,ZH-016-S05,No pathogen was isolated in the blood analysis.
+ZH-016,Clinical History,ZH-016-S06,History of bacterial infection.
+ZH-016,Assessment,ZH-016-S07,Findings are consistent with deficit caused by bite.
+ZH-017,Presentation,ZH-017-S01,Signs of thoracic discomfort are evident.
+ZH-017,Negative Findings,ZH-017-S02,Absence of acute rage attacks.
+ZH-017,Laboratory Analysis,ZH-017-S03,Blood analysis returned no relevant findings.
+ZH-017,Clinical History,ZH-017-S04,No previous diagnosis was recorded.
+ZH-017,Assessment,ZH-017-S05,Diagnosis: altercation injury.
+ZH-018,Presentation,ZH-018-S01,Signs of yellowish tongue are evident.
+ZH-018,Negative Findings,ZH-018-S02,The patient denies shaking of the pinky finger.
+ZH-018,Laboratory Analysis,ZH-018-S03,Blood analysis identified Cyanobacterium zumbi.
+ZH-018,Clinical History,ZH-018-S04,The patient denies previous infection of viral origin.
+ZH-018,Assessment,ZH-018-S05,Diagnosis: bacterial infectious process.
+ZH-019,Presentation,ZH-019-S01,The patient reports tremor in the little finger.
+ZH-019,Negative Findings,ZH-019-S02,The patient presents without paralysis.
+ZH-019,Laboratory Analysis,ZH-019-S03,No pathogen was isolated in the blood analysis.
+ZH-019,Clinical History,ZH-019-S04,The patient has a history of infection of bacterial origin.
+ZH-019,Assessment,ZH-019-S05,Diagnosis: deficit caused by bite.
+ZH-019,Assessment,ZH-019-S06,Negative for bacterial infection.
