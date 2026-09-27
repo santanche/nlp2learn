@@ -1,0 +1,114 @@
+report_id,sentence_id,surface,canonical,type,polarity
+ZH-001,ZH-001-S01,paralysis,paralysis,symptom,present
+ZH-001,ZH-001-S02,yellow tinted tongue,yellow tongue,symptom,present
+ZH-001,ZH-001-S04,trembling on the little finger,trembling on the little finger,symptom,absent
+ZH-001,ZH-001-S05,Cyanobacterium zumbi,Cyanobacterium zumbi,pathogen,present
+ZH-001,ZH-001-S06,viral infectious process,viral infection,disease,absent
+ZH-001,ZH-001-S08,infection of bacterial origin,bacterial infection,disease,present
+ZH-001,ZH-001-S09,bite deficit,bite deficit,disease,absent
+ZH-002,ZH-002-S01,yellowish tongue,yellow tongue,symptom,present
+ZH-002,ZH-002-S03,severe anger,severe anger,symptom,absent
+ZH-002,ZH-002-S04,tremor in the little finger,trembling on the little finger,symptom,absent
+ZH-002,ZH-002-S05,Cyanobacterium zumbi,Cyanobacterium zumbi,pathogen,present
+ZH-002,ZH-002-S06,deficit caused by bite,bite deficit,disease,absent
+ZH-002,ZH-002-S08,bacterial infectious process,bacterial infection,disease,present
+ZH-003,ZH-003-S01,yellow tinted tongue,yellow tongue,symptom,present
+ZH-003,ZH-003-S02,tremor in the little finger,trembling on the little finger,symptom,present
+ZH-003,ZH-003-S04,paralyzed limbs,paralysis,symptom,absent
+ZH-003,ZH-003-S05,chest pain,chest pain,symptom,absent
+ZH-003,ZH-003-S07,infection of bacterial origin,bacterial infection,disease,present
+ZH-003,ZH-003-S09,bite deficit,bite deficit,disease,present
+ZH-003,ZH-003-S10,viral infectious process,viral infection,disease,absent
+ZH-004,ZH-004-S01,member loss,member loss,symptom,present
+ZH-004,ZH-004-S02,yellowish tongue,yellow tongue,symptom,present
+ZH-004,ZH-004-S03,shaking of the pinky finger,trembling on the little finger,symptom,present
+ZH-004,ZH-004-S06,thoracic discomfort,chest pain,symptom,absent
+ZH-004,ZH-004-S07,paralysis,paralysis,symptom,absent
+ZH-004,ZH-004-S09,infection of bacterial origin,bacterial infection,disease,present
+ZH-004,ZH-004-S12,bite deficit,bite deficit,disease,present
+ZH-004,ZH-004-S13,altercation injury,fights,disease,absent
+ZH-005,ZH-005-S01,pain in the chest,chest pain,symptom,present
+ZH-005,ZH-005-S02,missing limb,member loss,symptom,present
+ZH-005,ZH-005-S05,acute rage attacks,severe anger,symptom,absent
+ZH-005,ZH-005-S06,yellow tinted tongue,yellow tongue,symptom,absent
+ZH-005,ZH-005-S07,Deltaretrovirus zumbi,Deltaretrovirus zumbi,pathogen,present
+ZH-005,ZH-005-S11,infection of viral origin,viral infection,disease,present
+ZH-005,ZH-005-S12,fight related trauma,fights,disease,absent
+ZH-006,ZH-006-S01,limb loss,member loss,symptom,present
+ZH-006,ZH-006-S02,intense anger episodes,severe anger,symptom,present
+ZH-006,ZH-006-S04,shaking of the pinky finger,trembling on the little finger,symptom,absent
+ZH-006,ZH-006-S09,fight injury,fights,disease,present
+ZH-006,ZH-006-S10,deficit caused by bite,bite deficit,disease,absent
+ZH-007,ZH-007-S01,severe anger,severe anger,symptom,present
+ZH-007,ZH-007-S03,missing limb,member loss,symptom,absent
+ZH-007,ZH-007-S08,fight injury,fights,disease,absent
+ZH-008,ZH-008-S01,tremor in the little finger,trembling on the little finger,symptom,present
+ZH-008,ZH-008-S03,yellow tinted tongue,yellow tongue,symptom,absent
+ZH-008,ZH-008-S04,loss of motor control,paralysis,symptom,absent
+ZH-008,ZH-008-S06,bacterial infectious process,bacterial infection,disease,present
+ZH-008,ZH-008-S09,deficit caused by bite,bite deficit,disease,present
+ZH-008,ZH-008-S10,infection of bacterial origin,bacterial infection,disease,absent
+ZH-009,ZH-009-S01,yellow tinted tongue,yellow tongue,symptom,present
+ZH-009,ZH-009-S02,thoracic discomfort,chest pain,symptom,present
+ZH-009,ZH-009-S05,paralyzed limbs,paralysis,symptom,absent
+ZH-009,ZH-009-S06,Cyanobacterium zumbi,Cyanobacterium zumbi,pathogen,present
+ZH-009,ZH-009-S07,bite related deficit,bite deficit,disease,absent
+ZH-009,ZH-009-S09,bacterial infectious process,bacterial infection,disease,present
+ZH-010,ZH-010-S01,pain in the chest,chest pain,symptom,present
+ZH-010,ZH-010-S04,yellow tongue,yellow tongue,symptom,absent
+ZH-010,ZH-010-S05,Deltaretrovirus zumbi,Deltaretrovirus zumbi,pathogen,present
+ZH-010,ZH-010-S09,infection of viral origin,viral infection,disease,present
+ZH-011,ZH-011-S01,missing limb,member loss,symptom,present
+ZH-011,ZH-011-S02,yellow tongue,yellow tongue,symptom,present
+ZH-011,ZH-011-S04,shaking of the pinky finger,trembling on the little finger,symptom,absent
+ZH-011,ZH-011-S06,infection of bacterial origin,bacterial infection,disease,present
+ZH-011,ZH-011-S09,bite related deficit,bite deficit,disease,present
+ZH-012,ZH-012-S01,loss of motor control,paralysis,symptom,present
+ZH-012,ZH-012-S02,yellow tongue,yellow tongue,symptom,present
+ZH-012,ZH-012-S05,shaking of the pinky finger,trembling on the little finger,symptom,absent
+ZH-012,ZH-012-S06,pain in the chest,chest pain,symptom,absent
+ZH-012,ZH-012-S07,Cyanobacterium zumbi,Cyanobacterium zumbi,pathogen,present
+ZH-012,ZH-012-S10,bacterial infection,bacterial infection,disease,present
+ZH-013,ZH-013-S01,pain in the chest,chest pain,symptom,present
+ZH-013,ZH-013-S04,shaking of the pinky finger,trembling on the little finger,symptom,absent
+ZH-013,ZH-013-S05,yellowish tongue,yellow tongue,symptom,absent
+ZH-013,ZH-013-S06,Deltaretrovirus zumbi,Deltaretrovirus zumbi,pathogen,present
+ZH-013,ZH-013-S07,bacterial infection,bacterial infection,disease,absent
+ZH-013,ZH-013-S09,viral infection,viral infection,disease,present
+ZH-014,ZH-014-S01,limb loss,member loss,symptom,present
+ZH-014,ZH-014-S04,trembling on the little finger,trembling on the little finger,symptom,absent
+ZH-014,ZH-014-S05,yellowish tongue,yellow tongue,symptom,absent
+ZH-014,ZH-014-S07,bacterial infectious process,bacterial infection,disease,absent
+ZH-014,ZH-014-S10,fight related trauma,fights,disease,present
+ZH-015,ZH-015-S01,yellow tongue,yellow tongue,symptom,present
+ZH-015,ZH-015-S02,trembling on the little finger,trembling on the little finger,symptom,present
+ZH-015,ZH-015-S04,intense anger episodes,severe anger,symptom,absent
+ZH-015,ZH-015-S05,limb loss,member loss,symptom,absent
+ZH-015,ZH-015-S07,bacterial infectious process,bacterial infection,disease,present
+ZH-015,ZH-015-S09,bite related deficit,bite deficit,disease,present
+ZH-015,ZH-015-S10,bacterial infection,bacterial infection,disease,absent
+ZH-016,ZH-016-S01,missing limb,member loss,symptom,present
+ZH-016,ZH-016-S02,yellow tongue,yellow tongue,symptom,present
+ZH-016,ZH-016-S03,shaking of the pinky finger,trembling on the little finger,symptom,present
+ZH-016,ZH-016-S05,paralysis,paralysis,symptom,absent
+ZH-016,ZH-016-S07,bacterial infection,bacterial infection,disease,present
+ZH-016,ZH-016-S09,bite deficit,bite deficit,disease,present
+ZH-016,ZH-016-S10,viral infection,viral infection,disease,absent
+ZH-017,ZH-017-S01,thoracic discomfort,chest pain,symptom,present
+ZH-017,ZH-017-S03,yellow tinted tongue,yellow tongue,symptom,absent
+ZH-017,ZH-017-S04,severe anger,severe anger,symptom,absent
+ZH-017,ZH-017-S06,bacterial infection,bacterial infection,disease,absent
+ZH-017,ZH-017-S09,fight injury,fights,disease,present
+ZH-017,ZH-017-S10,infection of bacterial origin,bacterial infection,disease,absent
+ZH-018,ZH-018-S01,yellowish tongue,yellow tongue,symptom,present
+ZH-018,ZH-018-S03,chest pain,chest pain,symptom,absent
+ZH-018,ZH-018-S04,Cyanobacterium zumbi,Cyanobacterium zumbi,pathogen,present
+ZH-018,ZH-018-S05,altercation injury,fights,disease,absent
+ZH-018,ZH-018-S08,infection of bacterial origin,bacterial infection,disease,present
+ZH-018,ZH-018-S09,bite related deficit,bite deficit,disease,absent
+ZH-019,ZH-019-S01,tremor in the little finger,trembling on the little finger,symptom,present
+ZH-019,ZH-019-S03,loss of motor control,paralysis,symptom,absent
+ZH-019,ZH-019-S04,yellow tinted tongue,yellow tongue,symptom,absent
+ZH-019,ZH-019-S06,infection of bacterial origin,bacterial infection,disease,present
+ZH-019,ZH-019-S08,bite related deficit,bite deficit,disease,present
+ZH-019,ZH-019-S09,bacterial infectious process,bacterial infection,disease,absent

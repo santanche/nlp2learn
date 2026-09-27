@@ -1,0 +1,1167 @@
+report_id,sentence_id,section,start,word,f1_disease,f2_symptom,f3_negation,f4_neg_scope
+ZH-001,ZH-001-S01,Presentation,0,the,0,0,0,0
+ZH-001,ZH-001-S01,Presentation,1,patient,0,0,0,0
+ZH-001,ZH-001-S01,Presentation,2,presents,0,0,0,0
+ZH-001,ZH-001-S01,Presentation,3,with,0,0,0,0
+ZH-001,ZH-001-S01,Presentation,4,paralysis,0,1,0,0
+ZH-001,ZH-001-S02,Presentation,0,findings,0,0,0,0
+ZH-001,ZH-001-S02,Presentation,1,include,0,0,0,0
+ZH-001,ZH-001-S02,Presentation,2,yellow,0,1,0,0
+ZH-001,ZH-001-S02,Presentation,3,tinted,0,1,0,0
+ZH-001,ZH-001-S02,Presentation,4,tongue,0,1,0,0
+ZH-001,ZH-001-S03,General Examination,0,every,0,0,0,0
+ZH-001,ZH-001-S03,General Examination,1,member,0,0,0,0
+ZH-001,ZH-001-S03,General Examination,2,is,0,0,0,0
+ZH-001,ZH-001-S03,General Examination,3,in,0,0,0,0
+ZH-001,ZH-001-S03,General Examination,4,its,0,0,0,0
+ZH-001,ZH-001-S03,General Examination,5,place,0,0,0,0
+ZH-001,ZH-001-S04,Negative Findings,0,the,0,0,0,0
+ZH-001,ZH-001-S04,Negative Findings,1,patient,0,0,0,0
+ZH-001,ZH-001-S04,Negative Findings,2,denies,0,0,1,0
+ZH-001,ZH-001-S04,Negative Findings,3,trembling,0,1,0,1
+ZH-001,ZH-001-S04,Negative Findings,4,on,0,1,0,1
+ZH-001,ZH-001-S04,Negative Findings,5,the,0,1,0,1
+ZH-001,ZH-001-S04,Negative Findings,6,little,0,1,0,1
+ZH-001,ZH-001-S04,Negative Findings,7,finger,0,1,0,1
+ZH-001,ZH-001-S05,Laboratory Analysis,0,blood,0,0,0,0
+ZH-001,ZH-001-S05,Laboratory Analysis,1,analysis,0,0,0,0
+ZH-001,ZH-001-S05,Laboratory Analysis,2,identified,0,0,0,0
+ZH-001,ZH-001-S05,Laboratory Analysis,3,cyanobacterium,0,0,0,0
+ZH-001,ZH-001-S05,Laboratory Analysis,4,zumbi,0,0,0,0
+ZH-001,ZH-001-S06,Clinical History,0,the,0,0,0,0
+ZH-001,ZH-001-S06,Clinical History,1,patient,0,0,0,0
+ZH-001,ZH-001-S06,Clinical History,2,denies,0,0,1,0
+ZH-001,ZH-001-S06,Clinical History,3,previous,0,0,0,1
+ZH-001,ZH-001-S06,Clinical History,4,viral,1,0,0,1
+ZH-001,ZH-001-S06,Clinical History,5,infectious,1,0,0,1
+ZH-001,ZH-001-S06,Clinical History,6,process,1,0,0,1
+ZH-001,ZH-001-S07,Social History,0,the,0,0,0,0
+ZH-001,ZH-001-S07,Social History,1,patient,0,0,0,0
+ZH-001,ZH-001-S07,Social History,2,watched,0,0,0,0
+ZH-001,ZH-001-S07,Social History,3,a,0,0,0,0
+ZH-001,ZH-001-S07,Social History,4,pillow,0,0,0,0
+ZH-001,ZH-001-S07,Social History,5,fight,0,0,0,0
+ZH-001,ZH-001-S07,Social History,6,in,0,0,0,0
+ZH-001,ZH-001-S07,Social History,7,the,0,0,0,0
+ZH-001,ZH-001-S07,Social History,8,waiting,0,0,0,0
+ZH-001,ZH-001-S07,Social History,9,room,0,0,0,0
+ZH-001,ZH-001-S08,Assessment,0,clinical,0,0,0,0
+ZH-001,ZH-001-S08,Assessment,1,impression,0,0,0,0
+ZH-001,ZH-001-S08,Assessment,2,infection,1,0,0,0
+ZH-001,ZH-001-S08,Assessment,3,of,1,0,0,0
+ZH-001,ZH-001-S08,Assessment,4,bacterial,1,0,0,0
+ZH-001,ZH-001-S08,Assessment,5,origin,1,0,0,0
+ZH-001,ZH-001-S09,Assessment,0,no,0,0,1,0
+ZH-001,ZH-001-S09,Assessment,1,evidence,0,0,0,1
+ZH-001,ZH-001-S09,Assessment,2,of,0,0,0,1
+ZH-001,ZH-001-S09,Assessment,3,bite,1,0,0,1
+ZH-001,ZH-001-S09,Assessment,4,deficit,1,0,0,1
+ZH-002,ZH-002-S01,Presentation,0,findings,0,0,0,0
+ZH-002,ZH-002-S01,Presentation,1,include,0,0,0,0
+ZH-002,ZH-002-S01,Presentation,2,yellowish,0,1,0,0
+ZH-002,ZH-002-S01,Presentation,3,tongue,0,1,0,0
+ZH-002,ZH-002-S02,General Examination,0,stethoscope,0,0,0,0
+ZH-002,ZH-002-S02,General Examination,1,on,0,0,0,0
+ZH-002,ZH-002-S02,General Examination,2,the,0,0,0,0
+ZH-002,ZH-002-S02,General Examination,3,chest,0,0,0,0
+ZH-002,ZH-002-S02,General Examination,4,detects,0,0,0,0
+ZH-002,ZH-002-S02,General Examination,5,no,0,0,1,0
+ZH-002,ZH-002-S02,General Examination,6,heartbeat,0,0,0,1
+ZH-002,ZH-002-S02,General Examination,7,as,0,0,0,1
+ZH-002,ZH-002-S02,General Examination,8,expected,0,0,0,1
+ZH-002,ZH-002-S03,Negative Findings,0,examination,0,0,0,0
+ZH-002,ZH-002-S03,Negative Findings,1,reveals,0,0,0,0
+ZH-002,ZH-002-S03,Negative Findings,2,no,0,0,1,0
+ZH-002,ZH-002-S03,Negative Findings,3,severe,0,1,0,1
+ZH-002,ZH-002-S03,Negative Findings,4,anger,0,1,0,1
+ZH-002,ZH-002-S04,Negative Findings,0,the,0,0,0,0
+ZH-002,ZH-002-S04,Negative Findings,1,patient,0,0,0,0
+ZH-002,ZH-002-S04,Negative Findings,2,presents,0,0,0,0
+ZH-002,ZH-002-S04,Negative Findings,3,without,0,0,1,0
+ZH-002,ZH-002-S04,Negative Findings,4,tremor,0,1,0,1
+ZH-002,ZH-002-S04,Negative Findings,5,in,0,1,0,1
+ZH-002,ZH-002-S04,Negative Findings,6,the,0,1,0,1
+ZH-002,ZH-002-S04,Negative Findings,7,little,0,1,0,1
+ZH-002,ZH-002-S04,Negative Findings,8,finger,0,1,0,1
+ZH-002,ZH-002-S05,Laboratory Analysis,0,blood,0,0,0,0
+ZH-002,ZH-002-S05,Laboratory Analysis,1,culture,0,0,0,0
+ZH-002,ZH-002-S05,Laboratory Analysis,2,is,0,0,0,0
+ZH-002,ZH-002-S05,Laboratory Analysis,3,positive,0,0,0,0
+ZH-002,ZH-002-S05,Laboratory Analysis,4,for,0,0,0,0
+ZH-002,ZH-002-S05,Laboratory Analysis,5,cyanobacterium,0,0,0,0
+ZH-002,ZH-002-S05,Laboratory Analysis,6,zumbi,0,0,0,0
+ZH-002,ZH-002-S06,Clinical History,0,no,0,0,1,0
+ZH-002,ZH-002-S06,Clinical History,1,history,0,0,0,1
+ZH-002,ZH-002-S06,Clinical History,2,of,0,0,0,1
+ZH-002,ZH-002-S06,Clinical History,3,deficit,1,0,0,1
+ZH-002,ZH-002-S06,Clinical History,4,caused,1,0,0,1
+ZH-002,ZH-002-S06,Clinical History,5,by,1,0,0,1
+ZH-002,ZH-002-S06,Clinical History,6,bite,1,0,0,1
+ZH-002,ZH-002-S07,Social History,0,the,0,0,0,0
+ZH-002,ZH-002-S07,Social History,1,patient,0,0,0,0
+ZH-002,ZH-002-S07,Social History,2,escaped,0,0,0,0
+ZH-002,ZH-002-S07,Social History,3,from,0,0,0,0
+ZH-002,ZH-002-S07,Social History,4,animal,0,0,0,0
+ZH-002,ZH-002-S07,Social History,5,control,0,0,0,0
+ZH-002,ZH-002-S07,Social History,6,twice,0,0,0,0
+ZH-002,ZH-002-S08,Assessment,0,clinical,0,0,0,0
+ZH-002,ZH-002-S08,Assessment,1,impression,0,0,0,0
+ZH-002,ZH-002-S08,Assessment,2,bacterial,1,0,0,0
+ZH-002,ZH-002-S08,Assessment,3,infectious,1,0,0,0
+ZH-002,ZH-002-S08,Assessment,4,process,1,0,0,0
+ZH-003,ZH-003-S01,Presentation,0,the,0,0,0,0
+ZH-003,ZH-003-S01,Presentation,1,patient,0,0,0,0
+ZH-003,ZH-003-S01,Presentation,2,reports,0,0,0,0
+ZH-003,ZH-003-S01,Presentation,3,yellow,0,1,0,0
+ZH-003,ZH-003-S01,Presentation,4,tinted,0,1,0,0
+ZH-003,ZH-003-S01,Presentation,5,tongue,0,1,0,0
+ZH-003,ZH-003-S02,Presentation,0,the,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,1,patient,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,2,presents,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,3,with,0,0,0,0
+ZH-003,ZH-003-S02,Presentation,4,tremor,0,1,0,0
+ZH-003,ZH-003-S02,Presentation,5,in,0,1,0,0
+ZH-003,ZH-003-S02,Presentation,6,the,0,1,0,0
+ZH-003,ZH-003-S02,Presentation,7,little,0,1,0,0
+ZH-003,ZH-003-S02,Presentation,8,finger,0,1,0,0
+ZH-003,ZH-003-S03,General Examination,0,the,0,0,0,0
+ZH-003,ZH-003-S03,General Examination,1,patient,0,0,0,0
+ZH-003,ZH-003-S03,General Examination,2,feels,0,0,0,0
+ZH-003,ZH-003-S03,General Examination,3,little,0,0,0,0
+ZH-003,ZH-003-S03,General Examination,4,pain,0,0,0,0
+ZH-003,ZH-003-S03,General Examination,5,as,0,0,0,0
+ZH-003,ZH-003-S03,General Examination,6,usual,0,0,0,0
+ZH-003,ZH-003-S03,General Examination,7,for,0,0,0,0
+ZH-003,ZH-003-S03,General Examination,8,zombies,0,0,0,0
+ZH-003,ZH-003-S04,Negative Findings,0,the,0,0,0,0
+ZH-003,ZH-003-S04,Negative Findings,1,patient,0,0,0,0
+ZH-003,ZH-003-S04,Negative Findings,2,denies,0,0,1,0
+ZH-003,ZH-003-S04,Negative Findings,3,paralyzed,0,1,0,1
+ZH-003,ZH-003-S04,Negative Findings,4,limbs,0,1,0,1
+ZH-003,ZH-003-S05,Negative Findings,0,absence,0,0,1,0
+ZH-003,ZH-003-S05,Negative Findings,1,of,0,0,0,1
+ZH-003,ZH-003-S05,Negative Findings,2,chest,0,1,0,1
+ZH-003,ZH-003-S05,Negative Findings,3,pain,0,1,0,1
+ZH-003,ZH-003-S06,Laboratory Analysis,0,laboratory,0,0,0,0
+ZH-003,ZH-003-S06,Laboratory Analysis,1,tests,0,0,0,0
+ZH-003,ZH-003-S06,Laboratory Analysis,2,did,0,0,0,0
+ZH-003,ZH-003-S06,Laboratory Analysis,3,not,0,0,1,0
+ZH-003,ZH-003-S06,Laboratory Analysis,4,identify,0,0,0,1
+ZH-003,ZH-003-S06,Laboratory Analysis,5,any,0,0,0,1
+ZH-003,ZH-003-S06,Laboratory Analysis,6,pathogen,0,0,0,1
+ZH-003,ZH-003-S07,Clinical History,0,previous,0,0,0,0
+ZH-003,ZH-003-S07,Clinical History,1,diagnosis,0,0,0,0
+ZH-003,ZH-003-S07,Clinical History,2,of,0,0,0,0
+ZH-003,ZH-003-S07,Clinical History,3,infection,1,0,0,0
+ZH-003,ZH-003-S07,Clinical History,4,of,1,0,0,0
+ZH-003,ZH-003-S07,Clinical History,5,bacterial,1,0,0,0
+ZH-003,ZH-003-S07,Clinical History,6,origin,1,0,0,0
+ZH-003,ZH-003-S08,Social History,0,the,0,0,0,0
+ZH-003,ZH-003-S08,Social History,1,caretaker,0,0,0,0
+ZH-003,ZH-003-S08,Social History,2,expressed,0,0,0,0
+ZH-003,ZH-003-S08,Social History,3,anger,0,0,0,0
+ZH-003,ZH-003-S08,Social History,4,over,0,0,0,0
+ZH-003,ZH-003-S08,Social History,5,the,0,0,0,0
+ZH-003,ZH-003-S08,Social History,6,parking,0,0,0,0
+ZH-003,ZH-003-S08,Social History,7,fees,0,0,0,0
+ZH-003,ZH-003-S09,Assessment,0,diagnosis,0,0,0,0
+ZH-003,ZH-003-S09,Assessment,1,bite,1,0,0,0
+ZH-003,ZH-003-S09,Assessment,2,deficit,1,0,0,0
+ZH-003,ZH-003-S10,Assessment,0,no,0,0,1,0
+ZH-003,ZH-003-S10,Assessment,1,evidence,0,0,0,1
+ZH-003,ZH-003-S10,Assessment,2,of,0,0,0,1
+ZH-003,ZH-003-S10,Assessment,3,viral,1,0,0,1
+ZH-003,ZH-003-S10,Assessment,4,infectious,1,0,0,1
+ZH-003,ZH-003-S10,Assessment,5,process,1,0,0,1
+ZH-004,ZH-004-S01,Presentation,0,findings,0,0,0,0
+ZH-004,ZH-004-S01,Presentation,1,include,0,0,0,0
+ZH-004,ZH-004-S01,Presentation,2,member,0,1,0,0
+ZH-004,ZH-004-S01,Presentation,3,loss,0,1,0,0
+ZH-004,ZH-004-S02,Presentation,0,examination,0,0,0,0
+ZH-004,ZH-004-S02,Presentation,1,reveals,0,0,0,0
+ZH-004,ZH-004-S02,Presentation,2,yellowish,0,1,0,0
+ZH-004,ZH-004-S02,Presentation,3,tongue,0,1,0,0
+ZH-004,ZH-004-S03,Presentation,0,findings,0,0,0,0
+ZH-004,ZH-004-S03,Presentation,1,include,0,0,0,0
+ZH-004,ZH-004-S03,Presentation,2,shaking,0,1,0,0
+ZH-004,ZH-004-S03,Presentation,3,of,0,1,0,0
+ZH-004,ZH-004-S03,Presentation,4,the,0,1,0,0
+ZH-004,ZH-004-S03,Presentation,5,pinky,0,1,0,0
+ZH-004,ZH-004-S03,Presentation,6,finger,0,1,0,0
+ZH-004,ZH-004-S04,General Examination,0,mild,0,0,0,0
+ZH-004,ZH-004-S04,General Examination,1,anger,0,0,0,0
+ZH-004,ZH-004-S04,General Examination,2,when,0,0,0,0
+ZH-004,ZH-004-S04,General Examination,3,hungry,0,0,0,0
+ZH-004,ZH-004-S04,General Examination,4,which,0,0,0,0
+ZH-004,ZH-004-S04,General Examination,5,is,0,0,0,0
+ZH-004,ZH-004-S04,General Examination,6,normal,0,0,0,0
+ZH-004,ZH-004-S05,General Examination,0,stethoscope,0,0,0,0
+ZH-004,ZH-004-S05,General Examination,1,on,0,0,0,0
+ZH-004,ZH-004-S05,General Examination,2,the,0,0,0,0
+ZH-004,ZH-004-S05,General Examination,3,chest,0,0,0,0
+ZH-004,ZH-004-S05,General Examination,4,detects,0,0,0,0
+ZH-004,ZH-004-S05,General Examination,5,no,0,0,1,0
+ZH-004,ZH-004-S05,General Examination,6,heartbeat,0,0,0,1
+ZH-004,ZH-004-S05,General Examination,7,as,0,0,0,1
+ZH-004,ZH-004-S05,General Examination,8,expected,0,0,0,1
+ZH-004,ZH-004-S06,Negative Findings,0,no,0,0,1,0
+ZH-004,ZH-004-S06,Negative Findings,1,signs,0,0,0,1
+ZH-004,ZH-004-S06,Negative Findings,2,of,0,0,0,1
+ZH-004,ZH-004-S06,Negative Findings,3,thoracic,0,1,0,1
+ZH-004,ZH-004-S06,Negative Findings,4,discomfort,0,1,0,1
+ZH-004,ZH-004-S07,Negative Findings,0,the,0,0,0,0
+ZH-004,ZH-004-S07,Negative Findings,1,patient,0,0,0,0
+ZH-004,ZH-004-S07,Negative Findings,2,denies,0,0,1,0
+ZH-004,ZH-004-S07,Negative Findings,3,paralysis,0,1,0,1
+ZH-004,ZH-004-S08,Laboratory Analysis,0,blood,0,0,0,0
+ZH-004,ZH-004-S08,Laboratory Analysis,1,analysis,0,0,0,0
+ZH-004,ZH-004-S08,Laboratory Analysis,2,returned,0,0,0,0
+ZH-004,ZH-004-S08,Laboratory Analysis,3,no,0,0,1,0
+ZH-004,ZH-004-S08,Laboratory Analysis,4,relevant,0,0,0,1
+ZH-004,ZH-004-S08,Laboratory Analysis,5,findings,0,0,0,1
+ZH-004,ZH-004-S09,Clinical History,0,the,0,0,0,0
+ZH-004,ZH-004-S09,Clinical History,1,patient,0,0,0,0
+ZH-004,ZH-004-S09,Clinical History,2,has,0,0,0,0
+ZH-004,ZH-004-S09,Clinical History,3,a,0,0,0,0
+ZH-004,ZH-004-S09,Clinical History,4,history,0,0,0,0
+ZH-004,ZH-004-S09,Clinical History,5,of,0,0,0,0
+ZH-004,ZH-004-S09,Clinical History,6,infection,1,0,0,0
+ZH-004,ZH-004-S09,Clinical History,7,of,1,0,0,0
+ZH-004,ZH-004-S09,Clinical History,8,bacterial,1,0,0,0
+ZH-004,ZH-004-S09,Clinical History,9,origin,1,0,0,0
+ZH-004,ZH-004-S10,Social History,0,the,0,0,0,0
+ZH-004,ZH-004-S10,Social History,1,patient,0,0,0,0
+ZH-004,ZH-004-S10,Social History,2,watched,0,0,0,0
+ZH-004,ZH-004-S10,Social History,3,a,0,0,0,0
+ZH-004,ZH-004-S10,Social History,4,pillow,0,0,0,0
+ZH-004,ZH-004-S10,Social History,5,fight,0,0,0,0
+ZH-004,ZH-004-S10,Social History,6,in,0,0,0,0
+ZH-004,ZH-004-S10,Social History,7,the,0,0,0,0
+ZH-004,ZH-004-S10,Social History,8,waiting,0,0,0,0
+ZH-004,ZH-004-S10,Social History,9,room,0,0,0,0
+ZH-004,ZH-004-S11,Social History,0,the,0,0,0,0
+ZH-004,ZH-004-S11,Social History,1,caretaker,0,0,0,0
+ZH-004,ZH-004-S11,Social History,2,has,0,0,0,0
+ZH-004,ZH-004-S11,Social History,3,a,0,0,0,0
+ZH-004,ZH-004-S11,Social History,4,sharp,0,0,0,0
+ZH-004,ZH-004-S11,Social History,5,tongue,0,0,0,0
+ZH-004,ZH-004-S12,Assessment,0,the,0,0,0,0
+ZH-004,ZH-004-S12,Assessment,1,patient,0,0,0,0
+ZH-004,ZH-004-S12,Assessment,2,was,0,0,0,0
+ZH-004,ZH-004-S12,Assessment,3,diagnosed,0,0,0,0
+ZH-004,ZH-004-S12,Assessment,4,with,0,0,0,0
+ZH-004,ZH-004-S12,Assessment,5,bite,1,0,0,0
+ZH-004,ZH-004-S12,Assessment,6,deficit,1,0,0,0
+ZH-004,ZH-004-S13,Assessment,0,no,0,0,1,0
+ZH-004,ZH-004-S13,Assessment,1,evidence,0,0,0,1
+ZH-004,ZH-004-S13,Assessment,2,of,0,0,0,1
+ZH-004,ZH-004-S13,Assessment,3,altercation,1,0,0,1
+ZH-004,ZH-004-S13,Assessment,4,injury,1,0,0,1
+ZH-005,ZH-005-S01,Presentation,0,findings,0,0,0,0
+ZH-005,ZH-005-S01,Presentation,1,include,0,0,0,0
+ZH-005,ZH-005-S01,Presentation,2,pain,0,1,0,0
+ZH-005,ZH-005-S01,Presentation,3,in,0,1,0,0
+ZH-005,ZH-005-S01,Presentation,4,the,0,1,0,0
+ZH-005,ZH-005-S01,Presentation,5,chest,0,1,0,0
+ZH-005,ZH-005-S02,Presentation,0,the,0,0,0,0
+ZH-005,ZH-005-S02,Presentation,1,patient,0,0,0,0
+ZH-005,ZH-005-S02,Presentation,2,reports,0,0,0,0
+ZH-005,ZH-005-S02,Presentation,3,missing,0,1,0,0
+ZH-005,ZH-005-S02,Presentation,4,limb,0,1,0,0
+ZH-005,ZH-005-S03,General Examination,0,tongue,0,0,0,0
+ZH-005,ZH-005-S03,General Examination,1,color,0,0,0,0
+ZH-005,ZH-005-S03,General Examination,2,green,0,0,0,0
+ZH-005,ZH-005-S04,General Examination,0,motor,0,0,0,0
+ZH-005,ZH-005-S04,General Examination,1,control,0,0,0,0
+ZH-005,ZH-005-S04,General Examination,2,is,0,0,0,0
+ZH-005,ZH-005-S04,General Examination,3,preserved,0,0,0,0
+ZH-005,ZH-005-S05,Negative Findings,0,absence,0,0,1,0
+ZH-005,ZH-005-S05,Negative Findings,1,of,0,0,0,1
+ZH-005,ZH-005-S05,Negative Findings,2,acute,0,1,0,1
+ZH-005,ZH-005-S05,Negative Findings,3,rage,0,1,0,1
+ZH-005,ZH-005-S05,Negative Findings,4,attacks,0,1,0,1
+ZH-005,ZH-005-S06,Negative Findings,0,the,0,0,0,0
+ZH-005,ZH-005-S06,Negative Findings,1,patient,0,0,0,0
+ZH-005,ZH-005-S06,Negative Findings,2,denies,0,0,1,0
+ZH-005,ZH-005-S06,Negative Findings,3,yellow,0,1,0,1
+ZH-005,ZH-005-S06,Negative Findings,4,tinted,0,1,0,1
+ZH-005,ZH-005-S06,Negative Findings,5,tongue,0,1,0,1
+ZH-005,ZH-005-S07,Laboratory Analysis,0,laboratory,0,0,0,0
+ZH-005,ZH-005-S07,Laboratory Analysis,1,tests,0,0,0,0
+ZH-005,ZH-005-S07,Laboratory Analysis,2,isolated,0,0,0,0
+ZH-005,ZH-005-S07,Laboratory Analysis,3,deltaretrovirus,0,0,0,0
+ZH-005,ZH-005-S07,Laboratory Analysis,4,zumbi,0,0,0,0
+ZH-005,ZH-005-S08,Clinical History,0,no,0,0,1,0
+ZH-005,ZH-005-S08,Clinical History,1,previous,0,0,0,1
+ZH-005,ZH-005-S08,Clinical History,2,diagnosis,0,0,0,1
+ZH-005,ZH-005-S08,Clinical History,3,was,0,0,0,1
+ZH-005,ZH-005-S08,Clinical History,4,recorded,0,0,0,1
+ZH-005,ZH-005-S09,Social History,0,the,0,0,0,0
+ZH-005,ZH-005-S09,Social History,1,patient,0,0,0,0
+ZH-005,ZH-005-S09,Social History,2,arrived,0,0,0,0
+ZH-005,ZH-005-S09,Social History,3,wearing,0,0,0,0
+ZH-005,ZH-005-S09,Social History,4,a,0,0,0,0
+ZH-005,ZH-005-S09,Social History,5,yellow,0,0,0,0
+ZH-005,ZH-005-S09,Social History,6,raincoat,0,0,0,0
+ZH-005,ZH-005-S10,Social History,0,the,0,0,0,0
+ZH-005,ZH-005-S10,Social History,1,patient,0,0,0,0
+ZH-005,ZH-005-S10,Social History,2,keeps,0,0,0,0
+ZH-005,ZH-005-S10,Social History,3,spare,0,0,0,0
+ZH-005,ZH-005-S10,Social History,4,brains,0,0,0,0
+ZH-005,ZH-005-S10,Social History,5,in,0,0,0,0
+ZH-005,ZH-005-S10,Social History,6,a,0,0,0,0
+ZH-005,ZH-005-S10,Social History,7,wooden,0,0,0,0
+ZH-005,ZH-005-S10,Social History,8,chest,0,0,0,0
+ZH-005,ZH-005-S11,Assessment,0,findings,0,0,0,0
+ZH-005,ZH-005-S11,Assessment,1,are,0,0,0,0
+ZH-005,ZH-005-S11,Assessment,2,consistent,0,0,0,0
+ZH-005,ZH-005-S11,Assessment,3,with,0,0,0,0
+ZH-005,ZH-005-S11,Assessment,4,infection,1,0,0,0
+ZH-005,ZH-005-S11,Assessment,5,of,1,0,0,0
+ZH-005,ZH-005-S11,Assessment,6,viral,1,0,0,0
+ZH-005,ZH-005-S11,Assessment,7,origin,1,0,0,0
+ZH-005,ZH-005-S12,Assessment,0,negative,0,0,1,0
+ZH-005,ZH-005-S12,Assessment,1,for,0,0,0,1
+ZH-005,ZH-005-S12,Assessment,2,fight,1,0,0,1
+ZH-005,ZH-005-S12,Assessment,3,related,1,0,0,1
+ZH-005,ZH-005-S12,Assessment,4,trauma,1,0,0,1
+ZH-006,ZH-006-S01,Presentation,0,the,0,0,0,0
+ZH-006,ZH-006-S01,Presentation,1,patient,0,0,0,0
+ZH-006,ZH-006-S01,Presentation,2,reports,0,0,0,0
+ZH-006,ZH-006-S01,Presentation,3,limb,0,1,0,0
+ZH-006,ZH-006-S01,Presentation,4,loss,0,1,0,0
+ZH-006,ZH-006-S02,Presentation,0,the,0,0,0,0
+ZH-006,ZH-006-S02,Presentation,1,patient,0,0,0,0
+ZH-006,ZH-006-S02,Presentation,2,presents,0,0,0,0
+ZH-006,ZH-006-S02,Presentation,3,with,0,0,0,0
+ZH-006,ZH-006-S02,Presentation,4,intense,0,1,0,0
+ZH-006,ZH-006-S02,Presentation,5,anger,0,1,0,0
+ZH-006,ZH-006-S02,Presentation,6,episodes,0,1,0,0
+ZH-006,ZH-006-S03,General Examination,0,the,0,0,0,0
+ZH-006,ZH-006-S03,General Examination,1,tongue,0,0,0,0
+ZH-006,ZH-006-S03,General Examination,2,is,0,0,0,0
+ZH-006,ZH-006-S03,General Examination,3,dry,0,0,0,0
+ZH-006,ZH-006-S03,General Examination,4,and,0,0,0,0
+ZH-006,ZH-006-S03,General Examination,5,rough,0,0,0,0
+ZH-006,ZH-006-S03,General Examination,6,typical,0,0,0,0
+ZH-006,ZH-006-S03,General Examination,7,of,0,0,0,0
+ZH-006,ZH-006-S03,General Examination,8,the,0,0,0,0
+ZH-006,ZH-006-S03,General Examination,9,species,0,0,0,0
+ZH-006,ZH-006-S04,Negative Findings,0,absence,0,0,1,0
+ZH-006,ZH-006-S04,Negative Findings,1,of,0,0,0,1
+ZH-006,ZH-006-S04,Negative Findings,2,shaking,0,1,0,1
+ZH-006,ZH-006-S04,Negative Findings,3,of,0,1,0,1
+ZH-006,ZH-006-S04,Negative Findings,4,the,0,1,0,1
+ZH-006,ZH-006-S04,Negative Findings,5,pinky,0,1,0,1
+ZH-006,ZH-006-S04,Negative Findings,6,finger,0,1,0,1
+ZH-006,ZH-006-S05,Laboratory Analysis,0,blood,0,0,0,0
+ZH-006,ZH-006-S05,Laboratory Analysis,1,analysis,0,0,0,0
+ZH-006,ZH-006-S05,Laboratory Analysis,2,returned,0,0,0,0
+ZH-006,ZH-006-S05,Laboratory Analysis,3,no,0,0,1,0
+ZH-006,ZH-006-S05,Laboratory Analysis,4,relevant,0,0,0,1
+ZH-006,ZH-006-S05,Laboratory Analysis,5,findings,0,0,0,1
+ZH-006,ZH-006-S06,Clinical History,0,no,0,0,1,0
+ZH-006,ZH-006-S06,Clinical History,1,previous,0,0,0,1
+ZH-006,ZH-006-S06,Clinical History,2,diagnosis,0,0,0,1
+ZH-006,ZH-006-S06,Clinical History,3,was,0,0,0,1
+ZH-006,ZH-006-S06,Clinical History,4,recorded,0,0,0,1
+ZH-006,ZH-006-S07,Social History,0,the,0,0,0,0
+ZH-006,ZH-006-S07,Social History,1,patient,0,0,0,0
+ZH-006,ZH-006-S07,Social History,2,sticks,0,0,0,0
+ZH-006,ZH-006-S07,Social History,3,out,0,0,0,0
+ZH-006,ZH-006-S07,Social History,4,the,0,0,0,0
+ZH-006,ZH-006-S07,Social History,5,tongue,0,0,0,0
+ZH-006,ZH-006-S07,Social History,6,at,0,0,0,0
+ZH-006,ZH-006-S07,Social History,7,the,0,0,0,0
+ZH-006,ZH-006-S07,Social History,8,nurses,0,0,0,0
+ZH-006,ZH-006-S08,Social History,0,the,0,0,0,0
+ZH-006,ZH-006-S08,Social History,1,patient,0,0,0,0
+ZH-006,ZH-006-S08,Social History,2,is,0,0,0,0
+ZH-006,ZH-006-S08,Social History,3,a,0,0,0,0
+ZH-006,ZH-006-S08,Social History,4,member,0,0,0,0
+ZH-006,ZH-006-S08,Social History,5,of,0,0,0,0
+ZH-006,ZH-006-S08,Social History,6,the,0,0,0,0
+ZH-006,ZH-006-S08,Social History,7,downtown,0,0,0,0
+ZH-006,ZH-006-S08,Social History,8,horde,0,0,0,0
+ZH-006,ZH-006-S09,Assessment,0,diagnosis,0,0,0,0
+ZH-006,ZH-006-S09,Assessment,1,fight,1,0,0,0
+ZH-006,ZH-006-S09,Assessment,2,injury,1,0,0,0
+ZH-006,ZH-006-S10,Assessment,0,no,0,0,1,0
+ZH-006,ZH-006-S10,Assessment,1,evidence,0,0,0,1
+ZH-006,ZH-006-S10,Assessment,2,of,0,0,0,1
+ZH-006,ZH-006-S10,Assessment,3,deficit,1,0,0,1
+ZH-006,ZH-006-S10,Assessment,4,caused,1,0,0,1
+ZH-006,ZH-006-S10,Assessment,5,by,1,0,0,1
+ZH-006,ZH-006-S10,Assessment,6,bite,1,0,0,1
+ZH-007,ZH-007-S01,Presentation,0,findings,0,0,0,0
+ZH-007,ZH-007-S01,Presentation,1,include,0,0,0,0
+ZH-007,ZH-007-S01,Presentation,2,severe,0,1,0,0
+ZH-007,ZH-007-S01,Presentation,3,anger,0,1,0,0
+ZH-007,ZH-007-S02,General Examination,0,limbs,0,0,0,0
+ZH-007,ZH-007-S02,General Examination,1,move,0,0,0,0
+ZH-007,ZH-007-S02,General Examination,2,slowly,0,0,0,0
+ZH-007,ZH-007-S02,General Examination,3,as,0,0,0,0
+ZH-007,ZH-007-S02,General Examination,4,usual,0,0,0,0
+ZH-007,ZH-007-S02,General Examination,5,for,0,0,0,0
+ZH-007,ZH-007-S02,General Examination,6,zombies,0,0,0,0
+ZH-007,ZH-007-S03,Negative Findings,0,absence,0,0,1,0
+ZH-007,ZH-007-S03,Negative Findings,1,of,0,0,0,1
+ZH-007,ZH-007-S03,Negative Findings,2,missing,0,1,0,1
+ZH-007,ZH-007-S03,Negative Findings,3,limb,0,1,0,1
+ZH-007,ZH-007-S04,Laboratory Analysis,0,blood,0,0,0,0
+ZH-007,ZH-007-S04,Laboratory Analysis,1,analysis,0,0,0,0
+ZH-007,ZH-007-S04,Laboratory Analysis,2,returned,0,0,0,0
+ZH-007,ZH-007-S04,Laboratory Analysis,3,no,0,0,1,0
+ZH-007,ZH-007-S04,Laboratory Analysis,4,relevant,0,0,0,1
+ZH-007,ZH-007-S04,Laboratory Analysis,5,findings,0,0,0,1
+ZH-007,ZH-007-S05,Clinical History,0,no,0,0,1,0
+ZH-007,ZH-007-S05,Clinical History,1,previous,0,0,0,1
+ZH-007,ZH-007-S05,Clinical History,2,diagnosis,0,0,0,1
+ZH-007,ZH-007-S05,Clinical History,3,was,0,0,0,1
+ZH-007,ZH-007-S05,Clinical History,4,recorded,0,0,0,1
+ZH-007,ZH-007-S06,Social History,0,the,0,0,0,0
+ZH-007,ZH-007-S06,Social History,1,caretaker,0,0,0,0
+ZH-007,ZH-007-S06,Social History,2,has,0,0,0,0
+ZH-007,ZH-007-S06,Social History,3,a,0,0,0,0
+ZH-007,ZH-007-S06,Social History,4,sharp,0,0,0,0
+ZH-007,ZH-007-S06,Social History,5,tongue,0,0,0,0
+ZH-007,ZH-007-S07,Assessment,0,no,0,0,1,0
+ZH-007,ZH-007-S07,Assessment,1,diagnosis,0,0,0,1
+ZH-007,ZH-007-S07,Assessment,2,was,0,0,0,1
+ZH-007,ZH-007-S07,Assessment,3,established,0,0,0,1
+ZH-007,ZH-007-S08,Assessment,0,the,0,0,0,0
+ZH-007,ZH-007-S08,Assessment,1,team,0,0,0,0
+ZH-007,ZH-007-S08,Assessment,2,ruled,0,0,1,0
+ZH-007,ZH-007-S08,Assessment,3,out,0,0,1,0
+ZH-007,ZH-007-S08,Assessment,4,fight,1,0,0,1
+ZH-007,ZH-007-S08,Assessment,5,injury,1,0,0,1
+ZH-008,ZH-008-S01,Presentation,0,examination,0,0,0,0
+ZH-008,ZH-008-S01,Presentation,1,reveals,0,0,0,0
+ZH-008,ZH-008-S01,Presentation,2,tremor,0,1,0,0
+ZH-008,ZH-008-S01,Presentation,3,in,0,1,0,0
+ZH-008,ZH-008-S01,Presentation,4,the,0,1,0,0
+ZH-008,ZH-008-S01,Presentation,5,little,0,1,0,0
+ZH-008,ZH-008-S01,Presentation,6,finger,0,1,0,0
+ZH-008,ZH-008-S02,General Examination,0,the,0,0,0,0
+ZH-008,ZH-008-S02,General Examination,1,patient,0,0,0,0
+ZH-008,ZH-008-S02,General Examination,2,shows,0,0,0,0
+ZH-008,ZH-008-S02,General Examination,3,a,0,0,0,0
+ZH-008,ZH-008-S02,General Examination,4,healthy,0,0,0,0
+ZH-008,ZH-008-S02,General Examination,5,green,0,0,0,0
+ZH-008,ZH-008-S02,General Examination,6,tongue,0,0,0,0
+ZH-008,ZH-008-S03,Negative Findings,0,the,0,0,0,0
+ZH-008,ZH-008-S03,Negative Findings,1,patient,0,0,0,0
+ZH-008,ZH-008-S03,Negative Findings,2,denies,0,0,1,0
+ZH-008,ZH-008-S03,Negative Findings,3,yellow,0,1,0,1
+ZH-008,ZH-008-S03,Negative Findings,4,tinted,0,1,0,1
+ZH-008,ZH-008-S03,Negative Findings,5,tongue,0,1,0,1
+ZH-008,ZH-008-S04,Negative Findings,0,examination,0,0,0,0
+ZH-008,ZH-008-S04,Negative Findings,1,reveals,0,0,0,0
+ZH-008,ZH-008-S04,Negative Findings,2,no,0,0,1,0
+ZH-008,ZH-008-S04,Negative Findings,3,loss,0,1,0,1
+ZH-008,ZH-008-S04,Negative Findings,4,of,0,1,0,1
+ZH-008,ZH-008-S04,Negative Findings,5,motor,0,1,0,1
+ZH-008,ZH-008-S04,Negative Findings,6,control,0,1,0,1
+ZH-008,ZH-008-S05,Laboratory Analysis,0,laboratory,0,0,0,0
+ZH-008,ZH-008-S05,Laboratory Analysis,1,tests,0,0,0,0
+ZH-008,ZH-008-S05,Laboratory Analysis,2,did,0,0,0,0
+ZH-008,ZH-008-S05,Laboratory Analysis,3,not,0,0,1,0
+ZH-008,ZH-008-S05,Laboratory Analysis,4,identify,0,0,0,1
+ZH-008,ZH-008-S05,Laboratory Analysis,5,any,0,0,0,1
+ZH-008,ZH-008-S05,Laboratory Analysis,6,pathogen,0,0,0,1
+ZH-008,ZH-008-S06,Clinical History,0,history,0,0,0,0
+ZH-008,ZH-008-S06,Clinical History,1,of,0,0,0,0
+ZH-008,ZH-008-S06,Clinical History,2,bacterial,1,0,0,0
+ZH-008,ZH-008-S06,Clinical History,3,infectious,1,0,0,0
+ZH-008,ZH-008-S06,Clinical History,4,process,1,0,0,0
+ZH-008,ZH-008-S07,Social History,0,a,0,0,0,0
+ZH-008,ZH-008-S07,Social History,1,video,0,0,0,0
+ZH-008,ZH-008-S07,Social History,2,of,0,0,0,0
+ZH-008,ZH-008-S07,Social History,3,the,0,0,0,0
+ZH-008,ZH-008-S07,Social History,4,patient,0,0,0,0
+ZH-008,ZH-008-S07,Social History,5,dancing,0,0,0,0
+ZH-008,ZH-008-S07,Social History,6,went,0,0,0,0
+ZH-008,ZH-008-S07,Social History,7,viral,0,0,0,0
+ZH-008,ZH-008-S08,Social History,0,favorite,0,0,0,0
+ZH-008,ZH-008-S08,Social History,1,snack,0,0,0,0
+ZH-008,ZH-008-S08,Social History,2,finger,0,0,0,0
+ZH-008,ZH-008-S08,Social History,3,food,0,0,0,0
+ZH-008,ZH-008-S09,Assessment,0,clinical,0,0,0,0
+ZH-008,ZH-008-S09,Assessment,1,impression,0,0,0,0
+ZH-008,ZH-008-S09,Assessment,2,deficit,1,0,0,0
+ZH-008,ZH-008-S09,Assessment,3,caused,1,0,0,0
+ZH-008,ZH-008-S09,Assessment,4,by,1,0,0,0
+ZH-008,ZH-008-S09,Assessment,5,bite,1,0,0,0
+ZH-008,ZH-008-S10,Assessment,0,the,0,0,0,0
+ZH-008,ZH-008-S10,Assessment,1,team,0,0,0,0
+ZH-008,ZH-008-S10,Assessment,2,ruled,0,0,1,0
+ZH-008,ZH-008-S10,Assessment,3,out,0,0,1,0
+ZH-008,ZH-008-S10,Assessment,4,infection,1,0,0,1
+ZH-008,ZH-008-S10,Assessment,5,of,1,0,0,1
+ZH-008,ZH-008-S10,Assessment,6,bacterial,1,0,0,1
+ZH-008,ZH-008-S10,Assessment,7,origin,1,0,0,1
+ZH-009,ZH-009-S01,Presentation,0,the,0,0,0,0
+ZH-009,ZH-009-S01,Presentation,1,patient,0,0,0,0
+ZH-009,ZH-009-S01,Presentation,2,reports,0,0,0,0
+ZH-009,ZH-009-S01,Presentation,3,yellow,0,1,0,0
+ZH-009,ZH-009-S01,Presentation,4,tinted,0,1,0,0
+ZH-009,ZH-009-S01,Presentation,5,tongue,0,1,0,0
+ZH-009,ZH-009-S02,Presentation,0,findings,0,0,0,0
+ZH-009,ZH-009-S02,Presentation,1,include,0,0,0,0
+ZH-009,ZH-009-S02,Presentation,2,thoracic,0,1,0,0
+ZH-009,ZH-009-S02,Presentation,3,discomfort,0,1,0,0
+ZH-009,ZH-009-S03,General Examination,0,pinky,0,0,0,0
+ZH-009,ZH-009-S03,General Examination,1,finger,0,0,0,0
+ZH-009,ZH-009-S03,General Examination,2,nails,0,0,0,0
+ZH-009,ZH-009-S03,General Examination,3,are,0,0,0,0
+ZH-009,ZH-009-S03,General Examination,4,long,0,0,0,0
+ZH-009,ZH-009-S03,General Examination,5,and,0,0,0,0
+ZH-009,ZH-009-S03,General Examination,6,dirty,0,0,0,0
+ZH-009,ZH-009-S03,General Examination,7,which,0,0,0,0
+ZH-009,ZH-009-S03,General Examination,8,is,0,0,0,0
+ZH-009,ZH-009-S03,General Examination,9,normal,0,0,0,0
+ZH-009,ZH-009-S04,General Examination,0,every,0,0,0,0
+ZH-009,ZH-009-S04,General Examination,1,member,0,0,0,0
+ZH-009,ZH-009-S04,General Examination,2,is,0,0,0,0
+ZH-009,ZH-009-S04,General Examination,3,in,0,0,0,0
+ZH-009,ZH-009-S04,General Examination,4,its,0,0,0,0
+ZH-009,ZH-009-S04,General Examination,5,place,0,0,0,0
+ZH-009,ZH-009-S05,Negative Findings,0,the,0,0,0,0
+ZH-009,ZH-009-S05,Negative Findings,1,patient,0,0,0,0
+ZH-009,ZH-009-S05,Negative Findings,2,presents,0,0,0,0
+ZH-009,ZH-009-S05,Negative Findings,3,without,0,0,1,0
+ZH-009,ZH-009-S05,Negative Findings,4,paralyzed,0,1,0,1
+ZH-009,ZH-009-S05,Negative Findings,5,limbs,0,1,0,1
+ZH-009,ZH-009-S06,Laboratory Analysis,0,blood,0,0,0,0
+ZH-009,ZH-009-S06,Laboratory Analysis,1,culture,0,0,0,0
+ZH-009,ZH-009-S06,Laboratory Analysis,2,is,0,0,0,0
+ZH-009,ZH-009-S06,Laboratory Analysis,3,positive,0,0,0,0
+ZH-009,ZH-009-S06,Laboratory Analysis,4,for,0,0,0,0
+ZH-009,ZH-009-S06,Laboratory Analysis,5,cyanobacterium,0,0,0,0
+ZH-009,ZH-009-S06,Laboratory Analysis,6,zumbi,0,0,0,0
+ZH-009,ZH-009-S07,Clinical History,0,the,0,0,0,0
+ZH-009,ZH-009-S07,Clinical History,1,patient,0,0,0,0
+ZH-009,ZH-009-S07,Clinical History,2,denies,0,0,1,0
+ZH-009,ZH-009-S07,Clinical History,3,previous,0,0,0,1
+ZH-009,ZH-009-S07,Clinical History,4,bite,1,0,0,1
+ZH-009,ZH-009-S07,Clinical History,5,related,1,0,0,1
+ZH-009,ZH-009-S07,Clinical History,6,deficit,1,0,0,1
+ZH-009,ZH-009-S08,Social History,0,the,0,0,0,0
+ZH-009,ZH-009-S08,Social History,1,caretaker,0,0,0,0
+ZH-009,ZH-009-S08,Social History,2,received,0,0,0,0
+ZH-009,ZH-009-S08,Social History,3,a,0,0,0,0
+ZH-009,ZH-009-S08,Social History,4,leaflet,0,0,0,0
+ZH-009,ZH-009-S08,Social History,5,about,0,0,0,0
+ZH-009,ZH-009-S08,Social History,6,infection,0,0,0,0
+ZH-009,ZH-009-S08,Social History,7,prevention,0,0,0,0
+ZH-009,ZH-009-S09,Assessment,0,findings,0,0,0,0
+ZH-009,ZH-009-S09,Assessment,1,are,0,0,0,0
+ZH-009,ZH-009-S09,Assessment,2,consistent,0,0,0,0
+ZH-009,ZH-009-S09,Assessment,3,with,0,0,0,0
+ZH-009,ZH-009-S09,Assessment,4,bacterial,1,0,0,0
+ZH-009,ZH-009-S09,Assessment,5,infectious,1,0,0,0
+ZH-009,ZH-009-S09,Assessment,6,process,1,0,0,0
+ZH-010,ZH-010-S01,Presentation,0,signs,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,1,of,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,2,pain,0,1,0,0
+ZH-010,ZH-010-S01,Presentation,3,in,0,1,0,0
+ZH-010,ZH-010-S01,Presentation,4,the,0,1,0,0
+ZH-010,ZH-010-S01,Presentation,5,chest,0,1,0,0
+ZH-010,ZH-010-S01,Presentation,6,are,0,0,0,0
+ZH-010,ZH-010-S01,Presentation,7,evident,0,0,0,0
+ZH-010,ZH-010-S02,General Examination,0,the,0,0,0,0
+ZH-010,ZH-010-S02,General Examination,1,patient,0,0,0,0
+ZH-010,ZH-010-S02,General Examination,2,shows,0,0,0,0
+ZH-010,ZH-010-S02,General Examination,3,a,0,0,0,0
+ZH-010,ZH-010-S02,General Examination,4,healthy,0,0,0,0
+ZH-010,ZH-010-S02,General Examination,5,green,0,0,0,0
+ZH-010,ZH-010-S02,General Examination,6,tongue,0,0,0,0
+ZH-010,ZH-010-S03,General Examination,0,mild,0,0,0,0
+ZH-010,ZH-010-S03,General Examination,1,anger,0,0,0,0
+ZH-010,ZH-010-S03,General Examination,2,when,0,0,0,0
+ZH-010,ZH-010-S03,General Examination,3,hungry,0,0,0,0
+ZH-010,ZH-010-S03,General Examination,4,which,0,0,0,0
+ZH-010,ZH-010-S03,General Examination,5,is,0,0,0,0
+ZH-010,ZH-010-S03,General Examination,6,normal,0,0,0,0
+ZH-010,ZH-010-S04,Negative Findings,0,no,0,0,1,0
+ZH-010,ZH-010-S04,Negative Findings,1,signs,0,0,0,1
+ZH-010,ZH-010-S04,Negative Findings,2,of,0,0,0,1
+ZH-010,ZH-010-S04,Negative Findings,3,yellow,0,1,0,1
+ZH-010,ZH-010-S04,Negative Findings,4,tongue,0,1,0,1
+ZH-010,ZH-010-S05,Laboratory Analysis,0,laboratory,0,0,0,0
+ZH-010,ZH-010-S05,Laboratory Analysis,1,tests,0,0,0,0
+ZH-010,ZH-010-S05,Laboratory Analysis,2,isolated,0,0,0,0
+ZH-010,ZH-010-S05,Laboratory Analysis,3,deltaretrovirus,0,0,0,0
+ZH-010,ZH-010-S05,Laboratory Analysis,4,zumbi,0,0,0,0
+ZH-010,ZH-010-S06,Clinical History,0,no,0,0,1,0
+ZH-010,ZH-010-S06,Clinical History,1,previous,0,0,0,1
+ZH-010,ZH-010-S06,Clinical History,2,diagnosis,0,0,0,1
+ZH-010,ZH-010-S06,Clinical History,3,was,0,0,0,1
+ZH-010,ZH-010-S06,Clinical History,4,recorded,0,0,0,1
+ZH-010,ZH-010-S07,Social History,0,the,0,0,0,0
+ZH-010,ZH-010-S07,Social History,1,patient,0,0,0,0
+ZH-010,ZH-010-S07,Social History,2,keeps,0,0,0,0
+ZH-010,ZH-010-S07,Social History,3,spare,0,0,0,0
+ZH-010,ZH-010-S07,Social History,4,brains,0,0,0,0
+ZH-010,ZH-010-S07,Social History,5,in,0,0,0,0
+ZH-010,ZH-010-S07,Social History,6,a,0,0,0,0
+ZH-010,ZH-010-S07,Social History,7,wooden,0,0,0,0
+ZH-010,ZH-010-S07,Social History,8,chest,0,0,0,0
+ZH-010,ZH-010-S08,Social History,0,mother,0,0,0,0
+ZH-010,ZH-010-S08,Social History,1,tongue,0,0,0,0
+ZH-010,ZH-010-S08,Social History,2,zombish,0,0,0,0
+ZH-010,ZH-010-S09,Assessment,0,the,0,0,0,0
+ZH-010,ZH-010-S09,Assessment,1,patient,0,0,0,0
+ZH-010,ZH-010-S09,Assessment,2,was,0,0,0,0
+ZH-010,ZH-010-S09,Assessment,3,diagnosed,0,0,0,0
+ZH-010,ZH-010-S09,Assessment,4,with,0,0,0,0
+ZH-010,ZH-010-S09,Assessment,5,infection,1,0,0,0
+ZH-010,ZH-010-S09,Assessment,6,of,1,0,0,0
+ZH-010,ZH-010-S09,Assessment,7,viral,1,0,0,0
+ZH-010,ZH-010-S09,Assessment,8,origin,1,0,0,0
+ZH-011,ZH-011-S01,Presentation,0,signs,0,0,0,0
+ZH-011,ZH-011-S01,Presentation,1,of,0,0,0,0
+ZH-011,ZH-011-S01,Presentation,2,missing,0,1,0,0
+ZH-011,ZH-011-S01,Presentation,3,limb,0,1,0,0
+ZH-011,ZH-011-S01,Presentation,4,are,0,0,0,0
+ZH-011,ZH-011-S01,Presentation,5,evident,0,0,0,0
+ZH-011,ZH-011-S02,Presentation,0,the,0,0,0,0
+ZH-011,ZH-011-S02,Presentation,1,patient,0,0,0,0
+ZH-011,ZH-011-S02,Presentation,2,presents,0,0,0,0
+ZH-011,ZH-011-S02,Presentation,3,with,0,0,0,0
+ZH-011,ZH-011-S02,Presentation,4,yellow,0,1,0,0
+ZH-011,ZH-011-S02,Presentation,5,tongue,0,1,0,0
+ZH-011,ZH-011-S03,General Examination,0,limbs,0,0,0,0
+ZH-011,ZH-011-S03,General Examination,1,move,0,0,0,0
+ZH-011,ZH-011-S03,General Examination,2,slowly,0,0,0,0
+ZH-011,ZH-011-S03,General Examination,3,as,0,0,0,0
+ZH-011,ZH-011-S03,General Examination,4,usual,0,0,0,0
+ZH-011,ZH-011-S03,General Examination,5,for,0,0,0,0
+ZH-011,ZH-011-S03,General Examination,6,zombies,0,0,0,0
+ZH-011,ZH-011-S04,Negative Findings,0,absence,0,0,1,0
+ZH-011,ZH-011-S04,Negative Findings,1,of,0,0,0,1
+ZH-011,ZH-011-S04,Negative Findings,2,shaking,0,1,0,1
+ZH-011,ZH-011-S04,Negative Findings,3,of,0,1,0,1
+ZH-011,ZH-011-S04,Negative Findings,4,the,0,1,0,1
+ZH-011,ZH-011-S04,Negative Findings,5,pinky,0,1,0,1
+ZH-011,ZH-011-S04,Negative Findings,6,finger,0,1,0,1
+ZH-011,ZH-011-S05,Laboratory Analysis,0,blood,0,0,0,0
+ZH-011,ZH-011-S05,Laboratory Analysis,1,analysis,0,0,0,0
+ZH-011,ZH-011-S05,Laboratory Analysis,2,returned,0,0,0,0
+ZH-011,ZH-011-S05,Laboratory Analysis,3,no,0,0,1,0
+ZH-011,ZH-011-S05,Laboratory Analysis,4,relevant,0,0,0,1
+ZH-011,ZH-011-S05,Laboratory Analysis,5,findings,0,0,0,1
+ZH-011,ZH-011-S06,Clinical History,0,history,0,0,0,0
+ZH-011,ZH-011-S06,Clinical History,1,of,0,0,0,0
+ZH-011,ZH-011-S06,Clinical History,2,infection,1,0,0,0
+ZH-011,ZH-011-S06,Clinical History,3,of,1,0,0,0
+ZH-011,ZH-011-S06,Clinical History,4,bacterial,1,0,0,0
+ZH-011,ZH-011-S06,Clinical History,5,origin,1,0,0,0
+ZH-011,ZH-011-S07,Social History,0,the,0,0,0,0
+ZH-011,ZH-011-S07,Social History,1,patient,0,0,0,0
+ZH-011,ZH-011-S07,Social History,2,speaks,0,0,0,0
+ZH-011,ZH-011-S07,Social History,3,in,0,0,0,0
+ZH-011,ZH-011-S07,Social History,4,a,0,0,0,0
+ZH-011,ZH-011-S07,Social History,5,strange,0,0,0,0
+ZH-011,ZH-011-S07,Social History,6,tongue,0,0,0,0
+ZH-011,ZH-011-S08,Social History,0,mother,0,0,0,0
+ZH-011,ZH-011-S08,Social History,1,tongue,0,0,0,0
+ZH-011,ZH-011-S08,Social History,2,zombish,0,0,0,0
+ZH-011,ZH-011-S09,Assessment,0,clinical,0,0,0,0
+ZH-011,ZH-011-S09,Assessment,1,impression,0,0,0,0
+ZH-011,ZH-011-S09,Assessment,2,bite,1,0,0,0
+ZH-011,ZH-011-S09,Assessment,3,related,1,0,0,0
+ZH-011,ZH-011-S09,Assessment,4,deficit,1,0,0,0
+ZH-012,ZH-012-S01,Presentation,0,examination,0,0,0,0
+ZH-012,ZH-012-S01,Presentation,1,reveals,0,0,0,0
+ZH-012,ZH-012-S01,Presentation,2,loss,0,1,0,0
+ZH-012,ZH-012-S01,Presentation,3,of,0,1,0,0
+ZH-012,ZH-012-S01,Presentation,4,motor,0,1,0,0
+ZH-012,ZH-012-S01,Presentation,5,control,0,1,0,0
+ZH-012,ZH-012-S02,Presentation,0,examination,0,0,0,0
+ZH-012,ZH-012-S02,Presentation,1,reveals,0,0,0,0
+ZH-012,ZH-012-S02,Presentation,2,yellow,0,1,0,0
+ZH-012,ZH-012-S02,Presentation,3,tongue,0,1,0,0
+ZH-012,ZH-012-S03,General Examination,0,bite,0,0,0,0
+ZH-012,ZH-012-S03,General Examination,1,force,0,0,0,0
+ZH-012,ZH-012-S03,General Examination,2,is,0,0,0,0
+ZH-012,ZH-012-S03,General Examination,3,normal,0,0,0,0
+ZH-012,ZH-012-S03,General Examination,4,for,0,0,0,0
+ZH-012,ZH-012-S03,General Examination,5,the,0,0,0,0
+ZH-012,ZH-012-S03,General Examination,6,species,0,0,0,0
+ZH-012,ZH-012-S04,General Examination,0,each,0,0,0,0
+ZH-012,ZH-012-S04,General Examination,1,limb,0,0,0,0
+ZH-012,ZH-012-S04,General Examination,2,is,0,0,0,0
+ZH-012,ZH-012-S04,General Examination,3,firmly,0,0,0,0
+ZH-012,ZH-012-S04,General Examination,4,attached,0,0,0,0
+ZH-012,ZH-012-S05,Negative Findings,0,the,0,0,0,0
+ZH-012,ZH-012-S05,Negative Findings,1,patient,0,0,0,0
+ZH-012,ZH-012-S05,Negative Findings,2,is,0,0,0,0
+ZH-012,ZH-012-S05,Negative Findings,3,free,0,0,1,0
+ZH-012,ZH-012-S05,Negative Findings,4,of,0,0,1,0
+ZH-012,ZH-012-S05,Negative Findings,5,shaking,0,1,0,1
+ZH-012,ZH-012-S05,Negative Findings,6,of,0,1,0,1
+ZH-012,ZH-012-S05,Negative Findings,7,the,0,1,0,1
+ZH-012,ZH-012-S05,Negative Findings,8,pinky,0,1,0,1
+ZH-012,ZH-012-S05,Negative Findings,9,finger,0,1,0,1
+ZH-012,ZH-012-S06,Negative Findings,0,absence,0,0,1,0
+ZH-012,ZH-012-S06,Negative Findings,1,of,0,0,0,1
+ZH-012,ZH-012-S06,Negative Findings,2,pain,0,1,0,1
+ZH-012,ZH-012-S06,Negative Findings,3,in,0,1,0,1
+ZH-012,ZH-012-S06,Negative Findings,4,the,0,1,0,1
+ZH-012,ZH-012-S06,Negative Findings,5,chest,0,1,0,1
+ZH-012,ZH-012-S07,Laboratory Analysis,0,blood,0,0,0,0
+ZH-012,ZH-012-S07,Laboratory Analysis,1,culture,0,0,0,0
+ZH-012,ZH-012-S07,Laboratory Analysis,2,is,0,0,0,0
+ZH-012,ZH-012-S07,Laboratory Analysis,3,positive,0,0,0,0
+ZH-012,ZH-012-S07,Laboratory Analysis,4,for,0,0,0,0
+ZH-012,ZH-012-S07,Laboratory Analysis,5,cyanobacterium,0,0,0,0
+ZH-012,ZH-012-S07,Laboratory Analysis,6,zumbi,0,0,0,0
+ZH-012,ZH-012-S08,Clinical History,0,no,0,0,1,0
+ZH-012,ZH-012-S08,Clinical History,1,previous,0,0,0,1
+ZH-012,ZH-012-S08,Clinical History,2,diagnosis,0,0,0,1
+ZH-012,ZH-012-S08,Clinical History,3,was,0,0,0,1
+ZH-012,ZH-012-S08,Clinical History,4,recorded,0,0,0,1
+ZH-012,ZH-012-S09,Social History,0,the,0,0,0,0
+ZH-012,ZH-012-S09,Social History,1,caretaker,0,0,0,0
+ZH-012,ZH-012-S09,Social History,2,says,0,0,0,0
+ZH-012,ZH-012-S09,Social History,3,the,0,0,0,0
+ZH-012,ZH-012-S09,Social History,4,patient,0,0,0,0
+ZH-012,ZH-012-S09,Social History,5,is,0,0,0,0
+ZH-012,ZH-012-S09,Social History,6,a,0,0,0,0
+ZH-012,ZH-012-S09,Social History,7,pain,0,0,0,0
+ZH-012,ZH-012-S09,Social History,8,to,0,0,0,0
+ZH-012,ZH-012-S09,Social History,9,feed,0,0,0,0
+ZH-012,ZH-012-S10,Assessment,0,clinical,0,0,0,0
+ZH-012,ZH-012-S10,Assessment,1,impression,0,0,0,0
+ZH-012,ZH-012-S10,Assessment,2,bacterial,1,0,0,0
+ZH-012,ZH-012-S10,Assessment,3,infection,1,0,0,0
+ZH-013,ZH-013-S01,Presentation,0,findings,0,0,0,0
+ZH-013,ZH-013-S01,Presentation,1,include,0,0,0,0
+ZH-013,ZH-013-S01,Presentation,2,pain,0,1,0,0
+ZH-013,ZH-013-S01,Presentation,3,in,0,1,0,0
+ZH-013,ZH-013-S01,Presentation,4,the,0,1,0,0
+ZH-013,ZH-013-S01,Presentation,5,chest,0,1,0,0
+ZH-013,ZH-013-S02,General Examination,0,motor,0,0,0,0
+ZH-013,ZH-013-S02,General Examination,1,control,0,0,0,0
+ZH-013,ZH-013-S02,General Examination,2,is,0,0,0,0
+ZH-013,ZH-013-S02,General Examination,3,preserved,0,0,0,0
+ZH-013,ZH-013-S03,General Examination,0,bite,0,0,0,0
+ZH-013,ZH-013-S03,General Examination,1,force,0,0,0,0
+ZH-013,ZH-013-S03,General Examination,2,is,0,0,0,0
+ZH-013,ZH-013-S03,General Examination,3,normal,0,0,0,0
+ZH-013,ZH-013-S03,General Examination,4,for,0,0,0,0
+ZH-013,ZH-013-S03,General Examination,5,the,0,0,0,0
+ZH-013,ZH-013-S03,General Examination,6,species,0,0,0,0
+ZH-013,ZH-013-S04,Negative Findings,0,absence,0,0,1,0
+ZH-013,ZH-013-S04,Negative Findings,1,of,0,0,0,1
+ZH-013,ZH-013-S04,Negative Findings,2,shaking,0,1,0,1
+ZH-013,ZH-013-S04,Negative Findings,3,of,0,1,0,1
+ZH-013,ZH-013-S04,Negative Findings,4,the,0,1,0,1
+ZH-013,ZH-013-S04,Negative Findings,5,pinky,0,1,0,1
+ZH-013,ZH-013-S04,Negative Findings,6,finger,0,1,0,1
+ZH-013,ZH-013-S05,Negative Findings,0,the,0,0,0,0
+ZH-013,ZH-013-S05,Negative Findings,1,patient,0,0,0,0
+ZH-013,ZH-013-S05,Negative Findings,2,denies,0,0,1,0
+ZH-013,ZH-013-S05,Negative Findings,3,yellowish,0,1,0,1
+ZH-013,ZH-013-S05,Negative Findings,4,tongue,0,1,0,1
+ZH-013,ZH-013-S06,Laboratory Analysis,0,laboratory,0,0,0,0
+ZH-013,ZH-013-S06,Laboratory Analysis,1,tests,0,0,0,0
+ZH-013,ZH-013-S06,Laboratory Analysis,2,isolated,0,0,0,0
+ZH-013,ZH-013-S06,Laboratory Analysis,3,deltaretrovirus,0,0,0,0
+ZH-013,ZH-013-S06,Laboratory Analysis,4,zumbi,0,0,0,0
+ZH-013,ZH-013-S07,Clinical History,0,the,0,0,0,0
+ZH-013,ZH-013-S07,Clinical History,1,patient,0,0,0,0
+ZH-013,ZH-013-S07,Clinical History,2,denies,0,0,1,0
+ZH-013,ZH-013-S07,Clinical History,3,previous,0,0,0,1
+ZH-013,ZH-013-S07,Clinical History,4,bacterial,1,0,0,1
+ZH-013,ZH-013-S07,Clinical History,5,infection,1,0,0,1
+ZH-013,ZH-013-S08,Social History,0,the,0,0,0,0
+ZH-013,ZH-013-S08,Social History,1,patient,0,0,0,0
+ZH-013,ZH-013-S08,Social History,2,watched,0,0,0,0
+ZH-013,ZH-013-S08,Social History,3,a,0,0,0,0
+ZH-013,ZH-013-S08,Social History,4,pillow,0,0,0,0
+ZH-013,ZH-013-S08,Social History,5,fight,0,0,0,0
+ZH-013,ZH-013-S08,Social History,6,in,0,0,0,0
+ZH-013,ZH-013-S08,Social History,7,the,0,0,0,0
+ZH-013,ZH-013-S08,Social History,8,waiting,0,0,0,0
+ZH-013,ZH-013-S08,Social History,9,room,0,0,0,0
+ZH-013,ZH-013-S09,Assessment,0,the,0,0,0,0
+ZH-013,ZH-013-S09,Assessment,1,patient,0,0,0,0
+ZH-013,ZH-013-S09,Assessment,2,was,0,0,0,0
+ZH-013,ZH-013-S09,Assessment,3,diagnosed,0,0,0,0
+ZH-013,ZH-013-S09,Assessment,4,with,0,0,0,0
+ZH-013,ZH-013-S09,Assessment,5,viral,1,0,0,0
+ZH-013,ZH-013-S09,Assessment,6,infection,1,0,0,0
+ZH-014,ZH-014-S01,Presentation,0,examination,0,0,0,0
+ZH-014,ZH-014-S01,Presentation,1,reveals,0,0,0,0
+ZH-014,ZH-014-S01,Presentation,2,limb,0,1,0,0
+ZH-014,ZH-014-S01,Presentation,3,loss,0,1,0,0
+ZH-014,ZH-014-S02,General Examination,0,limbs,0,0,0,0
+ZH-014,ZH-014-S02,General Examination,1,move,0,0,0,0
+ZH-014,ZH-014-S02,General Examination,2,slowly,0,0,0,0
+ZH-014,ZH-014-S02,General Examination,3,as,0,0,0,0
+ZH-014,ZH-014-S02,General Examination,4,usual,0,0,0,0
+ZH-014,ZH-014-S02,General Examination,5,for,0,0,0,0
+ZH-014,ZH-014-S02,General Examination,6,zombies,0,0,0,0
+ZH-014,ZH-014-S03,General Examination,0,the,0,0,0,0
+ZH-014,ZH-014-S03,General Examination,1,little,0,0,0,0
+ZH-014,ZH-014-S03,General Examination,2,finger,0,0,0,0
+ZH-014,ZH-014-S03,General Examination,3,is,0,0,0,0
+ZH-014,ZH-014-S03,General Examination,4,stiff,0,0,0,0
+ZH-014,ZH-014-S03,General Examination,5,and,0,0,0,0
+ZH-014,ZH-014-S03,General Examination,6,grey,0,0,0,0
+ZH-014,ZH-014-S04,Negative Findings,0,no,0,0,1,0
+ZH-014,ZH-014-S04,Negative Findings,1,signs,0,0,0,1
+ZH-014,ZH-014-S04,Negative Findings,2,of,0,0,0,1
+ZH-014,ZH-014-S04,Negative Findings,3,trembling,0,1,0,1
+ZH-014,ZH-014-S04,Negative Findings,4,on,0,1,0,1
+ZH-014,ZH-014-S04,Negative Findings,5,the,0,1,0,1
+ZH-014,ZH-014-S04,Negative Findings,6,little,0,1,0,1
+ZH-014,ZH-014-S04,Negative Findings,7,finger,0,1,0,1
+ZH-014,ZH-014-S05,Negative Findings,0,the,0,0,0,0
+ZH-014,ZH-014-S05,Negative Findings,1,patient,0,0,0,0
+ZH-014,ZH-014-S05,Negative Findings,2,presents,0,0,0,0
+ZH-014,ZH-014-S05,Negative Findings,3,without,0,0,1,0
+ZH-014,ZH-014-S05,Negative Findings,4,yellowish,0,1,0,1
+ZH-014,ZH-014-S05,Negative Findings,5,tongue,0,1,0,1
+ZH-014,ZH-014-S06,Laboratory Analysis,0,blood,0,0,0,0
+ZH-014,ZH-014-S06,Laboratory Analysis,1,analysis,0,0,0,0
+ZH-014,ZH-014-S06,Laboratory Analysis,2,returned,0,0,0,0
+ZH-014,ZH-014-S06,Laboratory Analysis,3,no,0,0,1,0
+ZH-014,ZH-014-S06,Laboratory Analysis,4,relevant,0,0,0,1
+ZH-014,ZH-014-S06,Laboratory Analysis,5,findings,0,0,0,1
+ZH-014,ZH-014-S07,Clinical History,0,the,0,0,0,0
+ZH-014,ZH-014-S07,Clinical History,1,patient,0,0,0,0
+ZH-014,ZH-014-S07,Clinical History,2,denies,0,0,1,0
+ZH-014,ZH-014-S07,Clinical History,3,previous,0,0,0,1
+ZH-014,ZH-014-S07,Clinical History,4,bacterial,1,0,0,1
+ZH-014,ZH-014-S07,Clinical History,5,infectious,1,0,0,1
+ZH-014,ZH-014-S07,Clinical History,6,process,1,0,0,1
+ZH-014,ZH-014-S08,Social History,0,the,0,0,0,0
+ZH-014,ZH-014-S08,Social History,1,patient,0,0,0,0
+ZH-014,ZH-014-S08,Social History,2,sticks,0,0,0,0
+ZH-014,ZH-014-S08,Social History,3,out,0,0,0,0
+ZH-014,ZH-014-S08,Social History,4,the,0,0,0,0
+ZH-014,ZH-014-S08,Social History,5,tongue,0,0,0,0
+ZH-014,ZH-014-S08,Social History,6,at,0,0,0,0
+ZH-014,ZH-014-S08,Social History,7,the,0,0,0,0
+ZH-014,ZH-014-S08,Social History,8,nurses,0,0,0,0
+ZH-014,ZH-014-S09,Social History,0,the,0,0,0,0
+ZH-014,ZH-014-S09,Social History,1,patient,0,0,0,0
+ZH-014,ZH-014-S09,Social History,2,speaks,0,0,0,0
+ZH-014,ZH-014-S09,Social History,3,in,0,0,0,0
+ZH-014,ZH-014-S09,Social History,4,a,0,0,0,0
+ZH-014,ZH-014-S09,Social History,5,strange,0,0,0,0
+ZH-014,ZH-014-S09,Social History,6,tongue,0,0,0,0
+ZH-014,ZH-014-S10,Assessment,0,diagnosis,0,0,0,0
+ZH-014,ZH-014-S10,Assessment,1,fight,1,0,0,0
+ZH-014,ZH-014-S10,Assessment,2,related,1,0,0,0
+ZH-014,ZH-014-S10,Assessment,3,trauma,1,0,0,0
+ZH-015,ZH-015-S01,Presentation,0,findings,0,0,0,0
+ZH-015,ZH-015-S01,Presentation,1,include,0,0,0,0
+ZH-015,ZH-015-S01,Presentation,2,yellow,0,1,0,0
+ZH-015,ZH-015-S01,Presentation,3,tongue,0,1,0,0
+ZH-015,ZH-015-S02,Presentation,0,the,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,1,patient,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,2,presents,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,3,with,0,0,0,0
+ZH-015,ZH-015-S02,Presentation,4,trembling,0,1,0,0
+ZH-015,ZH-015-S02,Presentation,5,on,0,1,0,0
+ZH-015,ZH-015-S02,Presentation,6,the,0,1,0,0
+ZH-015,ZH-015-S02,Presentation,7,little,0,1,0,0
+ZH-015,ZH-015-S02,Presentation,8,finger,0,1,0,0
+ZH-015,ZH-015-S03,General Examination,0,mild,0,0,0,0
+ZH-015,ZH-015-S03,General Examination,1,anger,0,0,0,0
+ZH-015,ZH-015-S03,General Examination,2,when,0,0,0,0
+ZH-015,ZH-015-S03,General Examination,3,hungry,0,0,0,0
+ZH-015,ZH-015-S03,General Examination,4,which,0,0,0,0
+ZH-015,ZH-015-S03,General Examination,5,is,0,0,0,0
+ZH-015,ZH-015-S03,General Examination,6,normal,0,0,0,0
+ZH-015,ZH-015-S04,Negative Findings,0,no,0,0,1,0
+ZH-015,ZH-015-S04,Negative Findings,1,signs,0,0,0,1
+ZH-015,ZH-015-S04,Negative Findings,2,of,0,0,0,1
+ZH-015,ZH-015-S04,Negative Findings,3,intense,0,1,0,1
+ZH-015,ZH-015-S04,Negative Findings,4,anger,0,1,0,1
+ZH-015,ZH-015-S04,Negative Findings,5,episodes,0,1,0,1
+ZH-015,ZH-015-S05,Negative Findings,0,the,0,0,0,0
+ZH-015,ZH-015-S05,Negative Findings,1,patient,0,0,0,0
+ZH-015,ZH-015-S05,Negative Findings,2,presents,0,0,0,0
+ZH-015,ZH-015-S05,Negative Findings,3,without,0,0,1,0
+ZH-015,ZH-015-S05,Negative Findings,4,limb,0,1,0,1
+ZH-015,ZH-015-S05,Negative Findings,5,loss,0,1,0,1
+ZH-015,ZH-015-S06,Laboratory Analysis,0,laboratory,0,0,0,0
+ZH-015,ZH-015-S06,Laboratory Analysis,1,tests,0,0,0,0
+ZH-015,ZH-015-S06,Laboratory Analysis,2,did,0,0,0,0
+ZH-015,ZH-015-S06,Laboratory Analysis,3,not,0,0,1,0
+ZH-015,ZH-015-S06,Laboratory Analysis,4,identify,0,0,0,1
+ZH-015,ZH-015-S06,Laboratory Analysis,5,any,0,0,0,1
+ZH-015,ZH-015-S06,Laboratory Analysis,6,pathogen,0,0,0,1
+ZH-015,ZH-015-S07,Clinical History,0,previous,0,0,0,0
+ZH-015,ZH-015-S07,Clinical History,1,diagnosis,0,0,0,0
+ZH-015,ZH-015-S07,Clinical History,2,of,0,0,0,0
+ZH-015,ZH-015-S07,Clinical History,3,bacterial,1,0,0,0
+ZH-015,ZH-015-S07,Clinical History,4,infectious,1,0,0,0
+ZH-015,ZH-015-S07,Clinical History,5,process,1,0,0,0
+ZH-015,ZH-015-S08,Social History,0,mother,0,0,0,0
+ZH-015,ZH-015-S08,Social History,1,tongue,0,0,0,0
+ZH-015,ZH-015-S08,Social History,2,zombish,0,0,0,0
+ZH-015,ZH-015-S09,Assessment,0,findings,0,0,0,0
+ZH-015,ZH-015-S09,Assessment,1,are,0,0,0,0
+ZH-015,ZH-015-S09,Assessment,2,consistent,0,0,0,0
+ZH-015,ZH-015-S09,Assessment,3,with,0,0,0,0
+ZH-015,ZH-015-S09,Assessment,4,bite,1,0,0,0
+ZH-015,ZH-015-S09,Assessment,5,related,1,0,0,0
+ZH-015,ZH-015-S09,Assessment,6,deficit,1,0,0,0
+ZH-015,ZH-015-S10,Assessment,0,no,0,0,1,0
+ZH-015,ZH-015-S10,Assessment,1,evidence,0,0,0,1
+ZH-015,ZH-015-S10,Assessment,2,of,0,0,0,1
+ZH-015,ZH-015-S10,Assessment,3,bacterial,1,0,0,1
+ZH-015,ZH-015-S10,Assessment,4,infection,1,0,0,1
+ZH-016,ZH-016-S01,Presentation,0,examination,0,0,0,0
+ZH-016,ZH-016-S01,Presentation,1,reveals,0,0,0,0
+ZH-016,ZH-016-S01,Presentation,2,missing,0,1,0,0
+ZH-016,ZH-016-S01,Presentation,3,limb,0,1,0,0
+ZH-016,ZH-016-S02,Presentation,0,the,0,0,0,0
+ZH-016,ZH-016-S02,Presentation,1,patient,0,0,0,0
+ZH-016,ZH-016-S02,Presentation,2,reports,0,0,0,0
+ZH-016,ZH-016-S02,Presentation,3,yellow,0,1,0,0
+ZH-016,ZH-016-S02,Presentation,4,tongue,0,1,0,0
+ZH-016,ZH-016-S03,Presentation,0,findings,0,0,0,0
+ZH-016,ZH-016-S03,Presentation,1,include,0,0,0,0
+ZH-016,ZH-016-S03,Presentation,2,shaking,0,1,0,0
+ZH-016,ZH-016-S03,Presentation,3,of,0,1,0,0
+ZH-016,ZH-016-S03,Presentation,4,the,0,1,0,0
+ZH-016,ZH-016-S03,Presentation,5,pinky,0,1,0,0
+ZH-016,ZH-016-S03,Presentation,6,finger,0,1,0,0
+ZH-016,ZH-016-S04,General Examination,0,mild,0,0,0,0
+ZH-016,ZH-016-S04,General Examination,1,anger,0,0,0,0
+ZH-016,ZH-016-S04,General Examination,2,when,0,0,0,0
+ZH-016,ZH-016-S04,General Examination,3,hungry,0,0,0,0
+ZH-016,ZH-016-S04,General Examination,4,which,0,0,0,0
+ZH-016,ZH-016-S04,General Examination,5,is,0,0,0,0
+ZH-016,ZH-016-S04,General Examination,6,normal,0,0,0,0
+ZH-016,ZH-016-S05,Negative Findings,0,absence,0,0,1,0
+ZH-016,ZH-016-S05,Negative Findings,1,of,0,0,0,1
+ZH-016,ZH-016-S05,Negative Findings,2,paralysis,0,1,0,1
+ZH-016,ZH-016-S06,Laboratory Analysis,0,blood,0,0,0,0
+ZH-016,ZH-016-S06,Laboratory Analysis,1,analysis,0,0,0,0
+ZH-016,ZH-016-S06,Laboratory Analysis,2,returned,0,0,0,0
+ZH-016,ZH-016-S06,Laboratory Analysis,3,no,0,0,1,0
+ZH-016,ZH-016-S06,Laboratory Analysis,4,relevant,0,0,0,1
+ZH-016,ZH-016-S06,Laboratory Analysis,5,findings,0,0,0,1
+ZH-016,ZH-016-S07,Clinical History,0,the,0,0,0,0
+ZH-016,ZH-016-S07,Clinical History,1,patient,0,0,0,0
+ZH-016,ZH-016-S07,Clinical History,2,has,0,0,0,0
+ZH-016,ZH-016-S07,Clinical History,3,a,0,0,0,0
+ZH-016,ZH-016-S07,Clinical History,4,history,0,0,0,0
+ZH-016,ZH-016-S07,Clinical History,5,of,0,0,0,0
+ZH-016,ZH-016-S07,Clinical History,6,bacterial,1,0,0,0
+ZH-016,ZH-016-S07,Clinical History,7,infection,1,0,0,0
+ZH-016,ZH-016-S08,Social History,0,the,0,0,0,0
+ZH-016,ZH-016-S08,Social History,1,patient,0,0,0,0
+ZH-016,ZH-016-S08,Social History,2,keeps,0,0,0,0
+ZH-016,ZH-016-S08,Social History,3,spare,0,0,0,0
+ZH-016,ZH-016-S08,Social History,4,brains,0,0,0,0
+ZH-016,ZH-016-S08,Social History,5,in,0,0,0,0
+ZH-016,ZH-016-S08,Social History,6,a,0,0,0,0
+ZH-016,ZH-016-S08,Social History,7,wooden,0,0,0,0
+ZH-016,ZH-016-S08,Social History,8,chest,0,0,0,0
+ZH-016,ZH-016-S09,Assessment,0,findings,0,0,0,0
+ZH-016,ZH-016-S09,Assessment,1,are,0,0,0,0
+ZH-016,ZH-016-S09,Assessment,2,consistent,0,0,0,0
+ZH-016,ZH-016-S09,Assessment,3,with,0,0,0,0
+ZH-016,ZH-016-S09,Assessment,4,bite,1,0,0,0
+ZH-016,ZH-016-S09,Assessment,5,deficit,1,0,0,0
+ZH-016,ZH-016-S10,Assessment,0,the,0,0,0,0
+ZH-016,ZH-016-S10,Assessment,1,team,0,0,0,0
+ZH-016,ZH-016-S10,Assessment,2,ruled,0,0,1,0
+ZH-016,ZH-016-S10,Assessment,3,out,0,0,1,0
+ZH-016,ZH-016-S10,Assessment,4,viral,1,0,0,1
+ZH-016,ZH-016-S10,Assessment,5,infection,1,0,0,1
+ZH-017,ZH-017-S01,Presentation,0,signs,0,0,0,0
+ZH-017,ZH-017-S01,Presentation,1,of,0,0,0,0
+ZH-017,ZH-017-S01,Presentation,2,thoracic,0,1,0,0
+ZH-017,ZH-017-S01,Presentation,3,discomfort,0,1,0,0
+ZH-017,ZH-017-S01,Presentation,4,are,0,0,0,0
+ZH-017,ZH-017-S01,Presentation,5,evident,0,0,0,0
+ZH-017,ZH-017-S02,General Examination,0,anger,0,0,0,0
+ZH-017,ZH-017-S02,General Examination,1,level,0,0,0,0
+ZH-017,ZH-017-S02,General Examination,2,is,0,0,0,0
+ZH-017,ZH-017-S02,General Examination,3,low,0,0,0,0
+ZH-017,ZH-017-S02,General Examination,4,for,0,0,0,0
+ZH-017,ZH-017-S02,General Examination,5,a,0,0,0,0
+ZH-017,ZH-017-S02,General Examination,6,zombie,0,0,0,0
+ZH-017,ZH-017-S03,Negative Findings,0,the,0,0,0,0
+ZH-017,ZH-017-S03,Negative Findings,1,patient,0,0,0,0
+ZH-017,ZH-017-S03,Negative Findings,2,is,0,0,0,0
+ZH-017,ZH-017-S03,Negative Findings,3,free,0,0,1,0
+ZH-017,ZH-017-S03,Negative Findings,4,of,0,0,1,0
+ZH-017,ZH-017-S03,Negative Findings,5,yellow,0,1,0,1
+ZH-017,ZH-017-S03,Negative Findings,6,tinted,0,1,0,1
+ZH-017,ZH-017-S03,Negative Findings,7,tongue,0,1,0,1
+ZH-017,ZH-017-S04,Negative Findings,0,no,0,0,1,0
+ZH-017,ZH-017-S04,Negative Findings,1,signs,0,0,0,1
+ZH-017,ZH-017-S04,Negative Findings,2,of,0,0,0,1
+ZH-017,ZH-017-S04,Negative Findings,3,severe,0,1,0,1
+ZH-017,ZH-017-S04,Negative Findings,4,anger,0,1,0,1
+ZH-017,ZH-017-S05,Laboratory Analysis,0,no,0,0,1,0
+ZH-017,ZH-017-S05,Laboratory Analysis,1,pathogen,0,0,0,1
+ZH-017,ZH-017-S05,Laboratory Analysis,2,was,0,0,0,1
+ZH-017,ZH-017-S05,Laboratory Analysis,3,isolated,0,0,0,1
+ZH-017,ZH-017-S05,Laboratory Analysis,4,in,0,0,0,1
+ZH-017,ZH-017-S05,Laboratory Analysis,5,the,0,0,0,1
+ZH-017,ZH-017-S05,Laboratory Analysis,6,blood,0,0,0,1
+ZH-017,ZH-017-S05,Laboratory Analysis,7,analysis,0,0,0,1
+ZH-017,ZH-017-S06,Clinical History,0,the,0,0,0,0
+ZH-017,ZH-017-S06,Clinical History,1,patient,0,0,0,0
+ZH-017,ZH-017-S06,Clinical History,2,denies,0,0,1,0
+ZH-017,ZH-017-S06,Clinical History,3,previous,0,0,0,1
+ZH-017,ZH-017-S06,Clinical History,4,bacterial,1,0,0,1
+ZH-017,ZH-017-S06,Clinical History,5,infection,1,0,0,1
+ZH-017,ZH-017-S07,Social History,0,the,0,0,0,0
+ZH-017,ZH-017-S07,Social History,1,caretaker,0,0,0,0
+ZH-017,ZH-017-S07,Social History,2,has,0,0,0,0
+ZH-017,ZH-017-S07,Social History,3,a,0,0,0,0
+ZH-017,ZH-017-S07,Social History,4,sharp,0,0,0,0
+ZH-017,ZH-017-S07,Social History,5,tongue,0,0,0,0
+ZH-017,ZH-017-S08,Social History,0,the,0,0,0,0
+ZH-017,ZH-017-S08,Social History,1,patient,0,0,0,0
+ZH-017,ZH-017-S08,Social History,2,watched,0,0,0,0
+ZH-017,ZH-017-S08,Social History,3,a,0,0,0,0
+ZH-017,ZH-017-S08,Social History,4,pillow,0,0,0,0
+ZH-017,ZH-017-S08,Social History,5,fight,0,0,0,0
+ZH-017,ZH-017-S08,Social History,6,in,0,0,0,0
+ZH-017,ZH-017-S08,Social History,7,the,0,0,0,0
+ZH-017,ZH-017-S08,Social History,8,waiting,0,0,0,0
+ZH-017,ZH-017-S08,Social History,9,room,0,0,0,0
+ZH-017,ZH-017-S09,Assessment,0,findings,0,0,0,0
+ZH-017,ZH-017-S09,Assessment,1,are,0,0,0,0
+ZH-017,ZH-017-S09,Assessment,2,consistent,0,0,0,0
+ZH-017,ZH-017-S09,Assessment,3,with,0,0,0,0
+ZH-017,ZH-017-S09,Assessment,4,fight,1,0,0,0
+ZH-017,ZH-017-S09,Assessment,5,injury,1,0,0,0
+ZH-017,ZH-017-S10,Assessment,0,negative,0,0,1,0
+ZH-017,ZH-017-S10,Assessment,1,for,0,0,0,1
+ZH-017,ZH-017-S10,Assessment,2,infection,1,0,0,1
+ZH-017,ZH-017-S10,Assessment,3,of,1,0,0,1
+ZH-017,ZH-017-S10,Assessment,4,bacterial,1,0,0,1
+ZH-017,ZH-017-S10,Assessment,5,origin,1,0,0,1
+ZH-018,ZH-018-S01,Presentation,0,signs,0,0,0,0
+ZH-018,ZH-018-S01,Presentation,1,of,0,0,0,0
+ZH-018,ZH-018-S01,Presentation,2,yellowish,0,1,0,0
+ZH-018,ZH-018-S01,Presentation,3,tongue,0,1,0,0
+ZH-018,ZH-018-S01,Presentation,4,are,0,0,0,0
+ZH-018,ZH-018-S01,Presentation,5,evident,0,0,0,0
+ZH-018,ZH-018-S02,General Examination,0,every,0,0,0,0
+ZH-018,ZH-018-S02,General Examination,1,member,0,0,0,0
+ZH-018,ZH-018-S02,General Examination,2,is,0,0,0,0
+ZH-018,ZH-018-S02,General Examination,3,in,0,0,0,0
+ZH-018,ZH-018-S02,General Examination,4,its,0,0,0,0
+ZH-018,ZH-018-S02,General Examination,5,place,0,0,0,0
+ZH-018,ZH-018-S03,Negative Findings,0,the,0,0,0,0
+ZH-018,ZH-018-S03,Negative Findings,1,patient,0,0,0,0
+ZH-018,ZH-018-S03,Negative Findings,2,presents,0,0,0,0
+ZH-018,ZH-018-S03,Negative Findings,3,without,0,0,1,0
+ZH-018,ZH-018-S03,Negative Findings,4,chest,0,1,0,1
+ZH-018,ZH-018-S03,Negative Findings,5,pain,0,1,0,1
+ZH-018,ZH-018-S04,Laboratory Analysis,0,laboratory,0,0,0,0
+ZH-018,ZH-018-S04,Laboratory Analysis,1,tests,0,0,0,0
+ZH-018,ZH-018-S04,Laboratory Analysis,2,isolated,0,0,0,0
+ZH-018,ZH-018-S04,Laboratory Analysis,3,cyanobacterium,0,0,0,0
+ZH-018,ZH-018-S04,Laboratory Analysis,4,zumbi,0,0,0,0
+ZH-018,ZH-018-S05,Clinical History,0,no,0,0,1,0
+ZH-018,ZH-018-S05,Clinical History,1,history,0,0,0,1
+ZH-018,ZH-018-S05,Clinical History,2,of,0,0,0,1
+ZH-018,ZH-018-S05,Clinical History,3,altercation,1,0,0,1
+ZH-018,ZH-018-S05,Clinical History,4,injury,1,0,0,1
+ZH-018,ZH-018-S06,Social History,0,the,0,0,0,0
+ZH-018,ZH-018-S06,Social History,1,patient,0,0,0,0
+ZH-018,ZH-018-S06,Social History,2,is,0,0,0,0
+ZH-018,ZH-018-S06,Social History,3,a,0,0,0,0
+ZH-018,ZH-018-S06,Social History,4,member,0,0,0,0
+ZH-018,ZH-018-S06,Social History,5,of,0,0,0,0
+ZH-018,ZH-018-S06,Social History,6,the,0,0,0,0
+ZH-018,ZH-018-S06,Social History,7,downtown,0,0,0,0
+ZH-018,ZH-018-S06,Social History,8,horde,0,0,0,0
+ZH-018,ZH-018-S07,Social History,0,the,0,0,0,0
+ZH-018,ZH-018-S07,Social History,1,patient,0,0,0,0
+ZH-018,ZH-018-S07,Social History,2,sticks,0,0,0,0
+ZH-018,ZH-018-S07,Social History,3,out,0,0,0,0
+ZH-018,ZH-018-S07,Social History,4,the,0,0,0,0
+ZH-018,ZH-018-S07,Social History,5,tongue,0,0,0,0
+ZH-018,ZH-018-S07,Social History,6,at,0,0,0,0
+ZH-018,ZH-018-S07,Social History,7,the,0,0,0,0
+ZH-018,ZH-018-S07,Social History,8,nurses,0,0,0,0
+ZH-018,ZH-018-S08,Assessment,0,diagnosis,0,0,0,0
+ZH-018,ZH-018-S08,Assessment,1,infection,1,0,0,0
+ZH-018,ZH-018-S08,Assessment,2,of,1,0,0,0
+ZH-018,ZH-018-S08,Assessment,3,bacterial,1,0,0,0
+ZH-018,ZH-018-S08,Assessment,4,origin,1,0,0,0
+ZH-018,ZH-018-S09,Assessment,0,no,0,0,1,0
+ZH-018,ZH-018-S09,Assessment,1,evidence,0,0,0,1
+ZH-018,ZH-018-S09,Assessment,2,of,0,0,0,1
+ZH-018,ZH-018-S09,Assessment,3,bite,1,0,0,1
+ZH-018,ZH-018-S09,Assessment,4,related,1,0,0,1
+ZH-018,ZH-018-S09,Assessment,5,deficit,1,0,0,1
+ZH-019,ZH-019-S01,Presentation,0,the,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,1,patient,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,2,reports,0,0,0,0
+ZH-019,ZH-019-S01,Presentation,3,tremor,0,1,0,0
+ZH-019,ZH-019-S01,Presentation,4,in,0,1,0,0
+ZH-019,ZH-019-S01,Presentation,5,the,0,1,0,0
+ZH-019,ZH-019-S01,Presentation,6,little,0,1,0,0
+ZH-019,ZH-019-S01,Presentation,7,finger,0,1,0,0
+ZH-019,ZH-019-S02,General Examination,0,a,0,0,0,0
+ZH-019,ZH-019-S02,General Examination,1,grey,0,0,0,0
+ZH-019,ZH-019-S02,General Examination,2,coating,0,0,0,0
+ZH-019,ZH-019-S02,General Examination,3,covers,0,0,0,0
+ZH-019,ZH-019-S02,General Examination,4,the,0,0,0,0
+ZH-019,ZH-019-S02,General Examination,5,tongue,0,0,0,0
+ZH-019,ZH-019-S02,General Examination,6,which,0,0,0,0
+ZH-019,ZH-019-S02,General Examination,7,is,0,0,0,0
+ZH-019,ZH-019-S02,General Examination,8,normal,0,0,0,0
+ZH-019,ZH-019-S03,Negative Findings,0,the,0,0,0,0
+ZH-019,ZH-019-S03,Negative Findings,1,patient,0,0,0,0
+ZH-019,ZH-019-S03,Negative Findings,2,is,0,0,0,0
+ZH-019,ZH-019-S03,Negative Findings,3,free,0,0,1,0
+ZH-019,ZH-019-S03,Negative Findings,4,of,0,0,1,0
+ZH-019,ZH-019-S03,Negative Findings,5,loss,0,1,0,1
+ZH-019,ZH-019-S03,Negative Findings,6,of,0,1,0,1
+ZH-019,ZH-019-S03,Negative Findings,7,motor,0,1,0,1
+ZH-019,ZH-019-S03,Negative Findings,8,control,0,1,0,1
+ZH-019,ZH-019-S04,Negative Findings,0,no,0,0,1,0
+ZH-019,ZH-019-S04,Negative Findings,1,signs,0,0,0,1
+ZH-019,ZH-019-S04,Negative Findings,2,of,0,0,0,1
+ZH-019,ZH-019-S04,Negative Findings,3,yellow,0,1,0,1
+ZH-019,ZH-019-S04,Negative Findings,4,tinted,0,1,0,1
+ZH-019,ZH-019-S04,Negative Findings,5,tongue,0,1,0,1
+ZH-019,ZH-019-S05,Laboratory Analysis,0,laboratory,0,0,0,0
+ZH-019,ZH-019-S05,Laboratory Analysis,1,tests,0,0,0,0
+ZH-019,ZH-019-S05,Laboratory Analysis,2,did,0,0,0,0
+ZH-019,ZH-019-S05,Laboratory Analysis,3,not,0,0,1,0
+ZH-019,ZH-019-S05,Laboratory Analysis,4,identify,0,0,0,1
+ZH-019,ZH-019-S05,Laboratory Analysis,5,any,0,0,0,1
+ZH-019,ZH-019-S05,Laboratory Analysis,6,pathogen,0,0,0,1
+ZH-019,ZH-019-S06,Clinical History,0,history,0,0,0,0
+ZH-019,ZH-019-S06,Clinical History,1,of,0,0,0,0
+ZH-019,ZH-019-S06,Clinical History,2,infection,1,0,0,0
+ZH-019,ZH-019-S06,Clinical History,3,of,1,0,0,0
+ZH-019,ZH-019-S06,Clinical History,4,bacterial,1,0,0,0
+ZH-019,ZH-019-S06,Clinical History,5,origin,1,0,0,0
+ZH-019,ZH-019-S07,Social History,0,the,0,0,0,0
+ZH-019,ZH-019-S07,Social History,1,caretaker,0,0,0,0
+ZH-019,ZH-019-S07,Social History,2,has,0,0,0,0
+ZH-019,ZH-019-S07,Social History,3,a,0,0,0,0
+ZH-019,ZH-019-S07,Social History,4,sharp,0,0,0,0
+ZH-019,ZH-019-S07,Social History,5,tongue,0,0,0,0
+ZH-019,ZH-019-S08,Assessment,0,clinical,0,0,0,0
+ZH-019,ZH-019-S08,Assessment,1,impression,0,0,0,0
+ZH-019,ZH-019-S08,Assessment,2,bite,1,0,0,0
+ZH-019,ZH-019-S08,Assessment,3,related,1,0,0,0
+ZH-019,ZH-019-S08,Assessment,4,deficit,1,0,0,0
+ZH-019,ZH-019-S09,Assessment,0,negative,0,0,1,0
+ZH-019,ZH-019-S09,Assessment,1,for,0,0,0,1
+ZH-019,ZH-019-S09,Assessment,2,bacterial,1,0,0,1
+ZH-019,ZH-019-S09,Assessment,3,infectious,1,0,0,1
+ZH-019,ZH-019-S09,Assessment,4,process,1,0,0,1
