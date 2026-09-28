@@ -4,32 +4,81 @@
 
 The project is a sequence of experiments built around a small fictional language. The central idea is to keep the observations fixed while changing how information in those observations is represented or modeled.
 
+### 1.1 Directory organization
+
+The notebooks are organized in three numbered stages, each in its own subdirectory. Every notebook writes its outputs into its own directory.
+
+```text
+zombienella/
+├── README.md                              grammar, derivations, probabilities
+├── zombienella_notebook_architecture.md   this document
+│
+├── 01-observations/
+│   ├── 01_generate_observations.ipynb
+│   └── observations.csv
+│
+├── 02-ngrams/
+│   ├── 02a_prefix_probabilities.ipynb
+│   ├── 02b_markov_ngrams.ipynb
+│   ├── probabilities-prefix.csv
+│   ├── probabilities-2-gram.csv
+│   ├── probabilities-3-gram.csv
+│   ├── probabilities-4-gram.csv
+│   ├── zombiegpt.html                     interactive sentence generator
+│   ├── zombie-head-1.svg                  images used by zombiegpt.html
+│   ├── zombie-head-2.svg
+│   └── zombienella-importunus.svg
+│
+└── 03-embeddings/
+    ├── 03a_cooccurrence_embeddings.ipynb
+    ├── 03b_word2vec_embeddings.ipynb
+    ├── cooccurrence-{2,4,6}-matrix.csv
+    ├── cooccurrence-{2,4,6}-cosine-similarities.csv
+    ├── embeddings-{2,4}-gram-{2,3}d-matrix.csv             (written by 03b)
+    └── embeddings-{2,4}-gram-{2,3}d-cosine-similarity.csv  (written by 03b)
+```
+
+The downstream notebooks in `02-ngrams/` and `03-embeddings/` all read the shared dataset through the relative path:
+
+```text
+../01-observations/observations.csv
+```
+
+so the notebooks must be executed from their own directories, and the directory structure must be preserved.
+
+### 1.2 Pipeline
+
 ```text
 Probabilistic Grammar
         |
         v
-01_generate_observations.ipynb
+01-observations/01_generate_observations.ipynb
         |
         | observations.csv
         v
-   +----+----------------+------------------+
-   |                     |                  |
-   v                     v                  v
-02_markov_ngrams     03_prefix         04_cooccurrence
-                         probabilities      embeddings
-   |                     |                  |
-   v                     v                  +-- co-occurrence matrices
-N-gram probabilities  full-prefix           +-- token vectors
-                     probabilities          +-- cosine similarity
-                                            +-- PCA visualization
+   +----+-------------+----------------+-------------------+
+   |                  |                |                   |
+   v                  v                v                   v
+02a_prefix       02b_markov      03a_cooccurrence     03b_word2vec
+probabilities    ngrams          embeddings           embeddings
+   |                  |                |                   |
+   v                  v                +-- matrices        +-- learned vectors
+full-prefix      N-gram                +-- cosine sim.     +-- cosine sim.
+probabilities    probabilities         +-- PCA plots       +-- 2D/3D plots
+   |                  |
+   +--------+---------+
+            |
+            v
+     zombiegpt.html
 ```
 
-The four notebooks have deliberately different responsibilities:
+The five notebooks have deliberately different responsibilities:
 
-1. Observation generation: knows the grammar and produces data.
-2. N-gram modeling: learns fixed-order conditional probabilities from observations.
-3. Full-prefix modeling: learns probabilities conditioned on the entire preceding prefix.
-4. Co-occurrence/embeddings: represents tokens according to the tokens that occur around them.
+1. `01` Observation generation: knows the grammar and produces data.
+2. `02a` Full-prefix modeling: learns probabilities conditioned on the entire preceding prefix.
+3. `02b` N-gram modeling: learns fixed-order conditional probabilities from observations.
+4. `03a` Co-occurrence embeddings: represents tokens by explicit counts of the tokens that occur around them.
+5. `03b` Word2Vec-style embeddings: learns dense token vectors from target/context pairs.
 
 The downstream notebooks do not need access to the grammar. This separates the **generative process** from the **statistical models learned from observations**.
 
@@ -121,7 +170,7 @@ P(s r r f e)
  = 1/24
 ```
 
-Notebook 01 samples these distributions to generate 850 observations.
+Notebook `01` samples these distributions to generate 850 observations.
 
 ---
 
@@ -130,7 +179,7 @@ Notebook 01 samples these distributions to generate 850 observations.
 ### File
 
 ```text
-01_generate_observations.ipynb
+01-observations/01_generate_observations.ipynb
 ```
 
 This is the **data-generation layer**. It contains the grammar, production probabilities, stochastic grammar sampler, and code that generates the 850 observations.
@@ -154,25 +203,82 @@ Terminal sequence
 observations.csv
 ```
 
-Its main output is:
+Its main output, written next to the notebook, is:
 
 ```text
-observations.csv
+01-observations/observations.csv
 ```
+
+with columns `id` and `sentence`.
 
 The observations are random samples, so empirical frequencies approximate the theoretical grammar distribution but are not expected to be identical to it.
 
 ---
 
-## 5. Notebook 02 — N-gram Markov Model
+## 5. Notebook 02a — Full-Prefix Model
 
 ### File
 
 ```text
-02_markov_ngrams.ipynb
+02-ngrams/02a_prefix_probabilities.ipynb
 ```
 
-This notebook learns a fixed-order language model from `observations.csv`.
+This notebook reads `../01-observations/observations.csv` and explores an intentionally impractical model for natural language: the **complete prefix from the beginning of the sentence is the state**.
+
+For:
+
+```text
+s r r f e
+```
+
+the notebook records:
+
+```text
+<s>             -> s
+<s> s           -> r
+<s> s r         -> r
+<s> s r r       -> f
+<s> s r r f     -> e
+<s> s r r f e   -> </s>
+```
+
+The probability is:
+
+\[
+P(w\mid h)=\frac{C(h,w)}{C(h)}
+\]
+
+and the output is:
+
+```text
+02-ngrams/probabilities-prefix.csv
+```
+
+with:
+
+```text
+history
+next_token
+combination_count
+history_count
+probability
+```
+
+This is feasible here because the fictional language has a very restricted set of possible prefixes. For natural language, the number of possible histories grows combinatorially, producing severe sparsity.
+
+The notebook ends with a comparison against the N-gram approach of Notebook `02b`, which bounds the history to a fixed number of previous tokens.
+
+---
+
+## 6. Notebook 02b — N-gram Markov Model
+
+### File
+
+```text
+02-ngrams/02b_markov_ngrams.ipynb
+```
+
+This notebook learns a fixed-order language model from `../01-observations/observations.csv`.
 
 ```python
 N = 2
@@ -215,12 +321,12 @@ P(w_t\mid h)=\frac{C(h,w_t)}{C(h)}
 
 where `h` contains the previous `N-1` tokens.
 
-The notebook saves, for example:
+The output file name reflects the configured value of `N`; running the notebook with `N = 2, 3, 4` produces:
 
 ```text
-2-gram-probabilites.csv
-3-gram-probabilites.csv
-4-gram-probabilites.csv
+02-ngrams/probabilities-2-gram.csv
+02-ngrams/probabilities-3-gram.csv
+02-ngrams/probabilities-4-gram.csv
 ```
 
 with columns:
@@ -239,70 +345,30 @@ The file is a compact representation of a Markov transition system:
 history -- probability --> next_token
 ```
 
+### 6.1 ZombieGPT viewer
+
+`02-ngrams/zombiegpt.html` is a standalone chat-like page that loads one of the probability files produced by `02a` and `02b` and generates sentences by sampling from them:
+
+```text
+probabilities-2-gram.csv  --+
+probabilities-3-gram.csv  --+
+probabilities-4-gram.csv  --+--> zombiegpt.html --> generated sentence
+probabilities-prefix.csv  --+
+```
+
+It fetches the CSVs and the SVG images by relative path, so it must be served from the `02-ngrams/` directory (for example, `python -m http.server` run inside that directory).
+
 ---
 
-## 6. Notebook 03 — Full-Prefix Model
+## 7. Notebook 03a — Co-occurrence Embeddings
 
 ### File
 
 ```text
-03_prefix_probabilities.ipynb
+03-embeddings/03a_cooccurrence_embeddings.ipynb
 ```
 
-This notebook explores an intentionally impractical model for natural language: the **complete prefix from the beginning of the sentence is the state**.
-
-For:
-
-```text
-s r r f e
-```
-
-the notebook records:
-
-```text
-<s>             -> s
-<s> s           -> r
-<s> s r         -> r
-<s> s r r       -> f
-<s> s r r f     -> e
-<s> s r r f e   -> </s>
-```
-
-The probability is:
-
-\[
-P(w\mid h)=\frac{C(h,w)}{C(h)}
-\]
-
-and the output is:
-
-```text
-prefix-probabilities.csv
-```
-
-with:
-
-```text
-history
-next_token
-combination_count
-history_count
-probability
-```
-
-This is feasible here because the fictional language has a very restricted set of possible prefixes. For natural language, the number of possible histories grows combinatorially, producing severe sparsity.
-
----
-
-## 7. Notebook 04 — Co-occurrence and Embeddings
-
-### File
-
-```text
-04_cooccurrence_embeddings.ipynb
-```
-
-The fourth notebook changes the question. Instead of asking:
+This notebook changes the question. Instead of asking:
 
 > What token comes next?
 
@@ -315,17 +381,17 @@ This introduces the distributional intuition behind embeddings.
 The notebook reads the same:
 
 ```text
-observations.csv
+../01-observations/observations.csv
 ```
 
 and does not use the grammar.
 
 ### 7.1 Vocabulary
 
-The linguistic tokens are:
+The vocabulary is built from the observations, and the linguistic tokens are:
 
 ```text
-s, i, r, l, f, p, e
+e, f, l, p, r, s
 ```
 
 The sentence-boundary markers used by the language-model notebooks are not treated as ordinary linguistic tokens in the co-occurrence representation.
@@ -347,15 +413,14 @@ For every occurrence of a token, the notebook counts the other tokens occurring 
 For each window, the notebook creates a matrix:
 
 ```text
-             s   i   r   l   f   p   e
-         +-------------------------------
-s        | ...
-i        | ...
-r        | ...
-l        | ...
-f        | ...
-p        | ...
+             e   f   l   p   r   s
+         +---------------------------
 e        | ...
+f        | ...
+l        | ...
+p        | ...
+r        | ...
+s        | ...
 ```
 
 where:
@@ -369,9 +434,9 @@ C_{ij} =
 The matrices are saved as:
 
 ```text
-2-cooccurrence-matrix.csv
-4-cooccurrence-matrix.csv
-6-cooccurrence-matrix.csv
+03-embeddings/cooccurrence-2-matrix.csv
+03-embeddings/cooccurrence-4-matrix.csv
+03-embeddings/cooccurrence-6-matrix.csv
 ```
 
 Each row is a vector representation of one token.
@@ -402,10 +467,12 @@ The notebook computes pairwise cosine similarities between token vectors:
 and saves:
 
 ```text
-2-cosine-similarities.csv
-4-cosine-similarities.csv
-6-cosine-similarities.csv
+03-embeddings/cooccurrence-2-cosine-similarities.csv
+03-embeddings/cooccurrence-4-cosine-similarities.csv
+03-embeddings/cooccurrence-6-cosine-similarities.csv
 ```
+
+with columns `token_1`, `token_2`, `cosine_similarity`.
 
 This makes it possible to compare the same pair of tokens under different definitions of context.
 
@@ -416,7 +483,7 @@ A high cosine similarity means that two tokens have similar **co-occurrence prof
 The original vectors have one coordinate for each vocabulary token. PCA reduces these vectors to two dimensions:
 
 ```text
-7-dimensional token vectors
+6-dimensional token vectors
           |
           v
          PCA
@@ -445,7 +512,82 @@ The same procedure is applied to windows 2, 4, and 6 so that students can see ho
 
 ---
 
-## 8. Why the Co-occurrence Experiment Matters
+## 8. Notebook 03b — Word2Vec-style Embeddings
+
+### File
+
+```text
+03-embeddings/03b_word2vec_embeddings.ipynb
+```
+
+This notebook reads `../01-observations/observations.csv` and **learns** dense token vectors instead of counting them. It is a pedagogical implementation written directly in NumPy, without a Word2Vec library, so the vectors and the objective remain visible.
+
+### 8.1 Target/context pairs
+
+As in `03a`, a symmetric window defines the context of each token:
+
+```text
+window 2 = 1 previous + 1 next
+window 4 = 2 previous + 2 next
+```
+
+Every observed `(target, context)` pair is a positive example. For each positive pair type, 3 negative pairs are built by sampling random context tokens that never occur with the target.
+
+### 8.2 Logistic objective with negative sampling
+
+Each token has a target vector \(v_w\) and a context vector \(u_c\), as in skip-gram. The probability that a pair is observed is:
+
+\[
+P(y=1\mid w,c)=\sigma(v_w\cdot u_c)
+\]
+
+The binary cross-entropy is minimized with stochastic gradient descent (800 epochs, learning rate 0.05, seed 42). The target vectors are the resulting embeddings.
+
+```text
+observations
+    |
+    v
+positive pairs (y=1) + negative pairs (y=0)
+    |
+    v
+logistic regression on v_w · u_c
+    |
+    v
+learned target vectors = embeddings
+```
+
+### 8.3 Configurations and outputs
+
+Four models are trained:
+
+```text
+window 2 × dimension 2
+window 2 × dimension 3
+window 4 × dimension 2
+window 4 × dimension 3
+```
+
+The 2-dimensional embeddings are plotted directly, and the 3-dimensional ones in a 3D plot, each token drawn as a line from the origin. No PCA is needed because the vectors are already low-dimensional.
+
+For each configuration, the notebook saves the embedding matrix and its cosine-similarity matrix:
+
+```text
+03-embeddings/embeddings-{window}-gram-{dim}d-matrix.csv
+03-embeddings/embeddings-{window}-gram-{dim}d-cosine-similarity.csv
+```
+
+for example `embeddings-2-gram-3d-matrix.csv`.
+
+Comparing `03a` and `03b` contrasts two routes to the same idea:
+
+```text
+03a: context counts  --> sparse explicit vectors (one coordinate per token)
+03b: context pairs   --> dense learned vectors (chosen dimension)
+```
+
+---
+
+## 9. Why the Co-occurrence Experiment Matters
 
 The embedding notebook makes an important idea explicit:
 
@@ -472,11 +614,11 @@ token vectors
 
 The vectors are not initially learned by a neural network. They are direct numerical descriptions of contextual behavior.
 
-This provides a simple bridge toward Word2Vec and other learned embedding methods.
+This provides a simple bridge toward Word2Vec and other learned embedding methods, which Notebook `03b` takes by learning dense vectors from the same kind of context.
 
 ---
 
-## 9. Context Has Different Roles
+## 10. Context Has Different Roles
 
 The N-gram/prefix notebooks and the co-occurrence notebook use context differently.
 
@@ -516,7 +658,7 @@ This distinction is central to the progression from language modeling toward emb
 
 ---
 
-## 10. Comparison of Representations
+## 11. Comparison of Representations
 
 ```text
 Bigram:
@@ -533,6 +675,9 @@ Full prefix:
 
 Co-occurrence:
     representation = context-count vector of a token
+
+Word2Vec-style:
+    representation = learned dense vector of a token
 ```
 
 For example, after generating:
@@ -557,51 +702,56 @@ The co-occurrence model does something different: it represents the tokens thems
 
 ---
 
-## 11. Architectural Separation of Concerns
+## 12. Architectural Separation of Concerns
 
 | Component | Responsibility | Knows grammar? |
 |---|---|---:|
-| `01_generate_observations.ipynb` | Generate observations | Yes |
-| `observations.csv` | Store observations | No |
-| `02_markov_ngrams.ipynb` | Learn fixed-order probabilities | No |
-| `03_prefix_probabilities.ipynb` | Learn full-prefix probabilities | No |
-| `04_cooccurrence_embeddings.ipynb` | Build distributional vectors | No |
-| N-gram probability CSVs | Store learned transitions | No |
-| `prefix-probabilities.csv` | Store full-prefix transitions | No |
-| Co-occurrence matrices | Store token vectors | No |
+| `01-observations/01_generate_observations.ipynb` | Generate observations | Yes |
+| `01-observations/observations.csv` | Store observations | No |
+| `02-ngrams/02a_prefix_probabilities.ipynb` | Learn full-prefix probabilities | No |
+| `02-ngrams/02b_markov_ngrams.ipynb` | Learn fixed-order probabilities | No |
+| `02-ngrams/zombiegpt.html` | Generate sentences from learned probabilities | No |
+| `03-embeddings/03a_cooccurrence_embeddings.ipynb` | Build explicit distributional vectors | No |
+| `03-embeddings/03b_word2vec_embeddings.ipynb` | Learn dense embeddings | No |
+| `02-ngrams/probabilities-prefix.csv` | Store full-prefix transitions | No |
+| `02-ngrams/probabilities-N-gram.csv` | Store learned transitions | No |
+| `03-embeddings/cooccurrence-*-matrix.csv` | Store count-based token vectors | No |
+| `03-embeddings/embeddings-*-matrix.csv` | Store learned token vectors | No |
 | Cosine-similarity CSVs | Store vector similarities | No |
 
 The common data contract is:
 
 ```text
-01_generate_observations.ipynb
-              |
+          01-observations/01_generate_observations.ipynb
+                              |
+                              v
+                 01-observations/observations.csv
+                              |
+       +--------------+-------+-------+----------------+
+       |              |               |                |
+       v              v               v                v
+  02a Prefixes    02b N-grams   03a Co-occurrence  03b Word2Vec
+       |              |               |                |
+       v              v               v                v
+ probabilities   probabilities     vectors          vectors
+       |              |               |                |
+       +------+-------+               v                v
+              |                 similarities     similarities
               v
-       observations.csv
-              |
-       +------+------+----------------+
-       |             |                |
-       v             v                v
-   N-grams        Prefixes       Co-occurrences
-       |             |                |
-       v             v                v
- probabilities   probabilities     vectors
-                                      |
-                                      v
-                                similarities
+       zombiegpt.html
 ```
 
 This is a simple pipeline architecture. The grammar is isolated in the data-generation layer, while the later notebooks operate on observations.
 
 ---
 
-## 12. Reproducibility and Randomness
+## 13. Reproducibility and Randomness
 
 There are two different stochastic processes.
 
 ### Dataset generation
 
-Notebook 01 samples grammar productions:
+Notebook `01` samples grammar productions:
 
 ```text
 Grammar probabilities
@@ -617,7 +767,7 @@ A random seed can make the dataset reproducible.
 
 ### Sentence generation
 
-The N-gram and prefix notebooks sample from learned transition probabilities:
+The prefix and N-gram notebooks (`02a`, `02b`) and `zombiegpt.html` sample from learned transition probabilities:
 
 ```text
 learned probabilities
@@ -631,11 +781,15 @@ generated sentence
 
 The probability model is deterministic once the observations are fixed; the sampling process is stochastic.
 
-The co-occurrence matrices, cosine similarities, and PCA representations are deterministic once `observations.csv` is fixed.
+The co-occurrence matrices, cosine similarities, and PCA representations (`03a`) are deterministic once `observations.csv` is fixed.
+
+### Embedding training
+
+Notebook `03b` initializes vectors randomly, samples negative pairs, and shuffles training examples. A fixed random seed (`RANDOM_SEED = 42`) makes the learned embeddings reproducible.
 
 ---
 
-## 13. End-to-End Experimental Loop
+## 14. End-to-End Experimental Loop
 
 ```text
                     GENERATIVE PROCESS
@@ -649,24 +803,23 @@ The co-occurrence matrices, cosine similarities, and PCA representations are det
                            v
                     observations.csv
                            |
-          +----------------+----------------+
-          |                |                |
-          v                v                v
-     Fixed history    Full history     Distributional
-       N-grams          Prefix           context
-          |                |                |
-          v                v                v
-      Markov           Prefix          Co-occurrence
-   probabilities     probabilities       matrices
-                                           |
-                                           v
-                                         vectors
-                                           |
-                                  +--------+--------+
-                                  |                 |
-                                  v                 v
-                              cosine            PCA
-                            similarity       visualization
+          +----------------+----------------+-----------------+
+          |                |                |                 |
+          v                v                v                 v
+     Full history    Fixed history    Distributional    Distributional
+        Prefix          N-grams          context           context
+        (02a)           (02b)            (03a)             (03b)
+          |                |                |                 |
+          v                v                v                 v
+       Prefix           Markov        Co-occurrence     Logistic training
+   probabilities    probabilities       matrices        (negative sampling)
+          |                |                |                 |
+          +-------+--------+                v                 v
+                  |                   sparse vectors     dense vectors
+                  v                         |                 |
+           zombiegpt.html                   v                 v
+                                    cosine similarity  cosine similarity
+                                    PCA visualization  2D/3D visualization
 ```
 
 The project can therefore ask two complementary questions:
@@ -676,7 +829,7 @@ The project can therefore ask two complementary questions:
 
 ---
 
-## 14. Suggested Teaching Progression
+## 15. Suggested Teaching Progression
 
 ### Stage 1 — Grammar
 Understand the grammar and enumerate its possible sentences.
@@ -684,10 +837,10 @@ Understand the grammar and enumerate its possible sentences.
 ### Stage 2 — Probability
 Assign probabilities to productions and calculate complete-sentence probabilities.
 
-### Stage 3 — Observations
+### Stage 3 — Observations (`01`)
 Generate 850 observations and compare empirical and theoretical distributions.
 
-### Stage 4 — Bigram model
+### Stage 4 — Bigram model (`02b`, `N = 2`)
 Estimate:
 
 \[
@@ -696,7 +849,7 @@ P(w_t\mid w_{t-1})
 
 from observations.
 
-### Stage 5 — Higher-order N-grams
+### Stage 5 — Higher-order N-grams (`02b`, `N = 3, 4`)
 Increase the history:
 
 \[
@@ -709,7 +862,7 @@ and:
 P(w_t\mid w_{t-3},w_{t-2},w_{t-1})
 \]
 
-### Stage 6 — Full prefix
+### Stage 6 — Full prefix (`02a`)
 Remove the fixed history limit:
 
 \[
@@ -718,7 +871,9 @@ P(w_t\mid w_1,\ldots,w_{t-1})
 
 This demonstrates the conceptual ideal of remembering everything.
 
-### Stage 7 — Co-occurrence
+In the directory organization, the full-prefix notebook comes first (`02a`) because it is the simplest model to state; in this progression it is presented as the limit of increasing `N`. Either order works. `zombiegpt.html` can be used to compare sentences generated by all of these models.
+
+### Stage 7 — Co-occurrence (`03a`)
 Change the question from:
 
 ```text
@@ -742,8 +897,8 @@ Compare token vectors and investigate whether tokens with similar contextual beh
 ### Stage 10 — PCA visualization
 Project the vectors into two dimensions and visualize them geometrically.
 
-### Stage 11 — Neural embeddings
-Use the explicit co-occurrence representation as a conceptual bridge toward methods such as Word2Vec:
+### Stage 11 — Learned embeddings (`03b`)
+Use the explicit co-occurrence representation as a conceptual bridge toward methods such as Word2Vec, then train Word2Vec-style embeddings with negative sampling:
 
 ```text
 explicit co-occurrence counts
@@ -781,7 +936,7 @@ Transformers
 
 ---
 
-## 15. Main Architectural Insight
+## 16. Main Architectural Insight
 
 The deepest conceptual distinction is not simply bigram versus trigram. It is:
 
