@@ -1,14 +1,10 @@
-# ZombieGPT: Architecture of the Probabilistic Language-Model Notebooks
+# Zombienella importunus: Architecture of the Probabilistic Language-Model and Embedding Notebooks
 
 ## 1. Overview
 
-The project is organized as a sequence of increasingly sophisticated
-language-modeling experiments built around a small fictional language.
+The project is a sequence of experiments built around a small fictional language. The central idea is to keep the observations fixed while changing how information in those observations is represented or modeled.
 
-The central idea is to keep the **observations fixed** while changing
-the **model used to estimate the probability of the next token**.
-
-``` text
+```text
 Probabilistic Grammar
         |
         v
@@ -16,89 +12,130 @@ Probabilistic Grammar
         |
         | observations.csv
         v
-   +----+-------------------+
-   |                        |
-   v                        v
-02_markov_ngrams.ipynb   03_prefix_probabilities.ipynb
-   |                        |
-   | probabilities-        | prefix-probabilities.csv
-   | N-gram.csv             |
-   |                        |
-   +-----------+------------+
-               v
-          ZombieGPT.html
-               |
-               v
-       Step-by-step
-       sentence generation
+   +----+----------------+------------------+
+   |                     |                  |
+   v                     v                  v
+02_markov_ngrams     03_prefix         04_cooccurrence
+                         probabilities      embeddings
+   |                     |                  |
+   v                     v                  +-- co-occurrence matrices
+N-gram probabilities  full-prefix           +-- token vectors
+                     probabilities          +-- cosine similarity
+                                            +-- PCA visualization
 ```
 
-The three notebooks have deliberately different responsibilities:
+The four notebooks have deliberately different responsibilities:
 
-1.  **Observation generation**: knows the grammar and produces data.
-2.  **N-gram modeling**: does not need to know the grammar; it learns
-    local conditional probabilities from observations.
-3.  **Full-prefix modeling**: also does not need to know the grammar; it
-    learns probabilities conditioned on the entire preceding prefix.
+1. Observation generation: knows the grammar and produces data.
+2. N-gram modeling: learns fixed-order conditional probabilities from observations.
+3. Full-prefix modeling: learns probabilities conditioned on the entire preceding prefix.
+4. Co-occurrence/embeddings: represents tokens according to the tokens that occur around them.
 
-The web application consumes the probability files and provides an
-interactive visualization of generation.
+The downstream notebooks do not need access to the grammar. This separates the **generative process** from the **statistical models learned from observations**.
 
-------------------------------------------------------------------------
+---
 
-## 2. The Grammar Layer
+## 2. Current Grammar
 
-The current fictional grammar is:
+The current grammar is **Zombienella importunus**:
 
-``` text
-S -> s A | s B | s C
-
-A -> F | r F | r r F | r r e
-B -> l A
-C -> l l A
-
-F -> f e | p e
+```text
+S -> s A | s B | s C.
+A -> F | r F | r r F | r r e.
+B -> l A.
+C -> l l A.
+F -> f e | p e.
 ```
 
-This grammar defines a finite language of 21 possible terminal
-sequences.
+It defines 21 terminal sequences:
 
-The grammar is used only by the **observation generator**.
+```text
+1.  s f e
+2.  s p e
+3.  s r f e
+4.  s r p e
+5.  s r r f e
+6.  s r r p e
+7.  s r r e
+8.  s l f e
+9.  s l p e
+10. s l r f e
+11. s l r p e
+12. s l r r f e
+13. s l r r p e
+14. s l r r e
+15. s l l f e
+16. s l l p e
+17. s l l r f e
+18. s l l r p e
+19. s l l r r f e
+20. s l l r r p e
+21. s l l r r e
+```
 
-The downstream notebooks intentionally do not import or depend on the
-grammar. This separation allows an important experiment:
+The grammar and these derivations are documented in the current `README.md`. The grammar is used by the observation generator, but the later notebooks intentionally learn only from `observations.csv`.
 
-> Can a language model reconstruct useful transition probabilities from
-> observations without having access to the grammar that generated them?
+---
 
-This is analogous to the distinction between a **generative process**
-and a **learned statistical model**.
+## 3. Production Probabilities
 
-------------------------------------------------------------------------
+The current transition/production probabilities are:
 
-# 3. Notebook 01 --- Observation Generation
+```text
+S -> s A   1/3
+S -> s B   1/3
+S -> s C   1/3
 
-## File
+A -> F       1/4
+A -> r F     1/4
+A -> r r F   1/4
+A -> r r e   1/4
 
-``` text
+F -> f e     1/2
+F -> p e     1/2
+
+B -> l A     1
+C -> l l A   1
+```
+
+Each group of alternatives forms a probability distribution. For example:
+
+```text
+P(S -> s A) + P(S -> s B) + P(S -> s C) = 1
+```
+
+and:
+
+```text
+P(A -> F) + P(A -> r F) + P(A -> r r F) + P(A -> r r e) = 1
+```
+
+A complete sentence probability is the product of the production probabilities along its derivation. For example:
+
+```text
+P(s r r f e)
+ = P(S -> s A)
+ × P(A -> r r F)
+ × P(F -> f e)
+ = 1/3 × 1/4 × 1/2
+ = 1/24
+```
+
+Notebook 01 samples these distributions to generate 850 observations.
+
+---
+
+## 4. Notebook 01 — Observation Generation
+
+### File
+
+```text
 01_generate_observations.ipynb
 ```
 
-## Responsibility
+This is the **data-generation layer**. It contains the grammar, production probabilities, stochastic grammar sampler, and code that generates the 850 observations.
 
-The first notebook is the **data-generation layer**.
-
-It contains:
-
--   the grammar;
--   the production probabilities;
--   the stochastic grammar sampler;
--   the number of observations to generate;
--   the code that writes `observations.csv`.
-
-Its architecture is:
-
-``` text
+```text
 Grammar
    |
    v
@@ -117,74 +154,41 @@ Terminal sequence
 observations.csv
 ```
 
-## Input
+Its main output is:
 
-There is no external input dataset. The notebook internally defines the
-grammar and production probabilities.
-
-## Output
-
-The main artifact is:
-
-``` text
+```text
 observations.csv
 ```
 
-with one generated sentence per observation.
+The observations are random samples, so empirical frequencies approximate the theoretical grammar distribution but are not expected to be identical to it.
 
-## Architectural role
+---
 
-This notebook is a **producer**.
+## 5. Notebook 02 — N-gram Markov Model
 
-It should not contain code for:
+### File
 
--   N-gram estimation;
--   prefix probability estimation;
--   sentence generation from learned probabilities;
--   web-interface behavior.
-
-Keeping these concerns separate makes the experiment easier to
-understand and modify.
-
-------------------------------------------------------------------------
-
-# 4. Notebook 02 --- N-gram Markov Model
-
-## File
-
-``` text
+```text
 02_markov_ngrams.ipynb
 ```
 
-## Responsibility
+This notebook learns a fixed-order language model from `observations.csv`.
 
-The second notebook transforms the observation dataset into a
-fixed-order statistical language model.
-
-The configurable parameter is:
-
-``` python
+```python
 N = 2
 ```
 
-Possible configurations include:
-
-``` text
-N = 2  -> bigram model
-N = 3  -> trigram model
-N = 4  -> four-gram model
-```
+gives a bigram model; `N = 3` gives a trigram model; `N = 4` gives a four-gram model.
 
 The architecture is:
 
-``` text
+```text
 observations.csv
        |
        v
 Tokenization
        |
        v
-Sentence boundary markers
 <s> ... </s>
        |
        v
@@ -200,87 +204,28 @@ History counts
 Conditional probabilities
        |
        v
-probabilities-N-gram.csv
+N-gram probability CSV
 ```
 
-## 4.1 Sentence boundaries
+The estimated probability is:
 
-The notebook introduces `<s>` and `</s>` so the model can learn both the
-beginning and end of a sentence.
+\[
+P(w_t\mid h)=\frac{C(h,w_t)}{C(h)}
+\]
 
-For example:
+where `h` contains the previous `N-1` tokens.
 
-``` text
-<s> s r r f e </s>
+The notebook saves, for example:
+
+```text
+2-gram-probabilites.csv
+3-gram-probabilites.csv
+4-gram-probabilites.csv
 ```
 
-produces bigrams:
+with columns:
 
-``` text
-<s> s
-s r
-r r
-r f
-f e
-e </s>
-```
-
-## 4.2 N-gram representation
-
-For a configurable `N`, an N-gram contains `N` consecutive tokens.
-
-For example, with `N = 3`:
-
-``` text
-<s> s r
-s r r
-r r f
-r f e
-f e </s>
-```
-
-The model state is the first `N-1` tokens of the N-gram.
-
-Thus:
-
-``` text
-s r r
-```
-
-represents:
-
-``` text
-history = s r
-next_token = r
-```
-
-## 4.3 Probability estimation
-
-The conditional probability is estimated as:
-
-\[ P(w_t `\mid `{=tex}h) = rac{C(h,w_t)}{C(h)} \]
-
-where `h` is the N-gram history.
-
-For a bigram model:
-
-\[ P(w_t`\mid `{=tex}w\_{t-1}) = rac{C(w\_{t-1},w_t)} {C(w\_{t-1})} \]
-
-## 4.4 Output
-
-The notebook saves:
-
-``` text
-probabilities-2-gram.csv
-probabilities-3-gram.csv
-probabilities-4-gram.csv
-```
-
-depending on `N`.
-
-The schema is:
-
-``` text
+```text
 history
 next_token
 ngram_count
@@ -288,77 +233,33 @@ history_count
 probability
 ```
 
-This file is a compact representation of a Markov transition system:
+The file is a compact representation of a Markov transition system:
 
-``` text
+```text
 history -- probability --> next_token
 ```
 
-------------------------------------------------------------------------
+---
 
-# 5. Notebook 03 --- Full-Prefix Model
+## 6. Notebook 03 — Full-Prefix Model
 
-## File
+### File
 
-``` text
+```text
 03_prefix_probabilities.ipynb
 ```
 
-## Responsibility
+This notebook explores an intentionally impractical model for natural language: the **complete prefix from the beginning of the sentence is the state**.
 
-The third notebook explores an intentionally impractical model for
-natural language:
+For:
 
-> The complete prefix from the beginning of the sentence is used as the
-> state.
-
-Instead of restricting the history to `N-1` tokens, the history grows
-throughout generation.
-
-The architecture is:
-
-``` text
-observations.csv
-       |
-       v
-Tokenization
-       |
-       v
-<s> + complete sentence + </s>
-       |
-       v
-Extract every prefix
-       |
-       v
-Count prefix -> next-token pairs
-       |
-       v
-Prefix counts
-       |
-       v
-Conditional probabilities
-       |
-       v
-prefix-probabilities.csv
-```
-
-## 5.1 Example
-
-Consider:
-
-``` text
+```text
 s r r f e
-```
-
-After adding boundary markers:
-
-``` text
-<s> s r r f e </s>
 ```
 
 the notebook records:
 
-``` text
+```text
 <s>             -> s
 <s> s           -> r
 <s> s r         -> r
@@ -367,17 +268,21 @@ the notebook records:
 <s> s r r f e   -> </s>
 ```
 
-Unlike an N-gram model, the histories have different lengths.
+The probability is:
 
-## 5.2 Probability estimation
+\[
+P(w\mid h)=\frac{C(h,w)}{C(h)}
+\]
 
-For every complete history `h`:
+and the output is:
 
-\[ P(w`\mid `{=tex}h) = rac{C(h,w)}{C(h)} \]
+```text
+prefix-probabilities.csv
+```
 
-The output contains:
+with:
 
-``` text
+```text
 history
 next_token
 combination_count
@@ -385,328 +290,320 @@ history_count
 probability
 ```
 
-## 5.3 Output
+This is feasible here because the fictional language has a very restricted set of possible prefixes. For natural language, the number of possible histories grows combinatorially, producing severe sparsity.
 
-``` text
-prefix-probabilities.csv
+---
+
+## 7. Notebook 04 — Co-occurrence and Embeddings
+
+### File
+
+```text
+04_cooccurrence_embeddings.ipynb
 ```
 
-The name is intentionally different from the N-gram files because there
-is no fixed `N`.
+The fourth notebook changes the question. Instead of asking:
 
-------------------------------------------------------------------------
+> What token comes next?
 
-# 6. Comparison of the Two Model Architectures
+it asks:
 
-The most important conceptual difference is the definition of the
-**state**.
+> Which tokens tend to occur near a given token?
 
-## N-gram model
+This introduces the distributional intuition behind embeddings.
 
-``` text
-state = last N-1 tokens
-```
+The notebook reads the same:
 
-For example, with a trigram model, after generating:
-
-``` text
-s l r r
-```
-
-the state is:
-
-``` text
-r r
-```
-
-## Full-prefix model
-
-``` text
-state = entire prefix
-```
-
-After generating the same sequence, the state is:
-
-``` text
-<s> s l r r
-```
-
-The progression is therefore:
-
-``` text
-Bigram:
-    state = 1 token
-
-Trigram:
-    state = 2 tokens
-
-4-gram:
-    state = 3 tokens
-
-Full prefix:
-    state = all preceding tokens
-```
-
-This hierarchy is the central pedagogical idea of the project.
-
-------------------------------------------------------------------------
-
-# 7. Why the Full-Prefix Model Is Normally Impractical
-
-For the fictional language, the number of possible prefixes is very
-small.
-
-Natural language is completely different.
-
-If the vocabulary contains `V` tokens, the number of possible sequences
-of length `k` is approximately:
-
-\[ V\^k \]
-
-Therefore, as the prefix grows, the number of possible histories grows
-combinatorially.
-
-A full-prefix model would need to distinguish potentially enormous
-numbers of histories, and most would have very few observations or none
-at all.
-
-This is the **sparsity problem**.
-
-N-gram models address this partially by deliberately limiting the amount
-of history.
-
-Modern neural language models take a different approach: instead of
-storing every possible history explicitly, they learn a representation
-of context.
-
-------------------------------------------------------------------------
-
-# 8. Common Data Contract
-
-An important architectural decision is that the notebooks communicate
-through files rather than through Python imports.
-
-The central data contract is:
-
-``` text
+```text
 observations.csv
 ```
 
-Therefore:
+and does not use the grammar.
 
-``` text
-01_generate_observations.ipynb
+### 7.1 Vocabulary
+
+The linguistic tokens are:
+
+```text
+s, i, r, l, f, p, e
 ```
 
-can be changed without requiring changes to the statistical-model
-notebooks, as long as the observation format remains compatible.
+The sentence-boundary markers used by the language-model notebooks are not treated as ordinary linguistic tokens in the co-occurrence representation.
 
-Likewise, the probability notebooks produce standardized CSV files that
-can be consumed independently by the web application.
+### 7.2 Context windows
 
-This is a simple form of **pipeline architecture**.
+Three context windows are computed:
 
-------------------------------------------------------------------------
-
-# 9. ZombieGPT Web Application
-
-## File
-
-``` text
-ZombieGPT.html
+```text
+window 2 = 1 previous + 1 next
+window 4 = 2 previous + 2 next
+window 6 = 3 previous + 3 next
 ```
 
-The web application is intentionally independent of the notebooks.
+For every occurrence of a token, the notebook counts the other tokens occurring inside the selected window.
 
-Its architecture is:
+### 7.3 Co-occurrence matrices
 
-``` text
-                  +-----------------------+
-                  |      ZombieGPT UI     |
-                  +-----------+-----------+
-                              |
-                    select probability file
-                              |
-              +---------------+---------------+
-              |               |               |
-              v               v               v
-       2-gram CSV       3-gram CSV       4-gram CSV
-              |               |               |
-              +---------------+---------------+
-                              |
-                              v
-                    prefix-probabilities.csv
-                              |
-                              v
-                     transition table
-                              |
-                              v
-                     random sampling
-                              |
-                              v
-                    token-by-token output
+For each window, the notebook creates a matrix:
+
+```text
+             s   i   r   l   f   p   e
+         +-------------------------------
+s        | ...
+i        | ...
+r        | ...
+l        | ...
+f        | ...
+p        | ...
+e        | ...
 ```
 
-The application is a **consumer** of the learned models.
+where:
 
-------------------------------------------------------------------------
+\[
+C_{ij} =
+\text{number of times token }j
+\text{ occurs within the context window of token }i
+\]
 
-# 10. ZombieGPT State Representation
+The matrices are saved as:
 
-The application interprets the selected model differently.
+```text
+2-cooccurrence-matrix.csv
+4-cooccurrence-matrix.csv
+6-cooccurrence-matrix.csv
+```
 
-``` text
-2-gram:
-    history = last 1 token
+Each row is a vector representation of one token.
 
-3-gram:
-    history = last 2 tokens
+Thus:
+
+```text
+token
+  |
+  v
+co-occurrence counts
+  |
+  v
+vector
+```
+
+This is an explicit, transparent distributional representation: no neural network is required to create the initial vectors.
+
+### 7.4 Cosine similarity
+
+The notebook computes pairwise cosine similarities between token vectors:
+
+\[
+\operatorname{cos}(x,y)=
+\frac{x\cdot y}{\|x\|\|y\|}
+\]
+
+and saves:
+
+```text
+2-cosine-similarities.csv
+4-cosine-similarities.csv
+6-cosine-similarities.csv
+```
+
+This makes it possible to compare the same pair of tokens under different definitions of context.
+
+A high cosine similarity means that two tokens have similar **co-occurrence profiles**. It does not automatically mean that they are synonyms.
+
+### 7.5 Two-dimensional visualization
+
+The original vectors have one coordinate for each vocabulary token. PCA reduces these vectors to two dimensions:
+
+```text
+7-dimensional token vectors
+          |
+          v
+         PCA
+          |
+          v
+2-dimensional coordinates
+```
+
+The notebook draws each projected token as a vector from the origin:
+
+```text
+                    r
+                    ●
+                   /
+                  /
+               f ●
+                /
+        l ●    /
+          \   /
+           \ /
+            +----------------
+          origin
+```
+
+The same procedure is applied to windows 2, 4, and 6 so that students can see how the representation changes as the context becomes broader.
+
+---
+
+## 8. Why the Co-occurrence Experiment Matters
+
+The embedding notebook makes an important idea explicit:
+
+> A vector representation can be constructed from the distributional behavior of a token.
+
+The pipeline is:
+
+```text
+observations
+    |
+    v
+context window
+    |
+    v
+co-occurrence counts
+    |
+    v
+token vectors
+    |
+    +------> cosine similarity
+    |
+    +------> PCA visualization
+```
+
+The vectors are not initially learned by a neural network. They are direct numerical descriptions of contextual behavior.
+
+This provides a simple bridge toward Word2Vec and other learned embedding methods.
+
+---
+
+## 9. Context Has Different Roles
+
+The N-gram/prefix notebooks and the co-occurrence notebook use context differently.
+
+### Sequence modeling
+
+```text
+history
+   |
+   v
+P(next_token | history)
+   |
+   v
+next token
+```
+
+The question is:
+
+> What comes next?
+
+### Distributional representation
+
+```text
+token
+   |
+   v
+context distribution
+   |
+   v
+vector
+```
+
+The question is:
+
+> What tends to occur around this token?
+
+This distinction is central to the progression from language modeling toward embeddings.
+
+---
+
+## 10. Comparison of Representations
+
+```text
+Bigram:
+    state = last 1 token
+
+Trigram:
+    state = last 2 tokens
 
 4-gram:
-    history = last 3 tokens
+    state = last 3 tokens
 
-Prefix model:
-    history = entire generated prefix
+Full prefix:
+    state = entire preceding sequence
+
+Co-occurrence:
+    representation = context-count vector of a token
 ```
 
 For example, after generating:
 
-``` text
+```text
 s l r r
 ```
 
-the models see:
+a trigram model uses:
 
-``` text
-2-gram:
-    r
-
-3-gram:
-    r r
-
-4-gram:
-    l r r
-
-prefix:
-    <s> s l r r
+```text
+r r
 ```
 
-This provides a direct visualization of different definitions of
-"memory" in a language model.
+as its state, whereas the full-prefix model uses:
 
-------------------------------------------------------------------------
-
-# 11. Stochastic Generation
-
-ZombieGPT does not simply select the most probable token.
-
-Instead, it samples from the transition distribution.
-
-If:
-
-``` text
-history = s
+```text
+<s> s l r r
 ```
 
-and:
+The co-occurrence model does something different: it represents the tokens themselves by their contextual distributions.
 
-``` text
-f -> 0.50
-p -> 0.50
+---
+
+## 11. Architectural Separation of Concerns
+
+| Component | Responsibility | Knows grammar? |
+|---|---|---:|
+| `01_generate_observations.ipynb` | Generate observations | Yes |
+| `observations.csv` | Store observations | No |
+| `02_markov_ngrams.ipynb` | Learn fixed-order probabilities | No |
+| `03_prefix_probabilities.ipynb` | Learn full-prefix probabilities | No |
+| `04_cooccurrence_embeddings.ipynb` | Build distributional vectors | No |
+| N-gram probability CSVs | Store learned transitions | No |
+| `prefix-probabilities.csv` | Store full-prefix transitions | No |
+| Co-occurrence matrices | Store token vectors | No |
+| Cosine-similarity CSVs | Store vector similarities | No |
+
+The common data contract is:
+
+```text
+01_generate_observations.ipynb
+              |
+              v
+       observations.csv
+              |
+       +------+------+----------------+
+       |             |                |
+       v             v                v
+   N-grams        Prefixes       Co-occurrences
+       |             |                |
+       v             v                v
+ probabilities   probabilities     vectors
+                                      |
+                                      v
+                                similarities
 ```
 
-then the application samples:
+This is a simple pipeline architecture. The grammar is isolated in the data-generation layer, while the later notebooks operate on observations.
 
-\[ w `\sim `{=tex}P(w`\mid `{=tex}s) \]
+---
 
-Consequently, repeated executions can produce different sentences even
-with the same model.
+## 12. Reproducibility and Randomness
 
-The probability model is deterministic; the **sampling process is
-stochastic**.
+There are two different stochastic processes.
 
-------------------------------------------------------------------------
-
-# 12. Why the Pause in ZombieGPT Matters
-
-The delay before each generated token exposes the generation process:
-
-``` text
-history
-   |
-   v
-probability distribution
-   |
-   v
-sample next token
-   |
-   v
-append token
-   |
-   v
-new history
-   |
-   +---- repeat
-```
-
-Instead of seeing only:
-
-``` text
-s l r r p e
-```
-
-the student sees:
-
-``` text
-s
-s l
-s l r
-s l r r
-s l r r p
-s l r r p e
-```
-
-This makes the **autoregressive nature** of language generation
-explicit.
-
-------------------------------------------------------------------------
-
-# 13. Architectural Separation of Concerns
-
-  -------------------------------------------------------------------------------------
-  Component                          Responsibility                  Knows the grammar?
-  ---------------------------------- --------------------- ----------------------------
-  `01_generate_observations.ipynb`   Generate observations                          Yes
-
-  `observations.csv`                 Store observations                              No
-
-  `02_markov_ngrams.ipynb`           Learn fixed-order                               No
-                                     probabilities         
-
-  `03_prefix_probabilities.ipynb`    Learn full-prefix                               No
-                                     probabilities         
-
-  Probability CSVs                   Store learned                                   No
-                                     transitions           
-
-  `ZombieGPT.html`                   Interactive                                     No
-                                     generation            
-  -------------------------------------------------------------------------------------
-
-This separation demonstrates that a model can be trained from
-observations without having access to the underlying generative grammar.
-
-------------------------------------------------------------------------
-
-# 14. Reproducibility and Randomness
-
-There are two distinct stochastic processes.
-
-## Dataset generation
+### Dataset generation
 
 Notebook 01 samples grammar productions:
 
-``` text
+```text
 Grammar probabilities
         |
         v
@@ -718,12 +615,11 @@ observation
 
 A random seed can make the dataset reproducible.
 
-## Sentence generation
+### Sentence generation
 
-Notebooks 02 and 03, and ZombieGPT, sample from learned transition
-probabilities:
+The N-gram and prefix notebooks sample from learned transition probabilities:
 
-``` text
+```text
 learned probabilities
         |
         v
@@ -733,146 +629,181 @@ random next-token selection
 generated sentence
 ```
 
-These are conceptually different uses of randomness.
+The probability model is deterministic once the observations are fixed; the sampling process is stochastic.
 
-------------------------------------------------------------------------
+The co-occurrence matrices, cosine similarities, and PCA representations are deterministic once `observations.csv` is fixed.
 
-# 15. End-to-End Experimental Loop
+---
 
-The complete experiment is:
+## 13. End-to-End Experimental Loop
 
-``` text
-             GENERATIVE PROCESS
-                    |
-                    v
-          Probabilistic grammar
-                    |
-                    v
-          850 sampled sentences
-                    |
-                    v
-             observations.csv
-                    |
-          +---------+---------+
-          |                   |
-          v                   v
-     Fixed history       Full history
-       N-grams             Prefix model
-          |                   |
-          v                   v
-   Markov probabilities   Prefix probabilities
-          |                   |
-          +---------+---------+
-                    |
-                    v
-                ZombieGPT
-                    |
-                    v
-             sampled output
+```text
+                    GENERATIVE PROCESS
+                           |
+                           v
+                 Probabilistic grammar
+                           |
+                           v
+                  850 observations
+                           |
+                           v
+                    observations.csv
+                           |
+          +----------------+----------------+
+          |                |                |
+          v                v                v
+     Fixed history    Full history     Distributional
+       N-grams          Prefix           context
+          |                |                |
+          v                v                v
+      Markov           Prefix          Co-occurrence
+   probabilities     probabilities       matrices
+                                           |
+                                           v
+                                         vectors
+                                           |
+                                  +--------+--------+
+                                  |                 |
+                                  v                 v
+                              cosine            PCA
+                            similarity       visualization
 ```
 
-The key experimental question is:
+The project can therefore ask two complementary questions:
 
-> **How does the amount of history retained by the model affect its
-> ability to reproduce the structure of the original language?**
+1. **How much history is required to predict the next token?**
+2. **How can contextual behavior be transformed into a representation of a token?**
 
-That question connects grammar, Markov chains, N-grams, statistical
-language models, and eventually neural language models.
+---
 
-------------------------------------------------------------------------
+## 14. Suggested Teaching Progression
 
-# 16. Suggested Teaching Progression
+### Stage 1 — Grammar
+Understand the grammar and enumerate its possible sentences.
 
-### Stage 1 --- Grammar
+### Stage 2 — Probability
+Assign probabilities to productions and calculate complete-sentence probabilities.
 
-Students understand:
+### Stage 3 — Observations
+Generate 850 observations and compare empirical and theoretical distributions.
 
-``` text
-S -> s A | s B | s C
-```
+### Stage 4 — Bigram model
+Estimate:
 
-and enumerate possible sentences.
-
-### Stage 2 --- Probability
-
-Students assign probabilities to productions and calculate the
-probability of a complete sentence.
-
-### Stage 3 --- Observations
-
-The grammar generates 850 observations.
-
-Students see that empirical frequencies approximate theoretical
-probabilities.
-
-### Stage 4 --- Bigram model
-
-The grammar is hidden.
-
-Students estimate:
-
-\[ P(w_t`\mid `{=tex}w\_{t-1}) \]
+\[
+P(w_t\mid w_{t-1})
+\]
 
 from observations.
 
-### Stage 5 --- Higher-order N-grams
+### Stage 5 — Higher-order N-grams
+Increase the history:
 
-Students increase the history:
+\[
+P(w_t\mid w_{t-2},w_{t-1})
+\]
 
-\[ P(w_t`\mid `{=tex}w\_{t-2},w\_{t-1}) \]
+and:
 
-and then:
+\[
+P(w_t\mid w_{t-3},w_{t-2},w_{t-1})
+\]
 
-\[ P(w_t`\mid `{=tex}w\_{t-3},w\_{t-2},w\_{t-1}) \]
+### Stage 6 — Full prefix
+Remove the fixed history limit:
 
-### Stage 6 --- Full prefix
-
-Students remove the fixed history limit:
-
-\[ P(w_t`\mid `{=tex}w_1,`\ldots`{=tex},w\_{t-1}) \]
+\[
+P(w_t\mid w_1,\ldots,w_{t-1})
+\]
 
 This demonstrates the conceptual ideal of remembering everything.
 
-### Stage 7 --- ZombieGPT
+### Stage 7 — Co-occurrence
+Change the question from:
 
-The mathematical model becomes interactive.
-
-Students can see the state, probability distribution, sampling, and
-generated sequence unfold in real time.
-
-------------------------------------------------------------------------
-
-# 17. Main Architectural Insight
-
-The most important conceptual distinction is not really "bigram versus
-trigram".
-
-It is:
-
-> **How much context is represented in the state?**
-
-The progression is:
-
-``` text
-                    AMOUNT OF HISTORY
-
-        small                              large
-          |                                  |
-          v                                  v
-
-      Bigram -> Trigram -> 4-gram -> Full prefix
-          |                                  |
-          +---------- Markov state ----------+
+```text
+What comes next?
 ```
 
-The fictional language makes it possible to experiment with this
-progression without the computational complexity of real natural
-language.
+to:
 
-The notebooks therefore form both a software pipeline and a **conceptual
-pipeline for teaching the evolution of language modeling**:
+```text
+What tends to occur around this token?
+```
 
-``` text
+Build context-count matrices using windows 2, 4, and 6.
+
+### Stage 8 — Vector representation
+Interpret each row of the co-occurrence matrix as a vector representing a token.
+
+### Stage 9 — Cosine similarity
+Compare token vectors and investigate whether tokens with similar contextual behavior have similar representations.
+
+### Stage 10 — PCA visualization
+Project the vectors into two dimensions and visualize them geometrically.
+
+### Stage 11 — Neural embeddings
+Use the explicit co-occurrence representation as a conceptual bridge toward methods such as Word2Vec:
+
+```text
+explicit co-occurrence counts
+          |
+          v
+dense learned representations
+```
+
+### Stage 12 — Modern language models
+
+```text
+grammar
+   |
+   v
+Markov chains
+   |
+   v
+N-grams
+   |
+   v
+context/history
+   |
+   v
+co-occurrence vectors
+   |
+   v
+embeddings
+   |
+   v
+neural language models
+   |
+   v
+Transformers
+```
+
+---
+
+## 15. Main Architectural Insight
+
+The deepest conceptual distinction is not simply bigram versus trigram. It is:
+
+> **What information about language is being represented, and how is that information encoded?**
+
+Sequence models represent context in order to predict:
+
+```text
+history -> probability distribution -> next token
+```
+
+Distributional representations describe a token through its contextual behavior:
+
+```text
+token -> context distribution -> vector
+```
+
+The fictional language makes it possible to explore both ideas with a tiny vocabulary and a completely controlled generative process.
+
+The notebooks therefore form both a software pipeline and a conceptual pipeline:
+
+```text
 formal grammar
       |
       v
@@ -883,6 +814,15 @@ N-gram language models
       |
       v
 context/history
+      |
+      v
+co-occurrence representations
+      |
+      v
+vector similarity
+      |
+      v
+embeddings
       |
       v
 neural representations
