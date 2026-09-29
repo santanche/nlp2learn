@@ -543,7 +543,7 @@ Each token has a target vector \(v_w\) and a context vector \(u_c\), as in skip-
 P(y=1\mid w,c)=\sigma(v_w\cdot u_c)
 \]
 
-The binary cross-entropy is minimized with mini-batch stochastic gradient descent (800 epochs, batch size 64, learning rate 0.05, seed 42), with each batch updated in vectorized NumPy. The target vectors are the resulting embeddings.
+The binary cross-entropy is minimized with mini-batch stochastic gradient descent (800 epochs, batch size 64, learning rate 0.05, seed 42), with each batch updated in vectorized NumPy. As in classic Word2Vec, the target vectors (matrix \(W\)) are the resulting embeddings; the context vectors (matrix \(U\)) are also kept, for visualization.
 
 ```text
 observations
@@ -569,7 +569,7 @@ window 4 × dimension 2
 window 4 × dimension 3
 ```
 
-The 2-dimensional embeddings are plotted directly, and the 3-dimensional ones in a 3D plot, each token drawn as a line from the origin. No PCA is needed because the vectors are already low-dimensional.
+The 2-dimensional embeddings are plotted directly, and the 3-dimensional ones in a 3D plot, each token drawn as a line from the origin. Each chart has three panels: the target matrix \(W\), the context matrix \(U\), and their sum \(W+U\) (the GloVe choice; concatenating \([W;U]\) would double the dimension and could not be plotted directly). No PCA is needed because the vectors are already low-dimensional.
 
 For each configuration, the notebook saves the embedding matrix and its cosine-similarity matrix:
 
