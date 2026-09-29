@@ -34,8 +34,8 @@ zombienella/
     ├── 03b_word2vec_embeddings.ipynb
     ├── cooccurrence-{2,4,6}-matrix.csv
     ├── cooccurrence-{2,4,6}-cosine-similarities.csv
-    ├── embeddings-{2,4}-gram-{2,3}d-matrix.csv             (written by 03b)
-    └── embeddings-{2,4}-gram-{2,3}d-cosine-similarity.csv  (written by 03b)
+    ├── embeddings-{2,4}-gram-{2,3}d-matrix.csv
+    └── embeddings-{2,4}-gram-{2,3}d-cosine-similarity.csv
 ```
 
 The downstream notebooks in `02-ngrams/` and `03-embeddings/` all read the shared dataset through the relative path:
@@ -531,7 +531,9 @@ window 2 = 1 previous + 1 next
 window 4 = 2 previous + 2 next
 ```
 
-Every observed `(target, context)` pair is a positive example. For each positive pair type, 3 negative pairs are built by sampling random context tokens that never occur with the target.
+Every observed `(target, context)` occurrence is a positive example. For each positive, 3 negative contexts are drawn from the noise distribution \(P_n(c)\propto\text{count}(c)^{3/4}\), with fresh negatives at every epoch.
+
+As in the original Word2Vec, negatives are not filtered against the observed pairs. In a six-token language almost every pair is observed (with window 2, `r` co-occurs with every token, itself included), so requiring never-observed negatives leaves some targets with no possible negative.
 
 ### 8.2 Logistic objective with negative sampling
 
@@ -541,7 +543,7 @@ Each token has a target vector \(v_w\) and a context vector \(u_c\), as in skip-
 P(y=1\mid w,c)=\sigma(v_w\cdot u_c)
 \]
 
-The binary cross-entropy is minimized with stochastic gradient descent (800 epochs, learning rate 0.05, seed 42). The target vectors are the resulting embeddings.
+The binary cross-entropy is minimized with mini-batch stochastic gradient descent (800 epochs, batch size 64, learning rate 0.05, seed 42), with each batch updated in vectorized NumPy. The target vectors are the resulting embeddings.
 
 ```text
 observations
