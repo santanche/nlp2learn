@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Logistic Regression Loss</title>
+  <script>
+    window.MathJax = {
+      loader: { load: ['input/tex', 'output/svg'] },
+      options: { enableAssistiveMml: false },
+      svg: { fontCache: 'none' },
+      startup: { typeset: false }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --panel: #ffffff;
+      --ink: #1f2937;
+      --muted: #667085;
+      --line: #d9dee8;
+      --grid: #edf0f5;
+      --accent: #0f766e;
+      --curve: #2563eb;
+      --point: #ea580c;
+      --tangent: #7c3aed;
+      --up: #dc2626;
+      --down: #16a34a;
+      --next: #0f766e;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0f1419;
+        --panel: #182029;
+        --ink: #e5e7eb;
+        --muted: #9aa4b2;
+        --line: #2d3946;
+        --grid: #212b36;
+        --accent: #2dd4bf;
+        --curve: #60a5fa;
+        --point: #fb923c;
+        --tangent: #a78bfa;
+        --up: #f87171;
+        --down: #4ade80;
+        --next: #2dd4bf;
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    main {
+      width: min(1240px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 24px 0 40px;
+    }
+
+    h1 { margin: 0 0 4px; font-size: 1.5rem; }
+    h2 { margin: 0 0 10px; font-size: 1.05rem; }
+    h3 { margin: 14px 0 4px; font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+    h3:first-child { margin-top: 0; }
+    .subtitle { margin: 0 0 18px; color: var(--muted); }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    /* ---------- controls ---------- */
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px 22px;
+      align-items: end;
+    }
+
+    .control label {
+      display: flex;
+      justify-content: space-between;
+      font-size: .85rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .control label span { color: var(--muted); font-weight: 400; }
+
+    .control .row { display: flex; gap: 8px; align-items: center; }
+    .control input[type=range] { flex: 1; min-width: 0; accent-color: var(--accent); }
+    .control input[type=number], .control select {
+      width: 84px;
+      padding: 4px 6px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--bg);
+      color: var(--ink);
+      font: inherit;
+      font-size: .9rem;
+    }
+    .control .pair { display: flex; gap: 8px; align-items: center; font-size: .85rem; color: var(--muted); }
+    .control .check { display: flex; gap: 6px; align-items: center; font-size: .85rem; margin-top: 6px; }
+
+    .buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+    button {
+      padding: 7px 14px;
+      border-radius: 6px;
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: var(--panel);
+      font: inherit;
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button.secondary { background: transparent; color: var(--accent); }
+
+    /* ---------- chart + equations rows ---------- */
+    .row-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .row-grid { grid-template-columns: 1fr; }
+    }
+
+    svg.chart { width: 100%; height: auto; display: block; }
+    svg.chart text { font-size: 12px; fill: var(--muted); font-family: inherit; }
+    svg.chart .axis { stroke: var(--muted); stroke-width: 1; }
+    svg.chart .gridline { stroke: var(--grid); stroke-width: 1; }
+    svg.chart .curve { fill: none; stroke: var(--curve); stroke-width: 2.5; }
+    svg.chart .guide { stroke: var(--point); stroke-width: 1.5; stroke-dasharray: 5 4; }
+    svg.chart .faint { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 3 4; opacity: .7; }
+    svg.chart .tangent { stroke: var(--tangent); stroke-width: 2; }
+    svg.chart .point { fill: var(--point); stroke: var(--panel); stroke-width: 2; }
+    svg.chart .next { fill: var(--next); stroke: var(--panel); stroke-width: 2; }
+    svg.chart .next-ghost { fill: none; stroke: var(--next); stroke-width: 2; }
+    svg.chart .arrow-up { stroke: var(--up); stroke-width: 2.5; }
+    svg.chart .arrow-down { stroke: var(--down); stroke-width: 2.5; }
+    svg.chart .step { stroke: var(--next); stroke-width: 2; stroke-dasharray: 6 4; }
+    svg.chart .lbl-point { fill: var(--point); font-weight: 600; }
+    svg.chart .lbl-up { fill: var(--up); font-weight: 600; }
+    svg.chart .lbl-down { fill: var(--down); font-weight: 600; }
+    svg.chart .lbl-next { fill: var(--next); font-weight: 600; }
+    svg.chart .lbl-tangent { fill: var(--tangent); font-weight: 600; }
+    svg.chart .axis-title { fill: var(--ink); font-weight: 600; }
+
+    .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: .8rem; color: var(--muted); margin-top: 6px; }
+    .legend i { display: inline-block; width: 14px; height: 3px; vertical-align: middle; margin-right: 5px; border-radius: 2px; }
+    .legend i.dot { width: 9px; height: 9px; border-radius: 50%; }
+
+    .eq { overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
+    .eq mjx-container { margin: 4px 0 !important; }
+    .note { font-size: .88rem; color: var(--muted); margin: 6px 0 0; line-height: 1.45; }
+    .note b.up { color: var(--up); }
+    .note b.down { color: var(--down); }
+    .note b.next { color: var(--next); }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Logistic Regression: Loss and Gradient</h1>
+  <p class="subtitle">How the weight <i>w</i> of a logistic regression changes the prediction ŷ, the cross-entropy loss, its derivative, and one gradient-descent step.</p>
+
+  <!-- ===================== controls ===================== -->
+  <section class="panel">
+    <div class="controls">
+      <div class="control">
+        <label for="w-range">Weight w <span>coefficient</span></label>
+        <div class="row">
+          <input type="range" id="w-range" data-key="w" min="-10" max="10" step="0.01">
+          <input type="number" id="w-num" data-key="w" step="0.1">
+        </div>
+      </div>
+      <div class="control">
+        <label for="b-range">Bias b <span>intercept</span></label>
+        <div class="row">
+          <input type="range" id="b-range" data-key="b" min="-10" max="10" step="0.01">
+          <input type="number" id="b-num" data-key="b" step="0.1">
+        </div>
+      </div>
+      <div class="control">
+        <label for="x-range">Sample x</label>
+        <div class="row">
+          <input type="range" id="x-range" data-key="x" step="0.01">
+          <input type="number" id="x-num" data-key="x" step="0.1">
+        </div>
+      </div>
+      <div class="control">
+        <label>Range of x <span>chart 1</span></label>
+        <div class="pair">
+          <input type="number" id="xmin-num" data-key="xmin" step="1"> to
+          <input type="number" id="xmax-num" data-key="xmax" step="1">
+        </div>
+      </div>
+      <div class="control">
+        <label for="eta-range">Learning rate η</label>
+        <div class="row">
+          <input type="range" id="eta-range" data-key="eta" min="0.01" max="3" step="0.01">
+          <input type="number" id="eta-num" data-key="eta" step="0.05" min="0">
+        </div>
+      </div>
+      <div class="control">
+        <label for="y-sel">True label y <span>of the sample</span></label>
+        <select id="y-sel" data-key="y">
+          <option value="1">1 (positive)</option>
+          <option value="0">0 (negative)</option>
+        </select>
+      </div>
+      <div class="control">
+        <label for="wspan-num">Weight range ± <span>charts 2 and 3</span></label>
+        <input type="number" id="wspan-num" data-key="wspan" step="1" min="0.5">
+        <div class="check"><input type="checkbox" id="follow-chk"><label for="follow-chk" style="margin:0;font-weight:400">Center on current w</label></div>
+      </div>
+      <div class="control buttons">
+        <button id="step-btn" title="Replace w by the new weight w − η·∂L/∂w">Take gradient step</button>
+        <button id="reset-btn" class="secondary">Reset</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 1. logistic regression ===================== -->
+  <section class="panel">
+    <h2>1 · Logistic regression curve</h2>
+    <div class="row-grid">
+      <div>
+        <svg class="chart" id="chart-logistic" viewBox="0 0 640 360" role="img" aria-label="Logistic regression curve with the sample"></svg>
+        <div class="legend">
+          <span><i style="background:var(--curve)"></i>ŷ = σ(wx + b)</span>
+          <span><i class="dot" style="background:var(--point)"></i>sample (x, ŷ) and its projection on the ŷ axis</span>
+        </div>
+      </div>
+      <div>
+        <h3>Logistic equation</h3>
+        <div class="eq" id="eq-logistic"></div>
+        <h3>With the sample value</h3>
+        <div class="eq" id="eq-logistic-sample"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 2. ŷ as a function of w ===================== -->
+  <section class="panel">
+    <h2>2 · Prediction ŷ as a function of the weight (x fixed)</h2>
+    <div class="row-grid">
+      <div>
+        <svg class="chart" id="chart-yhat" viewBox="0 0 640 360" role="img" aria-label="Prediction as a function of the weight"></svg>
+        <div class="legend">
+          <span><i style="background:var(--curve)"></i>ŷ(w) = σ(w·x + b)</span>
+          <span><i class="dot" style="background:var(--point)"></i>current w</span>
+          <span><i class="dot" style="background:var(--next)"></i>w after one gradient step</span>
+          <span><i style="background:var(--muted)"></i>target y</span>
+        </div>
+      </div>
+      <div>
+        <h3>ŷ as a function of w</h3>
+        <div class="eq" id="eq-yhat"></div>
+        <div class="eq" id="eq-yhat-sample"></div>
+        <p class="note">Here the sample x and the bias b are fixed; only the weight w varies along the horizontal axis.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 3. loss + derivative + step ===================== -->
+  <section class="panel">
+    <h2>3 · Cross-entropy loss, derivative and gradient step (x fixed)</h2>
+    <div class="row-grid">
+      <div>
+        <svg class="chart" id="chart-loss" viewBox="0 0 640 360" role="img" aria-label="Loss as a function of the weight with tangent and descent arrows"></svg>
+        <div class="legend">
+          <span><i style="background:var(--curve)"></i>L<sub>CE</sub>(w)</span>
+          <span><i style="background:var(--tangent)"></i>tangent (derivative at w)</span>
+          <span><i style="background:var(--up)"></i>loss increases</span>
+          <span><i style="background:var(--down)"></i>loss decreases</span>
+          <span><i class="dot" style="background:var(--next)"></i>new point w<sup>t+1</sup></span>
+        </div>
+      </div>
+      <div>
+        <h3>Loss function</h3>
+        <div class="eq" id="eq-loss"></div>
+        <div class="eq" id="eq-loss-sample"></div>
+        <h3>Derivative (slope of the tangent)</h3>
+        <div class="eq" id="eq-deriv"></div>
+        <div class="eq" id="eq-deriv-sample"></div>
+        <h3>Gradient step with learning rate <span style="text-transform:none">η</span></h3>
+        <div class="eq" id="eq-step"></div>
+        <p class="note" id="step-note"></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+  // ------------------------------------------------------------------
+  // State
+  // ------------------------------------------------------------------
+  const DEFAULTS = { w: 1, b: 0, x: 1.5, xmin: -6, xmax: 6, eta: 0.5, y: 1, wspan: 5, follow: true };
+  const state = { ...DEFAULTS };
+  let wCenter = state.w;
+
+  const $ = id => document.getElementById(id);
+
+  // ------------------------------------------------------------------
+  // Math
+  // ------------------------------------------------------------------
+  function sigmoid(z) {
+    return z >= 0 ? 1 / (1 + Math.exp(-z)) : Math.exp(z) / (1 + Math.exp(z));
+  }
+
+  // ln(1 + e^t), numerically stable
+  function softplus(t) {
+    return t > 0 ? t + Math.log1p(Math.exp(-t)) : Math.log1p(Math.exp(t));
+  }
+
+  // L_CE = -[y ln σ(z) + (1 - y) ln(1 - σ(z))]
+  function lossOf(z, y) {
+    return y === 1 ? softplus(-z) : softplus(z);
+  }
+
+  // ------------------------------------------------------------------
+  // Number formatting (plain text and TeX)
+  // ------------------------------------------------------------------
+  function fmt(v, d = 3) {
+    if (!isFinite(v)) return v > 0 ? '\\infty' : '-\\infty';
+    const a = Math.abs(v);
+    if (a !== 0 && (a >= 1e5 || a < 1e-3)) {
+      const [m, e] = v.toExponential(2).split('e');
+      return `${m}\\times 10^{${parseInt(e, 10)}}`;
+    }
+    const s = String(Number(v.toFixed(d)));
+    return s === '-0' ? '0' : s;
+  }
+
+  // number wrapped in parentheses when negative
+  const p = v => (v < 0 ? `(${fmt(v)})` : fmt(v));
+  // "+ v" or "- |v|"
+  const signed = v => (v < 0 ? `- ${fmt(-v)}` : `+ ${fmt(v)}`);
+  const plain = v => fmt(v).replace(/\\times 10\^\{(-?\d+)\}/, 'e$1').replace('\\infty', '∞');
+
+  // ------------------------------------------------------------------
+  // Equations (MathJax tex2svg, re-rendered only when the TeX changes)
+  // ------------------------------------------------------------------
+  const texCache = new Map();
+  function setTex(id, tex) {
+    const el = $(id);
+    if (texCache.get(id) === tex && el.childElementCount) return;
+    texCache.set(id, tex);
+    if (window.MathJax && MathJax.tex2svg) {
+      el.replaceChildren(MathJax.tex2svg(tex, { display: true }));
+    } else {
+      el.textContent = tex;
+    }
+  }
+
+  // ------------------------------------------------------------------
+  // SVG chart helpers
+  // ------------------------------------------------------------------
+  const W = 640, H = 360, M = { l: 58, r: 22, t: 18, b: 46 };
+
+  function niceStep(range, count) {
+    const raw = range / count;
+    const mag = Math.pow(10, Math.floor(Math.log10(raw)));
+    const n = raw / mag;
+    return (n < 1.5 ? 1 : n < 3 ? 2 : n < 7 ? 5 : 10) * mag;
+  }
+
+  function ticks(min, max, count = 6) {
+    const step = niceStep(max - min, count);
+    const out = [];
+    for (let v = Math.ceil(min / step) * step; v <= max + step * 1e-9; v += step) {
+      out.push(Math.abs(v) < step * 1e-9 ? 0 : v);
+    }
+    return out;
+  }
+
+  function makePlot(xd, yd, xTitle, yTitle, clipId) {
+    const sx = v => M.l + (v - xd[0]) / (xd[1] - xd[0]) * (W - M.l - M.r);
+    const sy = v => H - M.b - (v - yd[0]) / (yd[1] - yd[0]) * (H - M.t - M.b);
+    let s = `<defs>
+      <clipPath id="${clipId}"><rect x="${M.l}" y="${M.t}" width="${W - M.l - M.r}" height="${H - M.t - M.b}"/></clipPath>
+      <marker id="${clipId}-up" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--up)"/></marker>
+      <marker id="${clipId}-down" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--down)"/></marker>
+      <marker id="${clipId}-next" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--next)"/></marker>
+    </defs>`;
+    for (const t of ticks(xd[0], xd[1], 8)) {
+      s += `<line class="gridline" x1="${sx(t)}" x2="${sx(t)}" y1="${M.t}" y2="${H - M.b}"/>`;
+      s += `<text x="${sx(t)}" y="${H - M.b + 17}" text-anchor="middle">${plain(t)}</text>`;
+    }
+    for (const t of ticks(yd[0], yd[1], 5)) {
+      s += `<line class="gridline" x1="${M.l}" x2="${W - M.r}" y1="${sy(t)}" y2="${sy(t)}"/>`;
+      s += `<text x="${M.l - 8}" y="${sy(t) + 4}" text-anchor="end">${plain(t)}</text>`;
+    }
+    s += `<line class="axis" x1="${M.l}" x2="${W - M.r}" y1="${H - M.b}" y2="${H - M.b}"/>`;
+    s += `<line class="axis" x1="${M.l}" x2="${M.l}" y1="${M.t}" y2="${H - M.b}"/>`;
+    s += `<text class="axis-title" x="${(M.l + W - M.r) / 2}" y="${H - 8}" text-anchor="middle">${xTitle}</text>`;
+    s += `<text class="axis-title" transform="translate(16 ${(M.t + H - M.b) / 2}) rotate(-90)" text-anchor="middle">${yTitle}</text>`;
+    return { sx, sy, s, clip: `clip-path="url(#${clipId})"`, marker: k => `url(#${clipId}-${k})` };
+  }
+
+  function pathOf(f, d0, d1, sx, sy, n = 300) {
+    let d = '';
+    for (let i = 0; i <= n; i++) {
+      const v = d0 + (d1 - d0) * i / n;
+      d += (i ? 'L' : 'M') + sx(v).toFixed(2) + ',' + sy(f(v)).toFixed(2);
+    }
+    return d;
+  }
+
+  const clampTo = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+
+  // ------------------------------------------------------------------
+  // Render
+  // ------------------------------------------------------------------
+  function render() {
+    const { w, b, x, xmin, xmax, eta, y, wspan } = state;
+    if (state.follow) wCenter = w;
+
+    const z = w * x + b;
+    const yhat = sigmoid(z);
+    const L = lossOf(z, y);
+    const grad = (yhat - y) * x;           // ∂L/∂w
+    const wNew = w - eta * grad;
+    const yhatNew = sigmoid(wNew * x + b);
+    const LNew = lossOf(wNew * x + b, y);
+    const wd = [wCenter - wspan, wCenter + wspan];
+
+    // ---------------- chart 1: logistic curve ----------------
+    {
+      const P = makePlot([xmin, xmax], [0, 1], 'x', 'ŷ', 'c1');
+      let s = P.s;
+      s += `<line class="faint" x1="${M.l}" x2="${W - M.r}" y1="${P.sy(0.5)}" y2="${P.sy(0.5)}"/>`;
+      s += `<path class="curve" ${P.clip} d="${pathOf(v => sigmoid(w * v + b), xmin, xmax, P.sx, P.sy)}"/>`;
+      const px = P.sx(x), py = P.sy(yhat);
+      s += `<line class="guide" x1="${px}" x2="${px}" y1="${H - M.b}" y2="${py}"/>`;
+      s += `<line class="guide" x1="${M.l}" x2="${px}" y1="${py}" y2="${py}"/>`;
+      s += `<circle class="point" cx="${M.l}" cy="${py}" r="4"/>`;
+      s += `<circle class="point" cx="${px}" cy="${py}" r="6"/>`;
+      s += `<text class="lbl-point" x="${M.l + 6}" y="${py - 6}">ŷ = ${plain(yhat)}</text>`;
+      s += `<text class="lbl-point" x="${px + (px > W - 140 ? -8 : 8)}" y="${H - M.b - 6}" text-anchor="${px > W - 140 ? 'end' : 'start'}">x = ${plain(x)}</text>`;
+      $('chart-logistic').innerHTML = s;
+
+      setTex('eq-logistic', String.raw`\hat{y} = \sigma(z) = \frac{1}{1 + e^{-z}}, \qquad z = w\,x + b`);
+      setTex('eq-logistic-sample', String.raw`\begin{aligned}
+        z &= w\,x + b = ${p(w)} \cdot ${p(x)} ${signed(b)} = ${fmt(z)} \\[4pt]
+        \hat{y} &= \frac{1}{1 + e^{${fmt(-z)}}} = \frac{1}{1 + ${fmt(Math.exp(-z))}} = \frac{1}{${fmt(1 + Math.exp(-z))}} = \mathbf{${fmt(yhat)}}
+      \end{aligned}`);
+    }
+
+    // ---------------- chart 2: ŷ(w) ----------------
+    {
+      const P = makePlot(wd, [0, 1], 'w', 'ŷ(w)', 'c2');
+      let s = P.s;
+      s += `<line class="faint" x1="${M.l}" x2="${W - M.r}" y1="${P.sy(y)}" y2="${P.sy(y)}"/>`;
+      s += `<text x="${W - M.r - 4}" y="${P.sy(y) + (y ? 14 : -6)}" text-anchor="end">target y = ${y}</text>`;
+      s += `<path class="curve" d="${pathOf(v => sigmoid(v * x + b), wd[0], wd[1], P.sx, P.sy)}"/>`;
+      if (wNew >= wd[0] && wNew <= wd[1]) {
+        s += `<circle class="next" cx="${P.sx(wNew)}" cy="${P.sy(yhatNew)}" r="5"/>`;
+      }
+      if (w >= wd[0] && w <= wd[1]) {
+        const px = P.sx(w), py = P.sy(yhat);
+        s += `<line class="guide" x1="${px}" x2="${px}" y1="${H - M.b}" y2="${py}"/>`;
+        s += `<line class="guide" x1="${M.l}" x2="${px}" y1="${py}" y2="${py}"/>`;
+        s += `<circle class="point" cx="${px}" cy="${py}" r="6"/>`;
+        s += `<text class="lbl-point" x="${M.l + 6}" y="${py + (yhat > 0.85 ? 16 : -6)}">ŷ = ${plain(yhat)}</text>`;
+        s += `<text class="lbl-point" x="${px + 8}" y="${H - M.b - 6}">w = ${plain(w)}</text>`;
+      }
+      $('chart-yhat').innerHTML = s;
+
+      setTex('eq-yhat', String.raw`\hat{y}(w) = \sigma(w\,x + b) = \frac{1}{1 + e^{-(w\,x + b)}}`);
+      setTex('eq-yhat-sample', String.raw`\begin{aligned}
+        \hat{y}(w) &= \frac{1}{1 + e^{-(${fmt(x)}\,w ${signed(b)})}} \qquad (x = ${fmt(x)},\ b = ${fmt(b)}) \\[4pt]
+        \hat{y}(${fmt(w)}) &= \mathbf{${fmt(yhat)}}
+      \end{aligned}`);
+    }
+
+    // ---------------- chart 3: loss, tangent, arrows, step ----------------
+    {
+      const lossW = v => lossOf(v * x + b, y);
+      let lmax = 0;
+      for (let i = 0; i <= 200; i++) lmax = Math.max(lmax, lossW(wd[0] + (wd[1] - wd[0]) * i / 200));
+      lmax = Math.max(lmax * 1.1, 0.5);
+      const P = makePlot(wd, [0, lmax], 'w', 'L_CE(w)', 'c3');
+      let s = P.s;
+      s += `<path class="curve" ${P.clip} d="${pathOf(lossW, wd[0], wd[1], P.sx, P.sy)}"/>`;
+
+      const inRange = w >= wd[0] && w <= wd[1];
+      if (inRange) {
+        const px = P.sx(w), py = P.sy(L);
+
+        // tangent line L(w) + grad·(v − w)
+        const t0 = w - wspan * 0.45, t1 = w + wspan * 0.45;
+        s += `<line class="tangent" ${P.clip} x1="${P.sx(t0)}" y1="${P.sy(L + grad * (t0 - w))}" x2="${P.sx(t1)}" y2="${P.sy(L + grad * (t1 - w))}"/>`;
+
+        // arrows along the tangent, in screen space
+        if (Math.abs(grad) > 1e-9) {
+          let dx = P.sx(w + 1) - px, dy = P.sy(L + grad) - py;
+          const n = Math.hypot(dx, dy);
+          dx /= n; dy /= n;
+          const sg = Math.sign(grad);           // +w moves loss up when grad > 0
+          const len = 62, off = 9;
+          const ux = sg * dx, uy = sg * dy;      // direction of increasing loss
+          s += `<line class="arrow-up" x1="${px + ux * off}" y1="${py + uy * off}" x2="${px + ux * len}" y2="${py + uy * len}" marker-end="${P.marker('up')}"/>`;
+          s += `<line class="arrow-down" x1="${px - ux * off}" y1="${py - uy * off}" x2="${px - ux * len}" y2="${py - uy * len}" marker-end="${P.marker('down')}"/>`;
+          s += `<text class="lbl-up" x="${px + ux * (len + 10)}" y="${py + uy * (len + 10) - 4}" text-anchor="${ux > 0 ? 'start' : 'end'}">loss ↑</text>`;
+          s += `<text class="lbl-down" x="${px - ux * (len + 10)}" y="${py - uy * (len + 10) - 4}" text-anchor="${ux > 0 ? 'end' : 'start'}">loss ↓</text>`;
+        }
+
+        // gradient step: w → w_new along the w axis, and the new point on the curve
+        const nx = P.sx(clampTo(wNew, wd[0], wd[1]));
+        const ay = H - M.b - 12;
+        if (Math.abs(nx - px) > 3) {
+          s += `<line class="step" x1="${px}" y1="${ay}" x2="${nx}" y2="${ay}" marker-end="${P.marker('next')}"/>`;
+        }
+        s += `<line class="guide" x1="${px}" x2="${px}" y1="${H - M.b}" y2="${py}"/>`;
+        if (wNew >= wd[0] && wNew <= wd[1]) {
+          const ny = P.sy(LNew);
+          s += `<line class="faint" x1="${nx}" x2="${nx}" y1="${H - M.b}" y2="${ny}"/>`;
+          s += `<circle class="next-ghost" ${P.clip} cx="${nx}" cy="${P.sy(L + grad * (wNew - w))}" r="4"/>`;
+          s += `<circle class="next" cx="${nx}" cy="${ny}" r="6"/>`;
+          const ty = Math.max(M.t + 12, Math.min(py, ny) - 34);
+          s += `<text class="lbl-next" x="${nx + (wNew >= w ? 6 : -6)}" y="${ty}" text-anchor="${wNew >= w ? 'start' : 'end'}">w⁽ᵗ⁺¹⁾ = ${plain(wNew)}, L = ${plain(LNew)}</text>`;
+        } else {
+          s += `<text class="lbl-next" x="${nx + (wNew >= w ? -4 : 4)}" y="${ay - 8}" text-anchor="${wNew >= w ? 'end' : 'start'}">w⁽ᵗ⁺¹⁾ = ${plain(wNew)} (off chart)</text>`;
+        }
+        s += `<circle class="point" cx="${px}" cy="${py}" r="6"/>`;
+        // current-loss label on the side opposite to the step
+        const right = wNew >= w;
+        const ly = Math.max(M.t + 12, Math.min(py, P.sy(LNew)) - 34);
+        s += `<text class="lbl-point" x="${px + (right ? -6 : 6)}" y="${ly}" text-anchor="${right ? 'end' : 'start'}">L = ${plain(L)}</text>`;
+        s += `<text class="lbl-tangent" x="${W - M.r - 4}" y="${M.t + 14}" text-anchor="end">slope ∂L/∂w = ${plain(grad)}</text>`;
+      } else {
+        s += `<text x="${W / 2}" y="${M.t + 20}" text-anchor="middle">current w is outside the chart range</text>`;
+      }
+      $('chart-loss').innerHTML = s;
+
+      const lossSpecific = y === 1
+        ? String.raw`-\ln \hat{y} = -\ln \sigma(${fmt(x)}\,w ${signed(b)})`
+        : String.raw`-\ln (1 - \hat{y}) = -\ln \left(1 - \sigma(${fmt(x)}\,w ${signed(b)})\right)`;
+      const lossAtW = y === 1
+        ? String.raw`-\ln(${fmt(yhat)})`
+        : String.raw`-\ln(1 - ${fmt(yhat)})`;
+
+      setTex('eq-loss', String.raw`L_{CE}(\hat{y}, y) = -\left[\, y \ln \hat{y} + (1 - y) \ln (1 - \hat{y}) \,\right]`);
+      setTex('eq-loss-sample', String.raw`\begin{aligned}
+        y = ${y}:\quad L_{CE}(w) &= ${lossSpecific} \\[4pt]
+        L_{CE}(${fmt(w)}) &= ${lossAtW} = \mathbf{${fmt(L)}}
+      \end{aligned}`);
+      setTex('eq-deriv', String.raw`\frac{\partial L_{CE}}{\partial w} = (\hat{y} - y)\, x`);
+      setTex('eq-deriv-sample', String.raw`\begin{aligned}
+        \frac{\partial L_{CE}}{\partial w}\Big|_{w = ${fmt(w)}} &= (${fmt(yhat)} - ${y}) \cdot ${p(x)} = \mathbf{${fmt(grad)}} \\[4pt]
+        \text{tangent: } L &\approx ${fmt(L)} ${signed(grad)}\,(w - ${p(w)})
+      \end{aligned}`);
+      setTex('eq-step', String.raw`\begin{aligned}
+        w^{t+1} &= w^t - \eta\, \frac{\partial L_{CE}}{\partial w} = w^t - \eta\,(\hat{y} - y)\,x \\[4pt]
+        &= ${fmt(w)} - ${fmt(eta)} \cdot ${p(grad)} = \mathbf{${fmt(wNew)}} \\[4pt]
+        L_{CE}(w^{t+1}) &= ${fmt(LNew)} \qquad (\Delta L = ${fmt(LNew - L)})
+      \end{aligned}`);
+
+      let note;
+      if (Math.abs(grad) < 1e-9) {
+        note = 'The slope is zero: the loss is flat at this w, so gradient descent does not move.';
+      } else {
+        const dir = grad < 0 ? 'increasing' : 'decreasing';
+        note = `The slope is ${grad < 0 ? 'negative' : 'positive'}, so the loss <b class="down">decreases</b> by ${dir} w ` +
+          `and <b class="up">increases</b> in the opposite direction. The step moves against the slope by ` +
+          `η·|∂L/∂w| = ${plain(Math.abs(eta * grad))}, reaching <b class="next">w<sup>t+1</sup> = ${plain(wNew)}</b>.`;
+        if (LNew > L) note += ' The learning rate is too large here: the step overshoots and the loss goes up.';
+      }
+      $('step-note').innerHTML = note;
+    }
+  }
+
+  // ------------------------------------------------------------------
+  // Controls
+  // ------------------------------------------------------------------
+  function syncInputs() {
+    const xr = $('x-range');
+    xr.min = state.xmin; xr.max = state.xmax;
+    for (const el of document.querySelectorAll('[data-key]')) {
+      const k = el.dataset.key;
+      if (el.type === 'range') {
+        // widen sliders when a typed value falls outside them
+        if (k !== 'x') {
+          if (state[k] < +el.min) el.min = state[k];
+          if (state[k] > +el.max) el.max = state[k];
+        }
+      }
+      if (document.activeElement !== el || el.type === 'range') el.value = state[k];
+    }
+    $('follow-chk').checked = state.follow;
+  }
+
+  let frame = 0;
+  function update() {
+    if (frame) return;
+    frame = requestAnimationFrame(() => { frame = 0; render(); });
+  }
+
+  for (const el of document.querySelectorAll('[data-key]')) {
+    el.addEventListener('input', () => {
+      const v = parseFloat(el.value);
+      if (!isFinite(v)) return;
+      const k = el.dataset.key;
+      state[k] = k === 'y' ? (v ? 1 : 0) : v;
+      if (k === 'wspan') state.wspan = Math.max(0.5, v);
+      if (k === 'eta') state.eta = Math.max(0, v);
+      if (k === 'xmin' || k === 'xmax') {
+        if (state.xmax <= state.xmin) return;
+        state.x = clampTo(state.x, state.xmin, state.xmax);
+      }
+      if (k === 'x') state.x = clampTo(v, state.xmin, state.xmax);
+      syncInputs();
+      update();
+    });
+  }
+
+  $('follow-chk').addEventListener('change', e => {
+    state.follow = e.target.checked;
+    update();
+  });
+
+  $('step-btn').addEventListener('click', () => {
+    const grad = (sigmoid(state.w * state.x + state.b) - state.y) * state.x;
+    state.w = Number((state.w - state.eta * grad).toFixed(6));
+    syncInputs();
+    update();
+  });
+
+  $('reset-btn').addEventListener('click', () => {
+    Object.assign(state, DEFAULTS);
+    wCenter = state.w;
+    texCache.clear();
+    syncInputs();
+    update();
+  });
+
+  syncInputs();
+  render();
+
+  // re-render the equations once MathJax is ready
+  window.addEventListener('load', () => {
+    if (window.MathJax && MathJax.startup) {
+      MathJax.startup.promise.then(() => {
+        // CSS that MathJax needs for its SVG output (hides the duplicate MathML copy)
+        document.head.appendChild(MathJax.svgStylesheet());
+        texCache.clear();
+        render();
+      });
+    }
+  });
+</script>
+</body>
+</html>
