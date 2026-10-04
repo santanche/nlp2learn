@@ -136,6 +136,54 @@
       .row-grid { grid-template-columns: 1fr; }
     }
 
+    /* ---------- side-by-side layout: charts in one row, equations below ---------- */
+    @media (min-width: 901px) {
+      #sections.side {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        column-gap: 16px;
+        margin-bottom: 16px;
+      }
+      #sections.side > section,
+      #sections.side .row-grid { display: contents; }
+      #sections.side h2,
+      #sections.side .chart-cell,
+      #sections.side .eq-cell {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        padding: 0 14px;
+      }
+      #sections.side h2 {
+        grid-row: 1;
+        margin: 0;
+        padding-top: 14px;
+        padding-bottom: 8px;
+        border-bottom: none;
+        border-radius: 10px 10px 0 0;
+      }
+      #sections.side .chart-cell {
+        grid-row: 2;
+        padding-bottom: 14px;
+        border-top: none;
+        border-radius: 0 0 10px 10px;
+      }
+      #sections.side .eq-cell {
+        grid-row: 3;
+        margin-top: 16px;
+        padding: 14px;
+        border-radius: 10px;
+      }
+      #sections.side > section:nth-child(1) > h2,
+      #sections.side > section:nth-child(1) .row-grid > * { grid-column: 1; }
+      #sections.side > section:nth-child(2) > h2,
+      #sections.side > section:nth-child(2) .row-grid > * { grid-column: 2; }
+      #sections.side > section:nth-child(3) > h2,
+      #sections.side > section:nth-child(3) .row-grid > * { grid-column: 3; }
+      /* charts are a third as wide: enlarge text in SVG units, shrink equations */
+      #sections.side svg.chart text { font-size: 18px; }
+      #sections.side .eq { font-size: .82em; }
+    }
+
     svg.chart { width: 100%; height: auto; display: block; }
     svg.chart text { font-size: 12px; fill: var(--muted); font-family: inherit; }
     svg.chart .axis { stroke: var(--muted); stroke-width: 1; }
@@ -224,6 +272,13 @@
         <input type="number" id="wspan-num" data-key="wspan" step="1" min="0.5">
         <div class="check"><input type="checkbox" id="follow-chk"><label for="follow-chk" style="margin:0;font-weight:400">Center on current w</label></div>
       </div>
+      <div class="control">
+        <label for="layout-sel">Layout</label>
+        <select id="layout-sel" style="width:100%">
+          <option value="rows">Each chart with its equations</option>
+          <option value="side">Charts side by side, equations below</option>
+        </select>
+      </div>
       <div class="control buttons">
         <button id="step-btn" title="Replace w by the new weight w − η·∂L/∂w">Take gradient step</button>
         <button id="reset-btn" class="secondary">Reset</button>
@@ -231,18 +286,19 @@
     </div>
   </section>
 
+  <div id="sections">
   <!-- ===================== 1. logistic regression ===================== -->
   <section class="panel">
     <h2>1 · Logistic regression curve</h2>
     <div class="row-grid">
-      <div>
+      <div class="chart-cell">
         <svg class="chart" id="chart-logistic" viewBox="0 0 640 360" role="img" aria-label="Logistic regression curve with the sample"></svg>
         <div class="legend">
           <span><i style="background:var(--curve)"></i>ŷ = σ(wx + b)</span>
           <span><i class="dot" style="background:var(--point)"></i>sample (x, ŷ) and its projection on the ŷ axis</span>
         </div>
       </div>
-      <div>
+      <div class="eq-cell">
         <h3>Logistic equation</h3>
         <div class="eq" id="eq-logistic"></div>
         <h3>With the sample value</h3>
@@ -255,7 +311,7 @@
   <section class="panel">
     <h2>2 · Prediction ŷ as a function of the weight (x fixed)</h2>
     <div class="row-grid">
-      <div>
+      <div class="chart-cell">
         <svg class="chart" id="chart-yhat" viewBox="0 0 640 360" role="img" aria-label="Prediction as a function of the weight"></svg>
         <div class="legend">
           <span><i style="background:var(--curve)"></i>ŷ(w) = σ(w·x + b)</span>
@@ -264,7 +320,7 @@
           <span><i style="background:var(--muted)"></i>target y</span>
         </div>
       </div>
-      <div>
+      <div class="eq-cell">
         <h3>ŷ as a function of w</h3>
         <div class="eq" id="eq-yhat"></div>
         <div class="eq" id="eq-yhat-sample"></div>
@@ -277,7 +333,7 @@
   <section class="panel">
     <h2>3 · Cross-entropy loss, derivative and gradient step (x fixed)</h2>
     <div class="row-grid">
-      <div>
+      <div class="chart-cell">
         <svg class="chart" id="chart-loss" viewBox="0 0 640 360" role="img" aria-label="Loss as a function of the weight with tangent and descent arrows"></svg>
         <div class="legend">
           <span><i style="background:var(--curve)"></i>L<sub>CE</sub>(w)</span>
@@ -287,7 +343,7 @@
           <span><i class="dot" style="background:var(--next)"></i>new point w<sup>t+1</sup></span>
         </div>
       </div>
-      <div>
+      <div class="eq-cell">
         <h3>Loss function</h3>
         <div class="eq" id="eq-loss"></div>
         <div class="eq" id="eq-loss-sample"></div>
@@ -300,6 +356,7 @@
       </div>
     </div>
   </section>
+  </div>
 </main>
 
 <script>
@@ -645,6 +702,17 @@
     syncInputs();
     update();
   });
+
+  // layout choice is a per-viewer convenience, remembered in this browser
+  function setLayout(v) {
+    $('sections').classList.toggle('side', v === 'side');
+    $('layout-sel').value = v;
+  }
+  $('layout-sel').addEventListener('change', e => {
+    setLayout(e.target.value);
+    try { localStorage.setItem('lr-sim-layout', e.target.value); } catch (_) {}
+  });
+  try { setLayout(localStorage.getItem('lr-sim-layout') || 'rows'); } catch (_) { setLayout('rows'); }
 
   syncInputs();
   render();
