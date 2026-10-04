@@ -307,24 +307,24 @@
     </div>
   </section>
 
-  <!-- ===================== 2. ŷ as a function of w ===================== -->
+  <!-- ===================== 2. p(y|x) as a function of w ===================== -->
   <section class="panel">
-    <h2>2 · Prediction ŷ as a function of the weight (x fixed)</h2>
+    <h2>2 · Probability of the true label p(y|x) as a function of the weight (x fixed)</h2>
     <div class="row-grid">
       <div class="chart-cell">
-        <svg class="chart" id="chart-yhat" viewBox="0 0 640 360" role="img" aria-label="Prediction as a function of the weight"></svg>
+        <svg class="chart" id="chart-yhat" viewBox="0 0 640 360" role="img" aria-label="Probability of the true label as a function of the weight"></svg>
         <div class="legend">
-          <span><i style="background:var(--curve)"></i>ŷ(w) = σ(w·x + b)</span>
+          <span><i style="background:var(--curve)"></i>p(y|x) = ŷ<sup>y</sup>(1 − ŷ)<sup>1−y</sup></span>
           <span><i class="dot" style="background:var(--point)"></i>current w</span>
           <span><i class="dot" style="background:var(--next)"></i>w after one gradient step</span>
-          <span><i style="background:var(--muted)"></i>target y</span>
+          <span><i style="background:var(--muted)"></i>ideal p = 1</span>
         </div>
       </div>
       <div class="eq-cell">
-        <h3>ŷ as a function of w</h3>
+        <h3>Probability of the label (Bernoulli)</h3>
         <div class="eq" id="eq-yhat"></div>
         <div class="eq" id="eq-yhat-sample"></div>
-        <p class="note">Here the sample x and the bias b are fixed; only the weight w varies along the horizontal axis.</p>
+        <p class="note">Here the sample x and the bias b are fixed; only the weight w varies along the horizontal axis. Training pushes p(y|x) toward 1, and the loss in chart 3 is L<sub>CE</sub> = −ln p(y|x).</p>
       </div>
     </div>
   </section>
@@ -515,30 +515,35 @@
       \end{aligned}`);
     }
 
-    // ---------------- chart 2: ŷ(w) ----------------
+    // ---------------- chart 2: p(y|x) as a function of w ----------------
     {
-      const P = makePlot(wd, [0, 1], 'w', 'ŷ(w)', 'c2');
+      // probability the model assigns to the true label: ŷ^y (1 − ŷ)^(1−y)
+      const prob = yh => (y === 1 ? yh : 1 - yh);
+      const pNow = prob(yhat), pNew = prob(yhatNew);
+      const P = makePlot(wd, [0, 1], 'w', 'p(y|x)', 'c2');
       let s = P.s;
-      s += `<line class="faint" x1="${M.l}" x2="${W - M.r}" y1="${P.sy(y)}" y2="${P.sy(y)}"/>`;
-      s += `<text x="${W - M.r - 4}" y="${P.sy(y) + (y ? 14 : -6)}" text-anchor="end">target y = ${y}</text>`;
-      s += `<path class="curve" d="${pathOf(v => sigmoid(v * x + b), wd[0], wd[1], P.sx, P.sy)}"/>`;
+      s += `<line class="faint" x1="${M.l}" x2="${W - M.r}" y1="${P.sy(1)}" y2="${P.sy(1)}"/>`;
+      s += `<text x="${W - M.r - 4}" y="${P.sy(1) + 14}" text-anchor="end">ideal p = 1</text>`;
+      s += `<path class="curve" d="${pathOf(v => prob(sigmoid(v * x + b)), wd[0], wd[1], P.sx, P.sy)}"/>`;
       if (wNew >= wd[0] && wNew <= wd[1]) {
-        s += `<circle class="next" cx="${P.sx(wNew)}" cy="${P.sy(yhatNew)}" r="5"/>`;
+        s += `<circle class="next" cx="${P.sx(wNew)}" cy="${P.sy(pNew)}" r="5"/>`;
       }
       if (w >= wd[0] && w <= wd[1]) {
-        const px = P.sx(w), py = P.sy(yhat);
+        const px = P.sx(w), py = P.sy(pNow);
         s += `<line class="guide" x1="${px}" x2="${px}" y1="${H - M.b}" y2="${py}"/>`;
         s += `<line class="guide" x1="${M.l}" x2="${px}" y1="${py}" y2="${py}"/>`;
         s += `<circle class="point" cx="${px}" cy="${py}" r="6"/>`;
-        s += `<text class="lbl-point" x="${M.l + 6}" y="${py + (yhat > 0.85 ? 16 : -6)}">ŷ = ${plain(yhat)}</text>`;
+        s += `<text class="lbl-point" x="${M.l + 6}" y="${py + (pNow > 0.85 ? 16 : -6)}">p = ${plain(pNow)}</text>`;
         s += `<text class="lbl-point" x="${px + 8}" y="${H - M.b - 6}">w = ${plain(w)}</text>`;
       }
       $('chart-yhat').innerHTML = s;
 
-      setTex('eq-yhat', String.raw`\hat{y}(w) = \sigma(w\,x + b) = \frac{1}{1 + e^{-(w\,x + b)}}`);
+      const sig = String.raw`\sigma(${fmt(x)}\,w ${signed(b)})`;
+      setTex('eq-yhat', String.raw`p(y|x) = \hat{y}^{\,y}\,(1 - \hat{y})^{1 - y}, \qquad \hat{y} = \sigma(w\,x + b)`);
       setTex('eq-yhat-sample', String.raw`\begin{aligned}
-        \hat{y}(w) &= \frac{1}{1 + e^{-(${fmt(x)}\,w ${signed(b)})}} \qquad (x = ${fmt(x)},\ b = ${fmt(b)}) \\[4pt]
-        \hat{y}(${fmt(w)}) &= \mathbf{${fmt(yhat)}}
+        \text{fixed:}\quad x = ${fmt(x)},\ b &= ${fmt(b)} \\[4pt]
+        y = ${y}:\quad p(${y}|x) &= ${y === 1 ? String.raw`\hat{y} = ${sig}` : String.raw`1 - \hat{y} = 1 - ${sig}`} \\[4pt]
+        w = ${fmt(w)}:\quad p(${y}|x) &= ${fmt(yhat)}^{${y}}\,(1 - ${fmt(yhat)})^{${1 - y}} = \mathbf{${fmt(pNow)}}
       \end{aligned}`);
     }
 
@@ -609,7 +614,7 @@
         ? String.raw`-\ln(${fmt(yhat)})`
         : String.raw`-\ln(1 - ${fmt(yhat)})`;
 
-      setTex('eq-loss', String.raw`L_{CE}(\hat{y}, y) = -\left[\, y \ln \hat{y} + (1 - y) \ln (1 - \hat{y}) \,\right]`);
+      setTex('eq-loss', String.raw`L_{CE}(\hat{y}, y) = -\ln p(y|x) = -\left[\, y \ln \hat{y} + (1 - y) \ln (1 - \hat{y}) \,\right]`);
       setTex('eq-loss-sample', String.raw`\begin{aligned}
         y = ${y}:\quad L_{CE}(w) &= ${lossSpecific} \\[4pt]
         L_{CE}(${fmt(w)}) &= ${lossAtW} = \mathbf{${fmt(L)}}
