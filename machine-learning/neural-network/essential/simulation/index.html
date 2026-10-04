@@ -84,7 +84,7 @@
     /* ---------- controls ---------- */
     .controls {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 14px 22px;
       align-items: start;
     }
@@ -108,6 +108,7 @@
       font-size: .9rem;
     }
     select { width: 130px; }
+    select.wide { width: 100%; margin-top: 4px; }
     .check { display: flex; gap: 6px; align-items: center; font-size: .85rem; margin-top: 10px; }
 
     .buttons { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
@@ -125,18 +126,38 @@
     button.secondary { background: transparent; color: var(--accent); }
     button:disabled { opacity: .4; cursor: default; }
 
-    /* ---------- samples + scatter ---------- */
-    .row-grid {
+    /* ---------- board: table, scatter and network panels ---------- */
+    #board {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+      grid-template-areas: "table scatter" "net net";
       gap: 16px;
       align-items: stretch;
     }
-    .row-grid > .panel { margin-bottom: 0; }
-    @media (max-width: 900px) {
-      .row-grid { grid-template-columns: 1fr; }
+    #board > .panel { margin-bottom: 0; }
+    #p-table { grid-area: table; }
+    #p-scatter { grid-area: scatter; }
+    #p-net { grid-area: net; }
+
+    /* side by side: scatter plot and network in one row, samples below */
+    #board.side {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+      grid-template-areas: "scatter net" "table table";
+      align-items: start;
     }
-    .spacer { height: 16px; }
+    #board.side .explain { grid-template-columns: 1fr; }
+    #board.side .table-wrap { max-height: 300px; }
+    /* charts are narrower: enlarge text in SVG units */
+    #board.side svg.chart text { font-size: 15px; }
+    #board.side svg.net text { font-size: 18px; }
+    #board.side svg.net .node-title { font-size: 19px; }
+    #board.side svg.net .node-value { font-size: 26px; }
+    #board.side svg.net .caption { font-size: 16px; }
+    #board.side svg.net .mini text { font-size: 13px; }
+
+    @media (max-width: 900px) {
+      #board, #board.side { grid-template-columns: 1fr; grid-template-areas: "table" "scatter" "net"; }
+    }
 
     .table-wrap { max-height: 420px; overflow: auto; border: 1px solid var(--line); border-radius: 8px; }
     table { width: 100%; border-collapse: collapse; font-size: .88rem; font-variant-numeric: tabular-nums; }
@@ -232,7 +253,6 @@
       <fieldset>
         <legend class="out">Output</legend>
         <label class="param">b₃ <span>output bias</span> <input type="number" data-key="b3" step="0.05"></label>
-        <label class="check"><input type="checkbox" id="paths-chk"> Show each path's contribution in the plot</label>
         <div class="buttons">
           <button id="reset-btn" class="secondary" title="Restore the original weights and biases">Reset parameters</button>
         </div>
@@ -251,12 +271,22 @@
           <button id="gen-btn">New samples</button>
         </div>
       </fieldset>
+      <fieldset>
+        <legend>View</legend>
+        <label class="check" style="margin-top:6px"><input type="checkbox" id="curve-chk"> Show the network curve in the plot</label>
+        <label class="check"><input type="checkbox" id="paths-chk"> Show each path's contribution</label>
+        <label class="check" for="layout-sel" style="margin-bottom:0">Layout</label>
+        <select id="layout-sel" class="wide">
+          <option value="rows">Network below the plot</option>
+          <option value="side">Plot and network side by side</option>
+        </select>
+      </fieldset>
     </div>
   </section>
 
+  <div id="board">
   <!-- ===================== samples + scatter ===================== -->
-  <div class="row-grid">
-    <section class="panel">
+    <section class="panel" id="p-table">
       <h2>1 · Samples</h2>
       <div class="table-wrap">
         <table>
@@ -268,16 +298,14 @@
       <div class="buttons"><button id="all-btn" class="secondary">Compute all ŷ</button></div>
     </section>
 
-    <section class="panel">
+    <section class="panel" id="p-scatter">
       <h2>2 · Samples and the network curve</h2>
       <svg class="chart" id="chart-scatter" viewBox="0 0 640 400" role="img" aria-label="Scatter plot of the samples with the network curve"></svg>
       <div class="legend" id="scatter-legend"></div>
     </section>
-  </div>
-  <div class="spacer"></div>
 
   <!-- ===================== network ===================== -->
-  <section class="panel">
+  <section class="panel" id="p-net">
     <h2>3 · The network, step by step</h2>
     <svg class="net" id="net" viewBox="0 0 1000 540" role="img" aria-label="Network diagram with two softplus paths"></svg>
 
@@ -303,6 +331,7 @@
       </div>
     </div>
   </section>
+  </div>
 </main>
 
 <script>
@@ -311,7 +340,7 @@
   // ------------------------------------------------------------------
   const PARAMS = { w1: 3.6, b1: -1.8, v1: 1.04, w2: 28, b2: -21, v2: -0.27, b3: -0.16 };
   const P = { ...PARAMS };
-  const state = { n: 20, mode: 'rate', noise: 0.08, showPaths: false, sel: -1, step: 0 };
+  const state = { n: 20, mode: 'rate', noise: 0.08, showCurve: true, showPaths: false, sel: -1, step: 0 };
   let samples = [];   // { T, x, y, done }
 
   const $ = id => document.getElementById(id);
@@ -468,7 +497,7 @@
       s += `<path ${clip} fill="none" stroke="var(--upper)" stroke-width="2" stroke-dasharray="7 5" d="${pathOf(x => forward(x).o1, 0, 1, sx, sy)}"/>`;
       s += `<path ${clip} fill="none" stroke="var(--lower)" stroke-width="2" stroke-dasharray="7 5" d="${pathOf(x => forward(x).o2, 0, 1, sx, sy)}"/>`;
     }
-    s += `<path ${clip} fill="none" stroke="var(--out)" stroke-width="3" d="${pathOf(f, 0, 1, sx, sy)}"/>`;
+    if (state.showCurve) s += `<path ${clip} fill="none" stroke="var(--out)" stroke-width="3" d="${pathOf(f, 0, 1, sx, sy)}"/>`;
 
     samples.forEach((smp, i) => {
       if (i !== state.sel) s += `<circle class="sample-pt" data-i="${i}" cx="${sx(smp.x)}" cy="${sy(smp.y)}" r="6"><title>#${i + 1}: x = ${smp.x}, y = ${smp.y}</title></circle>`;
@@ -491,7 +520,7 @@
 
     $('scatter-legend').innerHTML =
       `<span><i class="dot" style="background:var(--sample)"></i>samples</span>` +
-      `<span><i style="background:var(--out)"></i>network output ŷ = f(x)</span>` +
+      (state.showCurve ? `<span><i style="background:var(--out)"></i>network output ŷ = f(x)</span>` : '') +
       (state.showPaths ? `<span><i class="dash" style="border-color:var(--upper)"></i>upper path v₁·softplus(w₁x + b₁)</span>` +
                          `<span><i class="dash" style="border-color:var(--lower)"></i>lower path v₂·softplus(w₂x + b₂)</span>` : '') +
       (state.sel >= 0 ? `<span><i class="dot" style="background:var(--out)"></i>prediction for the selected sample</span>` : '');
@@ -509,11 +538,13 @@
   };
 
   function badge(x, y, text, color, opts = {}) {
-    const w = text.length * 8.6 + 18, h = 28;
+    // badges grow with the larger text of the side-by-side layout
+    const k = $('board').classList.contains('side') ? 1.2 : 1;
+    const w = text.length * 8.6 * k + 18, h = 28 * k;
     const fill = opts.filled ? color : 'var(--panel)';
     const tcol = opts.filled ? 'var(--panel)' : 'var(--ink)';
     return `<g class="badge"><rect x="${x - w / 2}" y="${y - h / 2}" width="${w}" height="${h}" rx="5" style="fill:${fill};stroke:${color}"/>` +
-      `<text x="${x}" y="${y + 5}" text-anchor="middle" style="fill:${tcol}">${esc(text)}</text></g>`;
+      `<text x="${x}" y="${y + 5 * k}" text-anchor="middle" style="fill:${tcol}">${esc(text)}</text></g>`;
   }
 
   const lerp = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
@@ -692,7 +723,7 @@
         const err = smp.y - r.yhat;
         tex = String.raw`\begin{aligned} \hat{y} &= v_1 a_1 + v_2 a_2 + b_3 = ${fmt(r.o1)} ${signed(r.o2)} ${signed(P.b3)} = \mathbf{${fmt(r.yhat)}} \\[4pt]
           y - \hat{y} &= ${fmt(smp.y)} - ${p(r.yhat)} = ${fmt(err)} \end{aligned}`;
-        note = `<b class="out">Output:</b> the two path values and the output bias are summed. The prediction appears on the green curve of the scatter plot; the dotted line is the gap to the observed y.`;
+        note = `<b class="out">Output:</b> the two path values and the output bias are summed. The prediction appears as the green point in the scatter plot (it lies on the network curve); the dotted line is the gap to the observed y.`;
       }
     }
     $('step-title').textContent = `Step ${STEPS[state.step]}`;
@@ -779,6 +810,23 @@
     renderScatter();
   });
 
+  $('curve-chk').addEventListener('change', e => {
+    state.showCurve = e.target.checked;
+    renderScatter();
+  });
+
+  // layout choice is a per-viewer convenience, remembered in this browser
+  function setLayout(v) {
+    $('board').classList.toggle('side', v === 'side');
+    $('layout-sel').value = v;
+    renderNet();
+  }
+  $('layout-sel').addEventListener('change', e => {
+    setLayout(e.target.value);
+    try { localStorage.setItem('nn-sim-layout', e.target.value); } catch (_) {}
+  });
+  try { setLayout(localStorage.getItem('nn-sim-layout') || 'rows'); } catch (_) { setLayout('rows'); }
+
   $('n-num').addEventListener('change', e => {
     state.n = clampTo(Math.round(+e.target.value) || 20, 3, 200);
     e.target.value = state.n;
@@ -802,6 +850,7 @@
   $('noise-num').value = state.noise;
   $('mode-sel').value = state.mode;
   $('paths-chk').checked = state.showPaths;
+  $('curve-chk').checked = state.showCurve;
   syncParams();
   generate();
   render();
