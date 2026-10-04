@@ -1,0 +1,822 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Softplus Network Step by Step</title>
+  <script>
+    window.MathJax = {
+      loader: { load: ['input/tex', 'output/svg'] },
+      options: { enableAssistiveMml: false },
+      svg: { fontCache: 'none' },
+      startup: { typeset: false }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --panel: #ffffff;
+      --ink: #1f2937;
+      --muted: #667085;
+      --line: #d9dee8;
+      --grid: #edf0f5;
+      --accent: #0f766e;
+      --upper: #2563eb;
+      --lower: #ea580c;
+      --out: #16a34a;
+      --sample: #0d9488;
+      --idle: #c3cad6;
+      --band: rgba(124, 58, 237, .10);
+      --band-line: #7c3aed;
+      --row-sel: #e6f4f1;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0f1419;
+        --panel: #182029;
+        --ink: #e5e7eb;
+        --muted: #9aa4b2;
+        --line: #2d3946;
+        --grid: #212b36;
+        --accent: #2dd4bf;
+        --upper: #60a5fa;
+        --lower: #fb923c;
+        --out: #4ade80;
+        --sample: #2dd4bf;
+        --idle: #3a4654;
+        --band: rgba(167, 139, 250, .14);
+        --band-line: #a78bfa;
+        --row-sel: #17363a;
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    main {
+      width: min(1240px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 24px 0 40px;
+    }
+
+    h1 { margin: 0 0 4px; font-size: 1.5rem; }
+    h2 { margin: 0 0 10px; font-size: 1.05rem; }
+    h3 { margin: 14px 0 4px; font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+    h3:first-child { margin-top: 0; }
+    .subtitle { margin: 0 0 18px; color: var(--muted); max-width: 900px; line-height: 1.45; }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    /* ---------- controls ---------- */
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px 22px;
+      align-items: start;
+    }
+
+    fieldset { border: 1px solid var(--line); border-radius: 8px; margin: 0; padding: 8px 12px 12px; }
+    legend { font-size: .85rem; font-weight: 700; padding: 0 4px; }
+    legend.upper { color: var(--upper); }
+    legend.lower { color: var(--lower); }
+    legend.out { color: var(--out); }
+
+    .param { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: .88rem; margin-top: 6px; }
+    .param span { color: var(--muted); font-size: .8rem; }
+    input[type=number], select {
+      width: 84px;
+      padding: 4px 6px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--bg);
+      color: var(--ink);
+      font: inherit;
+      font-size: .9rem;
+    }
+    select { width: 130px; }
+    .check { display: flex; gap: 6px; align-items: center; font-size: .85rem; margin-top: 10px; }
+
+    .buttons { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    button {
+      padding: 7px 14px;
+      border-radius: 6px;
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: var(--panel);
+      font: inherit;
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button.secondary { background: transparent; color: var(--accent); }
+    button:disabled { opacity: .4; cursor: default; }
+
+    /* ---------- samples + scatter ---------- */
+    .row-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+    .row-grid > .panel { margin-bottom: 0; }
+    @media (max-width: 900px) {
+      .row-grid { grid-template-columns: 1fr; }
+    }
+    .spacer { height: 16px; }
+
+    .table-wrap { max-height: 420px; overflow: auto; border: 1px solid var(--line); border-radius: 8px; }
+    table { width: 100%; border-collapse: collapse; font-size: .88rem; font-variant-numeric: tabular-nums; }
+    th, td { padding: 5px 10px; text-align: right; border-bottom: 1px solid var(--grid); }
+    th { position: sticky; top: 0; background: var(--panel); color: var(--muted); font-weight: 600; border-bottom: 1px solid var(--line); }
+    th:first-child, td:first-child { text-align: center; color: var(--muted); }
+    tbody tr { cursor: pointer; }
+    tbody tr:hover { background: var(--grid); }
+    tbody tr.sel { background: var(--row-sel); font-weight: 700; }
+    tbody tr:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+    td.pending { color: var(--muted); }
+    td.yhat { color: var(--out); }
+
+    svg.chart { width: 100%; height: auto; display: block; }
+    svg.chart text, svg.net text { fill: var(--muted); font-family: inherit; }
+    svg.chart text { font-size: 12px; }
+    .axis { stroke: var(--muted); stroke-width: 1; }
+    .gridline { stroke: var(--grid); stroke-width: 1; }
+    .axis-title { fill: var(--ink) !important; font-weight: 600; }
+    .guide { stroke-width: 1.5; stroke-dasharray: 5 4; }
+    .sample-pt { fill: var(--sample); fill-opacity: .55; stroke: var(--sample); stroke-width: 1.5; cursor: pointer; }
+    .sample-pt.sel { fill-opacity: 1; stroke: var(--ink); stroke-width: 2.5; }
+
+    .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: .8rem; color: var(--muted); margin-top: 6px; }
+    .legend i { display: inline-block; width: 14px; height: 3px; vertical-align: middle; margin-right: 5px; border-radius: 2px; }
+    .legend i.dot { width: 9px; height: 9px; border-radius: 50%; }
+    .legend i.dash { background: none !important; border-top: 2px dashed; height: 0; }
+
+    /* ---------- network ---------- */
+    svg.net { width: 100%; height: auto; display: block; }
+    svg.net text { font-size: 15px; }
+    svg.net .node { fill: var(--panel); stroke-width: 3; }
+    svg.net .node-title { fill: var(--ink); font-weight: 700; font-size: 16px; }
+    svg.net .node-value { fill: var(--ink); font-weight: 700; font-size: 22px; }
+    svg.net .badge rect { fill: var(--panel); stroke-width: 1.5; }
+    svg.net .badge text { font-weight: 600; fill: var(--ink); }
+    svg.net .edge { fill: none; stroke-width: 4; stroke-linecap: round; }
+    svg.net .mini text { font-size: 11px; }
+    svg.net .caption { font-size: 14px; font-weight: 600; }
+
+    .stepbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 12px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; flex: 1; }
+    .chip {
+      padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line);
+      font-size: .8rem; color: var(--muted); background: var(--bg); cursor: pointer; font-weight: 500;
+    }
+    .chip.done { color: var(--ink); }
+    .chip.now { border-color: var(--accent); color: var(--accent); font-weight: 700; }
+    .chip:disabled { cursor: default; }
+
+    .explain {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 18px;
+      margin-top: 14px;
+      align-items: start;
+    }
+    @media (max-width: 900px) { .explain { grid-template-columns: 1fr; } }
+    .eq { overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
+    .eq mjx-container { margin: 4px 0 !important; }
+    .note { font-size: .9rem; color: var(--muted); margin: 6px 0 0; line-height: 1.5; }
+    .note b.upper { color: var(--upper); }
+    .note b.lower { color: var(--lower); }
+    .note b.out { color: var(--out); }
+    kbd { font: inherit; font-size: .78rem; border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>A Tiny Neural Network: Two Softplus Paths</h1>
+  <p class="subtitle">
+    Seeds germinate poorly in cold soil, well in warm soil, and die when the soil gets too hot.
+    No single S-shaped curve fits this "only the middle works" pattern, but a network with one input,
+    two hidden softplus neurons and one output can: each path bends a softplus curve, and their weighted
+    sum produces the bump. Pick a sample to follow its computation through the network step by step.
+  </p>
+
+  <!-- ===================== controls ===================== -->
+  <section class="panel">
+    <div class="controls">
+      <fieldset>
+        <legend class="upper">Upper path</legend>
+        <label class="param">w₁ <span>input weight</span> <input type="number" data-key="w1" step="0.1"></label>
+        <label class="param">b₁ <span>bias</span> <input type="number" data-key="b1" step="0.1"></label>
+        <label class="param">v₁ <span>output weight</span> <input type="number" data-key="v1" step="0.05"></label>
+      </fieldset>
+      <fieldset>
+        <legend class="lower">Lower path</legend>
+        <label class="param">w₂ <span>input weight</span> <input type="number" data-key="w2" step="0.5"></label>
+        <label class="param">b₂ <span>bias</span> <input type="number" data-key="b2" step="0.5"></label>
+        <label class="param">v₂ <span>output weight</span> <input type="number" data-key="v2" step="0.05"></label>
+      </fieldset>
+      <fieldset>
+        <legend class="out">Output</legend>
+        <label class="param">b₃ <span>output bias</span> <input type="number" data-key="b3" step="0.05"></label>
+        <label class="check"><input type="checkbox" id="paths-chk"> Show each path's contribution in the plot</label>
+        <div class="buttons">
+          <button id="reset-btn" class="secondary" title="Restore the original weights and biases">Reset parameters</button>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Samples</legend>
+        <label class="param">Count <span>trays</span> <input type="number" id="n-num" min="3" max="200" step="1"></label>
+        <label class="param">Type
+          <select id="mode-sel">
+            <option value="rate">Rate (0 to 1)</option>
+            <option value="binary">Yes / No (1 / 0)</option>
+          </select>
+        </label>
+        <label class="param">Noise <span>std. dev.</span> <input type="number" id="noise-num" min="0" max="0.5" step="0.01"></label>
+        <div class="buttons">
+          <button id="gen-btn">New samples</button>
+        </div>
+      </fieldset>
+    </div>
+  </section>
+
+  <!-- ===================== samples + scatter ===================== -->
+  <div class="row-grid">
+    <section class="panel">
+      <h2>1 · Samples</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>#</th><th>Temp. (°C)</th><th>x</th><th>y observed</th><th>ŷ network</th></tr></thead>
+          <tbody id="sample-rows"></tbody>
+        </table>
+      </div>
+      <p class="note">x is the temperature rescaled to [0, 1]: x = (T − 5) / 35. Click a row (or a point) to compute ŷ step by step; the ŷ column fills in as samples are computed.</p>
+      <div class="buttons"><button id="all-btn" class="secondary">Compute all ŷ</button></div>
+    </section>
+
+    <section class="panel">
+      <h2>2 · Samples and the network curve</h2>
+      <svg class="chart" id="chart-scatter" viewBox="0 0 640 400" role="img" aria-label="Scatter plot of the samples with the network curve"></svg>
+      <div class="legend" id="scatter-legend"></div>
+    </section>
+  </div>
+  <div class="spacer"></div>
+
+  <!-- ===================== network ===================== -->
+  <section class="panel">
+    <h2>3 · The network, step by step</h2>
+    <svg class="net" id="net" viewBox="0 0 1000 540" role="img" aria-label="Network diagram with two softplus paths"></svg>
+
+    <div class="stepbar">
+      <button id="prev-btn" class="secondary">◀ Back</button>
+      <button id="next-btn">Next ▶</button>
+      <div class="chips" id="chips"></div>
+    </div>
+
+    <div class="explain">
+      <div>
+        <h3>Network equation</h3>
+        <div class="eq" id="eq-net"></div>
+        <p class="note">
+          softplus(z) = ln(1 + e<sup>z</sup>) is a smooth version of max(0, z). In each softplus chart the shaded band
+          marks the z values the path can reach for x between 0 and 1: only that part of the curve shapes the output.
+        </p>
+      </div>
+      <div>
+        <h3 id="step-title">Current step</h3>
+        <div class="eq" id="eq-step"></div>
+        <p class="note" id="step-note"></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+  // ------------------------------------------------------------------
+  // State
+  // ------------------------------------------------------------------
+  const PARAMS = { w1: 3.6, b1: -1.8, v1: 1.04, w2: 28, b2: -21, v2: -0.27, b3: -0.16 };
+  const P = { ...PARAMS };
+  const state = { n: 20, mode: 'rate', noise: 0.08, showPaths: false, sel: -1, step: 0 };
+  let samples = [];   // { T, x, y, done }
+
+  const $ = id => document.getElementById(id);
+  const T_MIN = 5, T_SPAN = 35;
+
+  // ------------------------------------------------------------------
+  // Math
+  // ------------------------------------------------------------------
+  // ln(1 + e^t), numerically stable
+  function softplus(t) {
+    return t > 0 ? t + Math.log1p(Math.exp(-t)) : Math.log1p(Math.exp(t));
+  }
+
+  function forward(x) {
+    const z1 = P.w1 * x + P.b1, a1 = softplus(z1), o1 = P.v1 * a1;
+    const z2 = P.w2 * x + P.b2, a2 = softplus(z2), o2 = P.v2 * a2;
+    return { x, z1, a1, o1, z2, a2, o2, yhat: o1 + o2 + P.b3 };
+  }
+  const f = x => forward(x).yhat;
+
+  function gauss() {
+    let u = 0;
+    while (u === 0) u = Math.random();
+    return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * Math.random());
+  }
+
+  const clampTo = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+
+  function generate() {
+    samples = [];
+    for (let i = 0; i < state.n; i++) {
+      const T = Math.round((T_MIN + Math.random() * T_SPAN) * 2) / 2;    // 0.5 °C resolution
+      const x = Number(((T - T_MIN) / T_SPAN).toFixed(3));
+      const p = clampTo(f(x), 0, 1);
+      const y = state.mode === 'binary'
+        ? (Math.random() < p ? 1 : 0)
+        : Number(clampTo(p + state.noise * gauss(), 0, 1).toFixed(2));
+      samples.push({ T, x, y, done: false });
+    }
+    samples.sort((a, b) => a.x - b.x);
+    state.sel = -1;
+    state.step = 0;
+  }
+
+  // ------------------------------------------------------------------
+  // Number formatting (plain text and TeX)
+  // ------------------------------------------------------------------
+  function fmt(v, d = 3) {
+    const a = Math.abs(v);
+    if (a !== 0 && a < 1e-3) {
+      const [m, e] = v.toExponential(2).split('e');
+      return `${m}\\times 10^{${parseInt(e, 10)}}`;
+    }
+    const s = String(Number(v.toFixed(d)));
+    return s === '-0' ? '0' : s;
+  }
+  const p = v => (v < 0 ? `(${fmt(v)})` : fmt(v));
+  const signed = v => (v < 0 ? `- ${fmt(-v)}` : `+ ${fmt(v)}`);
+  const plain = (v, d = 3) => fmt(v, d).replace(/\\times 10\^\{(-?\d+)\}/, 'e$1').replace(/^-/, '−');
+  const plainSigned = v => (v < 0 ? `− ${plain(-v)}` : `+ ${plain(v)}`);
+
+  // ------------------------------------------------------------------
+  // Equations (MathJax tex2svg, re-rendered only when the TeX changes)
+  // ------------------------------------------------------------------
+  const texCache = new Map();
+  function setTex(id, tex) {
+    const el = $(id);
+    if (texCache.get(id) === tex && el.childElementCount) return;
+    texCache.set(id, tex);
+    if (window.MathJax && MathJax.tex2svg) {
+      el.replaceChildren(MathJax.tex2svg(tex, { display: true }));
+    } else {
+      el.textContent = tex;
+    }
+  }
+
+  // ------------------------------------------------------------------
+  // SVG helpers
+  // ------------------------------------------------------------------
+  function niceStep(range, count) {
+    const raw = range / count;
+    const mag = Math.pow(10, Math.floor(Math.log10(raw)));
+    const n = raw / mag;
+    return (n < 1.5 ? 1 : n < 3 ? 2 : n < 7 ? 5 : 10) * mag;
+  }
+
+  function ticks(min, max, count = 6) {
+    const step = niceStep(max - min, count);
+    const out = [];
+    for (let v = Math.ceil(min / step) * step; v <= max + step * 1e-9; v += step) {
+      out.push(Math.abs(v) < step * 1e-9 ? 0 : v);
+    }
+    return out;
+  }
+
+  function pathOf(fn, d0, d1, sx, sy, n = 300) {
+    let d = '';
+    for (let i = 0; i <= n; i++) {
+      const v = d0 + (d1 - d0) * i / n;
+      d += (i ? 'L' : 'M') + sx(v).toFixed(2) + ',' + sy(fn(v)).toFixed(2);
+    }
+    return d;
+  }
+
+  function arrowMarker(id, color) {
+    return `<marker id="${id}" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="${color}"/></marker>`;
+  }
+
+  const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+
+  // ------------------------------------------------------------------
+  // Table
+  // ------------------------------------------------------------------
+  function renderTable() {
+    const yTxt = y => (state.mode === 'binary' ? (y ? '1 (yes)' : '0 (no)') : y.toFixed(2));
+    $('sample-rows').innerHTML = samples.map((s, i) => `
+      <tr data-i="${i}" tabindex="0" class="${i === state.sel ? 'sel' : ''}">
+        <td>${i + 1}</td><td>${s.T.toFixed(1)}</td><td>${s.x.toFixed(3)}</td><td>${yTxt(s.y)}</td>
+        ${s.done ? `<td class="yhat">${plain(f(s.x))}</td>` : '<td class="pending">—</td>'}
+      </tr>`).join('');
+  }
+
+  // ------------------------------------------------------------------
+  // Scatter plot
+  // ------------------------------------------------------------------
+  function renderScatter() {
+    const W = 640, H = 400, M = { l: 56, r: 18, t: 16, b: 46 };
+    const curves = [f];
+    if (state.showPaths) curves.push(x => forward(x).o1, x => forward(x).o2);
+    let lo = 0, hi = 1;
+    for (const c of curves) for (let i = 0; i <= 100; i++) { const v = c(i / 100); lo = Math.min(lo, v); hi = Math.max(hi, v); }
+    const pad = (hi - lo) * 0.06;
+    const yd = [lo - pad, hi + pad];
+    const sx = v => M.l + v * (W - M.l - M.r);
+    const sy = v => H - M.b - (v - yd[0]) / (yd[1] - yd[0]) * (H - M.t - M.b);
+
+    let s = `<defs><clipPath id="sc-clip"><rect x="${M.l}" y="${M.t}" width="${W - M.l - M.r}" height="${H - M.t - M.b}"/></clipPath></defs>`;
+    for (const t of ticks(0, 1, 10)) {
+      s += `<line class="gridline" x1="${sx(t)}" x2="${sx(t)}" y1="${M.t}" y2="${H - M.b}"/>`;
+      s += `<text x="${sx(t)}" y="${H - M.b + 16}" text-anchor="middle">${plain(t)}</text>`;
+      s += `<text x="${sx(t)}" y="${H - M.b + 29}" text-anchor="middle" font-size="10">${(T_MIN + t * T_SPAN).toFixed(1)}°</text>`;
+    }
+    for (const t of ticks(yd[0], yd[1], 6)) {
+      s += `<line class="gridline" x1="${M.l}" x2="${W - M.r}" y1="${sy(t)}" y2="${sy(t)}"/>`;
+      s += `<text x="${M.l - 8}" y="${sy(t) + 4}" text-anchor="end">${plain(t)}</text>`;
+    }
+    s += `<line class="axis" x1="${M.l}" x2="${W - M.r}" y1="${sy(0)}" y2="${sy(0)}"/>`;
+    s += `<line class="axis" x1="${M.l}" x2="${M.l}" y1="${M.t}" y2="${H - M.b}"/>`;
+    s += `<text class="axis-title" x="${(M.l + W - M.r) / 2}" y="${H - 4}" text-anchor="middle">x (temperature)</text>`;
+    s += `<text class="axis-title" transform="translate(15 ${(M.t + H - M.b) / 2}) rotate(-90)" text-anchor="middle">germination</text>`;
+
+    const clip = 'clip-path="url(#sc-clip)"';
+    if (state.showPaths) {
+      s += `<path ${clip} fill="none" stroke="var(--upper)" stroke-width="2" stroke-dasharray="7 5" d="${pathOf(x => forward(x).o1, 0, 1, sx, sy)}"/>`;
+      s += `<path ${clip} fill="none" stroke="var(--lower)" stroke-width="2" stroke-dasharray="7 5" d="${pathOf(x => forward(x).o2, 0, 1, sx, sy)}"/>`;
+    }
+    s += `<path ${clip} fill="none" stroke="var(--out)" stroke-width="3" d="${pathOf(f, 0, 1, sx, sy)}"/>`;
+
+    samples.forEach((smp, i) => {
+      if (i !== state.sel) s += `<circle class="sample-pt" data-i="${i}" cx="${sx(smp.x)}" cy="${sy(smp.y)}" r="6"><title>#${i + 1}: x = ${smp.x}, y = ${smp.y}</title></circle>`;
+    });
+
+    if (state.sel >= 0) {
+      const smp = samples[state.sel], r = forward(smp.x), st = state.step, X = sx(smp.x);
+      s += `<line class="guide" stroke="var(--muted)" x1="${X}" x2="${X}" y1="${M.t}" y2="${H - M.b}"/>`;
+      if (state.showPaths && st >= 2) s += `<circle cx="${X}" cy="${sy(r.o1)}" r="5" fill="var(--upper)"/>`;
+      if (state.showPaths && st >= 4) s += `<circle cx="${X}" cy="${sy(r.o2)}" r="5" fill="var(--lower)"/>`;
+      if (st >= 5) {
+        s += `<line stroke="var(--out)" stroke-width="2" stroke-dasharray="3 3" x1="${X}" x2="${X}" y1="${sy(smp.y)}" y2="${sy(r.yhat)}"/>`;
+        s += `<circle cx="${X}" cy="${sy(r.yhat)}" r="7" fill="var(--out)" stroke="var(--panel)" stroke-width="2"/>`;
+        const right = X < W - 170;
+        s += `<text x="${X + (right ? 10 : -10)}" y="${sy(r.yhat) - 10}" text-anchor="${right ? 'start' : 'end'}" fill="var(--out)" style="fill:var(--out);font-weight:700">ŷ = ${plain(r.yhat)}</text>`;
+      }
+      s += `<circle class="sample-pt sel" data-i="${state.sel}" cx="${X}" cy="${sy(smp.y)}" r="7"><title>#${state.sel + 1}: x = ${smp.x}, y = ${smp.y}</title></circle>`;
+    }
+    $('chart-scatter').innerHTML = s;
+
+    $('scatter-legend').innerHTML =
+      `<span><i class="dot" style="background:var(--sample)"></i>samples</span>` +
+      `<span><i style="background:var(--out)"></i>network output ŷ = f(x)</span>` +
+      (state.showPaths ? `<span><i class="dash" style="border-color:var(--upper)"></i>upper path v₁·softplus(w₁x + b₁)</span>` +
+                         `<span><i class="dash" style="border-color:var(--lower)"></i>lower path v₂·softplus(w₂x + b₂)</span>` : '') +
+      (state.sel >= 0 ? `<span><i class="dot" style="background:var(--out)"></i>prediction for the selected sample</span>` : '');
+  }
+
+  // ------------------------------------------------------------------
+  // Network diagram
+  // ------------------------------------------------------------------
+  const NET = {
+    inp: { x: 20, y: 235, w: 130, h: 70 },
+    up: { x: 390, y: 34, w: 200, h: 180 },
+    lo: { x: 390, y: 326, w: 200, h: 180 },
+    sum: { cx: 785, cy: 270, r: 36 },
+    out: { x: 868, y: 235, w: 120, h: 70 }
+  };
+
+  function badge(x, y, text, color, opts = {}) {
+    const w = text.length * 8.6 + 18, h = 28;
+    const fill = opts.filled ? color : 'var(--panel)';
+    const tcol = opts.filled ? 'var(--panel)' : 'var(--ink)';
+    return `<g class="badge"><rect x="${x - w / 2}" y="${y - h / 2}" width="${w}" height="${h}" rx="5" style="fill:${fill};stroke:${color}"/>` +
+      `<text x="${x}" y="${y + 5}" text-anchor="middle" style="fill:${tcol}">${esc(text)}</text></g>`;
+  }
+
+  const lerp = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
+
+  // softplus chart inside a node box; stage 0: curve only, 1: z on the axis, 2: z mapped to softplus(z)
+  function miniChart(box, w, b, z, stage, color, sub) {
+    const zA = b, zB = w + b;
+    const zlo = Math.min(zA, zB), zhi = Math.max(zA, zB);
+    const padZ = Math.max(1, (zhi - zlo) * 0.12);
+    const d0 = zlo - padZ, d1 = zhi + padZ;
+    const ymax = softplus(d1) * 1.08;
+    const L = box.x + 34, R = box.x + box.w - 12, T = box.y + 14, B = box.y + box.h - 28;
+    const sx = v => L + (v - d0) / (d1 - d0) * (R - L);
+    const sy = v => B - v / ymax * (B - T);
+
+    let s = `<g class="mini">`;
+    s += `<rect x="${sx(zlo)}" y="${T}" width="${Math.max(1, sx(zhi) - sx(zlo))}" height="${B - T}" fill="var(--band)" stroke="var(--band-line)" stroke-width="1" stroke-dasharray="3 3"/>`;
+    for (const t of ticks(d0, d1, 4)) {
+      s += `<line class="axis" x1="${sx(t)}" x2="${sx(t)}" y1="${B}" y2="${B + 4}"/>`;
+      s += `<text x="${sx(t)}" y="${B + 15}" text-anchor="middle">${plain(t)}</text>`;
+    }
+    for (const t of ticks(0, ymax, 3)) {
+      s += `<line class="axis" x1="${L - 4}" x2="${L}" y1="${sy(t)}" y2="${sy(t)}"/>`;
+      s += `<text x="${L - 6}" y="${sy(t) + 4}" text-anchor="end">${plain(t)}</text>`;
+    }
+    s += `<line class="axis" x1="${L}" x2="${R}" y1="${B}" y2="${B}"/>`;
+    s += `<line class="axis" x1="${L}" x2="${L}" y1="${T}" y2="${B}"/>`;
+    s += `<text x="${R}" y="${B + 26}" text-anchor="end" style="font-style:italic">z${sub}</text>`;
+    s += `<path fill="none" stroke="var(--ink)" stroke-width="2.5" d="${pathOf(softplus, d0, d1, sx, sy, 160)}"/>`;
+    if (stage >= 1) {
+      const X = sx(z);
+      if (stage >= 2) {
+        const Y = sy(softplus(z));
+        s += `<line class="guide" stroke="${color}" x1="${X}" x2="${X}" y1="${B}" y2="${Y}"/>`;
+        s += `<line class="guide" stroke="${color}" x1="${L}" x2="${X}" y1="${Y}" y2="${Y}"/>`;
+        s += `<circle cx="${X}" cy="${Y}" r="5" fill="${color}"/>`;
+        s += `<circle cx="${L}" cy="${Y}" r="5" fill="${color}" stroke="var(--panel)" stroke-width="1.5"/>`;
+      }
+      s += `<circle cx="${X}" cy="${B}" r="5.5" fill="${color}" stroke="var(--panel)" stroke-width="1.5"/>`;
+    }
+    return s + '</g>';
+  }
+
+  function renderNet() {
+    const st = state.step, has = state.sel >= 0;
+    const r = has ? forward(samples[state.sel].x) : null;
+    const { inp, up, lo, sum, out } = NET;
+    const colU = 'var(--upper)', colL = 'var(--lower)', colO = 'var(--out)', idle = 'var(--idle)';
+    // a path segment is coloured once the computation has reached it
+    const cIn1 = has && st >= 1 ? colU : idle;
+    const cOut1 = has && st >= 2 ? colU : idle;
+    const cIn2 = has && st >= 3 ? colL : idle;
+    const cOut2 = has && st >= 4 ? colL : idle;
+    const cSum = has && st >= 5 ? colO : idle;
+
+    let s = `<defs>${arrowMarker('m-u', colU)}${arrowMarker('m-l', colL)}${arrowMarker('m-o', colO)}${arrowMarker('m-i', idle)}</defs>`;
+    const mk = c => (c === colU ? 'm-u' : c === colL ? 'm-l' : c === colO ? 'm-o' : 'm-i');
+
+    const inR = [inp.x + inp.w, inp.y + inp.h / 2];
+    const upL = [up.x, up.y + up.h / 2], loL = [lo.x, lo.y + lo.h / 2];
+    const upR = [up.x + up.w, up.y + up.h / 2], loR = [lo.x + lo.w, lo.y + lo.h / 2];
+    const toSum = from => {
+      const dx = sum.cx - from[0], dy = sum.cy - from[1], n = Math.hypot(dx, dy);
+      return [sum.cx - dx / n * (sum.r + 6), sum.cy - dy / n * (sum.r + 6)];
+    };
+    const edge = (a, b, c) => `<line class="edge" x1="${a[0]}" y1="${a[1]}" x2="${b[0] - 6 * Math.sign(b[0] - a[0])}" y2="${b[1]}" style="stroke:${c}" marker-end="url(#${mk(c)})"/>`;
+
+    // edges
+    const in1a = [inR[0] + 4, inR[1] - 8], in2a = [inR[0] + 4, inR[1] + 8];
+    s += edge(in1a, upL, cIn1) + edge(in2a, loL, cIn2);
+    const sU = toSum(upR), sL = toSum(loR), sO = [out.x - 4, out.y + out.h / 2];
+    s += edge(upR, sU, cOut1) + edge(loR, sL, cOut2);
+    s += edge([sum.cx + sum.r, sum.cy], sO, cSum);
+
+    // parameter badges on the edges
+    s += badge(...lerp(in1a, upL, 0.3), `× ${plain(P.w1)}`, cIn1 === idle ? 'var(--line)' : colU);
+    s += badge(...lerp(in1a, upL, 0.72), plainSigned(P.b1), cIn1 === idle ? 'var(--line)' : colU);
+    s += badge(...lerp(in2a, loL, 0.3), `× ${plain(P.w2)}`, cIn2 === idle ? 'var(--line)' : colL);
+    s += badge(...lerp(in2a, loL, 0.72), plainSigned(P.b2), cIn2 === idle ? 'var(--line)' : colL);
+    s += badge(...lerp(upR, sU, 0.33), `× ${plain(P.v1)}`, cOut1 === idle ? 'var(--line)' : colU);
+    s += badge(...lerp(loR, sL, 0.33), `× ${plain(P.v2)}`, cOut2 === idle ? 'var(--line)' : colL);
+    // values flowing into the sum
+    if (has && st >= 2) s += badge(...lerp(upR, sU, 0.65), plain(r.o1), colU, { filled: true });
+    if (has && st >= 4) s += badge(...lerp(loR, sL, 0.65), plain(r.o2), colL, { filled: true });
+
+    // input node
+    s += `<text class="node-title" x="${inp.x + inp.w / 2}" y="${inp.y - 12}" text-anchor="middle">Temperature x</text>`;
+    s += `<rect class="node" x="${inp.x}" y="${inp.y}" width="${inp.w}" height="${inp.h}" rx="8" style="stroke:var(--accent)"/>`;
+    s += `<text class="node-value" x="${inp.x + inp.w / 2}" y="${inp.y + inp.h / 2 + 8}" text-anchor="middle">${has ? plain(r.x) : '?'}</text>`;
+    if (has) s += `<text x="${inp.x + inp.w / 2}" y="${inp.y + inp.h + 20}" text-anchor="middle">${samples[state.sel].T.toFixed(1)} °C · sample #${state.sel + 1}</text>`;
+
+    // softplus nodes
+    for (const [box, c, w, b, z, stage, sub, name] of [
+      [up, cIn1 === idle ? 'var(--line)' : colU, P.w1, P.b1, r?.z1, !has ? 0 : st >= 2 ? 2 : st >= 1 ? 1 : 0, '₁', 'upper'],
+      [lo, cIn2 === idle ? 'var(--line)' : colL, P.w2, P.b2, r?.z2, !has ? 0 : st >= 4 ? 2 : st >= 3 ? 1 : 0, '₂', 'lower']
+    ]) {
+      s += `<rect class="node" x="${box.x}" y="${box.y}" width="${box.w}" height="${box.h}" rx="6" style="stroke:${c}"/>`;
+      s += miniChart(box, w, b, z ?? 0, stage, name === 'upper' ? colU : colL, sub);
+    }
+    s += `<text class="caption" x="${up.x + up.w / 2}" y="${up.y - 10}" text-anchor="middle" style="fill:var(--upper)">softplus</text>`;
+    s += `<text class="caption" x="${lo.x + lo.w / 2}" y="${lo.y + lo.h + 22}" text-anchor="middle" style="fill:var(--lower)">softplus</text>`;
+
+    // value captions between the two boxes
+    const cap = (y, c, z, a, show1, show2, sub) => {
+      if (!show1) return '';
+      let t = `z${sub} = ${plain(z)}`;
+      if (show2) t += `   →   a${sub} = softplus(z${sub}) = ${plain(a)}`;
+      return `<text class="caption" x="${up.x + up.w / 2}" y="${y}" text-anchor="middle" style="fill:${c}">${t}</text>`;
+    };
+    if (has) {
+      s += cap(up.y + up.h + 30, colU, r.z1, r.a1, st >= 1, st >= 2, '₁');
+      s += cap(lo.y - 18, colL, r.z2, r.a2, st >= 3, st >= 4, '₂');
+    }
+
+    // sum and output
+    s += `<circle class="node" cx="${sum.cx}" cy="${sum.cy}" r="${sum.r}" style="stroke:${cSum === idle ? 'var(--muted)' : colO}"/>`;
+    s += `<text x="${sum.cx}" y="${sum.cy + 10}" text-anchor="middle" style="font-size:30px;fill:var(--ink)">Σ</text>`;
+    s += badge(sum.cx, sum.cy + sum.r + 26, plainSigned(P.b3), cSum === idle ? 'var(--line)' : colO);
+    s += `<text class="node-title" x="${out.x + out.w / 2}" y="${out.y - 12}" text-anchor="middle">Germination ŷ</text>`;
+    s += `<rect class="node" x="${out.x}" y="${out.y}" width="${out.w}" height="${out.h}" rx="8" style="stroke:var(--out)"/>`;
+    s += `<text class="node-value" x="${out.x + out.w / 2}" y="${out.y + out.h / 2 + 8}" text-anchor="middle">${has && st >= 5 ? plain(r.yhat) : '?'}</text>`;
+    if (has && st >= 5) {
+      const y = samples[state.sel].y;
+      s += `<text x="${out.x + out.w / 2}" y="${out.y + out.h + 20}" text-anchor="middle">observed y = ${state.mode === 'binary' ? y : y.toFixed(2)}</text>`;
+    }
+    $('net').innerHTML = s;
+  }
+
+  // ------------------------------------------------------------------
+  // Step explanation
+  // ------------------------------------------------------------------
+  const STEPS = ['Input', 'a · upper: weight & bias', 'b · upper: softplus', 'c · lower: weight & bias', 'd · lower: softplus', 'e · sum'];
+
+  function renderSteps() {
+    const has = state.sel >= 0, st = state.step;
+    $('chips').innerHTML = STEPS.map((t, i) =>
+      `<button class="chip ${has && i < st ? 'done' : ''} ${has && i === st ? 'now' : ''}" data-step="${i}" ${has ? '' : 'disabled'}>${t}</button>`).join('');
+    $('prev-btn').disabled = !has || st === 0;
+    $('next-btn').disabled = !has || st === 5;
+
+    setTex('eq-net', String.raw`\hat{y} = v_1\,\mathrm{softplus}(w_1 x + b_1) + v_2\,\mathrm{softplus}(w_2 x + b_2) + b_3`);
+
+    if (!has) {
+      $('step-title').textContent = 'Current step';
+      setTex('eq-step', String.raw`\text{select a sample}`);
+      $('step-note').innerHTML = 'Click a row of the table or a point of the scatter plot to place that sample in the input node. Then press <b>Next</b> (or <kbd>→</kbd>) to follow the computation.';
+      return;
+    }
+
+    const smp = samples[state.sel], r = forward(smp.x), x = r.x;
+    const sp = (z, a, k) => String.raw`a_${k} &= \mathrm{softplus}(z_${k}) = \ln\!\left(1 + e^{${fmt(z)}}\right) = \ln(1 + ${fmt(Math.exp(z))}) = \mathbf{${fmt(a)}}`;
+    let tex, note;
+    switch (state.step) {
+      case 0:
+        tex = String.raw`x = \frac{T - 5}{35} = \frac{${fmt(smp.T)} - 5}{35} = \mathbf{${fmt(x)}}`;
+        note = `Sample #${state.sel + 1} enters the input node. The same value x is sent along both paths.`;
+        break;
+      case 1:
+        tex = String.raw`z_1 = w_1\,x + b_1 = ${p(P.w1)} \cdot ${fmt(x)} ${signed(P.b1)} = \mathbf{${fmt(r.z1)}}`;
+        note = `<b class="upper">Upper path:</b> the input is multiplied by w₁ and shifted by b₁. The result z₁ is marked on the horizontal axis of the softplus chart, not yet passed through the function.`;
+        break;
+      case 2:
+        tex = String.raw`\begin{aligned} ${sp(r.z1, r.a1, 1)} \\[4pt] v_1\,a_1 &= ${p(P.v1)} \cdot ${fmt(r.a1)} = \mathbf{${fmt(r.o1)}} \end{aligned}`;
+        note = `<b class="upper">Upper path:</b> softplus maps z₁ up to the curve and across to the vertical axis, giving a₁. The second segment scales it by v₁, and the value v₁·a₁ travels to the sum.`;
+        break;
+      case 3:
+        tex = String.raw`z_2 = w_2\,x + b_2 = ${p(P.w2)} \cdot ${fmt(x)} ${signed(P.b2)} = \mathbf{${fmt(r.z2)}}`;
+        note = `<b class="lower">Lower path:</b> the same input is multiplied by w₂ and shifted by b₂, giving z₂ on the horizontal axis of the second softplus chart.`;
+        break;
+      case 4:
+        tex = String.raw`\begin{aligned} ${sp(r.z2, r.a2, 2)} \\[4pt] v_2\,a_2 &= ${p(P.v2)} \cdot ${fmt(r.a2)} = \mathbf{${fmt(r.o2)}} \end{aligned}`;
+        note = `<b class="lower">Lower path:</b> softplus maps z₂ to a₂, which is scaled by v₂ before reaching the sum.` +
+          (r.a2 < 0.01 ? ' Here z₂ is far on the flat part of softplus, so this path contributes almost nothing: it only "switches on" for hot soil.' : '');
+        break;
+      default: {
+        const err = smp.y - r.yhat;
+        tex = String.raw`\begin{aligned} \hat{y} &= v_1 a_1 + v_2 a_2 + b_3 = ${fmt(r.o1)} ${signed(r.o2)} ${signed(P.b3)} = \mathbf{${fmt(r.yhat)}} \\[4pt]
+          y - \hat{y} &= ${fmt(smp.y)} - ${p(r.yhat)} = ${fmt(err)} \end{aligned}`;
+        note = `<b class="out">Output:</b> the two path values and the output bias are summed. The prediction appears on the green curve of the scatter plot; the dotted line is the gap to the observed y.`;
+      }
+    }
+    $('step-title').textContent = `Step ${STEPS[state.step]}`;
+    setTex('eq-step', tex);
+    $('step-note').innerHTML = note;
+  }
+
+  // ------------------------------------------------------------------
+  // Render + interaction
+  // ------------------------------------------------------------------
+  function render() {
+    renderTable();
+    renderScatter();
+    renderNet();
+    renderSteps();
+  }
+
+  function select(i) {
+    state.sel = i;
+    state.step = 0;
+    render();
+    const row = $('sample-rows').querySelector(`tr[data-i="${i}"]`);
+    if (row) row.scrollIntoView({ block: 'nearest' });
+  }
+
+  function goStep(k) {
+    if (state.sel < 0) return;
+    state.step = clampTo(k, 0, 5);
+    if (state.step === 5) samples[state.sel].done = true;
+    render();
+  }
+
+  $('sample-rows').addEventListener('click', e => {
+    const tr = e.target.closest('tr[data-i]');
+    if (tr) select(+tr.dataset.i);
+  });
+  $('sample-rows').addEventListener('keydown', e => {
+    const tr = e.target.closest('tr[data-i]');
+    if (tr && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); select(+tr.dataset.i); }
+  });
+  $('chart-scatter').addEventListener('click', e => {
+    const c = e.target.closest('[data-i]');
+    if (c) select(+c.dataset.i);
+  });
+  $('chips').addEventListener('click', e => {
+    const b = e.target.closest('[data-step]');
+    if (b) goStep(+b.dataset.step);
+  });
+  $('next-btn').addEventListener('click', () => goStep(state.step + 1));
+  $('prev-btn').addEventListener('click', () => goStep(state.step - 1));
+
+  document.addEventListener('keydown', e => {
+    if (e.target.matches('input, select, textarea')) return;
+    if (e.key === 'ArrowRight') { e.preventDefault(); goStep(state.step + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); goStep(state.step - 1); }
+  });
+
+  $('all-btn').addEventListener('click', () => {
+    samples.forEach(s => { s.done = true; });
+    render();
+  });
+
+  for (const el of document.querySelectorAll('[data-key]')) {
+    el.addEventListener('input', () => {
+      const v = parseFloat(el.value);
+      if (!isFinite(v)) return;
+      P[el.dataset.key] = v;
+      render();
+    });
+  }
+
+  function syncParams() {
+    for (const el of document.querySelectorAll('[data-key]')) el.value = P[el.dataset.key];
+  }
+
+  $('reset-btn').addEventListener('click', () => {
+    Object.assign(P, PARAMS);
+    syncParams();
+    render();
+  });
+
+  $('paths-chk').addEventListener('change', e => {
+    state.showPaths = e.target.checked;
+    renderScatter();
+  });
+
+  $('n-num').addEventListener('change', e => {
+    state.n = clampTo(Math.round(+e.target.value) || 20, 3, 200);
+    e.target.value = state.n;
+  });
+  $('noise-num').addEventListener('change', e => {
+    state.noise = clampTo(+e.target.value || 0, 0, 0.5);
+    e.target.value = state.noise;
+  });
+  $('mode-sel').addEventListener('change', e => {
+    state.mode = e.target.value;
+    $('noise-num').disabled = state.mode === 'binary';
+    generate();
+    render();
+  });
+  $('gen-btn').addEventListener('click', () => {
+    generate();
+    render();
+  });
+
+  $('n-num').value = state.n;
+  $('noise-num').value = state.noise;
+  $('mode-sel').value = state.mode;
+  $('paths-chk').checked = state.showPaths;
+  syncParams();
+  generate();
+  render();
+
+  // re-render the equations once MathJax is ready
+  window.addEventListener('load', () => {
+    if (window.MathJax && MathJax.startup) {
+      MathJax.startup.promise.then(() => {
+        // CSS that MathJax needs for its SVG output (hides the duplicate MathML copy)
+        document.head.appendChild(MathJax.svgStylesheet());
+        texCache.clear();
+        renderSteps();
+      });
+    }
+  });
+</script>
+</body>
+</html>
