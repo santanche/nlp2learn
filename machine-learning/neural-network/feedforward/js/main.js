@@ -21,6 +21,7 @@ Lab.init = function() {
     const correct=mode==="image"?result.prediction.every((v,i)=>v===target[i]):result.prediction===target;
     predictionStatus.textContent=model.trained?(correct?"Correct":"Incorrect"):"Untrained";predictionStatus.className=`status ${model.trained?(correct?"trained":""):""}`;
     document.getElementById("viz-panels").classList.toggle("horizontal",horizontal);
+    document.querySelector(".main-grid").classList.toggle("horizontal",horizontal);
     Lab.renderLossChart(model); Lab.renderLatent(model,selected,index=>{selected=index;arbitrary=null;update();},decodeArbitrary);
     Lab.renderExamples(model,selected,index=>{selected=index;arbitrary=null;update();});
     Lab.renderOutput(model,selected); Lab.renderInspector(model,selected);
