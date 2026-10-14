@@ -110,8 +110,8 @@ Use these exact mappings:
 
 | Input word | Target string |
 |---|---|
-| north | `|^` |
-| south | `|v` |
+| north | `\|^` |
+| south | `\|v` |
 | east | `->` |
 | west | `<-` |
 | northeast | `/^` |
