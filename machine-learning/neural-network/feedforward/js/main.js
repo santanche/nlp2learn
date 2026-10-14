@@ -22,7 +22,7 @@ Lab.init = function() {
     predictionStatus.textContent=model.trained?(correct?"Correct":"Incorrect"):"Untrained";predictionStatus.className=`status ${model.trained?(correct?"trained":""):""}`;
     document.getElementById("viz-panels").classList.toggle("horizontal",horizontal);
     document.querySelector(".main-grid").classList.toggle("horizontal",horizontal);
-    Lab.renderLossChart(model); Lab.renderLatent(model,selected,index=>{selected=index;arbitrary=null;update();},decodeArbitrary);
+    Lab.renderLossChart(model,horizontal); Lab.renderLatent(model,selected,index=>{selected=index;arbitrary=null;update();},decodeArbitrary);
     Lab.renderExamples(model,selected,index=>{selected=index;arbitrary=null;update();});
     Lab.renderOutput(model,selected); Lab.renderInspector(model,selected);
     const train=document.getElementById("train-btn"), step=document.getElementById("step-btn"), reset=document.getElementById("reset-btn");train.disabled=step.disabled=reset.disabled=busy;

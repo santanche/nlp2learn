@@ -1,7 +1,8 @@
 window.Lab = window.Lab || {};
 Lab.escape = value => String(value).replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
-Lab.renderLossChart = function(model) {
-  const svg = document.getElementById("loss-chart"), w = 720, h = 190, left = 54, right = 18, top = 16, bottom = 34; let history = model.lossHistory;
+Lab.renderLossChart = function(model, horizontal=false) {
+  const svg = document.getElementById("loss-chart"), w = 720, h = horizontal ? 430 : 190, left = 54, right = 18, top = 16, bottom = 34; let history = model.lossHistory;
+  svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
   if (!history.length) history = [Lab.datasetLoss(model)];
   let values = history.length > 120 ? history.filter((_, i) => i % Math.ceil(history.length / 120) === 0 || i === history.length - 1) : history;
   const max = Math.max(...values, 1e-6), min = Math.min(...values, 0), x = i => left + i / Math.max(1, values.length - 1) * (w - left - right), y = v => top + (max - v) / Math.max(1e-6, max - min) * (h - top - bottom);
