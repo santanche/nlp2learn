@@ -20,3 +20,4 @@
 /* In the stacked view, follow the latent-space plot immediately with its examples. */
 .viz-panels{grid-template-areas:"loss" "scatter" "examples" "inspector" "output" "forward"}
 @media(max-width:1050px){.viz-panels.horizontal{grid-template-areas:"loss" "scatter" "examples" "output" "inspector" "forward"}}
+.diagram-word-node{cursor:pointer}.diagram-word-node:hover .diagram-node,.diagram-word-node:focus-visible .diagram-node{stroke:#df8b35;stroke-width:4}.diagram-word-node:focus{outline:none}

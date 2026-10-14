@@ -46,7 +46,7 @@ Lab.renderOutput = function(model,index) {
   if(mode==="image") {const pixelGrid=(values,binary)=>`<div class="pixel-grid">${values.map(v=>`<i class="pixel ${((binary?v>=.5:v)?"black":"white")}"></i>`).join("")}</div>`;const correct=r.prediction.reduce((n,v,j)=>n+ +(v===r.target[j]),0);detail=`<div class="target-prediction"><div class="output-card"><h3>Target image</h3>${pixelGrid(r.target,true)}</div><div class="output-card"><h3>Predicted image</h3>${pixelGrid(r.output,false)}<b class="${correct===9?"correct":"incorrect"}">${correct===9?"Exact image":"Not an exact image"}</b></div></div><p class="note">Pixel accuracy: ${correct}/9 (${(correct/9*100).toFixed(1)}%) · Example loss: ${r.loss.toFixed(4)}</p><h3>Pixel probabilities (row-major)</h3><div class="pixel-prob">${r.output.map(v=>v.toFixed(2)).join(" · ")}</div>`;}
   document.getElementById("output-detail").innerHTML=detail;
 };
-Lab.renderInspector = function(model,index) {
+Lab.renderInspector = function(model,index,onSelectWord) {
   const pass=Lab.forward(model,Lab.oneHotInputs[index]), target=Lab.targetFor(model.mode,index), config=Lab.modeInfo[model.mode];
   document.getElementById("architecture").innerHTML=`<div class="layer"><b>Input</b>8 one-hot values</div><div class="layer"><b>Encoder · tanh</b>8 → 2</div><div class="layer"><b>Latent</b>2 values</div><div class="layer"><b>Decoder</b>2 → ${config.outputSize}</div><div class="layer"><b>${config.kind}</b>${model.mode==="image"?"9 pixel probabilities":model.mode==="symbol"?"2 × 8 symbol probabilities":"8 word probabilities"}</div>`;
   document.getElementById("forward-inspector").innerHTML=`<p class="explain-onehot">The input is one-hot, so the encoder selects column ${index+1} of Wₑ for <b>${Lab.words[index]}</b>; the bias is then added.</p><div class="codebox">Input x:     [${pass.input.join(", ")}]
@@ -63,24 +63,31 @@ bₑ [${model.encoderBias.map(v=>v.toFixed(2)).join(", ")}]
 W_d (${config.outputSize} × 2)
 ${model.decoder.map(row=>"["+row.map(v=>v.toFixed(2)).join(", ")+"]").join("\n")}
 b_d [${model.decoderBias.map(v=>v.toFixed(2)).join(", ")}]</div>`;
-  Lab.renderNetworkDiagram(model,index,pass);
+  Lab.renderNetworkDiagram(model,index,pass,onSelectWord);
 };
-Lab.renderNetworkDiagram = function(model,index,pass) {
+Lab.renderNetworkDiagram = function(model,index,pass,onSelectWord) {
   const svg=document.getElementById("network-diagram"), inputX=130, latentX=490, outputX=825, yTop=58, yBottom=548;
   const spread=(count)=>count===1?[305]:Array.from({length:count},(_,i)=>yTop+i*(yBottom-yTop)/(count-1));
-  const inputYs=spread(8), hiddenYs=spread(2), outputYs=spread(Lab.modeInfo[model.mode].outputSize);
-  const outputLabels=model.mode==="autoencoder"?Lab.words:model.mode==="symbol"?Array.from({length:16},(_,i)=>`${i<8?"1":"2"}:${Lab.symbols[i%8]}`):Array.from({length:9},(_,i)=>`p${i+1}`);
+  const shownInputIndices=Lab.trainingIndices, inputYs=spread(shownInputIndices.length), inputYByWord=new Map(shownInputIndices.map((wordIndex,yIndex)=>[wordIndex,inputYs[yIndex]])), hiddenYs=spread(2);
+  let shownOutputIndices=Array.from({length:Lab.modeInfo[model.mode].outputSize},(_,i)=>i);
+  if(model.mode==="autoencoder") shownOutputIndices=Lab.trainingIndices.slice();
+  if(model.mode==="symbol"&&Lab.trainingIndices.length<Lab.words.length) shownOutputIndices=[...new Set(Lab.trainingIndices.flatMap(wordIndex=>Lab.symbolTargets[wordIndex].split("").map((symbol,pos)=>pos*8+Lab.symbols.indexOf(symbol))))].sort((a,b)=>a-b);
+  const outputYs=spread(shownOutputIndices.length);
+  const outputLabels=model.mode==="autoencoder"?shownOutputIndices.map(i=>Lab.words[i]):model.mode==="symbol"?shownOutputIndices.map(i=>`${i<8?"1":"2"}:${Lab.symbols[i%8]}`):shownOutputIndices.map(i=>`p${i+1}`);
   const esc=Lab.escape;
   const edges=[];
   let maxInputContribution=0,maxOutputContribution=0;
-  model.encoder.forEach((row,h)=>row.forEach((weight,i)=>{maxInputContribution=Math.max(maxInputContribution,Math.abs(weight*pass.input[i]));}));
-  model.decoder.forEach((row,o)=>row.forEach((weight,h)=>{maxOutputContribution=Math.max(maxOutputContribution,Math.abs(weight*pass.z[h]));}));
+  model.encoder.forEach(row=>shownInputIndices.forEach(i=>{maxInputContribution=Math.max(maxInputContribution,Math.abs(row[i]*pass.input[i]));}));
+  shownOutputIndices.forEach(o=>model.decoder[o].forEach((weight,h)=>{maxOutputContribution=Math.max(maxOutputContribution,Math.abs(weight*pass.z[h]));}));
   const edgeMarkup=(x1,y1,x2,y2,value,max)=>{const strength=Math.abs(value),ratio=max?strength/max:0;return `<line class="diagram-edge ${value<0?"negative":"positive"}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke-width="${(.45+2.5*ratio).toFixed(2)}" stroke-opacity="${(.07+.78*ratio).toFixed(2)}"><title>Weighted contribution: ${value.toFixed(4)}</title></line>`;};
-  model.encoder.forEach((row,h)=>row.forEach((weight,i)=>edges.push(edgeMarkup(inputX+11,inputYs[i],latentX-12,hiddenYs[h],weight*pass.input[i],maxInputContribution))));
-  model.decoder.forEach((row,o)=>row.forEach((weight,h)=>edges.push(edgeMarkup(latentX+12,hiddenYs[h],outputX-11,outputYs[o],weight*pass.z[h],maxOutputContribution))));
+  model.encoder.forEach((row,h)=>shownInputIndices.forEach(i=>edges.push(edgeMarkup(inputX+11,inputYByWord.get(i),latentX-12,hiddenYs[h],row[i]*pass.input[i],maxInputContribution))));
+  shownOutputIndices.forEach((o,visibleIndex)=>model.decoder[o].forEach((weight,h)=>edges.push(edgeMarkup(latentX+12,hiddenYs[h],outputX-11,outputYs[visibleIndex],weight*pass.z[h],maxOutputContribution))));
   let nodes="";
-  pass.input.forEach((value,i)=>{const opacity=value?1:.08;nodes+=`<circle class="diagram-node ${value?"":"inactive"}" cx="${inputX}" cy="${inputYs[i]}" r="10" fill="#168c7e" fill-opacity="${opacity}"/><text class="diagram-label" x="${inputX-18}" y="${inputYs[i]+4}" text-anchor="end">${Lab.words[i]}</text><text class="diagram-value" x="${inputX}" y="${inputYs[i]+25}" text-anchor="middle">${value.toFixed(0)}</text>`;});
+  shownInputIndices.forEach((wordIndex,visibleIndex)=>{const value=pass.input[wordIndex], y=inputYs[visibleIndex], opacity=value?1:.08;nodes+=`<g class="diagram-word-node" data-index="${wordIndex}" tabindex="0" role="button" aria-label="Select ${Lab.words[wordIndex]}"><circle class="diagram-node ${value?"":"inactive"}" cx="${inputX}" cy="${y}" r="10" fill="#168c7e" fill-opacity="${opacity}"/><text class="diagram-label" x="${inputX-18}" y="${y+4}" text-anchor="end">${Lab.words[wordIndex]}</text><text class="diagram-value" x="${inputX}" y="${y+25}" text-anchor="middle">${value.toFixed(0)}</text></g>`;});
   pass.z.forEach((value,i)=>{const opacity=.12+.82*Math.abs(value),negative=value<0;nodes+=`<circle class="diagram-node ${negative?"negative-node":""}" cx="${latentX}" cy="${hiddenYs[i]}" r="13" fill="${negative?"#dc8b42":"#168c7e"}" fill-opacity="${opacity.toFixed(2)}"/><text class="diagram-value" x="${latentX}" y="${hiddenYs[i]+31}" text-anchor="middle">${value.toFixed(3)}</text>`;});
-  pass.output.forEach((value,i)=>{const binary=model.mode==="image", fill=binary?(value>=.5?"#172b3a":"#fff"):"#168c7e", opacity=binary?1:(.08+.9*value);nodes+=`<circle class="diagram-node" cx="${outputX}" cy="${outputYs[i]}" r="${model.mode==="symbol"?8.5:10}" fill="${fill}" fill-opacity="${opacity.toFixed(2)}"/><text class="diagram-label" x="${outputX+17}" y="${outputYs[i]+4}">${esc(outputLabels[i])}</text><text class="diagram-value" x="${outputX+110}" y="${outputYs[i]+4}">${value.toFixed(2)}</text>`;});
-  svg.innerHTML=`<text class="diagram-layer-label" x="${inputX}" y="25" text-anchor="middle">INPUT · 8</text><text class="diagram-layer-label" x="${latentX}" y="25" text-anchor="middle">TANH · 2</text><text class="diagram-layer-label" x="${outputX}" y="25" text-anchor="middle">${model.mode==="symbol"?"2 × 8 SYMBOLS":model.mode==="image"?"PIXELS · 9":"WORDS · 8"}</text>${edges.join("")}${nodes}`;
+  shownOutputIndices.forEach((outputIndex,visibleIndex)=>{const value=pass.output[outputIndex],binary=model.mode==="image",fill=binary?(value>=.5?"#172b3a":"#fff"):"#168c7e",opacity=binary?1:(.08+.9*value);nodes+=`<circle class="diagram-node" cx="${outputX}" cy="${outputYs[visibleIndex]}" r="${model.mode==="symbol"?8.5:10}" fill="${fill}" fill-opacity="${opacity.toFixed(2)}"/><text class="diagram-label" x="${outputX+17}" y="${outputYs[visibleIndex]+4}">${esc(outputLabels[visibleIndex])}</text><text class="diagram-value" x="${outputX+110}" y="${outputYs[visibleIndex]+4}">${value.toFixed(2)}</text>`;});
+  const cardinalOnly=Lab.trainingIndices.length<Lab.words.length, inputHeading=cardinalOnly?`INPUT · ${shownInputIndices.length} WORDS`:`INPUT · ${shownInputIndices.length}`;
+  const outputHeading=model.mode==="autoencoder"?`WORDS · ${shownOutputIndices.length}/${Lab.modeInfo[model.mode].outputSize}`:model.mode==="symbol"?`SYMBOLS · ${shownOutputIndices.length}/${Lab.modeInfo[model.mode].outputSize}`:`PIXELS · ${shownOutputIndices.length}`;
+  svg.innerHTML=`<text class="diagram-layer-label" x="${inputX}" y="25" text-anchor="middle">${inputHeading}</text><text class="diagram-layer-label" x="${latentX}" y="25" text-anchor="middle">TANH · 2</text><text class="diagram-layer-label" x="${outputX}" y="25" text-anchor="middle">${outputHeading}</text>${edges.join("")}${nodes}`;
+  svg.querySelectorAll(".diagram-word-node").forEach(node=>{node.addEventListener("click",()=>onSelectWord(+node.dataset.index));node.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();onSelectWord(+node.dataset.index);}});});
 };

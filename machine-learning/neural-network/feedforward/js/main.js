@@ -24,7 +24,7 @@ Lab.init = function() {
     document.querySelector(".main-grid").classList.toggle("horizontal",horizontal);
     Lab.renderLossChart(model,horizontal); Lab.renderLatent(model,selected,index=>{selected=index;arbitrary=null;update();},decodeArbitrary);
     Lab.renderExamples(model,selected,index=>{selected=index;arbitrary=null;update();});
-    Lab.renderOutput(model,selected); Lab.renderInspector(model,selected);
+    Lab.renderOutput(model,selected); Lab.renderInspector(model,selected,index=>{selected=index;arbitrary=null;update();});
     const train=document.getElementById("train-btn"), step=document.getElementById("step-btn"), reset=document.getElementById("reset-btn");train.disabled=step.disabled=reset.disabled=busy;
     document.getElementById("dataset").disabled=busy;
     document.querySelectorAll(".mode-tab").forEach(button=>button.disabled=busy);
