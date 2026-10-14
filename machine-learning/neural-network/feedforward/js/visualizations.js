@@ -54,4 +54,24 @@ bₑ [${model.encoderBias.map(v=>v.toFixed(2)).join(", ")}]
 W_d (${config.outputSize} × 2)
 ${model.decoder.map(row=>"["+row.map(v=>v.toFixed(2)).join(", ")+"]").join("\n")}
 b_d [${model.decoderBias.map(v=>v.toFixed(2)).join(", ")}]</div>`;
+  Lab.renderNetworkDiagram(model,index,pass);
+};
+Lab.renderNetworkDiagram = function(model,index,pass) {
+  const svg=document.getElementById("network-diagram"), inputX=130, latentX=490, outputX=825, yTop=58, yBottom=548;
+  const spread=(count)=>count===1?[305]:Array.from({length:count},(_,i)=>yTop+i*(yBottom-yTop)/(count-1));
+  const inputYs=spread(8), hiddenYs=spread(2), outputYs=spread(Lab.modeInfo[model.mode].outputSize);
+  const outputLabels=model.mode==="autoencoder"?Lab.words:model.mode==="symbol"?Array.from({length:16},(_,i)=>`${i<8?"1":"2"}:${Lab.symbols[i%8]}`):Array.from({length:9},(_,i)=>`p${i+1}`);
+  const esc=Lab.escape;
+  const edges=[];
+  let maxInputContribution=0,maxOutputContribution=0;
+  model.encoder.forEach((row,h)=>row.forEach((weight,i)=>{maxInputContribution=Math.max(maxInputContribution,Math.abs(weight*pass.input[i]));}));
+  model.decoder.forEach((row,o)=>row.forEach((weight,h)=>{maxOutputContribution=Math.max(maxOutputContribution,Math.abs(weight*pass.z[h]));}));
+  const edgeMarkup=(x1,y1,x2,y2,value,max)=>{const strength=Math.abs(value),ratio=max?strength/max:0;return `<line class="diagram-edge ${value<0?"negative":"positive"}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke-width="${(.45+2.5*ratio).toFixed(2)}" stroke-opacity="${(.07+.78*ratio).toFixed(2)}"><title>Weighted contribution: ${value.toFixed(4)}</title></line>`;};
+  model.encoder.forEach((row,h)=>row.forEach((weight,i)=>edges.push(edgeMarkup(inputX+11,inputYs[i],latentX-12,hiddenYs[h],weight*pass.input[i],maxInputContribution))));
+  model.decoder.forEach((row,o)=>row.forEach((weight,h)=>edges.push(edgeMarkup(latentX+12,hiddenYs[h],outputX-11,outputYs[o],weight*pass.z[h],maxOutputContribution))));
+  let nodes="";
+  pass.input.forEach((value,i)=>{const opacity=value?1:.08;nodes+=`<circle class="diagram-node ${value?"":"inactive"}" cx="${inputX}" cy="${inputYs[i]}" r="10" fill="#168c7e" fill-opacity="${opacity}"/><text class="diagram-label" x="${inputX-18}" y="${inputYs[i]+4}" text-anchor="end">${Lab.words[i]}</text><text class="diagram-value" x="${inputX}" y="${inputYs[i]+25}" text-anchor="middle">${value.toFixed(0)}</text>`;});
+  pass.z.forEach((value,i)=>{const opacity=.12+.82*Math.abs(value),negative=value<0;nodes+=`<circle class="diagram-node ${negative?"negative-node":""}" cx="${latentX}" cy="${hiddenYs[i]}" r="13" fill="${negative?"#dc8b42":"#168c7e"}" fill-opacity="${opacity.toFixed(2)}"/><text class="diagram-value" x="${latentX}" y="${hiddenYs[i]+31}" text-anchor="middle">${value.toFixed(3)}</text>`;});
+  pass.output.forEach((value,i)=>{const binary=model.mode==="image", fill=binary?(value>=.5?"#172b3a":"#fff"):"#168c7e", opacity=binary?1:(.08+.9*value);nodes+=`<circle class="diagram-node" cx="${outputX}" cy="${outputYs[i]}" r="${model.mode==="symbol"?8.5:10}" fill="${fill}" fill-opacity="${opacity.toFixed(2)}"/><text class="diagram-label" x="${outputX+17}" y="${outputYs[i]+4}">${esc(outputLabels[i])}</text><text class="diagram-value" x="${outputX+110}" y="${outputYs[i]+4}">${value.toFixed(2)}</text>`;});
+  svg.innerHTML=`<text class="diagram-layer-label" x="${inputX}" y="25" text-anchor="middle">INPUT · 8</text><text class="diagram-layer-label" x="${latentX}" y="25" text-anchor="middle">TANH · 2</text><text class="diagram-layer-label" x="${outputX}" y="25" text-anchor="middle">${model.mode==="symbol"?"2 × 8 SYMBOLS":model.mode==="image"?"PIXELS · 9":"WORDS · 8"}</text>${edges.join("")}${nodes}`;
 };

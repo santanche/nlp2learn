@@ -60,6 +60,10 @@
     <section class="panel inspector-panel">
       <div class="section-heading"><div><h2>Network inspector</h2><p class="muted">Input 8 → encoder 2 → mode-specific decoder</p></div></div>
       <div id="architecture" class="architecture"></div>
+      <div class="network-diagram-wrap">
+        <div class="diagram-heading"><div><h3>Live inference path</h3><p class="muted">Node fill shows activation; connection width and opacity show weighted contribution.</p></div><div class="diagram-legend"><span><i class="positive"></i>positive</span><span><i class="negative"></i>negative</span></div></div>
+        <svg id="network-diagram" viewBox="0 0 1060 610" role="img" aria-label="Neural network layer activations and weighted connections"></svg>
+      </div>
       <div class="inspect-grid"><div><h3>Selected word forward pass</h3><div id="forward-inspector"></div></div><div><h3>Weights</h3><div id="weight-inspector"></div></div></div>
     </section>
   </div>
