@@ -14,3 +14,9 @@
 /* In horizontal mode all six cards share one two-row grid. */
 .main-grid{display:contents}.viz-panels{grid-template-areas:"loss" "scatter" "inspector" "output" "examples" "forward"}.viz-panels .loss-panel{grid-area:loss}.viz-panels .scatter-panel{grid-area:scatter}.viz-panels .inspector-panel{grid-area:inspector}.viz-panels .output-panel{grid-area:output}.viz-panels .examples-panel{grid-area:examples}.viz-panels .forward-panel{grid-area:forward;grid-column:auto}.viz-panels.horizontal{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-areas:"loss scatter examples" "output inspector forward";align-items:stretch}.viz-panels.horizontal>.panel{min-width:0}.viz-panels.horizontal .chart-wrap{margin-top:12px}.viz-panels.horizontal #loss-chart{height:auto}.viz-panels.horizontal .loss-panel,.viz-panels.horizontal .scatter-panel,.viz-panels.horizontal .examples-panel,.viz-panels.horizontal .output-panel,.viz-panels.horizontal .inspector-panel,.viz-panels.horizontal .forward-panel{grid-column:auto}
 @media(max-width:1050px){.viz-panels.horizontal{grid-template-columns:minmax(0,1fr);grid-template-areas:"loss" "scatter" "examples" "output" "inspector" "forward"}}
+
+/* Keep the training controls available while the rest of the page scrolls. */
+.control-panel{position:sticky;top:10px;z-index:5}
+/* In the stacked view, follow the latent-space plot immediately with its examples. */
+.viz-panels{grid-template-areas:"loss" "scatter" "examples" "inspector" "output" "forward"}
+@media(max-width:1050px){.viz-panels.horizontal{grid-template-areas:"loss" "scatter" "examples" "output" "inspector" "forward"}}
