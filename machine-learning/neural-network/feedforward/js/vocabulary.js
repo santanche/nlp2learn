@@ -8,3 +8,4 @@ Lab.imagePatterns = [
 ];
 Lab.oneHotInputs = Lab.words.map((_, index) => Lab.words.map((__, i) => +(i === index)));
 Lab.imageTargets = Lab.imagePatterns.map(rows => rows.join("").split("").map(pixel => +(pixel === "*")));
+Lab.trainingIndices = Lab.words.map((_, index) => index);

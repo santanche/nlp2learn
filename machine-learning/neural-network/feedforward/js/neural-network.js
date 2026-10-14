@@ -32,7 +32,7 @@ Lab.lossFor = function(mode, output, target) {
   return target.reduce((loss, bit, i) => loss - bit * Math.log(Math.max(eps, output[i])) - (1 - bit) * Math.log(Math.max(eps, 1 - output[i])), 0);
 };
 Lab.exampleResult = function(model, index) { const pass = Lab.forward(model, Lab.oneHotInputs[index]), target = Lab.targetFor(model.mode, index); return { ...pass, target, loss: Lab.lossFor(model.mode, pass.output, target), prediction: Lab.prediction(model.mode, pass.output) }; };
-Lab.datasetLoss = function(model) { return Lab.words.reduce((sum, _, i) => sum + Lab.exampleResult(model, i).loss, 0); };
+Lab.datasetLoss = function(model) { return Lab.trainingIndices.reduce((sum, i) => sum + Lab.exampleResult(model, i).loss, 0); };
 Lab.zeroGradients = model => ({ encoder: model.encoder.map(row => row.map(() => 0)), encoderBias: [0, 0], decoder: model.decoder.map(row => row.map(() => 0)), decoderBias: model.decoderBias.map(() => 0) });
 Lab.gradientsForExample = function(model, input, target) {
   const pass = Lab.forward(model, input), grads = Lab.zeroGradients(model), dz = [0, 0], output = pass.output;
@@ -52,11 +52,11 @@ Lab.gradientsForExample = function(model, input, target) {
 };
 Lab.trainStep = function(model, learningRate) {
   const grads = Lab.zeroGradients(model);
-  Lab.words.forEach((_, index) => {
+  Lab.trainingIndices.forEach(index => {
     const result = Lab.gradientsForExample(model, Lab.oneHotInputs[index], Lab.targetFor(model.mode, index));
     ["encoder", "decoder", "encoderBias", "decoderBias"].forEach(key => {
-      if (Array.isArray(grads[key][0])) grads[key].forEach((row, i) => row.forEach((_, j) => { grads[key][i][j] += result.grads[key][i][j] / Lab.words.length; }));
-      else grads[key].forEach((_, i) => { grads[key][i] += result.grads[key][i] / Lab.words.length; });
+      if (Array.isArray(grads[key][0])) grads[key].forEach((row, i) => row.forEach((_, j) => { grads[key][i][j] += result.grads[key][i][j] / Lab.trainingIndices.length; }));
+      else grads[key].forEach((_, i) => { grads[key][i] += result.grads[key][i] / Lab.trainingIndices.length; });
     });
   });
   ["encoder", "decoder", "encoderBias", "decoderBias"].forEach(key => {

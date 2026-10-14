@@ -11,7 +11,7 @@
   <header class="hero">
     <p class="eyebrow">NEURAL NETWORK LAB</p>
     <h1>Direction Embeddings</h1>
-    <p>Train the same eight words for three different goals, and see how each objective shapes a two-dimensional representation.</p>
+    <p>Train a small direction vocabulary for three different goals, and see how each objective shapes a two-dimensional representation.</p>
   </header>
 
   <section class="panel modes-panel">
@@ -25,8 +25,9 @@
   </section>
 
   <section class="panel control-panel">
-    <div class="section-heading"><div><h2>Training controls</h2><p class="muted">Full-batch gradient descent updates all eight examples together.</p></div><div class="buttons"><button id="train-btn">Train</button><button id="step-btn" class="secondary">Step</button><button id="reset-btn" class="secondary">Reset</button></div></div>
+    <div class="section-heading"><div><h2>Training controls</h2><p class="muted" id="training-description">Full-batch gradient descent updates all eight examples together.</p></div><div class="buttons"><button id="train-btn">Train</button><button id="step-btn" class="secondary">Step</button><button id="reset-btn" class="secondary">Reset</button></div></div>
     <div class="settings">
+      <label>Training set<select id="dataset"><option value="all">All eight words</option><option value="cardinal">Four words: N, S, E, W</option></select></label>
       <label>Learning rate<input id="learning-rate" type="number" min="0.0001" max="2" step="0.01" value="0.05"></label>
       <label>Epochs per Train<input id="epochs" type="number" min="1" max="10000" step="10" value="100"></label>
       <label>Random seed<input id="seed" type="number" step="1" value="7"></label>
@@ -34,27 +35,20 @@
       <div class="metric"><span>Exact match</span><strong id="exact-value">—</strong></div>
       <div class="metric"><span id="extra-label">Training status</span><strong id="extra-value">Ready</strong></div>
     </div>
-    <div class="chart-wrap"><svg id="loss-chart" viewBox="0 0 720 190" role="img" aria-label="Training loss chart"></svg></div>
-    <p class="fine-print">Performance is measured on the training examples; all eight examples are used for learning.</p>
   </section>
 
-  <div class="main-grid">
+  <div class="viz-panels" id="viz-panels">
+    <section class="panel loss-panel">
+      <div class="section-heading"><div><h2>Training loss</h2><p class="muted">Dataset loss after each full-batch update.</p></div><button id="layout-toggle" class="secondary" aria-pressed="false">Show side by side</button></div>
+      <div class="chart-wrap"><svg id="loss-chart" viewBox="0 0 720 190" role="img" aria-label="Training loss chart"></svg></div>
+      <p class="fine-print">Training performance is measured on the examples shown in the selected training set.</p>
+    </section>
     <section class="panel scatter-panel">
       <div class="section-heading"><div><h2>Latent space</h2><p class="muted">The encoder maps every word to two coordinates.</p></div><span id="selected-coords" class="coord-badge">Select a word</span></div>
       <svg id="latent-chart" viewBox="0 0 680 430" role="img" aria-label="Interactive two-dimensional latent space"></svg>
       <p class="note">Each point represents a word's learned two-dimensional embedding. The neural network adjusts these coordinates during training to improve its predictions. Nearby points are geometrically similar, but their proximity does not necessarily imply linguistic or semantic similarity.</p>
       <p class="note">Click an empty location to decode that coordinate. It may produce an output that does not correspond to any training example.</p>
       <div class="arbitrary-result"><span>Decoded point</span><div id="arbitrary-output">Click an empty location in the chart.</div></div>
-    </section>
-
-    <section class="panel output-panel">
-      <div class="section-heading"><div><h2>Selected example</h2><p class="muted" id="selected-word-label">north</p></div><span id="prediction-status" class="status">Untrained</span></div>
-      <div id="output-detail"></div>
-    </section>
-
-    <section class="panel examples-panel">
-      <div class="section-heading"><div><h2>Vocabulary and examples</h2><p class="muted">Select a row or point to inspect the forward pass.</p></div></div>
-      <div class="table-scroll"><table><thead><tr><th>Word</th><th>Target</th><th>Embedding</th><th>Prediction</th><th>Status</th></tr></thead><tbody id="example-rows"></tbody></table></div>
     </section>
 
     <section class="panel inspector-panel">
@@ -65,6 +59,17 @@
         <svg id="network-diagram" viewBox="0 0 1060 610" role="img" aria-label="Neural network layer activations and weighted connections"></svg>
       </div>
       <div class="inspect-grid"><div><h3>Selected word forward pass</h3><div id="forward-inspector"></div></div><div><h3>Weights</h3><div id="weight-inspector"></div></div></div>
+    </section>
+  </div>
+
+  <div class="main-grid">
+    <section class="panel output-panel">
+      <div class="section-heading"><div><h2>Selected example</h2><p class="muted" id="selected-word-label">north</p></div><span id="prediction-status" class="status">Untrained</span></div>
+      <div id="output-detail"></div>
+    </section>
+    <section class="panel examples-panel">
+      <div class="section-heading"><div><h2>Vocabulary and examples</h2><p class="muted">Select a row or point to inspect the forward pass.</p></div><button id="decoder-weights-toggle" class="secondary" aria-pressed="false">Show decoder weights</button></div>
+      <div class="table-scroll"><table><thead><tr><th>Word</th><th>Target</th><th>Embedding (encoder)</th><th class="decoder-weight-heading" hidden>Decoder weights</th><th>Prediction</th><th>Status</th></tr></thead><tbody id="example-rows"></tbody></table></div>
     </section>
   </div>
   <footer>Vanilla JavaScript · encoder: 8 → 2 with tanh · no external libraries</footer>

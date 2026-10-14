@@ -4,4 +4,6 @@ Open `index.html` directly in a current browser. The page uses only local HTML, 
 
 The lab has three independent models: an eight-word autoencoder, a word-to-symbol translator, and a word-to-image translator. All use the same 8 → 2 tanh encoder and trainable decoder. Training uses full-batch gradient descent with the task's categorical, grouped categorical, or binary cross-entropy loss. The seeded linear-congruential generator makes Reset reproducible for a given mode and seed.
 
+Use the **Training set** control to train on all eight words or only north, south, east, and west. Each task keeps separate model parameters for each training-set size. **Show side by side** arranges the loss plot, latent space, and network inspector horizontally on wide screens. The examples table can reveal the decoder weight pair or pairs associated with each word's target output.
+
 The JavaScript is split by responsibility under `js/`: fixed targets, mode settings, network math and gradients, asynchronous training, rendering, and UI coordination. A central-difference gradient check runs at startup for encoder and decoder weights in all three modes; its maximum relative error is available as a tooltip on the model update/accuracy metric.
