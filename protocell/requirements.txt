@@ -1,0 +1,5 @@
+# Protocell-0 Language Labs — Python dependencies for the notebooks.
+# Phase 1 (corpus generator):
+numpy
+pandas
+jupyter

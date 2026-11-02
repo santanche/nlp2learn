@@ -45,7 +45,7 @@ then open `http://localhost:8000/web/` (once the labs exist; none are built yet)
 | Phase | Content | Status |
 |---|---|---|
 | 0 | repository setup, consistent docs | done |
-| 1 | language module and corpus generator | not started |
+| 1 | language module and corpus generator | done |
 | 2 | static embeddings (03a, 03b, Lab A) | not started |
 | 3 | attention by hand (04a, Lab B) | not started |
 | 4 | encoder training and export (04b) | not started |

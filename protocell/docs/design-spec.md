@@ -190,6 +190,13 @@ GENE_BLOCK(g) = RBS + gap + WXZ + MARKER_g + BODY_g + TERMINATOR_g + intergenic
   directly before GENE_BLOCK(SNIP), wherever NaxSNIP lands: the control element moves with the gene it
   controls. The shuffled corpus is a genome-only control for the static experiments (§4.4, §4.5); `K_high`
   attenuation (§2.5) is defined for pathway order.
+- **Parts and assembly (Phase 1).** Each genome is generated once as parts:
+  - flanking spacers, 5'UTR and leader;
+  - seven gene blocks, each carrying its intergenic spacer and any decoys.
+
+  The parts are then assembled in pathway order (`genome.csv`) and in shuffled order
+  (`genome-shuffled.csv`), so the two corpora differ only in gene order. An assembly in which a multi-codon
+  motif occurs anywhere other than its intended place is rejected, and that genome is resampled.
 
 ### 2.3 Codon dialects: meaning layer and style layer
 
@@ -205,12 +212,37 @@ Constraints for the generator: distributions peaky enough that each gene is stat
 ≈10 body codons, overlapping enough that no single body codon identifies the gene. The generator prints a
 gene-identifiability check (e.g. naive Bayes accuracy from k body codons, k = 1, 3, 10).
 
+Concrete form (Phase 1):
+
+- The weights are a hand-written table in `protocell_lang.GENES` (`composition`: residue → weight). Every
+  weight is positive, so every coding codon occurs in all seven genes.
+- **Two registers** for synonym choice, preference 0.8 / 0.2:
+  - register X — NaxGATE, NaxSNIP, NaxGRAB, NaxDUMP — prefers the synonym ending in X;
+  - register Y — NaxTAG, NaxFLIP, NaxPAY — prefers the synonym ending in Y.
+- **Targets:**
+  - naive-Bayes accuracy from the first 10 body codons is ≥ 0.90 on held-out genomes;
+  - no single coding codon gives any gene a posterior above 0.6 (uniform prior).
+
+  The weights may be adjusted only to meet these two constraints, with the reason logged in
+  `architecture.md`, and never to influence the predictions of §7.
+
 ### 2.4 Decoys (controlled polysemy of WXZ)
 
 | Decoy | Rate parameter (default) | Label |
 |---|---|---|
 | Bare `WXZ` in a spacer, followed by a gene marker with probability 0.5 | `p_spacer_decoy` = 1.0 per genome (Poisson mean) | `false_start_spacer` |
 | Gene block with one base of the RBS mutated (gene otherwise intact) | `p_broken_rbs` = 0.15 per gene block | `false_start_broken_rbs` |
+
+Placement and mutation rules (Phase 1):
+
+- **Spacer decoys.** The number of decoys per genome is Poisson(`p_spacer_decoy`). Each decoy goes into one of
+  11 spacer slots, chosen uniformly: two flanking spacers, the 5'UTR, seven intergenic spacers and the leader
+  spacer. Its insertion point within the slot is also uniform. With probability 0.5 a uniformly chosen gene
+  marker follows the `WXZ`. Decoy codons keep their slot's region label and get gene = none.
+- **Broken RBS.** One base of one RBS codon is mutated, choosing uniformly among the mutations whose result is
+  not a reserved codon: `WXX` → `XXX`, `YXX`, `ZXX` (first base) or `WXW` (third base), in either RBS codon —
+  8 options. A middle-base mutation would give a marker (`WWX`, `WYX`, `WZX`), and a third-base mutation to
+  `WXY` or `WXZ` would give a marker or an initiator. Both are excluded so that the gene stays otherwise intact.
 
 A broken-RBS gene is transcribed but not translated; its WXZ differs from a true start **only** in the RBS
 2–5 positions upstream. This is the cleanest test of case 1 and the basis of the mutation demo.
@@ -243,6 +275,13 @@ Every codon occurrence, in genome and transcripts, carries:
 | `leader_state` | read_through, attenuated (ksensor and attenuator codons in transcripts only) |
 | `residue` | residue code (body codons only) |
 | `pos_in_gene` | index within body, or none |
+
+Label conventions:
+- `gene` is set on the rbs, gap, initiator, marker, body and terminator codons of a gene block. Intergenic
+  codons and decoys have gene = none.
+- The leader's trailing spacer has region `spacer`.
+- `pos_in_gene` is 0-based.
+- Absent labels are empty in CSV and `null` in JSON.
 
 These labels make every claim in the labs checkable.
 
@@ -443,15 +482,16 @@ The data contract is the interface between notebooks and labs. Change this secti
 | File | Columns |
 |---|---|
 | `genome.csv` | genome_id, position, codon, region, gene, start_role, residue, pos_in_gene |
+| `genome-shuffled.csv` | same columns as `genome.csv`; the same genomes with shuffled gene order (§2.2) |
 | `transcripts.csv` | transcript_id, genome_id, condition, position, codon, region, gene, start_role, leader_state, residue, pos_in_gene |
-| `proteins.csv` | genome_id, gene, translated (bool), residues |
+| `proteins.csv` | genome_id, gene, translated (bool: RBS intact), residues (space-separated codes; empty when not translated) |
 
 **`data/web/` (labs; JSON, each file ≤ 5 MB, total ≤ 20 MB)**
 
 | File | Producer | Content |
 |---|---|---|
 | `language.json` | 01 | bases, transcription map, code table (stages I–II), residues, reserved codons, genes; the labs never hard-code these |
-| `genome-sample.json` | 01 | ≈60 genomes (DNA) with labels; plus RNA versions for the mixed-corpus experiment and a shuffled-order sample |
+| `genome-sample.json` | 01 | ≈60 genomes (DNA) with labels; plus RNA versions (the corpus transcripts of the same genomes) for the mixed-corpus experiment and the same genomes in shuffled order; sequences stored column-wise (one array per label) |
 | `showcase-transcripts.json` | 01 | ≈6 curated transcripts (K_low, K_high, broken RBS, spacer decoy) with labels |
 | `cooccurrence.json` | 03a | matrices, cosine similarities, PCA coordinates per window |
 | `w2v-results.json` | 03b | per configuration: W, U, cosine similarities, loss history |
