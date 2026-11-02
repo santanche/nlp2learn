@@ -652,6 +652,21 @@ One phase per Claude Code session, starting in plan mode. Update `docs/architect
 ### Phase 6 (optional) — n-gram baselines
 - Zombienella-style n-grams (orders 1–4) on transcripts; the spec's terminator experiment (predict the gene
   terminator at the end of the body) compared with the encoder.
+- **Details (fixed before running):**
+  - **Notebook:** `02-ngrams/02_ngram_baselines.ipynb`, run after 01 and 04b.
+  - **N-gram data:** the n-grams are trained on the transcripts of the encoder's training genomes (the 04b
+    split). Each sequence is wrapped in `<s>` … `</s>`.
+  - **Smoothing:** add-k with k = 0.1 over the 64 codons plus `</s>`.
+  - **Evaluation:** the 150 unique test transcripts of §4.8, with cross-entropy (bits per codon) and
+    perplexity per order.
+  - **Terminator experiment:** one item per gene terminator in those transcripts. Each model ranks the 7
+    terminator codons at that position. An n-gram uses P(t | the previous n−1 tokens); an encoder masks the
+    position and reads its MLM head (final snapshot).
+  - **Comparison:** the main comparison is the `causal` encoder, which has the same left-only context as the
+    n-grams. `full` and `no_position` are reported too. `full` also sees the right-hand context, where pathway
+    order leaks the gene.
+  - **Reference levels:** chance (1/7) and the majority-terminator rate.
+  - **Outputs:** none for the labs (no data-contract file).
 
 ---
 
@@ -701,6 +716,12 @@ Basis:
 
 **Caveat:** with strong dialects, many masked codons are predictable from neighbours alone; the masked-token
 loss is not evidence that attention does the work. The probes are.
+
+**Baselines (Phase 6).**
+
+| ID | Prediction | Holds if |
+|---|---|---|
+| P6 | N-grams beat chance on the terminator through dialect leakage, and attention buys the remaining gap (protocell-0-spec §4.1). | (a) every n-gram of order 2–4 is > 1/7 on the test terminators, **and** (b) the `causal` encoder is ≥ the best n-gram + 0.10 |
 
 **Pass criteria for C1–C5.** These were fixed before 04c ran. Accuracies are probe-test accuracies at the
 final snapshot; "majority" is the majority-class rate of that case (§4.8).

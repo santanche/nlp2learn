@@ -50,4 +50,4 @@ then open `http://localhost:8000/web/`. The labs read only from
 | 3 | attention by hand (04a, Lab B) | done |
 | 4 | encoder training and export (04b) | done |
 | 5 | contextual analysis and Context Lab (04c, Lab C) | done |
-| 6 | n-gram baselines (optional) | not started |
+| 6 | n-gram baselines (optional) | done |
