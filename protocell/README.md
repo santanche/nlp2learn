@@ -37,7 +37,7 @@ From this directory:
 python -m http.server
 ```
 
-then open `http://localhost:8000/web/` (once the labs exist; none are built yet). The labs read only from
+then open `http://localhost:8000/web/`. The labs read only from
 `data/web/`.
 
 ## Status
@@ -46,7 +46,7 @@ then open `http://localhost:8000/web/` (once the labs exist; none are built yet)
 |---|---|---|
 | 0 | repository setup, consistent docs | done |
 | 1 | language module and corpus generator | done |
-| 2 | static embeddings (03a, 03b, Lab A) | not started |
+| 2 | static embeddings (03a, 03b, Lab A) | done |
 | 3 | attention by hand (04a, Lab B) | not started |
 | 4 | encoder training and export (04b) | not started |
 | 5 | contextual analysis and Context Lab (04c, Lab C) | not started |

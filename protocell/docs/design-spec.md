@@ -373,11 +373,24 @@ Skip-gram with negative sampling written in NumPy, as Zombienella 03b. Configura
   converge.
 - **Shuffled-order control corpus:** pathway-order signal should disappear.
 
+**Training (identical in NumPy and in Lab A's JavaScript).**
+- Positive pairs: every (target, context) within the half-window. Windows never cross a genome or transcript
+  boundary.
+- k = 5 negatives per positive, drawn fresh each epoch from the unigram^¾ noise distribution.
+- Mini-batch SGD with batch 1,024: the per-sample gradients of a batch are summed into W and U. Learning rate
+  0.025, 5 epochs, initial weights N(0, 0.1²) for both W and U.
+- Epoch loss: the mean binary cross-entropy over that epoch's samples (training performance).
+- Grid: corpus {dna, shuffled, mixed} × half-window {±1, ±9} × dimension {2, 3, 8} = 18 runs.
+- The mixed corpus is the genomes plus all of their transcripts, unnormalised.
+
+The epochs may be changed only for convergence, with the reason logged.
+
 ### 4.5 Lab A — Codon Embeddings Lab (live training)
 
 Modelled on the Direction Embeddings Lab: Train / Step / Reset, learning rate, epochs, seed, window,
 dimension, corpus (DNA / DNA+RNA mixed / shuffled order), corpus size (subset of `genome-sample.json` so a
-run takes seconds).
+run takes seconds). Half-window ∈ {±1, ±2, ±4, ±9}, and the notebook comparison exists for ±1 and ±9.
+Dimension ∈ {2, 3, 8}. Corpus size ∈ {10, 20, 40, 60} sample genomes, with 20 as the default.
 
 Panels:
 
@@ -493,8 +506,8 @@ The data contract is the interface between notebooks and labs. Change this secti
 | `language.json` | 01 | bases, transcription map, code table (stages I–II), residues, reserved codons, genes; the labs never hard-code these |
 | `genome-sample.json` | 01 | ≈60 genomes (DNA) with labels; plus RNA versions (the corpus transcripts of the same genomes) for the mixed-corpus experiment and the same genomes in shuffled order; sequences stored column-wise (one array per label) |
 | `showcase-transcripts.json` | 01 | ≈6 curated transcripts (K_low, K_high, broken RBS, spacer decoy) with labels |
-| `cooccurrence.json` | 03a | matrices, cosine similarities, PCA coordinates per window |
-| `w2v-results.json` | 03b | per configuration: W, U, cosine similarities, loss history |
+| `cooccurrence.json` | 03a | `vocabulary`, `codon_class`, `windows`: [{half_window, counts, cosine, pca: {coords, explained_variance}}] |
+| `w2v-results.json` | 03b | `vocabularies` {dna, mixed}, `training` (hyper-parameters), `configs`: [{corpus, half_window, dim, W, U, loss_history, cosine}], `predictions`: [{id, corpus, half_window, dim, metric, value, baseline, holds}] |
 | `mini-transcripts.json` | 04a | Lab B dataset and the NumPy-trained weights for comparison |
 | `encoder-full.json`, `encoder-no_position.json`, `encoder-causal.json` | 04b/04c | architecture config, vocabulary, snapshots [{epoch, train_loss, test_loss, masked_acc, weights}], probe curves |
 | `contextual-sample.json` | 04c | ≈100 test transcripts, target-codon positions and labels, PCA mean/components per target codon |
@@ -560,6 +573,24 @@ only for a documented reason, never to force a result.
 | S4 | WXZ has one vector blending true and false starts. |
 | S5 | With a wide half-window (≥ the TERMINATOR_i → MARKER_i+1 distance, 5–9 positions; ±9), markers and terminators of adjacent genes lie close: pathway order recovered from sequence alone; the signal disappears in the shuffled-order corpus. Body codons do not carry it. Exception: NaxTAG → NaxSNIP spans the leader (intergenic 0–2 + leader 5 + spacer 0–2 + RBS 2 + gap 1–3 + WXZ + marker = 10–16 positions), so ±9 is predicted to recover the other five adjacent pairs, not this one. |
 | S6 | In the mixed DNA+RNA corpus, Z/V pairs (ZWX/VWX etc.) converge through shared neighbours. |
+
+**Pass criteria for S1–S6.** These were fixed before any training (Phase 2).
+
+Basis:
+- the target vectors W and cosine similarity;
+- every result is reported for half-windows ±1 and ±9 and dimensions 2, 3 and 8, and the verdict uses
+  dimension 8;
+- the baseline is the 95th percentile of 1,000 label permutations (seeded);
+- "beats the baseline" means strictly greater.
+
+| ID | Metric | Holds if |
+|---|---|---|
+| S1 | Mean class purity of the 5 nearest neighbours, over the 16 coding + 26 spacer-only codons (reserved codons excluded); classes coding / spacer-only | purity > baseline |
+| S2 | Over the 16 coding codons labelled with their preferred gene (the argmax of `codon_distribution`): the fraction whose nearest coding neighbour has the same label | fraction > baseline |
+| S3 | Mean cosine of coding pairs with the same register (third base) and different residues, minus the mean cosine of the six synonym pairs | difference > 0 |
+| S4 | One vector per codon type, by construction. Reported descriptively: WXZ's nearest neighbours, and the share of WXZ occurrences that are false starts | — (by construction) |
+| S5 | Of the 5 pathway-adjacent pairs that do not span the leader, the number in which terminator_i ranks marker_(i+1) first among the 7 markers | pathway corpus at ±9: 5 of 5; shuffled corpus at ±9: ≤ 2 of 5 (chance ≈ 0.7). For body codons, reported descriptively. |
+| S6 | Mixed corpus: the mean cosine over the Z/V twins (each Z-containing codon and its V form) | mean > the 95th percentile of the mean over 1,000 random DNA-form/RNA-form pairings |
 
 **Contextual (Part B)**
 

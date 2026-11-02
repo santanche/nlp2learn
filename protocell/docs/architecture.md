@@ -11,7 +11,7 @@ embeddings, Part A), then one vector per codon occurrence (contextual embeddings
 
 ### 1.1 Directory organization
 
-Current state (after Phase 1). Directories marked *(empty)* hold only a `.gitkeep`.
+Current state (after Phase 2). Directories marked *(empty)* hold only a `.gitkeep`.
 
 ```text
 protocell/
@@ -31,19 +31,21 @@ protocell/
 │   └── requirements.txt
 ├── 01-corpus/01_generate_corpus.ipynb   corpus generator — Phase 1
 ├── 02-ngrams/                    (empty) optional n-gram baselines — Phase 6
-├── 03-static/                    (empty) notebooks 03a, 03b — Phase 2
+├── 03-static/03a_cooccurrence.ipynb, 03b_word2vec.ipynb — Phase 2
 ├── 04-attention/                 (empty) notebooks 04a, 04b, 04c — Phases 3–5
 ├── data/
 │   ├── corpus/                   genome.csv, genome-shuffled.csv, transcripts.csv, proteins.csv
-│   └── web/                      language.json, genome-sample.json, showcase-transcripts.json
+│   └── web/                      language.json, genome-sample.json, showcase-transcripts.json,
+│                                 cooccurrence.json, w2v-results.json
 └── web/
-    ├── shared/                   (empty) styles, seeded RNG, matrix utils, charts, code viewer
-    ├── codon-embeddings/         (empty) Lab A — Phase 2
+    ├── index.html                landing page
+    ├── shared/                   styles.css, rng.js, linalg.js, charts.js, data.js, codeview.js
+    ├── codon-embeddings/         Lab A: index.html, lab.css, lab.js, skipgram.js, predictions.js
     ├── attention-inspector/      (empty) Lab B — Phase 3
     └── context-lab/              (empty) Lab C — Phase 5
 ```
 
-### 1.2 Pipeline (built through notebook 01; the rest planned)
+### 1.2 Pipeline (built through Phase 2; the rest planned)
 
 ```text
 protocell_lang.py  (language: bases, code table, residues, reserved codons, genes, dialects)
@@ -232,13 +234,99 @@ No prediction of §7 was consulted.
 
 ## 5. Phase 2 — Static embeddings (03a, 03b, Lab A)
 
-**Status:** not yet built.
+**Status:** done (2026-11-01).
 
 ### Files
+- `03-static/03a_cooccurrence.ipynb` — the Zombienella 03a method on the genome. It runs in about 6 s.
+- `03-static/03b_word2vec.ipynb` — skip-gram with negative sampling in NumPy, the 18-run grid and the S1–S6
+  tests. It runs in about 3.5 min, of which 193 s is training.
+- `web/index.html` — the landing page.
+- `web/shared/` — the shared modules: `styles.css`, `rng.js`, `linalg.js`, `charts.js`, `data.js` and
+  `codeview.js` (ES modules).
+- `web/codon-embeddings/` — Lab A: `index.html`, `lab.css`, `lab.js` (UI), `skipgram.js` (model) and
+  `predictions.js` (S1–S6).
+- `protocell_lang.py` gained `preferred_gene(codon)`, exported as `language.json` → `preferred_genes`.
+  Notebook 01 was re-run, and only `language.json` changed.
+- `requirements.txt`: added matplotlib and scikit-learn. Playwright is installed in `.venv` for testing only.
+
 ### Functions
+- **03a:**
+  - `build_cooccurrence_matrix(sequences, vocabulary, half_window)`;
+  - `cosine_similarity_matrix`, `nearest_neighbours`;
+  - `project_with_pca` (scikit-learn), `plot_codons`.
+- **03b:**
+  - `read_sequences`, `vocabulary_of` (the 64 DNA codons, then the V forms, keeping only tokens that occur);
+  - `build_positive_pairs` (by offset), `noise_distribution` (count^¾);
+  - `add_rows` (an `np.bincount` scatter-add), `train_skipgram`, the plotting helpers;
+  - the prediction tests `s1_coding_vs_spacer`, `s2_preferred_gene`, `s3_register_vs_residue`,
+    `s4_initiator`, `s5_pathway_order`, `s6_zv_twins`, with `permutation_baseline` and `cosine_matrix`.
+- **`skipgram.js`** — the same algorithm as 03b:
+  - `buildCorpus`, `buildVocabulary`, `buildPairs`, `noiseDistribution`, `prepareData`;
+  - `createModel`, `pairForward`;
+  - `makeEpochSamples` (async; it yields every 250k samples), `batchGradients`, `applyGradients`;
+  - `trainEpoch` (async; it yields every 40 batches);
+  - `gradientCheck`: central differences on every parameter of a 6-codon, 3-dimensional model.
+- **`predictions.js`:** `s1CodingVsSpacer` … `s6ZvTwins` and `measurePredictions`, ported line for line from
+  03b.
+- **`lab.js`:** a renderer for each panel, and `train` and `rebuild`. `window.labA` is exposed for
+  automated checks.
+- **Shared modules:**
+  - `createRng` (mulberry32, seeded) and `categoricalSampler`;
+  - `cosineMatrix`, `nearest`, `pca` (power iteration with deflation, with a sign convention);
+  - `lineChart`, `scatter2d`, `createScatter3d` (drag to rotate);
+  - `attachCodeView`, `jsSource`, `pythonSource`.
+
 ### Data flow
+```text
+genome.csv ─> 03a ─> cooccurrence.json  (counts, cosine, PCA for ±1, ±2, ±4)
+genome.csv, genome-shuffled.csv, transcripts.csv ─> 03b ─> w2v-results.json
+        (18 configs: W, U, loss history, cosine; predictions; Python sources of the trainer and the tests)
+language.json + genome-sample.json + w2v-results.json ─> Lab A
+        live: buildCorpus(subset) → buildPairs → trainEpoch …  ·  replay: the notebook W for the same config
+```
+Lab A's corpora come from `genome-sample.json`:
+
+| Corpus | Source |
+|---|---|
+| dna | `genomes` |
+| shuffled | `shuffled` |
+| mixed | `genomes` + `transcripts` |
+
+In each case, the first N genomes are used: 10, 20, 40 or 60.
+
 ### Outputs
-### Verification (predictions S1–S6, §10)
+- `cooccurrence.json` is 0.13 MB and `w2v-results.json` is 0.89 MB.
+- Lab A uses the same algorithm and hyper-parameters as 03b, but its own RNG.
+- On the default subset (20 genomes, about 4,800 codons), 5 epochs take 0.2 s at ±1 and 0.7 s at ±9.
+- The worst case (60 genomes, mixed corpus, ±9: 736k positive pairs, 4.4M samples) takes 1.6 s per epoch.
+
+### Verification
+- **Notebooks:** both run top to bottom and are deterministic (the hashes of a second run match, ignoring
+  `created`).
+- **Lab A**, tested with Playwright and Chromium on `python -m http.server`:
+  - the gradient check passes, with a maximum relative error of 4.5e-10;
+  - there are no console errors;
+  - the longest pause in the UI during training is 43 ms on the default subset and 38 ms in the worst case.
+    Before `makeEpochSamples` was made to yield, the worst case froze the page for 1.6 s;
+  - Reset with the same seed reproduces W exactly;
+  - every corpus, dimension and colouring renders;
+  - all six Code views are populated;
+  - screenshots were checked at 1366×768 and 1920×1080.
+- **Parity of the metrics:** the JS prediction functions, applied to the notebook's exported W for all 18
+  configurations, reproduce all 42 notebook metric values (|Δ| ≤ 1e-6), all verdicts and the first neighbour
+  in S4. The permutation baselines differ only by RNG (max |Δ| = 0.06, one step of S2's 1/16 resolution).
+
+### Observations worth teaching (03a)
+- At every window, codons that fill the same grammatical *slot* get similar count vectors:
+  - the markers are each other's nearest neighbours;
+  - the RBS codon `WXX` is closest to `ZXX` and `WXW`, its broken-RBS mutants.
+- PC1 of the raw count matrices correlates 0.89–0.96 with codon frequency, so the PCA plots mostly sort
+  codons by frequency. This is reported in the notebook.
+
+### Training caveat (03b)
+- The ±9 losses are flat after epoch 1.
+- The ±1 losses still fall by about 0.002 per epoch at epoch 5. The number of epochs was fixed before the
+  predictions were computed and was not changed afterwards.
 
 ## 6. Phase 3 — Attention by hand (04a, Lab B)
 
@@ -287,12 +375,12 @@ result.
 
 | ID | Prediction (short) | Status | Result | Where reported |
 |---|---|---|---|---|
-| S1 | coding codons separate from spacer-only codons | not yet run | | |
-| S2 | body codons cluster by preferred gene | not yet run | | |
-| S3 | synonyms cluster by register, not residue | not yet run | | |
-| S4 | WXZ has one blended vector | not yet run | | |
-| S5 | ±9 recovers pathway order (5 adjacent pairs; TAG→SNIP excepted); gone when shuffled | not yet run | | |
-| S6 | Z/V pairs converge in the mixed corpus | not yet run | | |
+| S1 | coding codons separate from spacer-only codons | **holds** | 5-NN purity 1.000 (±1), 0.995 (±9) vs baseline ≈ 0.59 | 03b, Lab A |
+| S2 | body codons cluster by preferred gene | **holds** | nearest coding neighbour same gene 0.81 (±1), 0.94 (±9) vs ≈ 0.25 | 03b, Lab A |
+| S3 | synonyms cluster by register, not residue | **fails** | same-register − synonym cosine −0.007 (±1), −0.019 (±9) at dim 8; slightly positive at dims 2–3 | 03b, Lab A |
+| S4 | WXZ has one blended vector | holds by construction | 74.5% true / 13.7% broken RBS / 11.8% spacer decoy; nearest neighbour at ±9 is `WXX` | 03b, Lab A |
+| S5 | ±9 recovers pathway order (5 adjacent pairs; TAG→SNIP excepted); gone when shuffled | **fails** | ±9: 3 of 5 ranked first (others second; criterion 5 of 5); shuffled 0 of 5 (control behaves); ±1: 0 of 5 | 03b, Lab A |
+| S6 | Z/V pairs converge in the mixed corpus | **holds** | twin cosine 0.41 (±1), 0.29 (±9) vs random 0.30, 0.22 | 03b, Lab A |
 | C1 | static probes at the majority baseline; contextual probes near 100% | not yet run | | |
 | C2 | WXZ attends to the RBS; breaking it moves the vector | not yet run | | |
 | C3 | shared body codons cluster by gene | not yet run | | |
@@ -319,3 +407,7 @@ result.
 | 2026-11-01 | 1 | design-spec §2.2 | genomes generated as parts and assembled in both orders; assemblies with unintended signals resampled | makes the shuffled corpus differ only in order |
 | 2026-11-01 | 1 | design-spec §2.6 | label conventions (gene on rbs…terminator; intergenic/decoys none; leader spacer = `spacer`; 0-based `pos_in_gene`) | unspecified |
 | 2026-11-01 | 1 | design-spec §5.2 (data contract) | added `genome-shuffled.csv`; `proteins.csv` semantics; `genome-sample.json` column-wise, RNA = corpus transcripts | 03b needs the shuffled corpus; file budget |
+| 2026-11-01 | 2 | design-spec §7 | pass criteria for S1–S6 (metrics, permutation baselines, thresholds), fixed before any training | predictions must be testable, not judged after the fact |
+| 2026-11-01 | 2 | design-spec §4.4 | training algorithm and hyper-parameters, identical in NumPy and JS; the 18-run grid; the mixed-corpus definition | Lab A and 03b must run the same maths |
+| 2026-11-01 | 2 | design-spec §4.5 | Lab A option lists (half-windows, dimensions, corpus sizes) | unspecified |
+| 2026-11-01 | 2 | design-spec §5.2 (data contract) | contents of `cooccurrence.json` and `w2v-results.json` (adds `predictions`, `training`) | the labs need the prediction table and hyper-parameters |

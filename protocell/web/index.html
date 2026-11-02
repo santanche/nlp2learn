@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Protocell-0 Language Labs</title>
+  <link rel="stylesheet" href="shared/styles.css">
+  <style>
+    .labs { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+    .labs .panel { margin: 0; }
+    .labs h2 { margin: 4px 0 6px; font-size: 1.15rem; }
+    .labs a.open { display: inline-block; margin-top: 10px; background: var(--accent); color: #fff; text-decoration: none; font-weight: 700; padding: 7px 14px; border-radius: 7px; }
+    .labs .soon { color: var(--muted); font-weight: 700; margin-top: 10px; display: inline-block; }
+  </style>
+</head>
+<body>
+<main>
+  <header class="hero">
+    <p class="eyebrow">PROTOCELL-0 LANGUAGE LABS</p>
+    <h1>How embeddings form</h1>
+    <p>Protocell-0 is an invented organism with an invented genetic code. Its genome is a text whose grammar we wrote,
+      so we know exactly what a model should be able to learn from it. These labs follow two kinds of word
+      representation: <b>static</b> embeddings (one vector per codon type) and <b>contextual</b> embeddings (one vector per
+      codon occurrence).</p>
+  </header>
+  <div class="labs">
+    <section class="panel">
+      <p class="eyebrow">LAB A · PART A</p>
+      <h2>Codon Embeddings</h2>
+      <p class="muted">Train word2vec live on Protocell-0 genomes; compare with notebook 03b; test predictions S1–S6.</p>
+      <a class="open" href="codon-embeddings/index.html">Open Lab A</a>
+    </section>
+    <section class="panel">
+      <p class="eyebrow">LAB B · PART B</p>
+      <h2>Attention Inspector</h2>
+      <p class="muted">One attention head, every tensor visible: is this WXZ a true start?</p>
+      <span class="soon">Coming in Phase 3</span>
+    </section>
+    <section class="panel">
+      <p class="eyebrow">LAB C · PART B</p>
+      <h2>Context Lab</h2>
+      <p class="muted">Replay an encoder's training; watch occurrence clouds form; mutate a transcript live.</p>
+      <span class="soon">Coming in Phase 5</span>
+    </section>
+  </div>
+  <footer>Serve with <code>python -m http.server</code> from <code>protocell/</code> · vanilla HTML, CSS and JavaScript</footer>
+</main>
+</body>
+</html>

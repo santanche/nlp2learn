@@ -1,0 +1,17 @@
+/* Lab A specifics. */
+.embedding-layout { display: grid; grid-template-columns: minmax(0, 3fr) minmax(220px, 1fr); gap: 14px; align-items: start; }
+@media (max-width: 900px) { .embedding-layout { grid-template-columns: minmax(0, 1fr); } }
+.selected-codon { font-size: .84rem; background: #f6f9fa; border-radius: 10px; padding: 10px 12px; }
+.selected-codon h3 { margin: 0 0 4px; font-size: 1.15rem; font-family: ui-monospace, monospace; }
+.selected-codon ol { margin: 6px 0 0; padding-left: 20px; font-family: ui-monospace, monospace; font-size: .8rem; }
+.selected-codon .tag { display: inline-block; background: #e5f4f1; color: var(--accent); border-radius: 6px; padding: 1px 6px; margin: 2px 3px 2px 0; font-size: .74rem; }
+
+#codon-table td { font-family: ui-monospace, monospace; font-size: .78rem; min-width: 150px; }
+#codon-table td b { font-size: .9rem; }
+#codon-table td .nb { color: var(--muted); display: block; }
+#codon-table td.clickable { cursor: pointer; }
+#codon-table td.selected { background: var(--soft); }
+
+.inspector-steps { display: grid; gap: 6px; font-size: .84rem; }
+.inspector-steps .step { background: #f6f9fa; border-radius: 8px; padding: 7px 10px; font-family: ui-monospace, monospace; font-size: .78rem; overflow-x: auto; white-space: nowrap; }
+.inspector-steps .step b { font-family: Inter, system-ui, sans-serif; color: var(--muted); font-weight: 700; margin-right: 6px; }

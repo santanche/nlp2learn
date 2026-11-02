@@ -221,6 +221,18 @@ RESERVED_CODONS = sorted(
 SPACER_ONLY_CODONS = sorted(set(ALL_CODONS) - set(CODING_CODONS) - set(RESERVED_CODONS))
 
 
+def preferred_gene(codon):
+    """The gene a codon is most associated with, or None.
+
+    Coding codon: the gene whose dialect gives it the highest probability (argmax of codon_distribution).
+    Marker or terminator: the gene it belongs to. Any other codon: None. Accepts DNA or RNA spelling.
+    """
+    codon = to_dna(codon)
+    if codon in CODE_TABLE:
+        return max(GENE_NAMES, key=lambda g: codon_distribution(g)[codon])
+    return MARKERS.get(codon) or TERMINATORS.get(codon)
+
+
 def codon_class(codon):
     """'coding', 'reserved' or 'spacer-only' (accepts DNA or RNA spelling)."""
     codon = to_dna(codon)
@@ -281,6 +293,7 @@ def language_as_dict():
         "reserved_codons": RESERVED_CODONS,
         "spacer_only_codons": SPACER_ONLY_CODONS,
         "codon_classes": {c: codon_class(c) for c in ALL_CODONS},
+        "preferred_genes": {c: preferred_gene(c) for c in ALL_CODONS},
         "genes": [
             {**{k: v for k, v in g.items()},
              "codon_distribution": codon_distribution(g)}

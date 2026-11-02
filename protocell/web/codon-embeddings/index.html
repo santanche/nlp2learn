@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Codon Embeddings Lab</title>
+  <link rel="stylesheet" href="../shared/styles.css">
+  <link rel="stylesheet" href="lab.css">
+</head>
+<body>
+<main>
+  <header class="hero">
+    <p class="eyebrow">PROTOCELL-0 · LAB A · STATIC EMBEDDINGS</p>
+    <h1>Codon Embeddings</h1>
+    <p>Train word2vec (skip-gram with negative sampling) on Protocell-0 genomes, live in your browser. Every codon
+      <em>type</em> gets one vector, learned only from the codons around it. Compare with notebook 03b and test
+      the predictions S1–S6. <a href="../index.html">All labs</a></p>
+  </header>
+
+  <div id="error"></div>
+
+  <section class="panel control-panel" id="controls">
+    <div class="section-heading">
+      <div><h2>Training</h2><p class="muted" id="corpus-description">Loading data…</p></div>
+      <div class="actions">
+        <span id="gradient-status" class="status">Gradient check…</span>
+        <span id="model-status" class="status">Untrained</span>
+        <div class="buttons">
+          <button id="train-btn" disabled>Train</button>
+          <button id="step-btn" class="secondary" disabled>Step (1 epoch)</button>
+          <button id="reset-btn" class="secondary" disabled>Reset</button>
+        </div>
+      </div>
+    </div>
+    <div class="settings">
+      <label>Corpus
+        <select id="corpus">
+          <option value="dna">DNA genomes</option>
+          <option value="mixed">DNA + RNA (mixed)</option>
+          <option value="shuffled">Shuffled gene order</option>
+        </select></label>
+      <label>Corpus size
+        <select id="n-genomes">
+          <option value="10">10 genomes</option>
+          <option value="20" selected>20 genomes</option>
+          <option value="40">40 genomes</option>
+          <option value="60">60 genomes</option>
+        </select></label>
+      <label>Half-window
+        <select id="half-window">
+          <option value="1">±1</option>
+          <option value="2">±2</option>
+          <option value="4">±4</option>
+          <option value="9">±9</option>
+        </select></label>
+      <label>Dimension
+        <select id="dim">
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="8">8 (shown by PCA)</option>
+        </select></label>
+      <label>Learning rate<input id="learning-rate" type="number" min="0.0001" max="1" step="0.005" value="0.025"></label>
+      <label>Epochs per Train<input id="epochs" type="number" min="1" max="200" step="1" value="5"></label>
+      <label>Random seed<input id="seed" type="number" step="1" value="42"></label>
+      <div class="metric"><span>Training loss (last epoch)</span><strong id="loss-value">—</strong></div>
+      <div class="metric"><span>Epochs trained</span><strong id="epochs-value">0</strong></div>
+      <div class="metric"><span>Samples per epoch</span><strong id="samples-value">—</strong></div>
+    </div>
+  </section>
+
+  <div class="lab-grid">
+    <section class="panel" id="loss-panel">
+      <div class="section-heading">
+        <div><h2>1 · Training loss</h2><p class="muted">Mean cross-entropy over each epoch's positive and negative samples.</p></div>
+        <div class="actions"><button class="secondary code-toggle">Code</button></div>
+      </div>
+      <svg id="loss-chart" class="chart" role="img" aria-label="Training loss per epoch"></svg>
+      <p class="note">This is <b>training performance</b>: it is measured on the pairs the model learns from. It tells
+        you whether training converged, not what the vectors mean.</p>
+      <div class="code-view" hidden></div>
+    </section>
+
+    <section class="panel" id="inspector-panel">
+      <div class="section-heading">
+        <div><h2>4 · Network inspector</h2><p class="muted">One (target, context) pair through the model.</p></div>
+        <div class="actions"><button class="secondary code-toggle">Code</button></div>
+      </div>
+      <div class="toolbar">
+        <label>Target<select id="inspect-target"></select></label>
+        <label>Context<select id="inspect-context"></select></label>
+      </div>
+      <div id="inspector"></div>
+      <div class="code-view" hidden></div>
+    </section>
+
+    <section class="panel wide" id="embedding-panel">
+      <div class="section-heading">
+        <div><h2>2 · Embedding space</h2><p class="muted" id="embedding-caption">One point per codon type.</p></div>
+        <div class="actions"><button class="secondary code-toggle">Code</button></div>
+      </div>
+      <div class="toolbar">
+        <label>Vectors
+          <select id="view">
+            <option value="W">target W (the embeddings)</option>
+            <option value="U">context U</option>
+            <option value="WU">W + U</option>
+          </select></label>
+        <label>Colour by
+          <select id="colour-by">
+            <option value="class">codon class</option>
+            <option value="gene">preferred gene (dialect)</option>
+            <option value="residue">residue</option>
+            <option value="middle">middle base</option>
+          </select></label>
+        <label class="check"><input type="checkbox" id="show-synonyms" checked> synonym pairs</label>
+        <label class="check"><input type="checkbox" id="show-twins" checked> Z/V twins (mixed corpus)</label>
+      </div>
+      <div class="embedding-layout">
+        <div>
+          <svg id="embedding-chart" class="chart" role="img" aria-label="Codon embedding space"></svg>
+          <div id="embedding-legend" class="legend"></div>
+        </div>
+        <aside id="selected-codon" class="selected-codon"></aside>
+      </div>
+      <p class="note strong">Proximity reflects <b>similar contexts</b>, not similar meaning: two codons are close
+        when they are surrounded by the same codons, whatever they code for.</p>
+      <div class="code-view" hidden></div>
+    </section>
+
+    <section class="panel wide" id="table-panel">
+      <div class="section-heading">
+        <div><h2>3 · Codon table and nearest neighbours</h2><p class="muted">The Stage II code; each cell lists the codon's 3 nearest neighbours (cosine, current vectors).</p></div>
+        <div class="actions"><button class="secondary code-toggle">Code</button></div>
+      </div>
+      <div class="table-scroll"><table id="codon-table"></table></div>
+      <p class="note" id="table-hint"></p>
+      <div class="code-view" hidden></div>
+    </section>
+
+    <section class="panel" id="compare-panel">
+      <div class="section-heading">
+        <div><h2>5 · Compare with notebook 03b</h2><p class="muted" id="compare-caption"></p></div>
+        <div class="actions"><button class="secondary code-toggle">Code</button></div>
+      </div>
+      <svg id="compare-chart" class="chart" role="img" aria-label="Notebook embedding for the same configuration"></svg>
+      <div id="compare-info"></div>
+      <p class="note">The notebook trained on all 400 genomes with NumPy's random generator; this page uses a subset and
+        its own generator. Compare the <b>structure</b> (which codons group together), not the coordinates.</p>
+      <div class="code-view" hidden></div>
+    </section>
+
+    <section class="panel" id="predictions-panel">
+      <div class="section-heading">
+        <div><h2>6 · Predictions S1–S6</h2><p class="muted">Pass criteria fixed in design-spec §7 before training.</p></div>
+        <div class="actions"><button class="secondary code-toggle">Code</button></div>
+      </div>
+      <div class="table-scroll"><table id="predictions-table"></table></div>
+      <p class="note" id="predictions-note"></p>
+      <div class="code-view" hidden></div>
+    </section>
+  </div>
+  <footer>Vanilla JavaScript · skip-gram with negative sampling written by hand · data from notebooks 01 and 03b</footer>
+</main>
+<script type="module" src="lab.js"></script>
+</body>
+</html>

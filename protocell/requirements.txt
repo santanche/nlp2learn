@@ -3,3 +3,6 @@
 numpy
 pandas
 jupyter
+# Phase 2 (static embeddings): plots and PCA
+matplotlib
+scikit-learn
