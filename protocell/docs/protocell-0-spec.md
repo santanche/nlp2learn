@@ -337,7 +337,19 @@ a 1-layer, 2-head transformer, terminator probe), predates this revision: it use
 amino-acid codes and three gene classes. It is kept for reference only.
 
 The current implementation follows the phases of `design-spec.md` §6, starting from `protocell_lang.py`, the
-single source of truth for the language. What has been built so far is recorded in `docs/architecture.md`.
+single source of truth for the language. Version 1 is complete (2026-11-02). It covers:
+- the corpus generator;
+- static embeddings (co-occurrence, word2vec, Lab A);
+- attention by hand (Lab B);
+- a small masked-codon encoder with probes (Lab C);
+- n-gram baselines, including the terminator experiment of §4.1 above.
+
+What was built is recorded in `docs/architecture.md`; how to resume, and the limitations, are in
+`docs/status-and-decisions.md`.
+
+The §4.1 experiment came out as this spec predicted:
+- n-grams beat chance through dialect leakage (0.48–0.57 against 1/7);
+- an encoder that reads the left context back to the marker reaches 0.96.
 
 ---
 

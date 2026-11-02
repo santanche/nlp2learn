@@ -6,11 +6,16 @@ Audience: students in machine learning and bioinformatics courses. Clarity beats
 
 ## Read first
 
-1. `docs/design-spec.md` — what to build, the data contract, phases, predictions. **Authoritative.**
-2. `docs/protocell-0-energy-pathway.md` — the seven Nax genes and their real counterparts.
-3. `docs/protocell-0-spec.md` — the organism (bases, staged code, grammar).
-4. `docs/architecture.md` — what has been built so far. Created in Phase 0; update it at the end of every
-   phase.
+Version 1 is complete (2026-11-02): all phases of `design-spec.md` §6 are done.
+
+1. `docs/status-and-decisions.md` — **start here when resuming**: status, run order and environment,
+   conventions agreed with the author, decisions and their reasons, limitations, open items.
+2. `docs/design-spec.md` — what to build, the data contract, phases, and predictions with their pass criteria.
+   **Authoritative.**
+3. `docs/architecture.md` — what was built, phase by phase, with measured results, the predictions log (§10)
+   and the spec change log (§12). Update it whenever something is built or changed.
+4. `docs/protocell-0-energy-pathway.md` — the seven Nax genes and their real counterparts.
+5. `docs/protocell-0-spec.md` — the organism (bases, staged code, grammar).
 
 Background only: `docs/ai/` (design debates). `legacy/protocell_lm.py` is the superseded prototype (A/C/G/T
 bases); do not import it or copy its tables.
@@ -26,6 +31,20 @@ Reference implementations in the same repository, for style and level:
   check; implement; verify; update `docs/architecture.md`; stop.
 - If a design question is not answered by the spec, ask instead of inventing.
 - If the data contract (§5) must change, edit the spec first, then the code, and say so.
+- Log every spec change, with its reason, in `architecture.md` §12.
+- Before running any experiment that has a prediction, fix its metric and pass threshold in `design-spec.md` §7
+  with the author. Then report the outcome as it came out. If a criterion turns out to be badly worded, report
+  it as written and explain; do not repair it after seeing the result.
+- Offer design choices with a recommended option and let the author decide. Do not commit: the author commits.
+- Notebooks are edited directly; there are no builder scripts. Re-execute with
+  `jupyter nbconvert --to notebook --execute --inplace` from the notebook's own folder, using
+  `protocell/.venv`.
+- After 04b, always re-run 04c: 04b rewrites `encoder-*.json` without the `probes` that Lab C needs.
+- `data/corpus/` is gitignored; notebook 01 regenerates it. `data/web/` is committed and must stay within
+  budget (≤ 5 MB per file, ≤ 20 MB in total; it is 15.2 MB now).
+- Verify labs in a real browser, served by `python -m http.server`: the start-up badges must pass. Each lab
+  exposes `window.labA`, `window.labB` or `window.labC` for scripted checks (Playwright is installed in
+  `.venv`).
 
 ## Single sources of truth
 

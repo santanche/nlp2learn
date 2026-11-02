@@ -2,7 +2,13 @@
 
 **Static and contextual embeddings over the Protocell-0 energy pathway**
 
-*Version 1.0 · 2026-11-01 · Companion to `protocell-0-spec.md` and `protocell-0-energy-pathway.md`*
+*Version 1.1 · 2026-11-02 · as implemented (version 1 of the labs is complete) · Companion to `protocell-0-spec.md`
+and `protocell-0-energy-pathway.md`*
+
+*Version 1.0 (2026-11-01) was the design before implementation. Every later change was made here first —
+the details each phase had to fix, the `misplaced_rbs` category, the 60-epoch encoder, and the pass criteria
+of §7 — and is logged, with its reason, in `architecture.md` §12. Results are in `architecture.md` §10; how to
+resume the project is in `status-and-decisions.md`.*
 
 ---
 
@@ -325,11 +331,12 @@ protocell/
 │   ├── protocell-0-energy-pathway.md
 │   ├── design-spec.md            ← this file
 │   ├── architecture.md           ← maintained as phases land
+│   ├── status-and-decisions.md   ← resume here: run order, decisions, limitations, open items
 │   └── ai/                       ← background debates (ChatGPT, Gemini)
 ├── legacy/protocell_lm.py        ← superseded prototype; not imported
 ├── protocell_lang.py             ← single source of truth for the language
 ├── 01-corpus/01_generate_corpus.ipynb
-├── 02-ngrams/                    ← optional (phase 6)
+├── 02-ngrams/02_ngram_baselines.ipynb   ← optional (phase 6)
 ├── 03-static/03a_cooccurrence.ipynb
 │             03b_word2vec.ipynb
 ├── 04-attention/04a_attention_by_hand.ipynb
@@ -472,7 +479,7 @@ Overall and per-category accuracies are otherwise reported descriptively.
 | Block | pre-LayerNorm: x + Attn(LN(x)); x + FF(LN(x)); FF uses ReLU |
 | Attention | written explicitly (no `nn.MultiheadAttention`, no `nn.TransformerEncoder*`) |
 | Objective | masked-codon prediction: 15% of non-special tokens replaced by `[MASK]`; loss on masked positions only |
-| Optimiser | AdamW, lr 1e-3, batch 32, ≈30 epochs; must train on a laptop CPU in minutes |
+| Optimiser | AdamW, lr 1e-3, batch 32, 60 epochs (≈30 in v1.0; see Details below); must train on a laptop CPU in minutes |
 | Split | by genome, 80/20 |
 
 **Configurations (each exported separately):** `full`; `no_position` (positional embeddings removed);
@@ -618,6 +625,9 @@ Weights are stored as nested arrays rounded to 6 decimals, with named tensors ma
 
 One phase per Claude Code session, starting in plan mode. Update `docs/architecture.md` at the end of each.
 
+**Status (2026-11-02):** phases 0–6 are all done. What was built and measured is recorded per phase in
+`architecture.md` §3–§9.
+
 ### Phase 0 — repository setup
 - Directory skeleton; docs copied in; `CLAUDE.md` in place.
 - Create `docs/architecture.md` as a skeleton (in the style of `zombienella_notebook_architecture.md`): one
@@ -755,6 +765,9 @@ final snapshot; "majority" is the majority-class rate of that case (§4.8).
 4. **Low-food scenario:** graph side only in version 1; on the language side it would change transcript
    frequencies, not sequences.
 5. **Stage III** (synonymy at scale) and the chemiosmotic branch: later versions.
+
+Items arising from the implementation (case 1 in the encoder, the wording of C1, repeatable browser checks,
+Colab and browser coverage, an optional Phase 6 panel) are listed in `status-and-decisions.md` §6.
 
 ## 10. References
 
