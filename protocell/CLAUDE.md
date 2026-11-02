@@ -12,6 +12,9 @@ Audience: students in machine learning and bioinformatics courses. Clarity beats
 4. `docs/architecture.md` — what has been built so far. Created in Phase 0; update it at the end of every
    phase.
 
+Background only: `docs/ai/` (design debates). `legacy/protocell_lm.py` is the superseded prototype (A/C/G/T
+bases); do not import it or copy its tables.
+
 Reference implementations in the same repository, for style and level:
 - `zombie/zombienella/` — notebook series (n-grams, co-occurrence, NumPy word2vec).
 - `machine-learning/neural-network/feedforward/` — browser lab: live training, latent-space chart, network

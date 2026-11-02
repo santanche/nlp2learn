@@ -98,10 +98,11 @@ Rows: first·third base. Columns: middle base. DNA spelling (RNA: replace Z with
 
 ### 1.3 Residues (Stage II roster, revised)
 
-Names end in **-an** (bases end in **-ine**). Two characters change from `protocell-0-spec.md` §1.3 to match
-SNS, and one residue is renamed.
+Names end in **-an** (bases end in **-ine**). Two characters changed from the original roster of
+`protocell-0-spec.md` to match SNS, and one residue was renamed; `protocell-0-spec.md` §1.3 has been updated
+to this table.
 
-| Code | Name | Character | Real analogue | Stage | Codons | Change vs. spec |
+| Code | Name | Character | Real analogue | Stage | Codons | Change vs. original spec (v0) |
 |---|---|---|---|---|---|---|
 | Nm | neman | smallest, flexible | Gly | I | XXY, XXX | — |
 | Kv | korvan | small hydrophobic | Ala | I | XYY, XYX | — |
@@ -179,13 +180,16 @@ GENE_BLOCK(g) = RBS + gap + WXZ + MARKER_g + BODY_g + TERMINATOR_g + intergenic
                 WXX WXX  spacer(1–3)       12–24 codons             spacer(0–2)
 ```
 
-- **Gene body length:** 12–24 codons (decision; the spec's 30–60 would give 250–450-token transcripts and
+- **Gene body length:** 12–24 codons (decision; the original spec's 30–60 would give 250–450-token transcripts and
   unreadable attention maps). A full read-through transcript is ≈150–220 tokens.
 - **Spacers** draw codons uniformly from all 64 triplets **except** `WXZ` (initiator decoys are injected
   deliberately, §2.4) and except draws that would complete a multi-codon motif (promoter pair, RBS pair,
   K-sensor triple, terminator pair). Single reserved codons may appear in spacers; that polysemy is wanted.
 - **Order:** pathway order in every genome by default. A control corpus with shuffled gene order is generated
-  with the same seed (parameter `operon_order = pathway | shuffled`).
+  with the same seed (parameter `operon_order = pathway | shuffled`). In shuffled genomes the LEADER stays
+  directly before GENE_BLOCK(SNIP), wherever NaxSNIP lands: the control element moves with the gene it
+  controls. The shuffled corpus is a genome-only control for the static experiments (§4.4, §4.5); `K_high`
+  attenuation (§2.5) is defined for pathway order.
 
 ### 2.3 Codon dialects: meaning layer and style layer
 
@@ -281,7 +285,9 @@ protocell/
 │   ├── protocell-0-spec.md
 │   ├── protocell-0-energy-pathway.md
 │   ├── design-spec.md            ← this file
-│   └── architecture.md           ← maintained as phases land
+│   ├── architecture.md           ← maintained as phases land
+│   └── ai/                       ← background debates (ChatGPT, Gemini)
+├── legacy/protocell_lm.py        ← superseded prototype; not imported
 ├── protocell_lang.py             ← single source of truth for the language
 ├── 01-corpus/01_generate_corpus.ipynb
 ├── 02-ngrams/                    ← optional (phase 6)
@@ -512,7 +518,7 @@ only for a documented reason, never to force a result.
 | S2 | Body codons cluster by preferred gene (dialect). |
 | S3 | Synonymous codons cluster by register, not by residue, when their genes' preferences differ: distributional similarity is not semantic similarity. |
 | S4 | WXZ has one vector blending true and false starts. |
-| S5 | With a wide half-window (≥ the TERMINATOR_i → MARKER_i+1 distance, 5–9 positions; ±9), markers and terminators of adjacent genes lie close: pathway order recovered from sequence alone; the signal disappears in the shuffled-order corpus. Body codons do not carry it. |
+| S5 | With a wide half-window (≥ the TERMINATOR_i → MARKER_i+1 distance, 5–9 positions; ±9), markers and terminators of adjacent genes lie close: pathway order recovered from sequence alone; the signal disappears in the shuffled-order corpus. Body codons do not carry it. Exception: NaxTAG → NaxSNIP spans the leader (intergenic 0–2 + leader 5 + spacer 0–2 + RBS 2 + gap 1–3 + WXZ + marker = 10–16 positions), so ±9 is predicted to recover the other five adjacent pairs, not this one. |
 | S6 | In the mixed DNA+RNA corpus, Z/V pairs (ZWX/VWX etc.) converge through shared neighbours. |
 
 **Contextual (Part B)**
@@ -557,4 +563,4 @@ loss is not evidence that attention does the work. The probes are.
 - Direction Embeddings Lab (`santanche/nlp2learn/machine-learning/neural-network/feedforward/`).
 - Ikehara, K. GNC–SNS hypothesis on the origin of the genetic code.
 - Mikolov et al. (2013) word2vec; Devlin et al. (2019) BERT (masked-language-model objective).
-- Debates: `attention_encoders_pathway_debate_chatgpt.md`, `attention_encoders_pathway_debate_gemini.md`.
+- Debates: `docs/ai/attention_encoders_pathway_debate_chatgpt.md`, `docs/ai/attention_encoders_pathway_debate_gemini.md`.

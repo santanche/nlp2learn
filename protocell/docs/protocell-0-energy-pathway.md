@@ -194,6 +194,10 @@ Same `nodes.csv` / `edges.csv` format as the zombie project, loadable in Dagober
 
 ## 8. Open decisions and next steps
 
+*Status as of `design-spec.md` v1.0 (2026-11-01):* item 1 still open (graph side); item 2 kept separate,
+seven proteins (design-spec §9.2); item 3 graph side only (§9.3); item 4 later version (§9.5); item 5 done
+(`protocell-0-spec.md` §3.2 updated).
+
 1. **Next deliverable (proposed, not yet done):** `nodes.csv` (id, pathway, role, expression_normal,
    expression_lowfood, expression_diff) and `edges.csv` (source, target, pathway) for the seven proteins, ready
    for Dagoberto.
