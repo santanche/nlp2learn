@@ -11,7 +11,7 @@ embeddings, Part A), then one vector per codon occurrence (contextual embeddings
 
 ### 1.1 Directory organization
 
-Current state (after Phase 2). Directories marked *(empty)* hold only a `.gitkeep`.
+Current state (after Phase 3). Directories marked *(empty)* hold only a `.gitkeep`.
 
 ```text
 protocell/
@@ -32,16 +32,16 @@ protocell/
 ├── 01-corpus/01_generate_corpus.ipynb   corpus generator — Phase 1
 ├── 02-ngrams/                    (empty) optional n-gram baselines — Phase 6
 ├── 03-static/03a_cooccurrence.ipynb, 03b_word2vec.ipynb — Phase 2
-├── 04-attention/                 (empty) notebooks 04a, 04b, 04c — Phases 3–5
+├── 04-attention/04a_attention_by_hand.ipynb — Phase 3 (04b, 04c: Phases 4–5)
 ├── data/
 │   ├── corpus/                   genome.csv, genome-shuffled.csv, transcripts.csv, proteins.csv
 │   └── web/                      language.json, genome-sample.json, showcase-transcripts.json,
-│                                 cooccurrence.json, w2v-results.json
+│                                 cooccurrence.json, w2v-results.json, mini-transcripts.json
 └── web/
     ├── index.html                landing page
     ├── shared/                   styles.css, rng.js, linalg.js, charts.js, data.js, codeview.js
     ├── codon-embeddings/         Lab A: index.html, lab.css, lab.js, skipgram.js, predictions.js
-    ├── attention-inspector/      (empty) Lab B — Phase 3
+    ├── attention-inspector/      Lab B: index.html, lab.css, lab.js, attention.js
     └── context-lab/              (empty) Lab C — Phase 5
 ```
 
@@ -330,13 +330,70 @@ In each case, the first N genomes are used: 10, 20, 40 or 60.
 
 ## 6. Phase 3 — Attention by hand (04a, Lab B)
 
-**Status:** not yet built.
+**Status:** done (2026-11-02).
 
 ### Files
+- `04-attention/04a_attention_by_hand.ipynb` — the NumPy model, the gradient check, both models, the
+  criterion, and attention heat maps. It runs in about 13 s.
+- `web/attention-inspector/` — Lab B: `index.html`, `lab.css`, `lab.js` (UI) and `attention.js` (maths).
+- `web/shared/charts.js`: `lineChart` gained the `xValues` and `yRange` options.
+- `web/index.html`: Lab B is linked.
+
 ### Functions
+- **04a:**
+  - `make_mini_transcript(category, rng)`, `make_dataset`;
+  - `init_params`, `forward` (one sequence, every tensor);
+  - `batch_arrays` (padding and mask);
+  - `forward_backward` (batched, only the WXV row, manual gradients);
+  - `gradient_check`, `train_model`, `predict`, `accuracy_table`, `plot_attention`.
+- **`attention.js`:**
+  - `createParams` (seeded by mulberry32), `paramsFromJSON`;
+  - `embed`, `forward` (every tensor), `lossAndGradients` (the same equations, one sequence at a time);
+  - `trainStep`, `evaluate`, `gradientCheck`, `parityCheck`.
+- **`lab.js`:** the sequence editor (a click on a base cycles W→X→Y→V), attention arcs, matrix heat maps,
+  training curves, the per-category table and the criterion. `window.labB` is exposed for automated checks.
+
 ### Data flow
-### Outputs
-### Verification (gradient check; JS–NumPy forward agreement; no-position toggle)
+```text
+protocell_lang ─> 04a: make_dataset (600 train / 300 test, seed 42) ─> train both models (lr 0.1, 3000 steps)
+      ─> mini-transcripts.json: dataset, initial + trained weights (full precision), loss histories,
+         accuracies, parity data (test logits and WXV attention rows), criterion, Python sources
+mini-transcripts.json + language.json ─> Lab B
+      start-up: gradientCheck (5 sequences, every parameter, both models)
+                parityCheck (the notebook's trained weights, all 300 test sequences, both models)
+      live: trainStep (full batch) from a JS seed or from the notebook's initial weights
+```
+
+### Outputs (seed 42, notebook)
+Test accuracy, overall and per category:
+
+| Model | overall | true_start | broken_rbs | no_rbs | misplaced_rbs |
+|---|---|---|---|---|---|
+| with positions | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 |
+| without positions | 0.787 | 0.830 | 1.000 | 1.000 | **0.260** |
+
+- With positions, the training performance is 1.000 everywhere.
+- Without positions, the training performance is 0.875 overall and 0.576 on misplaced RBS: it memorises
+  training sequences through their spacer codons.
+- The training loss falls from 0.685 to 0.0008 with positions, and from 0.687 to 0.271 without.
+- `mini-transcripts.json` is 0.44 MB.
+
+### Verification
+- **04a:** the gradient check passes (max relative error 6.2e-7 with positions, 1.7e-6 without; threshold
+  1e-5). The batched and one-sequence logits agree to 6e-17, and the notebook is deterministic.
+- **Lab B**, tested with Playwright:
+  - the gradient check passes (5.7e-6);
+  - **forward parity:** the JS forward pass on the notebook's trained weights matches the NumPy logits and
+    attention rows to max |Δ| 3.8e-14, on all 300 test sequences and both models;
+  - **training parity:** 300 JS steps from the notebook's initial weights reproduce the notebook's loss history
+    to a relative 2e-15;
+  - a live run (JS seed 42, 3,000 steps per model) takes about 24 s per model, with the longest UI pause at
+    70 ms. Its test accuracy on misplaced RBS is 0.96 with positions and 0.36 without, so the criterion also
+    holds live;
+  - Reset reproduces a run;
+  - mutating one base of the RBS of a true start moves p from 1.000 to 0.068;
+  - there are no console errors;
+  - Lab A still works with the changed `charts.js`.
 
 ## 7. Phase 4 — Encoder training and export (04b, JS forward pass)
 
@@ -381,6 +438,7 @@ result.
 | S4 | WXZ has one blended vector | holds by construction | 74.5% true / 13.7% broken RBS / 11.8% spacer decoy; nearest neighbour at ±9 is `WXX` | 03b, Lab A |
 | S5 | ±9 recovers pathway order (5 adjacent pairs; TAG→SNIP excepted); gone when shuffled | **fails** | ±9: 3 of 5 ranked first (others second; criterion 5 of 5); shuffled 0 of 5 (control behaves); ±1: 0 of 5 | 03b, Lab A |
 | S6 | Z/V pairs converge in the mixed corpus | **holds** | twin cosine 0.41 (±1), 0.29 (±9) vs random 0.30, 0.22 | 03b, Lab A |
+| P3 | (Phase 3) without positions, a misplaced RBS cannot be told from a true start | **holds** | test accuracy on misplaced RBS: 1.000 with positions (≥ 0.90), 0.260 without (≤ 0.50); live Lab B run 0.96 / 0.36 | 04a, Lab B |
 | C1 | static probes at the majority baseline; contextual probes near 100% | not yet run | | |
 | C2 | WXZ attends to the RBS; breaking it moves the vector | not yet run | | |
 | C3 | shared body codons cluster by gene | not yet run | | |
@@ -411,3 +469,6 @@ result.
 | 2026-11-01 | 2 | design-spec §4.4 | training algorithm and hyper-parameters, identical in NumPy and JS; the 18-run grid; the mixed-corpus definition | Lab A and 03b must run the same maths |
 | 2026-11-01 | 2 | design-spec §4.5 | Lab A option lists (half-windows, dimensions, corpus sizes) | unspecified |
 | 2026-11-01 | 2 | design-spec §5.2 (data contract) | contents of `cooccurrence.json` and `w2v-results.json` (adds `predictions`, `training`) | the labs need the prediction table and hyper-parameters |
+| 2026-11-02 | 3 | design-spec §4.6 | the mini-transcript dataset is specified, with a new `misplaced_rbs` category | without it, a model with no positions could solve the task from the tokens alone, and the spec's prediction would fail by construction |
+| 2026-11-02 | 3 | design-spec §4.6 | model equations, training (lr 0.1, 3,000 steps, chosen on training loss only), gradient-check rule, and the pre-registered criterion | the spec gave the architecture only in words |
+| 2026-11-02 | 3 | design-spec §5.2 (data contract) | contents of `mini-transcripts.json` | Lab B needs the dataset, initial and trained weights, and parity data |

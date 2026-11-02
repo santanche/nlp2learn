@@ -421,6 +421,46 @@ selected token; Train / Step / Reset with loss and accuracy; toggle positional e
 the task becomes unsolvable when cue position matters); mutation by clicking a base. A finite-difference
 gradient check runs at startup (as in the feedforward lab). 04a is the NumPy twin with identical maths.
 
+**Dataset (Phase 3).** Transcripts use RNA spelling, so the initiator token is `WXV`.
+- Length 8–14 tokens; 600 train and 300 test sequences, seed 42.
+- Categories (label 1 = true start), roughly 1/2 `true_start` and 1/6 each of the others:
+
+  | Category | Construction |
+  |---|---|
+  | `true_start` | intact RBS, gap 1–3 (the nearer RBS codon is 2–4 positions upstream) |
+  | `broken_rbs` | one RBS codon mutated as in §2.4 (`XXX`, `YXX`, `VXX`, `WXW`) |
+  | `no_rbs` | spacer codons only |
+  | `misplaced_rbs` | an intact RBS at the wrong place: upstream with gap 5–7 (6–8 positions away), or downstream, inside the body after the marker |
+
+  The misplaced-RBS category is added so that the position of the cue matters. Without it, "an intact RBS is
+  present somewhere" would decide the task, and a model without positions could solve it.
+- Spacer and gap codons are uniform over the RNA codons, excluding `WXV`, `WXX` and the markers.
+- Then come the marker of a random gene and 1–4 body codons from that gene's dialect.
+
+**Model (d = 4).**
+- X = E[tokens] + P[0:n] (P is omitted when positions are off).
+- Q = X W_Q, K = X W_K, V = X W_V; S = Q Kᵀ/√d; A = softmax by row; H = A V.
+- The readout is h = H[t] at the `WXV` position t; z = w·h + b; p = σ(z); the loss is the mean binary
+  cross-entropy.
+- There are no Q/K/V biases, no residual connection and no layer normalisation. Only row t of A receives
+  gradient.
+
+**Training.**
+- Full-batch gradient descent with manual gradients. Initial parameters N(0, 0.5²) and b = 0.
+- The `with_position` and `no_position` models are trained separately from the same seed.
+- The learning rate and number of steps are tuned on the training loss only, before any test accuracy is
+  examined, and are logged here.
+- **Chosen: learning rate 0.1, 3,000 steps.** At learning rates 0.3, 0.5 and 2.0 at least one model became
+  unstable: the training loss jumped up, or became NaN. At 0.1 both models' training losses fall steadily.
+- Gradient check: central differences with ε = 1e-5 on every parameter. It passes when
+  |numeric − analytic| / max(|numeric| + |analytic|, 1e-6) < 1e-5.
+
+**Prediction and pass criterion (fixed before training).** On the test set:
+- the model with positions reaches ≥ 0.90 accuracy on `misplaced_rbs`; **and**
+- the model without positions reaches ≤ 0.50 on `misplaced_rbs`.
+
+Overall and per-category accuracies are otherwise reported descriptively.
+
 ### 4.7 Notebook 04b — encoder training (PyTorch)
 
 | Item | Value |
@@ -508,7 +548,7 @@ The data contract is the interface between notebooks and labs. Change this secti
 | `showcase-transcripts.json` | 01 | ≈6 curated transcripts (K_low, K_high, broken RBS, spacer decoy) with labels |
 | `cooccurrence.json` | 03a | `vocabulary`, `codon_class`, `windows`: [{half_window, counts, cosine, pca: {coords, explained_variance}}] |
 | `w2v-results.json` | 03b | `vocabularies` {dna, mixed}, `training` (hyper-parameters), `configs`: [{corpus, half_window, dim, W, U, loss_history, cosine}], `predictions`: [{id, corpus, half_window, dim, metric, value, baseline, holds}] |
-| `mini-transcripts.json` | 04a | Lab B dataset and the NumPy-trained weights for comparison |
+| `mini-transcripts.json` | 04a | `vocabulary` (64 RNA codons), `config`, `categories`, `train`/`test` [{tokens, target, label, category}], `models.{with_position, no_position}` {initial, trained (E, P, W_Q, W_K, W_V, w, b), loss_history, accuracy}, `parity` (test logits and attention rows at the readout), `criterion` |
 | `encoder-full.json`, `encoder-no_position.json`, `encoder-causal.json` | 04b/04c | architecture config, vocabulary, snapshots [{epoch, train_loss, test_loss, masked_acc, weights}], probe curves |
 | `contextual-sample.json` | 04c | ≈100 test transcripts, target-codon positions and labels, PCA mean/components per target codon |
 | `parity-tests.json` | 04b | inputs with expected final hidden states and layer-0 attention weights; tolerance 1e-4 |

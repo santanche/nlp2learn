@@ -1,0 +1,37 @@
+/* Lab B specifics. */
+label.inline { display: flex; align-items: center; gap: 6px; font-size: .78rem; color: var(--muted); }
+label.inline select { padding: 5px 6px; border: 1px solid var(--line); border-radius: 7px; font: inherit; max-width: 320px; }
+
+.sequence { overflow-x: auto; padding-bottom: 4px; }
+.sequence svg { display: block; }
+.token-row { display: flex; gap: 6px; align-items: flex-start; }
+.token { display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 64px; }
+.token .bases { display: flex; border-radius: 7px; overflow: hidden; border: 2px solid transparent; }
+.token.target .bases { border-color: var(--bad); }
+.token .bases button { border: 0; border-radius: 0; padding: 6px 5px; font-family: ui-monospace, monospace; font-size: 1rem; font-weight: 700; color: var(--ink); background: transparent; cursor: pointer; }
+.token .bases button:hover { background: #ffffff88; }
+.token .pos { font-size: .7rem; color: var(--muted); }
+.token .weight { font-size: .74rem; font-family: ui-monospace, monospace; color: var(--ink); }
+.token .kind { font-size: .66rem; color: var(--muted); }
+.token.rbs .bases { background: #cfe8b8; }
+.token.initiator .bases { background: #f6c7c3; }
+.token.marker .bases { background: #c9dfe8; }
+.token.mutant .bases { background: #fde7b0; }
+.token.other .bases { background: #eef2f4; }
+.token.edited .pos::after { content: " ✎"; color: var(--warn); }
+
+.prediction { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; margin-top: 12px; font-size: .9rem; }
+.prediction .bar { width: 220px; height: 10px; background: #edf1f3; border-radius: 5px; overflow: hidden; display: inline-block; vertical-align: middle; }
+.prediction .bar i { display: block; height: 100%; background: var(--accent); }
+.prediction .warn { color: var(--warn); font-weight: 700; }
+
+.matrices { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; align-items: start; }
+.matrix h3 { font-size: .8rem; margin: 0 0 4px; font-family: ui-monospace, monospace; }
+.matrix p { font-size: .72rem; color: var(--muted); margin: 0 0 4px; }
+.matrix table { border-collapse: collapse; font-family: ui-monospace, monospace; font-size: .66rem; width: auto; }
+.matrix th, .matrix td { padding: 2px 4px; border: 0; text-align: right; }
+.matrix th { background: transparent; color: var(--muted); font-weight: 400; }
+.matrix tr.target td { outline: 2px solid var(--bad); outline-offset: -1px; }
+.matrix.wide { grid-column: span 2; }
+@media (max-width: 700px) { .matrix.wide { grid-column: auto; } }
+.matrix .scroll { overflow-x: auto; }

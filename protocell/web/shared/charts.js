@@ -13,9 +13,10 @@ function extent(values, padShare = 0.08) {
 }
 
 // ------------------------------------------------------------------------------------------------
-// Line chart. series: [{label, colour, values: [y0, y1, …]}]; x is the index + xOffset.
+// Line chart. series: [{label, colour, values: [y0, y1, …]}]; x is the index + xOffset, or xValues[index].
 // ------------------------------------------------------------------------------------------------
-export function lineChart(svg, series, { xLabel = "", yLabel = "", xOffset = 1, width = 640, height = 220 } = {}) {
+export function lineChart(svg, series, { xLabel = "", yLabel = "", xOffset = 1, xValues = null, yRange = null, width = 640, height = 220 } = {}) {
+  const xName = i => (xValues ? xValues[i] : i + xOffset);
   const pad = { l: 62, r: 16, t: 14, b: 40 };
   svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
   const all = series.flatMap(s => s.values);
@@ -24,7 +25,7 @@ export function lineChart(svg, series, { xLabel = "", yLabel = "", xOffset = 1, 
     return;
   }
   const n = Math.max(...series.map(s => s.values.length));
-  const [ymin, ymax] = extent(all);
+  const [ymin, ymax] = yRange || extent(all);
   const x = i => pad.l + (n === 1 ? 0.5 : i / (n - 1)) * (width - pad.l - pad.r);
   const y = v => pad.t + (ymax - v) / (ymax - ymin) * (height - pad.t - pad.b);
 
@@ -36,14 +37,14 @@ export function lineChart(svg, series, { xLabel = "", yLabel = "", xOffset = 1, 
   }
   const step = Math.max(1, Math.ceil(n / 10));
   for (let i = 0; i < n; i += step) {
-    out += `<text class="tick" x="${x(i)}" y="${height - pad.b + 16}" text-anchor="middle">${i + xOffset}</text>`;
+    out += `<text class="tick" x="${x(i)}" y="${height - pad.b + 16}" text-anchor="middle">${xName(i)}</text>`;
   }
   out += `<line class="axis" x1="${pad.l}" y1="${pad.t}" x2="${pad.l}" y2="${height - pad.b}"/>`;
   out += `<line class="axis" x1="${pad.l}" y1="${height - pad.b}" x2="${width - pad.r}" y2="${height - pad.b}"/>`;
   series.forEach(s => {
     const points = s.values.map((v, i) => `${x(i)},${y(v)}`).join(" ");
     out += `<polyline points="${points}" fill="none" stroke="${s.colour}" stroke-width="2.5"/>`;
-    s.values.forEach((v, i) => { out += `<circle cx="${x(i)}" cy="${y(v)}" r="3" fill="${s.colour}"><title>${escapeHtml(s.label)} · ${i + xOffset}: ${v.toFixed(5)}</title></circle>`; });
+    s.values.forEach((v, i) => { out += `<circle cx="${x(i)}" cy="${y(v)}" r="3" fill="${s.colour}"><title>${escapeHtml(s.label)} · ${xName(i)}: ${v.toFixed(5)}</title></circle>`; });
   });
   out += `<text class="axis-label" x="${(pad.l + width - pad.r) / 2}" y="${height - 6}" text-anchor="middle">${escapeHtml(xLabel)}</text>`;
   out += `<text class="axis-label" x="14" y="${height / 2}" transform="rotate(-90 14 ${height / 2})" text-anchor="middle">${escapeHtml(yLabel)}</text>`;

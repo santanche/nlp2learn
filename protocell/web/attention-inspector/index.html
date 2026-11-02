@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Attention Inspector</title>
+  <link rel="stylesheet" href="../shared/styles.css">
+  <link rel="stylesheet" href="lab.css">
+</head>
+<body>
+<main>
+  <header class="hero">
+    <p class="eyebrow">PROTOCELL-0 · LAB B · ATTENTION BY HAND</p>
+    <h1>Attention Inspector</h1>
+    <p>Is this start codon (<code>WXZ</code>, written <code>WXV</code> in RNA) a <b>true start</b>? Only if an intact
+      ribosome-binding site <code>WXX WXX</code> sits 2–5 positions upstream. One attention head with 4-number
+      embeddings learns to look for it — every matrix is on this page. Switch the positional embeddings off and see
+      what the model can no longer tell. <a href="../index.html">All labs</a></p>
+  </header>
+
+  <div id="error"></div>
+
+  <section class="panel control-panel">
+    <div class="section-heading">
+      <div><h2>Training</h2><p class="muted" id="data-description">Loading data…</p></div>
+      <div class="actions">
+        <span id="gradient-status" class="status">Gradient check…</span>
+        <span id="parity-status" class="status">Parity…</span>
+        <span id="model-status" class="status">Untrained</span>
+        <div class="buttons">
+          <button id="train-btn" disabled>Train</button>
+          <button id="step-btn" class="secondary" disabled>Step</button>
+          <button id="reset-btn" class="secondary" disabled>Reset</button>
+        </div>
+      </div>
+    </div>
+    <div class="settings">
+      <label>Positional embeddings
+        <select id="positions">
+          <option value="with_position">on (model 1)</option>
+          <option value="no_position">off (model 2)</option>
+        </select></label>
+      <label>Initial weights
+        <select id="init">
+          <option value="seed">random (seed)</option>
+          <option value="notebook">notebook 04a's</option>
+        </select></label>
+      <label>Random seed<input id="seed" type="number" step="1" value="42"></label>
+      <label>Learning rate<input id="learning-rate" type="number" min="0.001" max="2" step="0.01" value="0.1"></label>
+      <label>Steps per Train<input id="steps" type="number" min="1" max="10000" step="50" value="500"></label>
+      <div class="metric"><span>Steps</span><strong id="steps-value">0</strong></div>
+      <div class="metric"><span>Training loss</span><strong id="loss-value">—</strong></div>
+      <div class="metric"><span>Training accuracy</span><strong id="train-acc">—</strong></div>
+      <div class="metric"><span>Test accuracy</span><strong id="test-acc">—</strong></div>
+    </div>
+  </section>
+
+  <div class="lab-grid">
+    <section class="panel wide" id="editor-panel">
+      <div class="section-heading">
+        <div><h2>1 · Sequence editor and attention</h2><p class="muted">Click a base to mutate it (W → X → Y → V). The framed token is the start being classified.</p></div>
+        <div class="actions">
+          <label class="inline">Example <select id="example"></select></label>
+          <button id="restore-btn" class="secondary">Restore</button>
+          <button class="secondary code-toggle">Code</button>
+        </div>
+      </div>
+      <div id="sequence" class="sequence"></div>
+      <div id="prediction" class="prediction"></div>
+      <div class="code-view" hidden></div>
+    </section>
+
+    <section class="panel wide" id="matrices-panel">
+      <div class="section-heading">
+        <div><h2>2 · Every tensor of the forward pass</h2><p class="muted">Rows are tokens; the framed row is the start codon, the only row the classifier reads.</p></div>
+        <div class="actions"><button class="secondary code-toggle">Code</button></div>
+      </div>
+      <div id="matrices" class="matrices"></div>
+      <p class="note">All rows of A are computed, but only the start codon's row reaches the loss, so only that row is
+        trained. The other rows show what the untrained parts of the head happen to do.</p>
+      <div class="code-view" hidden></div>
+    </section>
+
+    <section class="panel" id="curves-panel">
+      <div class="section-heading">
+        <div><h2>3 · Training curves</h2><p class="muted">Full-batch gradient descent on 600 sequences.</p></div>
+        <div class="actions"><button class="secondary code-toggle">Code</button></div>
+      </div>
+      <svg id="loss-chart" class="chart" role="img" aria-label="Training loss"></svg>
+      <svg id="accuracy-chart" class="chart" role="img" aria-label="Training and test accuracy"></svg>
+      <p class="note">Training accuracy is <b>training performance</b> (the 600 sequences the model learns from);
+        test accuracy uses 300 sequences it never sees.</p>
+      <div class="code-view" hidden></div>
+    </section>
+
+    <section class="panel" id="results-panel">
+      <div class="section-heading">
+        <div><h2>4 · Where does each model fail?</h2><p class="muted">Test accuracy per category, both models.</p></div>
+        <div class="actions"><button class="secondary code-toggle">Code</button></div>
+      </div>
+      <div class="table-scroll"><table id="category-table"></table></div>
+      <div id="criterion" class="note strong"></div>
+      <div class="code-view" hidden></div>
+    </section>
+  </div>
+  <footer>Vanilla JavaScript · one attention head with hand-derived gradients · twin of notebook 04a</footer>
+</main>
+<script type="module" src="lab.js"></script>
+</body>
+</html>
