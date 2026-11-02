@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Context Lab</title>
+  <link rel="stylesheet" href="../shared/styles.css">
+  <link rel="stylesheet" href="lab.css">
+</head>
+<body>
+<main>
+  <header class="hero">
+    <p class="eyebrow">PROTOCELL-0 · LAB C · CONTEXTUAL EMBEDDINGS</p>
+    <h1>Context Lab</h1>
+    <p>A small encoder (2 layers, 2 heads, 32 dimensions) trained in notebook 04b to guess masked codons in
+      transcripts. This page loads its weights and runs its forward pass in your browser. <b>In progress:</b> parity
+      check and training replay are ready; occurrence clouds, probes, the transcript viewer and the mutation editor
+      arrive in Phase 5. <a href="../index.html">All labs</a></p>
+  </header>
+
+  <div id="error"></div>
+
+  <section class="panel control-panel">
+    <div class="section-heading">
+      <div><h2>Encoder</h2><p class="muted" id="config-description">Loading weights (about 8 MB)…</p></div>
+      <div class="actions" id="parity-badges"></div>
+    </div>
+    <div class="settings">
+      <label>Configuration
+        <select id="config" disabled>
+          <option value="full">full (positions, bidirectional)</option>
+          <option value="no_position">no_position (no positional embeddings)</option>
+          <option value="causal">causal (each token sees only its left)</option>
+        </select></label>
+      <label>Snapshot (epoch)<input id="epoch" type="range" min="0" max="9" step="1" value="9" disabled></label>
+      <div class="metric"><span>Epoch</span><strong id="epoch-value">—</strong></div>
+      <div class="metric"><span>Training loss</span><strong id="train-loss">—</strong></div>
+      <div class="metric"><span>Test loss</span><strong id="test-loss">—</strong></div>
+      <div class="metric"><span>Test masked-token accuracy</span><strong id="test-acc">—</strong></div>
+    </div>
+  </section>
+
+  <div class="lab-grid">
+    <section class="panel wide" id="replay-panel">
+      <div class="section-heading">
+        <div><h2>1 · Training replay</h2><p class="muted">Masked-token loss and accuracy at each exported snapshot; the slider picks the snapshot the other panels will use.</p></div>
+        <div class="actions"><button class="secondary code-toggle">Code</button></div>
+      </div>
+      <div class="replay-charts">
+        <svg id="loss-chart" class="chart" role="img" aria-label="Masked-token loss per snapshot"></svg>
+        <svg id="accuracy-chart" class="chart" role="img" aria-label="Masked-token accuracy per snapshot"></svg>
+      </div>
+      <p class="note">Dashed: training set (<b>training performance</b>); solid: test genomes. A low masked-token loss is
+        <b>not</b> evidence that attention does the work: many masked codons can be guessed from their dialect alone.
+        The probes (Phase 5) are the evidence.</p>
+      <div class="code-view" hidden></div>
+    </section>
+
+    <section class="panel wide" id="parity-panel">
+      <div class="section-heading">
+        <div><h2>Parity: the browser runs the same model as PyTorch</h2><p class="muted">Run at start-up on the final snapshot of each configuration.</p></div>
+        <div class="actions"><button class="secondary code-toggle">Code</button></div>
+      </div>
+      <div class="table-scroll"><table id="parity-table"></table></div>
+      <p class="note">For four test transcripts per configuration, the JavaScript forward pass computes every token's final
+        vector (32 numbers) and the layer-0 attention weights, and compares them with the values PyTorch computed from the
+        same exported weights. Tolerance 1e-4.</p>
+      <div class="code-view" hidden></div>
+    </section>
+  </div>
+  <footer>Vanilla JavaScript · encoder forward pass in web/shared/encoder.js · weights from notebook 04b</footer>
+</main>
+<script type="module" src="lab.js"></script>
+</body>
+</html>

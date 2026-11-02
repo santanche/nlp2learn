@@ -6,3 +6,6 @@ jupyter
 # Phase 2 (static embeddings): plots and PCA
 matplotlib
 scikit-learn
+# Phase 4 (encoder): PyTorch, CPU build is enough —
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+torch

@@ -479,6 +479,36 @@ Overall and per-category accuracies are otherwise reported descriptively.
 `causal` (causal attention mask). Snapshots at ≈10 epochs (log-spaced, including epoch 0) with weights,
 train/test loss, masked-token accuracy.
 
+**Details (Phase 4).** These fill in what the table above leaves open.
+
+- **Sequence:** `[CLS]` + transcript (RNA codons) + `[EOS]`, padded with `[PAD]` to the batch's longest
+  sequence.
+- **Vocabulary order:** `[PAD]`, `[MASK]`, `[CLS]`, `[EOS]`, then the 64 RNA codons in `protocell_lang` order.
+- **Masking:**
+  - 15% of the codon tokens (never special tokens), rounded up, at least 1 per sequence;
+  - the masks are redrawn every epoch from a seeded generator;
+  - test metrics use one fixed, seeded set of masks;
+  - masked-token accuracy is the top-1 prediction on the masked positions.
+- **Attention:** 2 heads with d_head = 16 and scores scaled by 1/√16.
+  - Q, K and V come from one `Linear(32 → 96)`, split into three, then into the two heads.
+  - A `Linear(32 → 32)` output projection follows.
+  - Key padding is masked; the `causal` configuration also masks keys j > i.
+- **Normalisation and head:** LayerNorm with eps = 1e-5, a final LayerNorm, then an untied MLM head
+  `Linear(32 → 68)`.
+- **No dropout:** a teaching choice, so that the browser can reproduce the forward pass exactly.
+- **Initialisation:** PyTorch defaults under `torch.manual_seed(42)`, with a fixed number of CPU threads.
+- **Split:** 80/20 by genome, seeded. The test genome IDs are exported, so 04c uses the same split.
+- **Snapshots:** at epochs 0, 1, 2, 3, 5, 8, 12, 18, 24 and 30. Each is evaluated with fixed, seeded masks on
+  the training set (training performance) and on the test set: masked-token loss and masked-token accuracy.
+- **Weights:** named tensors in PyTorch layout. A linear layer stores W as (out, in) and computes
+  y = x Wᵀ + b; the JS forward pass follows the same convention. `no_position` has no `pos_emb`.
+- **Final hidden state:** the output of the final LayerNorm. It is what the MLM head reads, and it is the
+  occurrence vector of §4.8.
+- **Parity tests:** 4 test transcripts per configuration (`K_low`, `K_high`, broken RBS, spacer decoy).
+  - Each test stores the token IDs, the final hidden states and the layer-0 attention weights per head, all
+    computed with the final snapshot's **rounded** (exported) weights, in float64.
+  - The JS forward pass must match within 1e-4.
+
 ### 4.8 Notebook 04c — contextual analysis
 
 - Occurrence vectors (final layer output) for the target codons of cases 1–3, from test genomes.
@@ -549,9 +579,9 @@ The data contract is the interface between notebooks and labs. Change this secti
 | `cooccurrence.json` | 03a | `vocabulary`, `codon_class`, `windows`: [{half_window, counts, cosine, pca: {coords, explained_variance}}] |
 | `w2v-results.json` | 03b | `vocabularies` {dna, mixed}, `training` (hyper-parameters), `configs`: [{corpus, half_window, dim, W, U, loss_history, cosine}], `predictions`: [{id, corpus, half_window, dim, metric, value, baseline, holds}] |
 | `mini-transcripts.json` | 04a | `vocabulary` (64 RNA codons), `config`, `categories`, `train`/`test` [{tokens, target, label, category}], `models.{with_position, no_position}` {initial, trained (E, P, W_Q, W_K, W_V, w, b), loss_history, accuracy}, `parity` (test logits and attention rows at the readout), `criterion` |
-| `encoder-full.json`, `encoder-no_position.json`, `encoder-causal.json` | 04b/04c | architecture config, vocabulary, snapshots [{epoch, train_loss, test_loss, masked_acc, weights}], probe curves |
+| `encoder-full.json`, `encoder-no_position.json`, `encoder-causal.json` | 04b/04c | `config` (architecture, causal, use_position, vocabulary, special tokens, train/test genome IDs), `snapshots` [{epoch, train_loss, test_loss, masked_acc, weights}]; 04c adds `probes` |
 | `contextual-sample.json` | 04c | ≈100 test transcripts, target-codon positions and labels, PCA mean/components per target codon |
-| `parity-tests.json` | 04b | inputs with expected final hidden states and layer-0 attention weights; tolerance 1e-4 |
+| `parity-tests.json` | 04b | per configuration: `epoch` and `tests` [{label, transcript_id, ids, final (n × 32), attention_layer0 (heads × n × n)}]; tolerance 1e-4 |
 
 Weights are stored as nested arrays rounded to 6 decimals, with named tensors matching the JS forward pass.
 

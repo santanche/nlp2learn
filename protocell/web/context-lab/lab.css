@@ -1,0 +1,6 @@
+/* Lab C specifics. */
+.replay-charts { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; }
+@media (max-width: 900px) { .replay-charts { grid-template-columns: minmax(0, 1fr); } }
+.settings input[type="range"] { padding: 0; border: 0; background: transparent; accent-color: var(--accent); }
+#parity-table td.pass { color: var(--good); font-weight: 700; }
+#parity-table td.fail { color: var(--bad); font-weight: 700; }

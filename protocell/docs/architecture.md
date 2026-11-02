@@ -11,7 +11,7 @@ embeddings, Part A), then one vector per codon occurrence (contextual embeddings
 
 ### 1.1 Directory organization
 
-Current state (after Phase 3). Directories marked *(empty)* hold only a `.gitkeep`.
+Current state (after Phase 4). Directories marked *(empty)* hold only a `.gitkeep`.
 
 ```text
 protocell/
@@ -32,17 +32,18 @@ protocell/
 ├── 01-corpus/01_generate_corpus.ipynb   corpus generator — Phase 1
 ├── 02-ngrams/                    (empty) optional n-gram baselines — Phase 6
 ├── 03-static/03a_cooccurrence.ipynb, 03b_word2vec.ipynb — Phase 2
-├── 04-attention/04a_attention_by_hand.ipynb — Phase 3 (04b, 04c: Phases 4–5)
+├── 04-attention/04a_attention_by_hand.ipynb (Phase 3), 04b_encoder_training.ipynb (Phase 4); 04c: Phase 5
 ├── data/
 │   ├── corpus/                   genome.csv, genome-shuffled.csv, transcripts.csv, proteins.csv
 │   └── web/                      language.json, genome-sample.json, showcase-transcripts.json,
-│                                 cooccurrence.json, w2v-results.json, mini-transcripts.json
+│                                 cooccurrence.json, w2v-results.json, mini-transcripts.json,
+│                                 encoder-{full,no_position,causal}.json, parity-tests.json
 └── web/
     ├── index.html                landing page
-    ├── shared/                   styles.css, rng.js, linalg.js, charts.js, data.js, codeview.js
+    ├── shared/                   styles.css, rng.js, linalg.js, charts.js, data.js, codeview.js, encoder.js
     ├── codon-embeddings/         Lab A: index.html, lab.css, lab.js, skipgram.js, predictions.js
     ├── attention-inspector/      Lab B: index.html, lab.css, lab.js, attention.js
-    └── context-lab/              (empty) Lab C — Phase 5
+    └── context-lab/              Lab C (skeleton): index.html, lab.css, lab.js — parity + training replay
 ```
 
 ### 1.2 Pipeline (built through Phase 2; the rest planned)
@@ -397,13 +398,69 @@ Test accuracy, overall and per category:
 
 ## 7. Phase 4 — Encoder training and export (04b, JS forward pass)
 
-**Status:** not yet built.
+**Status:** done (2026-11-02).
 
 ### Files
+- `04-attention/04b_encoder_training.ipynb`: the PyTorch encoder written out, three configurations, learning
+  curves, a first look at attention, the export and a self-check. It runs in about 5 min on a 4-thread CPU.
+- `web/shared/encoder.js`: the JS forward pass (float64).
+- `web/context-lab/` (Lab C skeleton): `index.html`, `lab.css`, `lab.js`. It runs the start-up parity check
+  and shows the training replay with an epoch slider.
+- `web/shared/charts.js`: `lineChart` gained per-series `dash` and a `highlight` band.
+- `web/index.html`: Lab C is linked and marked "in progress".
+- `requirements.txt`: added `torch`, installed from the CPU index.
+
 ### Functions
+- **04b:**
+  - `pad_batch`, `mask_tokens` (15% of codons, at least 1, never special tokens);
+  - the classes `SelfAttention` (fused QKV, head split, padding and causal masks, returns the weights),
+    `Block` (pre-LN, ReLU FF) and `Encoder` (tok_emb, optional pos_emb, 2 blocks, ln_final, head);
+  - `evaluate`, `fixed_masks`, `train_config` (AdamW, snapshots);
+  - `model_from_weights` (float64, from rounded weights), `parity_cases`, `class_source` (method sources,
+    because `inspect` cannot read a class defined in a notebook).
+- **`encoder.js`:** `loadWeights`, `linear` (x Wᵀ + b), `layerNorm`, `relu`, `selfAttention`,
+  `encoderForward` (returns embeddings, per-layer attention and outputs, and `final`), `predictTokens`,
+  `parityCheck`.
+- **Lab C:** `renderReplay` (all three configurations on the same axes, training dashed and test solid, with the
+  selected snapshot highlighted) and `renderParity`. `window.labC` is exposed for checks.
+
 ### Data flow
-### Outputs
-### Verification (browser parity check for all three configurations; CPU training time)
+```text
+transcripts.csv ─> 04b: split by genome (seed 42; 320 / 80 genomes → 1280 / 320 transcripts)
+   ─> train full / no_position / causal (AdamW, 30 epochs, snapshots 0,1,2,3,5,8,12,18,24,30)
+   ─> encoder-<config>.json (config incl. train/test genome IDs; snapshots with weights rounded to 6 dp)
+   ─> parity-tests.json (4 test transcripts per config: final vectors + layer-0 attention, float64, from rounded weights)
+encoder-*.json + parity-tests.json ─> Lab C: parityCheck at start-up; training replay
+```
+
+### Outputs (seed 42)
+| Config | test masked-token accuracy | training performance | test loss | time |
+|---|---|---|---|---|
+| full | 0.227 | 0.225 | 2.895 | 99 s |
+| no_position | 0.098 | 0.096 | 3.402 | 87 s |
+| causal | 0.244 | 0.249 | 2.795 | 92 s |
+
+- Guessing the most frequent codon would score 0.071.
+- File sizes: `encoder-full.json` 2.83 MB, `encoder-no_position.json` 2.05 MB, `encoder-causal.json` 2.82 MB,
+  `parity-tests.json` 2.88 MB. All of `data/web/` comes to 14.4 MB (budget 20 MB).
+
+### Verification
+- **04b self-check:** reloading each exported file reproduces `parity-tests.json` exactly (Δ = 0).
+- **Determinism:** two runs give identical hashes, ignoring `created`.
+- **Lab C** (Playwright):
+  - all three configurations pass the parity check at start-up. The max |Δ| is 5.0e-8 for both the final
+    vectors and the layer-0 attention, which is the 7-decimal rounding of the stored expected values; the
+    tolerance is 1e-4;
+  - the check takes 35–97 ms per configuration, and the page loads in 0.4 s from a local server;
+  - the configuration selector and the epoch slider update the replay;
+  - there are no console errors, and Labs A and B still work.
+
+### Observations (descriptive; predictions belong to 04c)
+- **`full` is not fully converged at epoch 30:** its test loss is 2.922 → 2.895 between epochs 24 and 30.
+- **`causal` slightly beats `full` on masked-token accuracy.** In this generator, the gene body to the left of
+  a masked codon already reveals the dialect.
+- **`no_position` barely beats the most-frequent baseline.** Without positions, every token sees the same bag
+  of tokens.
 
 ## 8. Phase 5 — Contextual analysis and Context Lab (04c, Lab C)
 
@@ -472,3 +529,5 @@ result.
 | 2026-11-02 | 3 | design-spec §4.6 | the mini-transcript dataset is specified, with a new `misplaced_rbs` category | without it, a model with no positions could solve the task from the tokens alone, and the spec's prediction would fail by construction |
 | 2026-11-02 | 3 | design-spec §4.6 | model equations, training (lr 0.1, 3,000 steps, chosen on training loss only), gradient-check rule, and the pre-registered criterion | the spec gave the architecture only in words |
 | 2026-11-02 | 3 | design-spec §5.2 (data contract) | contents of `mini-transcripts.json` | Lab B needs the dataset, initial and trained weights, and parity data |
+| 2026-11-02 | 4 | design-spec §4.7 | sequence format, vocabulary order, masking rule, attention layout, final LN + untied head, no dropout, initialisation and threads, snapshot epochs and metrics, weight layout, definition of the "final hidden state", parity-test construction | unspecified, and needed for exact JS parity |
+| 2026-11-02 | 4 | design-spec §5.2 (data contract) | contents of `encoder-<config>.json` (adds train/test genome IDs; 04c adds `probes`) and `parity-tests.json` | Lab C and 04c need them |
