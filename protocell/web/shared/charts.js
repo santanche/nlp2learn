@@ -58,6 +58,14 @@ export function lineChart(svg, series, { xLabel = "", yLabel = "", xOffset = 1, 
 // ------------------------------------------------------------------------------------------------
 function pointMarkup(p, cx, cy, selected, radius = 6) {
   const r = selected ? radius + 2.5 : radius;
+  if (p.shape === "star") {
+    const points = Array.from({ length: 10 }, (_, k) => {
+      const radius = k % 2 ? r * 0.75 : r * 1.9, angle = -Math.PI / 2 + k * Math.PI / 5;
+      return `${cx + radius * Math.cos(angle)},${cy + radius * Math.sin(angle)}`;
+    }).join(" ");
+    return `<g class="scatter-point" data-id="${escapeHtml(p.id)}"><polygon points="${points}" fill="${p.colour}" stroke="#172b3a" stroke-width="1.5"/>` +
+      `<text class="point-label" x="${cx + 2 * r}" y="${cy + 3.5}">${escapeHtml(p.label)}</text><title>${escapeHtml(p.title || p.label)}</title></g>`;
+  }
   const shape = p.shape === "square"
     ? `<rect x="${cx - r}" y="${cy - r}" width="${2 * r}" height="${2 * r}" fill="${p.colour}" class="point${selected ? " selected" : ""}"/>`
     : `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${p.colour}" class="point${selected ? " selected" : ""}"/>`;
@@ -175,6 +183,30 @@ export function createScatter3d(svg, { width = 720, height = 520 } = {}) {
     // Stop reacting to drags (when the same SVG is used for a 2D chart).
     deactivate() { state = null; },
   };
+}
+
+// Heat map of a matrix with values in [0, 1] (attention weights), drawn on a canvas so that 220 × 220 stays fast.
+// highlightRow: a row to outline.
+export function heatmapCanvas(canvas, matrix, { highlightRow = null, size = 440 } = {}) {
+  const n = matrix.length, cell = size / n;
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext("2d");
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, size, size);
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < n; j++) {
+      const v = matrix[i][j];
+      if (v <= 0.002) continue;
+      ctx.fillStyle = `rgba(8,127,120,${Math.min(1, Math.sqrt(v)).toFixed(3)})`;     // sqrt: small weights stay visible
+      ctx.fillRect(j * cell, i * cell, Math.ceil(cell), Math.ceil(cell));
+    }
+  }
+  if (highlightRow !== null) {
+    ctx.strokeStyle = "#b8433c";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(0, highlightRow * cell, size, Math.max(cell, 2));
+  }
 }
 
 export function legendMarkup(entries) {

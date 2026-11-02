@@ -12,17 +12,17 @@
   <header class="hero">
     <p class="eyebrow">PROTOCELL-0 · LAB C · CONTEXTUAL EMBEDDINGS</p>
     <h1>Context Lab</h1>
-    <p>A small encoder (2 layers, 2 heads, 32 dimensions) trained in notebook 04b to guess masked codons in
-      transcripts. This page loads its weights and runs its forward pass in your browser. <b>In progress:</b> parity
-      check and training replay are ready; occurrence clouds, probes, the transcript viewer and the mutation editor
-      arrive in Phase 5. <a href="../index.html">All labs</a></p>
+    <p>A small encoder (2 layers, 2 heads, 32 dimensions), trained in notebook 04b to guess masked codons in transcripts,
+      gives every codon <em>occurrence</em> its own vector. This page runs its forward pass in your browser: replay its
+      training, watch the occurrence clouds of three ambiguous codons form, read the probes, and mutate a transcript to
+      see the vectors move. <a href="../index.html">All labs</a></p>
   </header>
 
   <div id="error"></div>
 
   <section class="panel control-panel">
     <div class="section-heading">
-      <div><h2>Encoder</h2><p class="muted" id="config-description">Loading weights (about 8 MB)…</p></div>
+      <div><h2>7 · Encoder</h2><p class="muted" id="config-description">Loading weights (about 10 MB)…</p></div>
       <div class="actions" id="parity-badges"></div>
     </div>
     <div class="settings">
@@ -43,16 +43,96 @@
   <div class="lab-grid">
     <section class="panel wide" id="replay-panel">
       <div class="section-heading">
-        <div><h2>1 · Training replay</h2><p class="muted">Masked-token loss and accuracy at each exported snapshot; the slider picks the snapshot the other panels will use.</p></div>
+        <div><h2>1 · Training replay</h2><p class="muted">Masked-token loss and accuracy at each exported snapshot. The slider above moves every panel to that snapshot.</p></div>
         <div class="actions"><button class="secondary code-toggle">Code</button></div>
       </div>
-      <div class="replay-charts">
+      <div class="two-charts">
         <svg id="loss-chart" class="chart" role="img" aria-label="Masked-token loss per snapshot"></svg>
         <svg id="accuracy-chart" class="chart" role="img" aria-label="Masked-token accuracy per snapshot"></svg>
       </div>
       <p class="note">Dashed: training set (<b>training performance</b>); solid: test genomes. A low masked-token loss is
         <b>not</b> evidence that attention does the work: many masked codons can be guessed from their dialect alone.
-        The probes (Phase 5) are the evidence.</p>
+        The probes (panel 4) are the evidence.</p>
+      <div class="code-view" hidden></div>
+    </section>
+
+    <section class="panel wide" id="cloud-panel">
+      <div class="section-heading">
+        <div><h2>3 · Occurrence cloud</h2><p class="muted" id="cloud-caption">Every occurrence of the target codon in 150 test transcripts, run through the current snapshot.</p></div>
+        <div class="actions">
+          <label class="inline">Target
+            <select id="case">
+              <option value="case1">case 1 · WXV: true or false start?</option>
+              <option value="case2">case 2 · XYX in a gene body: which gene?</option>
+              <option value="case3">case 3 · WVV in the attenuator: read-through or attenuated?</option>
+            </select></label>
+          <span id="cloud-status" class="status">—</span>
+          <button class="secondary code-toggle">Code</button>
+        </div>
+      </div>
+      <div class="cloud-layout">
+        <div>
+          <svg id="cloud-chart" class="chart" role="img" aria-label="Occurrence cloud"></svg>
+          <div id="cloud-legend" class="legend"></div>
+        </div>
+        <div id="cloud-info" class="side-info"></div>
+      </div>
+      <p class="note strong">Each point is one occurrence of the same codon. Points are close when their <b>contexts</b> are
+        similar — not because they mean the same. The axes are fixed (PCA of the final snapshot), so moving the slider
+        shows the clouds forming during training.</p>
+      <div class="code-view" hidden></div>
+    </section>
+
+    <section class="panel wide" id="editor-panel">
+      <div class="section-heading">
+        <div><h2>5 · Transcript viewer &amp; 6 · mutation editor</h2><p class="muted">Click a codon's label to select it; click a base to mutate it (W → X → Y → V). Arcs: attention from the selected token.</p></div>
+        <div class="actions">
+          <label class="inline">Transcript <select id="transcript"></select></label>
+          <label class="inline">Layer <select id="layer"><option value="0">1</option><option value="1" selected>2</option></select></label>
+          <label class="inline">Head <select id="head"><option value="0">1</option><option value="1">2</option><option value="avg" selected>average</option></select></label>
+          <button class="secondary code-toggle">Code</button>
+        </div>
+      </div>
+      <div class="buttons presets">
+        <button id="preset-break" class="secondary">Break the RBS of the selected start</button>
+        <button id="preset-truncate" class="secondary">Delete the genes after the attenuator (K_low → K_high)</button>
+        <button id="preset-restore" class="secondary">Restore</button>
+        <span id="latency" class="status">—</span>
+      </div>
+      <div id="strip" class="strip"></div>
+      <div class="editor-lower">
+        <div>
+          <h3 class="small-heading" id="heatmap-title">Attention</h3>
+          <canvas id="heatmap" class="heatmap" width="440" height="440" aria-label="Attention heat map"></canvas>
+          <p class="note">Rows: the token that looks; columns: the token looked at. Framed row: the selected token.</p>
+        </div>
+        <div id="token-info" class="side-info"></div>
+      </div>
+      <div class="code-view" hidden></div>
+    </section>
+
+    <section class="panel" id="probe-panel">
+      <div class="section-heading">
+        <div><h2>4 · Probes and predictions</h2><p class="muted">Logistic-regression probes from notebook 04c (probe-test accuracy).</p></div>
+        <div class="actions"><button class="secondary code-toggle">Code</button></div>
+      </div>
+      <svg id="probe-chart" class="chart" role="img" aria-label="Probe accuracy per snapshot"></svg>
+      <div class="table-scroll"><table id="probe-table"></table></div>
+      <h3 class="small-heading">Predictions C1–C5 (criteria fixed before notebook 04c ran)</h3>
+      <div class="table-scroll"><table id="verdict-table"></table></div>
+      <div class="code-view" hidden></div>
+    </section>
+
+    <section class="panel" id="static-panel">
+      <div class="section-heading">
+        <div><h2>2 · Static view</h2><p class="muted">One vector per codon type: the encoder's input table (current snapshot) and word2vec (notebook 03b, mixed corpus, ±1, dimension 8).</p></div>
+        <div class="actions"><button class="secondary code-toggle">Code</button></div>
+      </div>
+      <svg id="static-encoder" class="chart" role="img" aria-label="Encoder input embedding"></svg>
+      <svg id="static-w2v" class="chart" role="img" aria-label="Word2vec embedding"></svg>
+      <div id="static-legend" class="legend"></div>
+      <p class="note">A static vector cannot tell a true start from a false one: <code>WXV</code> has one point here,
+        whatever its context. Proximity reflects similar contexts, not similar meaning.</p>
       <div class="code-view" hidden></div>
     </section>
 
@@ -63,12 +143,12 @@
       </div>
       <div class="table-scroll"><table id="parity-table"></table></div>
       <p class="note">For four test transcripts per configuration, the JavaScript forward pass computes every token's final
-        vector (32 numbers) and the layer-0 attention weights, and compares them with the values PyTorch computed from the
-        same exported weights. Tolerance 1e-4.</p>
+        vector and the layer-0 attention weights and compares them with PyTorch's values for the same exported weights
+        (tolerance 1e-4). The occurrence clouds are also checked against notebook 04c's projections.</p>
       <div class="code-view" hidden></div>
     </section>
   </div>
-  <footer>Vanilla JavaScript · encoder forward pass in web/shared/encoder.js · weights from notebook 04b</footer>
+  <footer>Vanilla JavaScript · encoder forward pass in web/shared/encoder.js · weights from notebook 04b, probes from 04c</footer>
 </main>
 <script type="module" src="lab.js"></script>
 </body>

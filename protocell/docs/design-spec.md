@@ -498,7 +498,10 @@ train/test loss, masked-token accuracy.
 - **No dropout:** a teaching choice, so that the browser can reproduce the forward pass exactly.
 - **Initialisation:** PyTorch defaults under `torch.manual_seed(42)`, with a fixed number of CPU threads.
 - **Split:** 80/20 by genome, seeded. The test genome IDs are exported, so 04c uses the same split.
-- **Snapshots:** at epochs 0, 1, 2, 3, 5, 8, 12, 18, 24 and 30. Each is evaluated with fixed, seeded masks on
+- **Epochs (Phase 5 change):** 60 instead of ≈30. At 30 epochs the `full` model's test loss was still
+  falling (2.922 → 2.895 over the last 6 epochs). The change was decided before any probe or C result
+  existed.
+- **Snapshots:** at epochs 0, 1, 2, 4, 7, 11, 17, 26, 40 and 60. Each is evaluated with fixed, seeded masks on
   the training set (training performance) and on the test set: masked-token loss and masked-token accuracy.
 - **Weights:** named tensors in PyTorch layout. A linear layer stores W as (out, in) and computes
   y = x Wᵀ + b; the JS forward pass follows the same convention. `no_position` has no `pos_emb`.
@@ -518,6 +521,30 @@ train/test loss, masked-token accuracy.
 - PCA per target codon on final-snapshot vectors; export mean and components so the browser can project live
   vectors onto fixed axes.
 - Encoder input embedding matrix vs. word2vec vectors (both static).
+
+**Protocol (Phase 5, fixed before 04c ran).**
+- **Targets.** These are fixed by the language, not by results:
+
+  | Case | Target | Label | Majority |
+  |---|---|---|---|
+  | 1 | every `WXV` | true start vs false start | 0.78 |
+  | 2 | `XYX` in gene bodies — the codon used most evenly by the seven genes (highest entropy of P(gene \| codon)) | gene | 0.48 |
+  | 3 | `WVV` as the first codon of the attenuator | `leader_state` | 0.53 |
+
+  The majority values are measured on the test transcripts.
+- **Occurrences.** These come from the unique (genome, condition) transcripts of the encoder's 80 test
+  genomes: 150 transcripts.
+- **Probe.** Multinomial logistic regression (scikit-learn, C = 1, no scaling).
+  - It is trained on the occurrences of half of those genomes and scored on the other half. The split is by
+    genome and seeded.
+  - **Contextual features:** the final hidden state.
+  - **Static features:** the encoder's `tok_emb` row, which is constant per type.
+  - It runs at every snapshot and for every configuration, and the verdicts use the final snapshot.
+- **PCA axes.** Per (configuration, case), from the final-snapshot occurrence vectors.
+- **Static comparison.** `tok_emb` against word2vec on the mixed corpus at ±1, dimension 8 (that run has RNA
+  tokens). Descriptive only.
+- **Forward pass.** 04c computes the forward pass in NumPy from the exported JSON weights, checked against
+  `parity-tests.json`.
 
 ### 4.9 Lab C — Context Lab (replay + live inference)
 
@@ -579,8 +606,8 @@ The data contract is the interface between notebooks and labs. Change this secti
 | `cooccurrence.json` | 03a | `vocabulary`, `codon_class`, `windows`: [{half_window, counts, cosine, pca: {coords, explained_variance}}] |
 | `w2v-results.json` | 03b | `vocabularies` {dna, mixed}, `training` (hyper-parameters), `configs`: [{corpus, half_window, dim, W, U, loss_history, cosine}], `predictions`: [{id, corpus, half_window, dim, metric, value, baseline, holds}] |
 | `mini-transcripts.json` | 04a | `vocabulary` (64 RNA codons), `config`, `categories`, `train`/`test` [{tokens, target, label, category}], `models.{with_position, no_position}` {initial, trained (E, P, W_Q, W_K, W_V, w, b), loss_history, accuracy}, `parity` (test logits and attention rows at the readout), `criterion` |
-| `encoder-full.json`, `encoder-no_position.json`, `encoder-causal.json` | 04b/04c | `config` (architecture, causal, use_position, vocabulary, special tokens, train/test genome IDs), `snapshots` [{epoch, train_loss, test_loss, masked_acc, weights}]; 04c adds `probes` |
-| `contextual-sample.json` | 04c | ≈100 test transcripts, target-codon positions and labels, PCA mean/components per target codon |
+| `encoder-full.json`, `encoder-no_position.json`, `encoder-causal.json` | 04b/04c | `config` (architecture, causal, use_position, vocabulary, special tokens, train/test genome IDs), `snapshots` [{epoch, train_loss, test_loss, masked_acc, weights}]; 04c adds `probes` {case: {target, label, classes, majority, curve [{epoch, static, contextual}], final {coef, intercept}}} |
+| `contextual-sample.json` | 04c | the 150 unique test transcripts (tokens, ids, labels), per-case targets {token, label, classes, occurrences [[transcript, position, label]]}, PCA {config: {case: {mean, components, explained}}}, C1–C5 results |
 | `parity-tests.json` | 04b | per configuration: `epoch` and `tests` [{label, transcript_id, ids, final (n × 32), attention_layer0 (heads × n × n)}]; tolerance 1e-4 |
 
 Weights are stored as nested arrays rounded to 6 decimals, with named tensors matching the JS forward pass.
@@ -674,6 +701,17 @@ Basis:
 
 **Caveat:** with strong dialects, many masked codons are predictable from neighbours alone; the masked-token
 loss is not evidence that attention does the work. The probes are.
+
+**Pass criteria for C1–C5.** These were fixed before 04c ran. Accuracies are probe-test accuracies at the
+final snapshot; "majority" is the majority-class rate of that case (§4.8).
+
+| ID | Holds if |
+|---|---|
+| C1 | `full`: for each of cases 1–3, the static probe is ≤ majority + 0.02 **and** the contextual probe is ≥ 0.95 |
+| C2 | `full`, both parts:<br>(a) in some layer/head, the mean over true starts of the attention that `WXV` puts on its two RBS codons is ≥ 0.30;<br>(b) mutating the nearer RBS codon `WXX` → `XXX` flips the case-1 probe to "false start" for ≥ 80% of the correctly classified probe-test true starts |
+| C3 | `full`: the case-2 contextual probe is ≥ 0.90 |
+| C4 | `causal`: case 3 is ≤ majority + 0.05, **and** cases 1 and 2 are ≥ 0.90 |
+| C5 | `no_position`: cases 1 and 2 are both ≤ majority + 0.10 |
 
 ---
 

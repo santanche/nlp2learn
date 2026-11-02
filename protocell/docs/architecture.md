@@ -11,7 +11,7 @@ embeddings, Part A), then one vector per codon occurrence (contextual embeddings
 
 ### 1.1 Directory organization
 
-Current state (after Phase 4). Directories marked *(empty)* hold only a `.gitkeep`.
+Current state (after Phase 5). Directories marked *(empty)* hold only a `.gitkeep`.
 
 ```text
 protocell/
@@ -32,18 +32,19 @@ protocell/
 ├── 01-corpus/01_generate_corpus.ipynb   corpus generator — Phase 1
 ├── 02-ngrams/                    (empty) optional n-gram baselines — Phase 6
 ├── 03-static/03a_cooccurrence.ipynb, 03b_word2vec.ipynb — Phase 2
-├── 04-attention/04a_attention_by_hand.ipynb (Phase 3), 04b_encoder_training.ipynb (Phase 4); 04c: Phase 5
+├── 04-attention/04a_attention_by_hand.ipynb (Phase 3), 04b_encoder_training.ipynb (Phase 4),
+│                 04c_contextual_analysis.ipynb (Phase 5)
 ├── data/
 │   ├── corpus/                   genome.csv, genome-shuffled.csv, transcripts.csv, proteins.csv
 │   └── web/                      language.json, genome-sample.json, showcase-transcripts.json,
 │                                 cooccurrence.json, w2v-results.json, mini-transcripts.json,
-│                                 encoder-{full,no_position,causal}.json, parity-tests.json
+│                                 encoder-{full,no_position,causal}.json, parity-tests.json, contextual-sample.json
 └── web/
     ├── index.html                landing page
     ├── shared/                   styles.css, rng.js, linalg.js, charts.js, data.js, codeview.js, encoder.js
     ├── codon-embeddings/         Lab A: index.html, lab.css, lab.js, skipgram.js, predictions.js
     ├── attention-inspector/      Lab B: index.html, lab.css, lab.js, attention.js
-    └── context-lab/              Lab C (skeleton): index.html, lab.css, lab.js — parity + training replay
+    └── context-lab/              Lab C: index.html, lab.css, lab.js
 ```
 
 ### 1.2 Pipeline (built through Phase 2; the rest planned)
@@ -402,7 +403,8 @@ Test accuracy, overall and per category:
 
 ### Files
 - `04-attention/04b_encoder_training.ipynb`: the PyTorch encoder written out, three configurations, learning
-  curves, a first look at attention, the export and a self-check. It runs in about 5 min on a 4-thread CPU.
+  curves, a first look at attention, the export and a self-check. It runs in about 8.5 min on a 4-thread CPU
+  (60 epochs; see the Phase 5 update below).
 - `web/shared/encoder.js`: the JS forward pass (float64).
 - `web/context-lab/` (Lab C skeleton): `index.html`, `lab.css`, `lab.js`. It runs the start-up parity check
   and shows the training replay with an epoch slider.
@@ -427,22 +429,23 @@ Test accuracy, overall and per category:
 ### Data flow
 ```text
 transcripts.csv ─> 04b: split by genome (seed 42; 320 / 80 genomes → 1280 / 320 transcripts)
-   ─> train full / no_position / causal (AdamW, 30 epochs, snapshots 0,1,2,3,5,8,12,18,24,30)
+   ─> train full / no_position / causal (AdamW, 60 epochs, snapshots 0,1,2,4,7,11,17,26,40,60)
    ─> encoder-<config>.json (config incl. train/test genome IDs; snapshots with weights rounded to 6 dp)
    ─> parity-tests.json (4 test transcripts per config: final vectors + layer-0 attention, float64, from rounded weights)
 encoder-*.json + parity-tests.json ─> Lab C: parityCheck at start-up; training replay
 ```
 
-### Outputs (seed 42)
+### Outputs (seed 42; 60 epochs since Phase 5)
 | Config | test masked-token accuracy | training performance | test loss | time |
 |---|---|---|---|---|
-| full | 0.227 | 0.225 | 2.895 | 99 s |
-| no_position | 0.098 | 0.096 | 3.402 | 87 s |
-| causal | 0.244 | 0.249 | 2.795 | 92 s |
+| full | 0.254 | 0.269 | 2.750 | 158 s |
+| no_position | 0.102 | 0.095 | 3.376 | 167 s |
+| causal | 0.279 | 0.292 | 2.615 | 174 s |
 
 - Guessing the most frequent codon would score 0.071.
-- File sizes: `encoder-full.json` 2.83 MB, `encoder-no_position.json` 2.05 MB, `encoder-causal.json` 2.82 MB,
-  `parity-tests.json` 2.88 MB. All of `data/web/` comes to 14.4 MB (budget 20 MB).
+- The first Phase 4 run (30 epochs) gave 0.227 / 0.098 / 0.244.
+- File sizes stay about the same: about 2.8 MB per encoder with positions, 2.1 MB without, and 2.9 MB for
+  `parity-tests.json`.
 
 ### Verification
 - **04b self-check:** reloading each exported file reproduces `parity-tests.json` exactly (Δ = 0).
@@ -456,7 +459,9 @@ encoder-*.json + parity-tests.json ─> Lab C: parityCheck at start-up; training
   - there are no console errors, and Labs A and B still work.
 
 ### Observations (descriptive; predictions belong to 04c)
-- **`full` is not fully converged at epoch 30:** its test loss is 2.922 → 2.895 between epochs 24 and 30.
+- **`full` is not fully converged, even at 60 epochs:** its test loss is 2.844 → 2.750 between epochs 40 and
+  60. At 30 epochs it was 2.922 → 2.895 over the last 6 epochs; that is why the epoch count was raised before
+  Phase 5.
 - **`causal` slightly beats `full` on masked-token accuracy.** In this generator, the gene body to the left of
   a masked codon already reveals the dialect.
 - **`no_position` barely beats the most-frequent baseline.** Without positions, every token sees the same bag
@@ -464,13 +469,88 @@ encoder-*.json + parity-tests.json ─> Lab C: parityCheck at start-up; training
 
 ## 8. Phase 5 — Contextual analysis and Context Lab (04c, Lab C)
 
-**Status:** not yet built.
+**Status:** done (2026-11-02). It started by retraining 04b with 60 epochs (see Phase 4).
 
 ### Files
+- `04-attention/04c_contextual_analysis.ipynb`. It runs in about 20 s and covers:
+  - a NumPy forward pass from the exported JSON weights, checked against `parity-tests.json` (Δ 5e-8);
+  - the occurrences of the three targets in the 150 unique test transcripts;
+  - probes at every snapshot for all three configurations, static against contextual;
+  - the C1–C5 evaluation: C2a (attention mass on the RBS) and C2b (the RBS-mutation flip rate);
+  - a descriptive check of cutting a transcript after its attenuator;
+  - PCA clouds, and the static view.
+- `04b` gained `EPOCHS = 60`. Its observations cell was rewritten in place, without re-running the code cells.
+- `web/context-lab/` is complete: all eight panels.
+- `web/shared/charts.js`: `heatmapCanvas` (canvas, for up to 223 × 223) and a `star` point shape.
+
 ### Functions
+- **04c:**
+  - `layer_norm`, `softmax`, `encoder_forward` (it mirrors `encoder.js`);
+  - `build_transcripts` (unique (genome, condition) transcripts), `find_occurrences`, `run_probe`
+    (`LogisticRegression(C=1)`), `occurrence_vectors`;
+  - `rbs_positions`, `flip_rate`, `probe_block`.
+- **Lab C `lab.js`:**
+  - `weights` (cached per configuration and snapshot), `idsOf`;
+  - `probeProbabilities`, which applies 04c's final probe weights in the browser;
+  - `project`, onto 04c's PCA axes;
+  - `caseOf`;
+  - one renderer per panel: `renderReplay`, `renderStatic`, `renderCloud` (async with chunked forward passes,
+    a cache, and cancellation by job number), `renderProbes`, `renderEditor`;
+  - the presets `breakRbs` and `truncateAfterAttenuator`;
+  - `runParity`, which also checks the cloud projections against 04c's reference points;
+  - `window.labC` is exposed for checks.
+
 ### Data flow
-### Outputs
-### Verification (predictions C1–C5, §10; mutation-editor latency)
+```text
+encoder-*.json + parity-tests.json + transcripts.csv ─> 04c (NumPy forward from the exported weights)
+   ─> probes per snapshot × configuration × case ─> encoder-*.json gains "probes" (curves + final probe weights)
+   ─> contextual-sample.json: 150 test transcripts with labels, target occurrences, PCA axes (+5 reference
+      projections) per configuration × case, C1–C5 verdicts
+Lab C: encoder-*.json, parity-tests.json, contextual-sample.json, showcase-transcripts.json, w2v-results.json,
+       language.json ─> parity at start-up; every panel follows the configuration and the epoch slider
+```
+
+Running 04b again rewrites the encoder files without `probes`, so 04c must be run after it.
+
+### Outputs (seed 42)
+Probe-test accuracy at the final snapshot (contextual / static):
+
+| Case (target) | majority | full | no_position | causal |
+|---|---|---|---|---|
+| 1 (`WXV`, true vs false start) | 0.78 | 0.777 / 0.788 | 0.788 / 0.788 | 0.804 / 0.788 |
+| 2 (`XYX` in a body, gene) | 0.48 | **0.916** / 0.509 | 0.486 / 0.509 | **0.953** / 0.509 |
+| 3 (`WVV` attenuator, leader state) | 0.53 | **0.803** / 0.513 | **1.000** / 0.513 | 0.500 / 0.513 |
+
+- **C2a:** the maximum attention mass from a true-start `WXV` onto its RBS codons is 0.061, in layer 1,
+  head 1.
+- **C2b:** breaking the RBS flips the probe for 0.011 of 278 true starts.
+- **Truncation check** (`full`, case 3, probe-test): cutting the `K_low` transcripts after the attenuator turns
+  29 of 37 "read-through" predictions into "attenuated". The `K_high` transcripts get 32 of 39 "attenuated".
+- The cosine structures of `tok_emb` and word2vec correlate at 0.03.
+- `contextual-sample.json` is 0.77 MB. All of `data/web/` comes to 15.2 MB.
+
+### Verification
+- **04c:** NumPy matches PyTorch's parity values (Δ 5.0e-8). Two runs give identical hashes for the encoder
+  files and `contextual-sample.json`.
+- **Lab C** (Playwright):
+  - parity at start-up passes for all three configurations: final vectors and attention Δ 5.0e-8, cloud
+    projections against 04c Δ ≤ 4.3e-15;
+  - **mutation editor:** about 57 ms per edit, including the forward pass and redraw, on the longest test
+    transcript (221 codons); the target was < 200 ms;
+  - **cloud:** about 1.4–3.4 s the first time a (configuration, snapshot) is shown, with a progress counter,
+    and instant from the cache after that;
+  - the presets work. "Break RBS" barely moves the case-1 probe, consistent with C2. "Delete the genes after
+    the attenuator" moves the case-3 probe for most transcripts;
+  - a newly loaded transcript opens with its selected token in view;
+  - there are no console errors, and Labs A and B still work.
+
+### Results in short
+- C3 and C5 hold; C1, C2 and C4 fail (§10).
+- The main lesson: **the masked-codon objective did not make the encoder represent RBS integrity** (case 1),
+  while the supervised one-head model of 04a learned it perfectly.
+- **A surprise:** `no_position` solves case 3 from the *composition* of the transcript (which genes are
+  present), without seeing order.
+- The full discussion is in 04c, §5.
 
 ## 9. Phase 6 (optional) — N-gram baselines
 
@@ -496,11 +576,11 @@ result.
 | S5 | ±9 recovers pathway order (5 adjacent pairs; TAG→SNIP excepted); gone when shuffled | **fails** | ±9: 3 of 5 ranked first (others second; criterion 5 of 5); shuffled 0 of 5 (control behaves); ±1: 0 of 5 | 03b, Lab A |
 | S6 | Z/V pairs converge in the mixed corpus | **holds** | twin cosine 0.41 (±1), 0.29 (±9) vs random 0.30, 0.22 | 03b, Lab A |
 | P3 | (Phase 3) without positions, a misplaced RBS cannot be told from a true start | **holds** | test accuracy on misplaced RBS: 1.000 with positions (≥ 0.90), 0.260 without (≤ 0.50); live Lab B run 0.96 / 0.36 | 04a, Lab B |
-| C1 | static probes at the majority baseline; contextual probes near 100% | not yet run | | |
-| C2 | WXZ attends to the RBS; breaking it moves the vector | not yet run | | |
-| C3 | shared body codons cluster by gene | not yet run | | |
-| C4 | `causal`: case 3 at chance; cases 1–2 survive | not yet run | | |
-| C5 | `no_position`: cases 1–2 collapse | not yet run | | |
+| C1 | static probes at the majority baseline; contextual probes near 100% | **fails** | full contextual: case 1 0.777 (≈ majority), case 2 0.916, case 3 0.803 (needed ≥ 0.95); static case 2 0.509 > 0.50 (split artefact: it equals the probe-test majority share) | 04c, Lab C |
+| C2 | WXZ attends to the RBS; breaking it moves the vector | **fails** | max attention mass on the RBS 0.061 (needed ≥ 0.30); RBS mutation flips 0.011 of 278 (needed ≥ 0.80) | 04c, Lab C |
+| C3 | shared body codons cluster by gene | **holds** | full case 2 probe 0.916 (≥ 0.90); causal 0.953 | 04c, Lab C |
+| C4 | `causal`: case 3 at chance; cases 1–2 survive | **fails** | case 3 0.500 (at chance, as predicted); case 2 0.953; case 1 0.804 (needed ≥ 0.90; no configuration learned case 1) | 04c, Lab C |
+| C5 | `no_position`: cases 1–2 collapse | **holds** | case 1 0.788, case 2 0.486 (both at majority); unexpectedly, case 3 1.000 | 04c, Lab C |
 
 ## 11. Reproducibility
 
@@ -531,3 +611,7 @@ result.
 | 2026-11-02 | 3 | design-spec §5.2 (data contract) | contents of `mini-transcripts.json` | Lab B needs the dataset, initial and trained weights, and parity data |
 | 2026-11-02 | 4 | design-spec §4.7 | sequence format, vocabulary order, masking rule, attention layout, final LN + untied head, no dropout, initialisation and threads, snapshot epochs and metrics, weight layout, definition of the "final hidden state", parity-test construction | unspecified, and needed for exact JS parity |
 | 2026-11-02 | 4 | design-spec §5.2 (data contract) | contents of `encoder-<config>.json` (adds train/test genome IDs; 04c adds `probes`) and `parity-tests.json` | Lab C and 04c need them |
+| 2026-11-02 | 5 | design-spec §4.7 | 60 epochs, with new snapshot epochs | `full` had not converged at 30 epochs; decided before any probe result existed |
+| 2026-11-02 | 5 | design-spec §4.8 | the 04c protocol: targets, probe, split, static features, PCA axes, static comparison, NumPy forward pass | unspecified |
+| 2026-11-02 | 5 | design-spec §7 | pass criteria for C1–C5, fixed before 04c ran | predictions must be testable |
+| 2026-11-02 | 5 | design-spec §5.2 (data contract) | `probes` in `encoder-*.json`; contents of `contextual-sample.json` (150 transcripts instead of ≈100) | Lab C needs the probe weights, the PCA axes and the labels |
