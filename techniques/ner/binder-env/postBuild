@@ -1,0 +1,35 @@
+#!/bin/bash
+# Runs once when Binder builds the image. Everything written to $HOME here is
+# part of the image, so student sessions start with no downloads at all.
+set -euo pipefail
+
+# 1. Hugging Face models -> default cache (~/.cache/huggingface); the notebook
+#    does not set HF_HOME, so it finds them there.
+python - <<'EOF'
+from transformers import AutoTokenizer, AutoModel, AutoModelForTokenClassification
+
+for name in ["distilbert-base-uncased", "d4data/biomedical-ner-all"]:
+    AutoTokenizer.from_pretrained(name)
+AutoModel.from_pretrained("distilbert-base-uncased")
+AutoModelForTokenClassification.from_pretrained("d4data/biomedical-ner-all")
+EOF
+
+# 2. MACCROBAT2018 (CC BY 4.0) -> the cache folder ner_helpers.py looks in.
+#    Same URL/checksum as ner_helpers.download_maccrobat().
+python - <<'EOF'
+import hashlib, urllib.request, zipfile
+from pathlib import Path
+
+url = "https://ndownloader.figshare.com/files/17493650"
+md5 = "453c144879c303d248d74f56b6b40914"
+target = Path.home() / ".cache" / "nlp2learn" / "maccrobat"
+target.mkdir(parents=True, exist_ok=True)
+zip_path = target / "MACCROBAT2018.zip"
+urllib.request.urlretrieve(url, zip_path)
+assert hashlib.md5(zip_path.read_bytes()).hexdigest() == md5, "MACCROBAT checksum mismatch"
+with zipfile.ZipFile(zip_path) as zf:
+    for member in zf.namelist():
+        if member.endswith((".txt", ".ann")):
+            (target / Path(member).name).write_bytes(zf.read(member))
+print("MACCROBAT:", len(list(target.glob("*.ann"))), "annotated reports in", target)
+EOF

@@ -1,0 +1,29 @@
+# NER step by step — environment for ner_pipeline.ipynb
+# Used both locally (uv venv) and on Binder (copied into the binder-ner branch,
+# see binder-env/README.md). Keep the two in sync.
+
+# CPU-only PyTorch build: avoids pulling multi-GB CUDA libraries.
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+jupyterlab
+ipywidgets
+numpy<2            # spaCy 3.7 / thinc 8.2 wheels are built against numpy 1.x
+pandas
+scikit-learn
+matplotlib
+
+torch>=2.2
+transformers>=4.45
+
+nbgitpuller        # only needed on Binder (pulls the notebooks into the session)
+
+# spaCy models. scispaCy models are only published for v0.5.4, which needs
+# spaCy 3.7.x; installing the model packages pulls a compatible spaCy, so
+# spaCy itself is not pinned here.
+#   en_core_sci_sm : biomedical tokenizer, sentence splitter, POS, and an
+#                    untyped CNN + transition-based NER (no word vectors)
+#   en_core_web_md : general-English static word vectors (20k x 300)
+# The scispaCy *md/lg* models are NOT used: their 4M-key vocabularies take
+# ~1.6 GB of RAM each, more than a Binder session can afford.
+https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_core_sci_sm-0.5.4.tar.gz
+https://github.com/explosion/spacy-models/releases/download/en_core_web_md-3.7.1/en_core_web_md-3.7.1-py3-none-any.whl
