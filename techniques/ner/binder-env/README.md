@@ -39,8 +39,10 @@ the latest version.
 
 ## Memory budget
 
-mybinder.org sessions get roughly 1–2 GB of RAM. Measured locally, a full
-run of `ner_pipeline.ipynb` peaks at about **1.5 GB**. That is why the
+mybinder.org sessions get roughly 1–2 GB of RAM. A full run of
+`ner_pipeline.ipynb` inside this image, with a 2 GB memory cap and **no
+network** (proving nothing is downloaded at run time), peaks at about
+**1.2 GB** for the whole container. That is why the
 notebook uses `en_core_sci_sm` + `en_core_web_md` vectors and not
 scispaCy's `md`/`lg` models: their 4-million-key vocabularies alone take
 ~1.6 GB each.
