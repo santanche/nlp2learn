@@ -12,6 +12,12 @@ for name in ["distilbert-base-uncased", "d4data/biomedical-ner-all"]:
     AutoTokenizer.from_pretrained(name)
 AutoModel.from_pretrained("distilbert-base-uncased")
 AutoModelForTokenClassification.from_pretrained("d4data/biomedical-ner-all")
+
+# Tokenizers only (a few MB each, no weights) for 01-tokenization.ipynb.
+for name in ["bert-base-cased",
+             "microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext",
+             "roberta-base", "albert-base-v2", "xlm-roberta-base", "google/byt5-small"]:
+    AutoTokenizer.from_pretrained(name)
 EOF
 
 # 2. MACCROBAT2018 (CC BY 4.0) -> the cache folder ner_helpers.py looks in.
