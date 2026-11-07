@@ -13,6 +13,16 @@ one step of `ner_pipeline.ipynb`; letters split one step into an elementary
 and a detailed notebook. All notebooks are committed with their
 outputs (executed with papermill, see the repository `CLAUDE.md`).
 
+## Documentation
+
+| Document | Covers |
+|---|---|
+| [`docs/notebooks_overview.md`](docs/notebooks_overview.md) | **start here** — the series, suggested order in class, how the notebooks connect |
+| [`docs/ner_pipeline.md`](docs/ner_pipeline.md) | design and rationale of the main class, section by section, with committed results and a verification checklist |
+| [`docs/tokenization.md`](docs/tokenization.md) | design and rationale of 01a and 01b, with committed results |
+| [`docs/data_and_models.md`](docs/data_and_models.md) | the MultiCaRe sample, MACCROBAT, every model and tokenizer, `ner_helpers.py` |
+| [`docs/environment.md`](docs/environment.md) | local setup, pins, caches, Binder, executing with papermill, maintenance, troubleshooting |
+
 ## `ner_pipeline.ipynb`
 
 An interactive class that follows one sentence from a clinical case report
@@ -35,8 +45,11 @@ with four 🧩 challenges along the way.
 ## Run it
 
 **On Binder** (nothing to install):
-[launch `ner_pipeline.ipynb`](https://mybinder.org/v2/gh/santanche/nlp2learn/binder-ner?urlpath=git-pull%3Frepo%3Dhttps%253A%252F%252Fgithub.com%252Fsantanche%252Fnlp2learn%26urlpath%3Dlab%252Ftree%252Fnlp2learn%252Ftechniques%252Fner%252Fner_pipeline.ipynb%26branch%3Dmain)
-— see [`binder-env/README.md`](binder-env/README.md) for how that environment is built.
+[launch the folder](https://mybinder.org/v2/gh/santanche/nlp2learn/binder-ner?urlpath=git-pull%3Frepo%3Dhttps%253A%252F%252Fgithub.com%252Fsantanche%252Fnlp2learn%26urlpath%3Dlab%252Ftree%252Fnlp2learn%252Ftechniques%252Fner%26branch%3Dmain)
+or [launch `ner_pipeline.ipynb`](https://mybinder.org/v2/gh/santanche/nlp2learn/binder-ner?urlpath=git-pull%3Frepo%3Dhttps%253A%252F%252Fgithub.com%252Fsantanche%252Fnlp2learn%26urlpath%3Dlab%252Ftree%252Fnlp2learn%252Ftechniques%252Fner%252Fner_pipeline.ipynb%26branch%3Dmain)
+— the links work once the `binder-ner` branch is published; see
+[`docs/environment.md`](docs/environment.md#2-binder) and
+[`binder-env/README.md`](binder-env/README.md).
 
 **Locally**, with [uv](https://docs.astral.sh/uv/) (from this folder):
 
@@ -47,14 +60,14 @@ uv pip install -r requirements.txt
 jupyter lab ner_pipeline.ipynb
 ```
 
-The `01a`/`01b` tokenization notebooks need nothing more: it downloads only tokenizer
-files (a few MB per model, no weights) and reuses the MACCROBAT cache. It
-runs in under a minute.
+The first run of `ner_pipeline.ipynb` downloads the two DistilBERT models
+(~0.5 GB, into the default Hugging Face cache `~/.cache/huggingface`) and
+MACCROBAT (~1 MB, into `~/.cache/nlp2learn/maccrobat`). A full run takes
+about 2 minutes on a laptop CPU and peaks at ~1.2 GB of RAM.
 
-The first run downloads the two DistilBERT models (~0.5 GB, into the default
-Hugging Face cache `~/.cache/huggingface`) and MACCROBAT (~1 MB, into
-`~/.cache/nlp2learn/maccrobat`). A full run takes about 2 minutes on a
-laptop CPU and peaks at ~1.5 GB of RAM.
+The `01a`/`01b` tokenization notebooks need nothing more: they download
+only tokenizer files (a few MB per model, no weights) and reuse the
+MACCROBAT cache. They run in about 10 and 30 seconds.
 
 ## Files
 
@@ -67,9 +80,13 @@ laptop CPU and peaks at ~1.5 GB of RAM.
 | `sample/` | 50-article sample of MultiCaRe converted to CSV (same as `to-kg/data/csv/sample`) |
 | `requirements.txt` | environment, shared by the local and Binder setups |
 | `binder-env/` | Binder image definition (published as branch `binder-ner`) |
+| `docs/` | project documentation (see above) |
 | `CLAUDE.md` | design notes and decision log for the notebook series (for resuming work) |
 
 ## Design notes
+
+In short (details and the full decision log in
+[`docs/ner_pipeline.md`](docs/ner_pipeline.md#4-decisions-and-alternatives)):
 
 * **Why not spaCy alone?** spaCy's pipelines are very explicit, but its
   neural NER hides exactly what this class wants to show: `tok2vec` hashes

@@ -1,5 +1,8 @@
 # Binder setup for `techniques/ner`
 
+(The full context — design, limits, local Docker test, maintenance — is in
+[`../docs/environment.md`](../docs/environment.md#2-binder).)
+
 The NER notebook needs PyTorch, transformers, spaCy models, two DistilBERT
 models and the MACCROBAT corpus. Putting all that in the repository's
 top-level `binder/` would make every push to `main` (even a typo fix in a
@@ -19,7 +22,7 @@ branch main        ──(nbgitpuller, at session start)──►  notebooks pul
 |---|---|---|
 | `../requirements.txt` | `binder/requirements.txt` | same file as the local `uv` setup (single source of truth) |
 | `runtime.txt` | `binder/runtime.txt` | Python 3.12 |
-| `postBuild` | `binder/postBuild` | downloads the two Hugging Face models and MACCROBAT **into the image** |
+| `postBuild` | `binder/postBuild` | downloads the two Hugging Face models, the tokenizers used by 01a/01b, and MACCROBAT **into the image** |
 | `make_branch.sh` | — | builds the `binder-ner` branch from the files above |
 
 ## Publishing (once, and again whenever requirements or postBuild change)

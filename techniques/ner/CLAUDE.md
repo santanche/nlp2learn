@@ -29,6 +29,42 @@ Rules of the series:
   top, 🧩 Challenge cells (markdown + empty code cell) at the end, credits
   last. Commentary must match the executed outputs (see "verification").
 
+## Documentation (`docs/`, human-facing — keep in sync)
+
+`docs/notebooks_overview.md` (series map, order, connections),
+`docs/ner_pipeline.md` (main class: architecture, section-by-section
+rationale, decision table, committed results, checklist),
+`docs/tokenization.md` (01a/01b), `docs/data_and_models.md` (corpora,
+models, `ner_helpers.py` API), `docs/environment.md` (setup, pins, caches,
+Binder, papermill, maintenance, troubleshooting). The docs **quote
+executed numbers**: after re-executing a notebook, update the matching
+tables there too. A new notebook gets a row in `README.md` and
+`notebooks_overview.md` and a design doc (or section) in `docs/`.
+
+## ner_pipeline.ipynb
+
+Full design in `docs/ner_pipeline.md`; the essentials for resuming work:
+
+* Sections §0–§9 follow the diagram ① spaCy → ② static vectors → ③
+  WordPiece → ④ layer 0 → ⑤ 6 layers → ⑥ classifier → ⑦ decoding, then
+  ⑧ base vs fine-tuned geometry (MACCROBAT) and ⑨ spaCy's transition-based
+  NER. 4 challenges (after §7, two after §8, after §9).
+* Key choices: `en_core_sci_sm` + `en_core_web_md` vectors (scispaCy
+  md/lg and bc5cdr ≈1.6 GB RAM each: no Binder); `attn_implementation="eager"`
+  (transformers 5); displacy via `jupyter=False` + `HTML` (IPython 9);
+  §8 uses MACCROBAT gold labels with **intentional leakage**, 6 types, `O`
+  excluded, 150 words/type (904 total), first-piece vectors, mean-centered
+  cosine to type centroids, silhouette / nearest-centroid / linear probe
+  with 5-fold CV.
+* Committed results: §8 last layer own-centroid distance base 0.701 vs ft
+  0.431, silhouette 0.033 vs 0.291, linear probe 0.825 vs 0.935; layer 0
+  equal; word-embedding table moved ≈2%. Context curves: other-sense
+  cosine ≈0.15 at layer 6 for *culture* and *cold*.
+* Committed outputs come from `nbconvert`, not papermill — use papermill
+  on the next re-execution. Checklist: `docs/ner_pipeline.md` §6.
+* Binder: branch `binder-ner` not yet created/pushed (2026-11-07); the
+  Docker test of the image predates the 01a/01b tokenizers in `postBuild`.
+
 ## 01a-tokenization-tokens.ipynb
 
 The user asked for a "very starting" notebook: one studied cell with the
