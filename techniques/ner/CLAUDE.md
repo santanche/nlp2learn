@@ -43,6 +43,11 @@ basic routine, everything else prepared in earlier cells, no tables/charts.
 * Studied cell: `tokenizer = TOKENIZERS["..."]  # ← change me`, then
   sentence token count and the `for w in WORDS: print(... tokenizer.tokenize(w))`
   loop. A second cell runs the same routine for every tokenizer.
+* Then the same pair for the whole sentence ("A whole sentence": one
+  tokenizer, `← change me`, prints all tokens; then every tokenizer).
+  Token counts for the sentence: scispaCy 22, spaCy 28, BERT-uncased 31,
+  BiomedBERT 28, RoBERTa 30, ALBERT 30, ByT5 140 — quoted in the closing
+  "What to notice" notes.
 * `.tokenize()` never adds special tokens, so the count line says
   "tokens in the sentence" (not "including [CLS] and [SEP]" as in the
   main class, which counted `input_ids`).
