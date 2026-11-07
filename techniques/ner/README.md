@@ -4,11 +4,13 @@
 
 | Notebook | Content |
 |---|---|
-| [`01-tokenization.ipynb`](01-tokenization.ipynb) | **preliminary 01**: rule-based (spaCy/scispaCy), BPE, WordPiece, Unigram and byte tokenization compared on clinical text — algorithms re-implemented, side-by-side tables, corpus metrics, entity-boundary alignment, controlled training experiment |
+| [`01a-tokenization-tokens.ipynb`](01a-tokenization-tokens.ipynb) | **preliminary 01a**: the elementary operation — one routine (`tokenizer.tokenize(w)`) and seven tokenizers to plug into it |
+| [`01b-tokenization.ipynb`](01b-tokenization.ipynb) | **preliminary 01b**: rule-based (spaCy/scispaCy), BPE, WordPiece, Unigram and byte tokenization compared on clinical text — algorithms re-implemented, side-by-side tables, corpus metrics, entity-boundary alignment, controlled training experiment |
 | [`ner_pipeline.ipynb`](ner_pipeline.ipynb) | **the main class**: one sentence through a Transformer NER, step by step (below) |
 
-Preliminary notebooks are numbered (`01-`, `02-`, ...) and each zooms into
-one step of `ner_pipeline.ipynb`. All notebooks are committed with their
+Preliminary notebooks are numbered (`01a-`, `01b-`, `02-`, ...) and each zooms into
+one step of `ner_pipeline.ipynb`; letters split one step into an elementary
+and a detailed notebook. All notebooks are committed with their
 outputs (executed with papermill, see the repository `CLAUDE.md`).
 
 ## `ner_pipeline.ipynb`
@@ -45,7 +47,7 @@ uv pip install -r requirements.txt
 jupyter lab ner_pipeline.ipynb
 ```
 
-`01-tokenization.ipynb` needs nothing more: it downloads only tokenizer
+The `01a`/`01b` tokenization notebooks need nothing more: it downloads only tokenizer
 files (a few MB per model, no weights) and reuses the MACCROBAT cache. It
 runs in under a minute.
 
@@ -58,7 +60,8 @@ laptop CPU and peaks at ~1.5 GB of RAM.
 
 | Path | Content |
 |---|---|
-| `01-tokenization.ipynb` | preliminary notebook 01: tokenization approaches compared |
+| `01a-tokenization-tokens.ipynb` | preliminary notebook 01a: tokens, a first look |
+| `01b-tokenization.ipynb` | preliminary notebook 01b: tokenization approaches compared |
 | `ner_pipeline.ipynb` | the class |
 | `ner_helpers.py` | plumbing only: MACCROBAT download, brat parsing, span → token alignment |
 | `sample/` | 50-article sample of MultiCaRe converted to CSV (same as `to-kg/data/csv/sample`) |

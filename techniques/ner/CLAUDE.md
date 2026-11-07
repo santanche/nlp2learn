@@ -9,13 +9,15 @@ in `README.md`; the papermill execution procedure is in the repository
 | Notebook | Role | Status |
 |---|---|---|
 | `ner_pipeline.ipynb` | main class: one MultiCaRe sentence through spaCy → WordPiece → DistilBERT layers → classifier → spans, plus fine-tuning geometry (MACCROBAT) and spaCy's CNN NER | done |
-| `01-tokenization.ipynb` | preliminary 01: zooms into the tokenization step (§1–3 of the main class) | done (2026-11-07) |
+| `01a-tokenization-tokens.ipynb` | preliminary 01a: the elementary operation only — one `tokenizer.tokenize(w)` routine, tokenizers chosen from a dict | done (2026-11-07) |
+| `01b-tokenization.ipynb` | preliminary 01b: the detailed tokenization comparison (§1–3 of the main class); was `01-tokenization.ipynb` | done (2026-11-07) |
 | `02-...` | not yet defined; natural candidates: static vs contextual embeddings (§2/§4–5 of the main class), or a BiomedBERT-based NER compared with d4data | — |
 
 Rules of the series:
 
-* Preliminary notebooks are numbered `NN-topic.ipynb`; each one **replicates
-  the start of `ner_pipeline.ipynb`** (same `sample/cases.csv`, case
+* Preliminary notebooks are numbered `NN-topic.ipynb`, with a letter when a
+  step is split into an elementary notebook (`a`) and a detailed one (`b`).
+  Detailed notebooks **replicate the start of `ner_pipeline.ipynb`** (same `sample/cases.csv`, case
   `PMC5137649_01`, sentence starting "A 44-year-old woman presented",
   `en_core_sci_sm` sentence splitting) and then goes deep into one step.
 * Same environment as the main class (`requirements.txt`, `.venv`, Binder
@@ -27,7 +29,27 @@ Rules of the series:
   top, 🧩 Challenge cells (markdown + empty code cell) at the end, credits
   last. Commentary must match the executed outputs (see "verification").
 
-## 01-tokenization.ipynb
+## 01a-tokenization-tokens.ipynb
+
+The user asked for a "very starting" notebook: one studied cell with the
+basic routine, everything else prepared in earlier cells, no tables/charts.
+
+* Preparation cell: `SpacyTokenizer` adapter (gives spaCy a
+  `.tokenize(text) -> list[str]` method, like Hugging Face tokenizers) and
+  a `TOKENIZERS` dict of 7 (scispaCy, spaCy blank, BERT-uncased via
+  `d4data/biomedical-ner-all` as in the main class, BiomedBERT, RoBERTa,
+  ALBERT, ByT5); the sentence is hard-coded (same walkthrough sentence)
+  to avoid loading the case CSV and running the parser.
+* Studied cell: `tokenizer = TOKENIZERS["..."]  # ← change me`, then
+  sentence token count and the `for w in WORDS: print(... tokenizer.tokenize(w))`
+  loop. A second cell runs the same routine for every tokenizer.
+* `.tokenize()` never adds special tokens, so the count line says
+  "tokens in the sentence" (not "including [CLS] and [SEP]" as in the
+  main class, which counted `input_ids`).
+* RoBERTa shows no `Ġ` on isolated words (no preceding space) — the
+  closing notes say so.
+
+## 01b-tokenization.ipynb
 
 ### Architecture
 
