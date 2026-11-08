@@ -25,6 +25,8 @@ outputs (executed with papermill, see the repository `CLAUDE.md`).
 
 ## `ner_pipeline.ipynb`
 
+![NER pipeline overview](docs/images/ner_pipeline_overview.svg)
+
 An interactive class that follows one sentence from a clinical case report
 through a Transformer-based NER system, exposing every intermediate step:
 

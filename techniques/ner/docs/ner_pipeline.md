@@ -30,6 +30,16 @@ comparing the NER model with the general-purpose model it was trained from.
 
 ## 2. Architecture
 
+![The NER pipeline on the walkthrough sentence: WordPiece ids enter the DistilBERT encoder (layer 0 plus six Transformer layers); every piece's 768-d output vector goes through the same Linear(768→84) + softmax head; the per-piece BIO labels are decoded with the first-piece rule into word spans and shown as entities.](images/ner_pipeline_overview.svg)
+
+*Steps ③–⑦ on the walkthrough sentence (17 of its 33 positions). Ids,
+labels and the `##pati` probabilities are the model's real outputs. Unlike
+sentence classification, where only the `[CLS]` vector reaches the
+classifier, NER sends **every** piece's vector through the same head. Style
+after Jay Alammar,
+[A Visual Guide to Using BERT for the First Time](https://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/).
+Regenerate with `python docs/images/make_ner_pipeline_overview.py`.*
+
 ```
 sentence (MultiCaRe case report)
   │  ① spaCy / scispaCy: sentence splitting + word tokens        §1
