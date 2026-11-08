@@ -75,7 +75,7 @@ Therapeutic_procedure, Medication, Biological_structure).
 | Package | Version | Role | Notebooks | Size |
 |---|---|---|---|---|
 | `en_core_sci_sm` | scispaCy 0.5.4 | tokenizer and sentence splitter tuned for biomedical text; POS, lemmas, parser; untyped CNN + transition-based NER (`ENTITY`); **no word vectors** | all three | 19 MB on disk, ≈75 MB RAM |
-| `en_core_web_md` | spaCy 3.7.1 | only its static vector table is used (20,000 × 300, 514,157 keys, pruned) | `ner_pipeline` §2 | 53 MB on disk, ≈230 MB RAM |
+| `en_core_web_md` | spaCy 3.7.1 | only its static vector table is used (20,000 × 300, 514,157 keys, pruned) | `ner_pipeline` §2; `02a` (as the Word2Vec-style approach) | 53 MB on disk, ≈230 MB RAM |
 
 scispaCy models are only published for v0.5.4, which needs spaCy 3.7.x,
 whose `thinc` wheels need `numpy<2`. Hence the `numpy<2` pin. spaCy itself
@@ -87,8 +87,13 @@ is not pinned: the model packages pull a compatible version.
 |---|---|---|---|---|
 | [`d4data/biomedical-ner-all`](https://huggingface.co/d4data/biomedical-ner-all) | `DistilBertForTokenClassification`: 6 layers, 768 dims, 12 heads, 66M parameters, head `Linear(768 → 84)` | the NER model; its tokenizer is BERT-uncased's (30,522 WordPiece entries) | `ner_pipeline`; tokenizer in `01a` | 266 MB |
 | [`distilbert-base-uncased`](https://huggingface.co/distilbert-base-uncased) | `DistilBertModel` (encoder only; its masked-LM head weights are discarded on load) | the starting point of d4data's fine-tuning, for §8 | `ner_pipeline`; tokenizer in `01b` | 268 MB |
+| [`bert-base-uncased`](https://huggingface.co/bert-base-uncased) | `BertModel`; only `.embeddings` is kept: token 30,522 × 768, position 512 × 768, segment 2 × 768 | the reference BERT layer 0 | `02a` | 440 MB |
+| [`microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext`](https://huggingface.co/microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext) | `BertModel`, same shapes as BERT, PubMed vocabulary | domain vocabulary, same architecture | `02a`; tokenizer in `01a`/`01b` | 440 MB |
+| [`roberta-base`](https://huggingface.co/roberta-base) | `RobertaModel`: token 50,265 × 768, position 514 × 768 (ids start at 2), segment 1 × 768 | byte-level BPE model | `02a`; tokenizer in `01a`/`01b` | 500 MB |
+| [`albert-base-v2`](https://huggingface.co/albert-base-v2) | `AlbertModel`: factorized embeddings, token 30,000 × **128**, position 512 × 128, segment 2 × 128 | Unigram model, small embeddings | `02a`; tokenizer in `01a`/`01b` | 47 MB |
 
-**Tokenizers only** (no weights; a few MB each), for 01a/01b:
+**Tokenizers only** (no weights; a few MB each), for 01a/01b (02a downloads
+the weights of BiomedBERT, RoBERTa and ALBERT, above):
 `bert-base-cased`, `microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext`,
 `roberta-base`, `albert-base-v2`, `xlm-roberta-base`, `google/byt5-small`.
 
@@ -110,7 +115,8 @@ Facts about d4data worth knowing when teaching:
 | `en_core_sci_md` / `en_core_sci_lg` | 4M-key vocabulary, ≈1.6 GB of RAM each: does not fit Binder. Can replace `STATIC_VECTORS` locally |
 | `en_ner_bc5cdr_md` (typed DISEASE/CHEMICAL NER) | same ≈1.6 GB cost, even with a shared `Vocab`; optional in Challenge 4 |
 | `emilyalsentzer/Bio_ClinicalBERT` | no NER head; trained on ICU notes, not case reports. Appears in 01b Challenge 1 |
-| BiomedBERT with weights | no NER head here; candidate for a future notebook |
+| BiomedBERT NER | no NER fine-tune of it is used (02a loads its weights only for the embedding layer); candidate for a future notebook |
+| Google News Word2Vec (`word2vec-google-news-300`) | 3.6 GB and needs `gensim`; 02a uses spaCy's `en_core_web_md` vectors as the Word2Vec-style approach |
 | `Clinical-AI-Apollo/Medical-NER` | DeBERTa, ≈3× larger; a possible comparison, not needed for the class |
 
 ## 3. `ner_helpers.py`
@@ -128,6 +134,8 @@ Plumbing only. Everything the class is *about* stays in the notebooks.
 | `resolve_overlaps(spans) → spans` | function | non-overlapping subset, **longest span first** (a BIO tagger can give one label per token) |
 | `load_maccrobat_sentences(folder, keep_labels=None, max_docs=None) → [Sentence]` | function | reads all reports; if `keep_labels` is given, drops other types *before* resolving overlaps (so they become plain text); splits on newlines; keeps a span only if it lies within one line |
 | `word_labels(tokenizer, sentence, max_length=512) → (encoding, words)` | function | tokenizes a sentence with offsets; for each **word** (`word_ids()`), returns its text, the index of its **first piece**, and the gold label of the span containing its first character (`"O"` otherwise) |
+| `vector_boxes(vector, scale) → str` | function | an `<img>` tag drawing a vector as tiny boxes, one per dimension, 48 per line (`BOX_COLUMNS`), red (negative) – white – blue (positive), saturating at ±`scale` in 5 steps (`BOX_LEVELS`); a palette PNG with 1-pixel transparent gaps, ≈1.6 KB for 768 dims |
+| `show_embeddings(table, title=None)` | function | displays a DataFrame as an HTML table, drawing every array-valued column with `vector_boxes`; scale = 2 standard deviations of the values shown, shared by the columns listed in `table.attrs["same_scale"]`; prints `table.attrs["note"]` under the table |
 
 Who uses what:
 
@@ -136,6 +144,7 @@ Who uses what:
 | `download_maccrobat` | §8 | §8–9 |
 | `load_maccrobat_sentences`, `word_labels` | §8 | — |
 | `read_brat` | (via `load_maccrobat_sentences`) | §8 |
+| `show_embeddings` (`vector_boxes`) | — | — (used by `02a`) |
 
 `binder-env/postBuild` duplicates the download logic (same URL, checksum and
 target folder), because it runs at image-build time, before the notebooks

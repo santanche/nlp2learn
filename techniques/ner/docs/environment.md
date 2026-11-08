@@ -16,7 +16,7 @@ cd techniques/ner
 uv venv --python 3.12
 source .venv/bin/activate              # .venv\Scripts\activate on Windows
 uv pip install -r requirements.txt
-jupyter lab                            # open 01a, 01b or ner_pipeline
+jupyter lab                            # open 01a, 01b, 02a or ner_pipeline
 ```
 
 * uv keeps a global package cache and hardlinks packages into each venv,
@@ -48,11 +48,11 @@ compiled from source.
 | What | Where | Size |
 |---|---|---|
 | venv | `techniques/ner/.venv` | ≈1.7 GB |
-| Hugging Face models and tokenizers | `~/.cache/huggingface` (default; **no `HF_HOME` is set**, so all projects share it) | ≈0.55 GB (two DistilBERT models of ≈266 MB each, plus tokenizer files) |
+| Hugging Face models and tokenizers | `~/.cache/huggingface` (default; **no `HF_HOME` is set**, so all projects share it) | ≈0.55 GB for the main class (two DistilBERT models of ≈266 MB each, plus tokenizer files); ≈1.1 GB more for 02a (BERT, BiomedBERT, RoBERTa, ALBERT) |
 | MACCROBAT | `~/.cache/nlp2learn/maccrobat` (override with `MACCROBAT_DIR`) | ≈4 MB |
 
 First run: the models and MACCROBAT are downloaded on demand. After that,
-with a laptop CPU: 01a ≈10 s, 01b ≈30 s, `ner_pipeline` ≈2 min. Peak memory
+with a laptop CPU: 01a ≈10 s, 01b ≈30 s, 02a ≈20 s, `ner_pipeline` ≈2 min. Peak memory
 of `ner_pipeline` is ≈1.2 GB (whole Jupyter container, measured in the
 Binder image).
 
@@ -83,7 +83,7 @@ rebuild.
 |---|---|---|
 | `../requirements.txt` | `binder/requirements.txt` | the same file as the local setup |
 | `runtime.txt` | `binder/runtime.txt` | Python 3.12 |
-| `postBuild` | `binder/postBuild` | at build time: downloads both DistilBERT models, the tokenizers of 01a/01b, and MACCROBAT **into the image** |
+| `postBuild` | `binder/postBuild` | at build time: downloads both DistilBERT models, the tokenizers of 01a/01b, the four checkpoints of 02a, and MACCROBAT **into the image** |
 | `make_branch.sh` | — | creates/updates the local `binder-ner` branch (orphan branch, via a temporary git worktree) |
 
 ### Status
@@ -148,8 +148,9 @@ docker run --rm --network none --memory 2g --memory-swap 2g \
 This was done for `ner_pipeline.ipynb` on 2026-11-05: build OK (image
 ≈5.9 GB: conda base and libraries 2.7 GB, models 0.5 GB), all 41 code cells
 ran offline, peak 1.15 GB. **It has not yet been repeated** since
-`postBuild` gained the 01a/01b tokenizers; do it before the first
-class that uses 01a/01b on Binder.
+`postBuild` gained the 01a/01b tokenizers and the 02a checkpoints
+(≈1.1 GB more in the image); do it before the first class that uses
+01a/01b/02a on Binder, and measure 02a's peak memory there.
 
 ## 3. Executing the notebooks
 
@@ -173,7 +174,7 @@ papermill NB.ipynb NB.ipynb --cwd . --log-output --no-progress-bar
   [`tokenization.md`](tokenization.md#verification-checklist-after-editing-01b)).
 * papermill adds per-cell timing metadata; that is expected.
 
-Note: 01a and 01b were executed with papermill. The committed outputs of
+Note: 01a, 01b and 02a were executed with papermill. The committed outputs of
 `ner_pipeline.ipynb` come from an `nbconvert` run (no papermill metadata),
 so use papermill on its next re-execution.
 

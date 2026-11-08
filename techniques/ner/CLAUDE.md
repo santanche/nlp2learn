@@ -11,7 +11,8 @@ in `README.md`; the papermill execution procedure is in the repository
 | `ner_pipeline.ipynb` | main class: one MultiCaRe sentence through spaCy → WordPiece → DistilBERT layers → classifier → spans, plus fine-tuning geometry (MACCROBAT) and spaCy's CNN NER | done |
 | `01a-tokenization-tokens.ipynb` | preliminary 01a: the elementary operation only — one `tokenizer.tokenize(w)` routine, tokenizers chosen from a dict | done (2026-11-07) |
 | `01b-tokenization.ipynb` | preliminary 01b: the detailed tokenization comparison (§1–3 of the main class); was `01-tokenization.ipynb` | done (2026-11-07) |
-| `02-...` | not yet defined; natural candidates: static vs contextual embeddings (§2/§4–5 of the main class), or a BiomedBERT-based NER compared with d4data | — |
+| `02a-static-embeddings.ipynb` | preliminary 02a: static embeddings only — `embedding(tokens)` → table of token / position / segment vectors and layer 0, drawn as colored boxes; 5 Transformers + Word2Vec-style | done (2026-11-08) |
+| `02b-...` | not yet defined; candidate: static → contextual (§4–5 of the main class), or a BiomedBERT-based NER compared with d4data | — |
 
 Rules of the series:
 
@@ -23,7 +24,8 @@ Rules of the series:
 * Same environment as the main class (`requirements.txt`, `.venv`, Binder
   branch `binder-ner`): no new packages unless unavoidable.
 * Teaching code stays in the notebook; `ner_helpers.py` only holds plumbing
-  (MACCROBAT download, brat parsing, span alignment). 01 reuses
+  (MACCROBAT download, brat parsing, span alignment, and since 02a the
+  colored-box display `show_embeddings`/`vector_boxes`). 01b reuses
   `download_maccrobat` and `read_brat` from it.
 * Style: markdown sections numbered `## N.`, a configuration cell at the
   top, 🧩 Challenge cells (markdown + empty code cell) at the end, credits
@@ -34,7 +36,8 @@ Rules of the series:
 `docs/notebooks_overview.md` (series map, order, connections),
 `docs/ner_pipeline.md` (main class: architecture, section-by-section
 rationale, decision table, committed results, checklist),
-`docs/tokenization.md` (01a/01b), `docs/data_and_models.md` (corpora,
+`docs/tokenization.md` (01a/01b), `docs/static_embeddings.md` (02a),
+`docs/data_and_models.md` (corpora,
 models, `ner_helpers.py` API), `docs/environment.md` (setup, pins, caches,
 Binder, papermill, maintenance, troubleshooting). The docs **quote
 executed numbers**: after re-executing a notebook, update the matching
@@ -89,6 +92,46 @@ basic routine, everything else prepared in earlier cells, no tables/charts.
   main class, which counted `input_ids`).
 * RoBERTa shows no `Ġ` on isolated words (no preceding space) — the
   closing notes say so.
+
+## 02a-static-embeddings.ipynb
+
+User request: same basic approach as 01a, one more step (static vectors
+only, nothing after layer 0); tokenization taken for granted (one cell);
+a per-token table with token, id, position, segment and the three
+embeddings as red–blue boxes (like `~/git/huggingface/clinical-embedding`);
+routine → every approach, for the five words then the sentence; the
+embedding picks its own tokenizer automatically, or the user picks a pair;
+include Word2Vec; avoid a complex notebook. Full design:
+`docs/static_embeddings.md`.
+
+* Prep cell = 01a's tokenizers minus ByT5. Teaching cell = two classes,
+  `TransformerEmbeddings(model, tokenizer, first_position=0, separators=1)`
+  and `WordVectors(spacy_model, tokenizer)`, both
+  `__call__(tokens, tokens_b=None) → DataFrame`; `EMBEDDINGS` dict of 6
+  (BERT uncased, DistilBERT = d4data, BiomedBERT, RoBERTa
+  `first_position=2, separators=2`, ALBERT, Word2Vec-style = spaCy
+  `en_core_web_md` vectors). Only `AutoModel(...).embeddings` is kept.
+* Lookup **by token string** (`convert_tokens_to_ids`, `vectors.find`):
+  foreign tokenizers give `[UNK]` / zero vector instead of out-of-range
+  ids. Special tokens added by hand (transformers 5 has no
+  `build_inputs_with_special_tokens`). Words also get `[CLS]`/`[SEP]`.
+* Extra column beyond the request: `layer 0 = LayerNorm(sum)`; each table
+  carries `attrs["note"]` = check vs the model's embedding module (must be
+  True everywhere) and `attrs["same_scale"]` (token/position/segment share
+  a color scale).
+* Sections beyond 01a's pattern: two texts (segments), mixing (both names
+  chosen), mixing for every pair (missing-token counts 6 × 6).
+* "Word2Vec-style": real Google News Word2Vec is 3.6 GB + gensim (new
+  package) — rejected; the notebook says so.
+* Size 2.4 MB with outputs (box PNGs with 1-px gaps, ≈1.6 KB/vector);
+  gapless would be ≈0.7 KB/vector if size becomes a problem.
+* Weights of bert-base-uncased, BiomedBERT, roberta-base, albert-base-v2
+  added to `binder-env/postBuild` (≈1.1 GB); Binder memory test not yet
+  repeated. On this machine the HF xet backend hung on first download;
+  `HF_HUB_DISABLE_XET=1` worked.
+* Results: see `docs/static_embeddings.md` "Committed results"
+  (dyspnea/nausea share Word2Vec row 18050; BERT + scispaCy → [UNK] for
+  A, 44-year-old, 3-day, constipation).
 
 ## 01b-tokenization.ipynb
 

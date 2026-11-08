@@ -1,8 +1,8 @@
-"""Support code for ner_pipeline.ipynb.
+"""Support code for ner_pipeline.ipynb and the preliminary notebooks.
 
 Only the plumbing lives here: downloading MACCROBAT, reading its brat
-annotation files, and aligning character-level annotations to WordPiece
-tokens. Everything the class is actually about (tokens, embeddings,
+annotation files, aligning character-level annotations to WordPiece
+tokens, and drawing embedding vectors as colored boxes (02a). Everything the class is actually about (tokens, embeddings,
 attention, the classifier) stays in the notebook where students can see it.
 
 MACCROBAT2018 (Caufield, 2019, CC BY 4.0, https://doi.org/10.6084/m9.figshare.9764942.v2)
@@ -158,3 +158,94 @@ def word_labels(tokenizer, sentence: Sentence, max_length: int = 512):
             {"word": sentence.text[char_start:char_end], "first_token": tok_idx, "label": label}
         )
     return enc, words
+
+
+# ---------------------------------------------------------------------------
+# Embedding vectors as colored boxes (02a-static-embeddings.ipynb)
+# ---------------------------------------------------------------------------
+# One tiny box per dimension, red (negative) - white (0) - blue (positive),
+# as in the clinical-embedding browser. Each vector becomes a small palette
+# PNG embedded in an HTML table, so a notebook with hundreds of vectors stays
+# small (~0.5 KB per vector).
+
+BOX_COLUMNS = 48   # boxes per line: 768 dims -> 16 lines, 300 -> 7, 128 -> 3
+BOX_SIZE = 3       # pixels per box, plus a 1-pixel transparent gap
+BOX_LEVELS = 5     # color steps on each side of zero
+
+
+def _box_palette():
+    pal = [0, 0, 0]                                        # 0: transparent (gaps, padding)
+    for level in range(-BOX_LEVELS, BOX_LEVELS + 1):       # 1 .. 2*BOX_LEVELS+1
+        fade = round(255 * (1 - abs(level) / BOX_LEVELS))  # 255 at zero, 0 at full intensity
+        pal += [255, fade, fade] if level < 0 else [fade, fade, 255]
+    return pal
+
+
+def vector_boxes(vector, scale: float) -> str:
+    """An <img> tag drawing `vector` as boxes; values beyond +-scale get the full color."""
+    import base64
+    import io
+
+    import numpy as np
+    from PIL import Image
+
+    v = np.asarray(vector, dtype=float)
+    levels = np.clip(np.rint(v / scale * BOX_LEVELS), -BOX_LEVELS, BOX_LEVELS).astype(int)
+    idx = np.zeros(-(-len(v) // BOX_COLUMNS) * BOX_COLUMNS, dtype=np.uint8)
+    idx[: len(v)] = levels + BOX_LEVELS + 1
+    grid = idx.reshape(-1, BOX_COLUMNS)
+    pitch = BOX_SIZE + 1
+    img = np.zeros((grid.shape[0] * pitch, grid.shape[1] * pitch), dtype=np.uint8)
+    for dy in range(BOX_SIZE):
+        for dx in range(BOX_SIZE):
+            img[dy::pitch, dx::pitch] = grid
+    pil = Image.fromarray(img, mode="P")
+    pil.putpalette(_box_palette())
+    buf = io.BytesIO()
+    pil.save(buf, format="PNG", transparency=0, optimize=True)
+    data = base64.b64encode(buf.getvalue()).decode()
+    return f'<img src="data:image/png;base64,{data}" style="image-rendering:pixelated">'
+
+
+def show_embeddings(table, title: str | None = None) -> None:
+    """Display a DataFrame whose vector-valued columns are drawn as boxes.
+
+    A column counts as a vector column when its cells are arrays; other
+    cells are printed (None as a dash). Color scale: +-2 standard deviations
+    of the values shown. Columns listed in ``table.attrs["same_scale"]``
+    share one scale (pooled values), the others get one each.
+    ``table.attrs["note"]``, if present, is printed under the table.
+    """
+    import html
+
+    import numpy as np
+    from IPython.display import HTML, display
+
+    vector_cols = [c for c in table.columns
+                   if any(isinstance(x, np.ndarray) for x in table[c])]
+    shared = [c for c in table.attrs.get("same_scale", []) if c in vector_cols]
+    scales = {}
+    for c in vector_cols:
+        pool = shared if c in shared else [c]
+        values = np.concatenate([x for p in pool for x in table[p] if isinstance(x, np.ndarray)])
+        scales[c] = 2 * float(values.std()) or 1.0
+
+    th = 'style="text-align:left; padding:2px 8px; vertical-align:bottom"'
+    td = 'style="text-align:left; padding:2px 8px; vertical-align:middle; font-family:monospace"'
+    out = ['<table style="border-collapse:collapse; margin:4px 0 12px 0">']
+    if title:
+        out.append(f'<caption style="text-align:left; font-weight:bold; padding:4px 0">{html.escape(title)}</caption>')
+    out.append("<tr>" + "".join(f"<th {th}>{html.escape(str(c))}</th>" for c in table.columns) + "</tr>")
+    for _, row in table.iterrows():
+        cells = []
+        for c in table.columns:
+            x = row[c]
+            if c in vector_cols and isinstance(x, np.ndarray):
+                cells.append(f"<td {td}>{vector_boxes(x, scales[c])}</td>")
+            else:
+                cells.append(f"<td {td}>{'—' if x is None else html.escape(str(x))}</td>")
+        out.append("<tr>" + "".join(cells) + "</tr>")
+    out.append("</table>")
+    if table.attrs.get("note"):
+        out.append(f'<div style="margin:-8px 0 16px 0; font-size:90%">{html.escape(table.attrs["note"])}</div>')
+    display(HTML("".join(out)))

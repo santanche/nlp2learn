@@ -18,6 +18,14 @@ for name in ["bert-base-cased",
              "microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext",
              "roberta-base", "albert-base-v2", "xlm-roberta-base", "google/byt5-small"]:
     AutoTokenizer.from_pretrained(name)
+
+# Model weights for 02a-static-embeddings (it keeps only each model's embedding
+# layer, but the whole checkpoint has to be downloaded; ~1.1 GB together).
+for name in ["bert-base-uncased",
+             "microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext",
+             "roberta-base", "albert-base-v2"]:
+    AutoTokenizer.from_pretrained(name)
+    AutoModel.from_pretrained(name)
 EOF
 
 # 2. MACCROBAT2018 (CC BY 4.0) -> the cache folder ner_helpers.py looks in.

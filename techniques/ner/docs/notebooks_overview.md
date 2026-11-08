@@ -11,6 +11,7 @@ notebook or one concern each.
 | **this file** | the series as a whole |
 | [`ner_pipeline.md`](ner_pipeline.md) | design and rationale of the main class, section by section |
 | [`tokenization.md`](tokenization.md) | design and rationale of the two tokenization notebooks (01a, 01b) |
+| [`static_embeddings.md`](static_embeddings.md) | design and rationale of the static-embeddings notebook (02a) |
 | [`data_and_models.md`](data_and_models.md) | the two corpora, every model and tokenizer, `ner_helpers.py` |
 | [`environment.md`](environment.md) | local setup, caches, Binder, executing and verifying the notebooks, extending the series |
 
@@ -29,6 +30,7 @@ activities share vocabulary and examples.
 |---|---|---|---|---|
 | [`01a-tokenization-tokens.ipynb`](../01a-tokenization-tokens.ipynb) | **warm-up**: one routine, `tokenizer.tokenize(text)`, and seven tokenizers to plug into it | ~10 s | nothing (the sentence is hard-coded) | — |
 | [`01b-tokenization.ipynb`](../01b-tokenization.ipynb) | **detailed** look at the first step of the pipeline: rule-based, BPE, WordPiece, Unigram and byte tokenization on clinical text | ~30 s | `sample/cases.csv`, MACCROBAT | — |
+| [`02a-static-embeddings.ipynb`](../02a-static-embeddings.ipynb) | **warm-up** for steps ② and ④: one routine, `embedding(tokens)`, showing each token's token, position and segment vectors and layer 0 as colored boxes; five Transformer models and Word2Vec-style vectors | ~20 s | nothing (the sentence is hard-coded) | — |
 | [`ner_pipeline.ipynb`](../ner_pipeline.ipynb) | **the main class**: one sentence through a Transformer NER, tensor by tensor; then what fine-tuning changed, and a contrasting architecture | ~2 min | `sample/cases.csv`, MACCROBAT | — |
 
 Times are for a laptop CPU with models already cached. All notebooks are
@@ -55,6 +57,9 @@ the model/data caches described in [`environment.md`](environment.md).
   │
 01b  (selected sections)  why tokenizers differ; §5 side-by-side, §6 clinical
   │                       words and §8 entity boundaries are the most useful live
+  │
+02a  (10–15 min)  "what vector does a token get?" — token + position + segment,
+  │               change one name, re-run one cell
   ▼
 ner_pipeline  §1–7   one sentence, tensor by tensor (the core of the class)
               §8     what fine-tuning changed (the "aha" plots)
@@ -71,7 +76,7 @@ class time is short, and both end with challenges.
                                 │
           ┌─────────────────────┼─────────────────────────────┐
           ▼                     ▼                             ▼
-     01a (sentence         01b §1–7                     ner_pipeline §1–7
+     01a, 02a (sentence    01b §1–7                     ner_pipeline §1–7
       hard-coded)          tokenizers compared          walkthrough sentence
                                 │                             │
                      MACCROBAT (200 annotated reports, via ner_helpers.py)
@@ -86,7 +91,8 @@ class time is short, and both end with challenges.
 | ① spaCy sentence splitting and word tokens (§1) | 01a, 01b §1–2 |
 | ③ WordPiece tokenization (§3) | 01a, 01b §3–7 |
 | ⑦ sub-word labels → entity spans, `char_span(alignment_mode="expand")` | 01b §8 |
-| ② static vectors, ④–⑤ layer 0 → contextual vectors | not yet (candidate for `02`) |
+| ② static word vectors (§2), ④ layer 0: token + position embeddings (§4) | 02a (adds segment embeddings, four more models, and mixed tokenizer/embedding pairs) |
+| ⑤ layer 0 → contextual vectors | not yet (candidate for `02b`) |
 | ⑧ fine-tuning geometry | not yet |
 
 The recurring idea that ties the notebooks together is that **character
@@ -110,9 +116,9 @@ reconciled only through offsets.
 
 ## What comes next
 
-`02-...` is not defined yet. The natural candidates are:
+`02a` covers the static step only. The natural candidates for what follows are:
 
-* **static vs contextual embeddings**, expanding §2 and §4–5 of the main
+* **`02b`, static vs contextual embeddings**, expanding §4–5 of the main
   class (e.g. more polysemous words, layer-wise similarity, static vectors
   from domain-specific models on a machine with more RAM);
 * **a BiomedBERT-based NER compared with d4data**: 01b shows BiomedBERT's
