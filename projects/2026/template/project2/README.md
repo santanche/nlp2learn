@@ -12,7 +12,7 @@ A estrutura aqui apresentada é uma simplificação daquela proposta pelo [Cooki
 │
 └── project2
     |
-    ├── README.md  <- texto da Entrega 1 do projeto
+    ├── README.md  <- texto da Entrega 2 do projeto
     │
     ├── data
     │   ├── external       <- dados de terceiros em formato usado para entrada na transformação
@@ -32,7 +32,7 @@ A estrutura aqui apresentada é uma simplificação daquela proposta pelo [Cooki
         └── slides         <- slides em PDF
 ~~~
 
-Na raiz da pasta `project1` deve haver um arquivo de nome `README.md` contendo a apresentação do projeto, como detalhado na seção seguinte.
+Na raiz da pasta `project2` deve haver um arquivo de nome `README.md` contendo a apresentação do projeto, como detalhado na seção seguinte.
 
 ## `data`
 
