@@ -6,7 +6,6 @@
 jupyterlab
 numpy
 pandas
-scikit-learn
 
 torch>=2.2
 transformers>=4.45

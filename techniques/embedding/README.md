@@ -2,13 +2,17 @@
 
 | Notebook | Content |
 |---|---|
-| [`text-embeddings.ipynb`](text-embeddings.ipynb) | three clinical texts → one `[CLS]` vector each (`BAAI/bge-small-en-v1.5`, 384 dimensions); the vectors as a table; cosine similarity of each pair; a logistic regression on the `[CLS]` vectors that labels a new case |
+| [`text-embeddings.ipynb`](text-embeddings.ipynb) | four clinical texts → one `[CLS]` vector each (`BAAI/bge-small-en-v1.5`, 384 dimensions); the vectors as a table; cosine similarity of each pair |
 
-The three texts are opening sentences of MultiCaRe cases from the sample in
-[`../ner/`](../ner/) (`PMC5137649_01`, `PMC11722600_01`, `PMC6949661_01`):
-texts 1 and 2 are about abdominal pain, text 3 is about a possible seizure.
-The notebook is committed with its outputs (executed with papermill, see the
-repository `CLAUDE.md`).
+Next: [`../classification/title-classification.ipynb`](../classification/title-classification.ipynb)
+trains a logistic regression on these `[CLS]` vectors.
+
+The four texts are sentences from MultiCaRe cases in the sample
+[`../../data/multicare/data/csv_sample/`](../../data/multicare/data/csv_sample/)
+(`PMC5137649_01`, `PMC11722600_01`, `PMC6949661_01`, `PMC6134951_01`):
+texts 1 and 2 are about abdominal pain, text 3 is about a possible seizure,
+text 4 about a rash. The notebook is committed with its outputs (executed
+with papermill, see the repository `CLAUDE.md`).
 
 ## Run it locally
 
