@@ -86,7 +86,7 @@ teacher might want to change:
 | `STATIC_VECTORS` | `en_core_web_md` | where the static vectors of §2 come from (comment suggests `en_core_sci_md` on machines with > 3 GB RAM) |
 | `FT_MODEL` | `d4data/biomedical-ner-all` | the fine-tuned NER model |
 | `BASE_MODEL` | `distilbert-base-uncased` | the model it was fine-tuned from |
-| `CASES_CSV` | `sample/cases.csv` | MultiCaRe sample |
+| `CASES_CSV` | `../../data/multicare/data/csv_sample/cases.csv` | MultiCaRe sample (shared, repository root) |
 | `CASE_ID`, `SENTENCE_STARTS_WITH` | `PMC5137649_01`, `"A 44-year-old woman presented"` | the walkthrough sentence |
 | `COMPARE_LABELS` | 6 MACCROBAT types | entity types used in §8 |
 | `WORDS_PER_LABEL` | 150 | balanced sample size per type in §8 |

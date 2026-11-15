@@ -30,7 +30,7 @@ Desenvolver e avaliar um processo de extração de um grafo de conhecimento clí
 
 ## Conjunto de Dados Completo
 
-Além dos arquivos CSV de amostra, está disponível um notebook que extrai um CSV completo com todos os registros em: [Preparação de Dados](../../../to-kg/notebooks/01_data_preparation.ipynb).
+Além dos arquivos CSV de amostra, está disponível um notebook que extrai um CSV completo com todos os registros em: [Preparação de Dados](../../../data/multicare/preparation/multicare_data_preparation.ipynb).
 
 O conjunto de dados completo pode ser explorado nesta aplicação final.
 

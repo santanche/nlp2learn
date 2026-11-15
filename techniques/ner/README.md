@@ -86,7 +86,6 @@ embedding layers in memory; it runs in about 20 seconds.
 | `02a-static-embeddings.ipynb` | preliminary notebook 02a: static embeddings, a first look |
 | `ner_pipeline.ipynb` | the class |
 | `ner_helpers.py` | plumbing only: MACCROBAT download, brat parsing, span → token alignment, drawing vectors as colored boxes |
-| `sample/` | 50-article sample of MultiCaRe converted to CSV (same as `to-kg/data/csv/sample`) |
 | `requirements.txt` | environment, shared by the local and Binder setups |
 | `binder-env/` | Binder image definition (published as branch `binder-ner`) |
 | `docs/` | project documentation (see above) |

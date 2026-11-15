@@ -8,7 +8,7 @@ installation and caches in [`environment.md`](environment.md).
 
 ## 1. Corpora
 
-### 1.1 MultiCaRe sample (`sample/`)
+### 1.1 MultiCaRe sample (`data/multicare/data/csv_sample/`)
 
 Unannotated clinical case reports from PubMed Central, used for every
 walkthrough and corpus statistic.
@@ -16,7 +16,8 @@ walkthrough and corpus statistic.
 | | |
 |---|---|
 | Source | MultiCaRe, Nievas Offidani et al., [Zenodo 10.5281/zenodo.10079369](https://doi.org/10.5281/zenodo.10079369) |
-| How the sample was made | by `to-kg/notebooks/01_data_preparation.ipynb`: 50 `article_id`s drawn with seed 42 from the sorted list of all ids (see [`to-kg/docs/data_source.md`](../../../to-kg/docs/data_source.md)). The files here are byte-identical copies of `to-kg/data/csv/sample/` |
+| Where | [`data/multicare/data/csv_sample/`](../../../data/multicare/data/csv_sample/) at the repository root, shared with `to-kg`; the notebooks read `../../data/multicare/data/csv_sample/cases.csv` |
+| How the sample was made | by [`data/multicare/preparation/multicare_data_preparation.ipynb`](../../../data/multicare/preparation/multicare_data_preparation.ipynb): 50 `article_id`s drawn with seed 42 from the sorted list of all ids (see [`to-kg/docs/data_source.md`](../../../to-kg/docs/data_source.md)). |
 | Size | 56 cases from 50 articles (some articles report several cases), 185,279 characters; cases range from 465 to 11,806 characters |
 | Licenses | per article, in the `license` column of `metadata.csv` |
 

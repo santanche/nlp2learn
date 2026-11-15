@@ -18,6 +18,9 @@ class.
 - 📚 **[Case Teaching data](https://github.com/santanche/nlp2learn/tree/main/data/case-teaching-cabot)**
   — historical case-teaching corpus (Cabot), extracted text and metadata
   used for information extraction exercises.
+- 🏥 **[MultiCaRe data](https://github.com/santanche/nlp2learn/tree/main/data/multicare)**
+  — clinical case reports from PubMed Central: preparation notebook and a
+  50-article CSV sample, shared by the knowledge-graph and NER material.
 - 🧠 **[From Clinical Case Reports to Knowledge Graphs](https://github.com/santanche/nlp2learn/tree/main/to-kg)**
   — a full pedagogical activity taking clinical case reports through
   tokenization and entity/relation extraction into a knowledge graph.

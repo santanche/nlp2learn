@@ -17,7 +17,7 @@ behave on clinical English, and what does that mean for NER?*
 | level | elementary | detailed |
 | in class | 5–10 minutes, live | selected sections live, the rest as reading |
 | content | one routine, seven tokenizers | algorithms re-implemented, nine tokenizers measured, NER alignment, a controlled experiment |
-| reads | nothing (sentence hard-coded) | `sample/cases.csv`, MACCROBAT |
+| reads | nothing (sentence hard-coded) | MultiCaRe sample `cases.csv`, MACCROBAT |
 | run time | ≈10 s | ≈30 s |
 | downloads | tokenizer files only (a few MB each, no model weights) | same |
 

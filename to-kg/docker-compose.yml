@@ -5,8 +5,11 @@ services:
       dockerfile: environment/data-prep/Dockerfile
     ports:
       - "127.0.0.1:8888:8888"
+    # Same relative layout as on the host: the notebooks reach the shared
+    # MultiCaRe dataset (repository root data/multicare/) via ../../data/multicare.
     volumes:
-      - ./:/home/jovyan/work
+      - ./:/home/jovyan/work/to-kg
+      - ../data/multicare:/home/jovyan/work/data/multicare
 
   kg-extraction:
     build:
@@ -14,8 +17,11 @@ services:
       dockerfile: environment/kg-extraction/Dockerfile
     ports:
       - "127.0.0.1:8889:8888"
+    # Same relative layout as on the host: the notebooks reach the shared
+    # MultiCaRe dataset (repository root data/multicare/) via ../../data/multicare.
     volumes:
-      - ./:/home/jovyan/work
+      - ./:/home/jovyan/work/to-kg
+      - ../data/multicare:/home/jovyan/work/data/multicare
     environment:
       # Override to bolt://neo4j:7687 when also running the neo4j service below
       # (docker compose --profile graph up kg-extraction neo4j).

@@ -22,16 +22,18 @@ series uses that knowledge to open up a real **Named Entity Recognition**
 system on real clinical text, and shows what each stage of the pipeline
 does to the data. The corpus is the same as the sibling project
 [`to-kg`](../../../to-kg/) (MultiCaRe clinical case reports), so the two
-activities share vocabulary and examples.
+activities share vocabulary and examples; both read it from
+[`data/multicare/`](../../../data/multicare/) at the repository root (the
+notebooks here use its 50-article CSV sample).
 
 ## The notebooks
 
 | Notebook | Role | Runs in | Reads | Writes |
 |---|---|---|---|---|
 | [`01a-tokenization-tokens.ipynb`](../01a-tokenization-tokens.ipynb) | **warm-up**: one routine, `tokenizer.tokenize(text)`, and seven tokenizers to plug into it | ~10 s | nothing (the sentence is hard-coded) | — |
-| [`01b-tokenization.ipynb`](../01b-tokenization.ipynb) | **detailed** look at the first step of the pipeline: rule-based, BPE, WordPiece, Unigram and byte tokenization on clinical text | ~30 s | `sample/cases.csv`, MACCROBAT | — |
+| [`01b-tokenization.ipynb`](../01b-tokenization.ipynb) | **detailed** look at the first step of the pipeline: rule-based, BPE, WordPiece, Unigram and byte tokenization on clinical text | ~30 s | MultiCaRe sample `cases.csv`, MACCROBAT | — |
 | [`02a-static-embeddings.ipynb`](../02a-static-embeddings.ipynb) | **warm-up** for steps ② and ④: one routine, `embedding(tokens)`, showing each token's token, position and segment vectors and layer 0 as colored boxes; five Transformer models and Word2Vec-style vectors | ~20 s | nothing (the sentence is hard-coded) | — |
-| [`ner_pipeline.ipynb`](../ner_pipeline.ipynb) | **the main class**: one sentence through a Transformer NER, tensor by tensor; then what fine-tuning changed, and a contrasting architecture | ~2 min | `sample/cases.csv`, MACCROBAT | — |
+| [`ner_pipeline.ipynb`](../ner_pipeline.ipynb) | **the main class**: one sentence through a Transformer NER, tensor by tensor; then what fine-tuning changed, and a contrasting architecture | ~2 min | MultiCaRe sample `cases.csv`, MACCROBAT | — |
 
 Times are for a laptop CPU with models already cached. All notebooks are
 read-only with respect to the repository: they write nothing to disk except
@@ -72,7 +74,7 @@ class time is short, and both end with challenges.
 ## How the notebooks connect
 
 ```
-                         sample/cases.csv  (MultiCaRe, 56 cases)
+        data/multicare/data/csv_sample/cases.csv  (MultiCaRe, 56 cases)
                                 │
           ┌─────────────────────┼─────────────────────────────┐
           ▼                     ▼                             ▼

@@ -18,7 +18,9 @@ Rules of the series:
 
 * Preliminary notebooks are numbered `NN-topic.ipynb`, with a letter when a
   step is split into an elementary notebook (`a`) and a detailed one (`b`).
-  Detailed notebooks **replicate the start of `ner_pipeline.ipynb`** (same `sample/cases.csv`, case
+  Detailed notebooks **replicate the start of `ner_pipeline.ipynb`** (same `cases.csv` from the shared MultiCaRe sample
+  `data/multicare/data/csv_sample/` at the repository root — read as
+  `../../data/multicare/data/csv_sample/cases.csv`; there is no local `sample/`, case
   `PMC5137649_01`, sentence starting "A 44-year-old woman presented",
   `en_core_sci_sm` sentence splitting) and then goes deep into one step.
 * Same environment as the main class (`requirements.txt`, `.venv`, Binder
@@ -63,8 +65,9 @@ Full design in `docs/ner_pipeline.md`; the essentials for resuming work:
   0.431, silhouette 0.033 vs 0.291, linear probe 0.825 vs 0.935; layer 0
   equal; word-embedding table moved ≈2%. Context curves: other-sense
   cosine ≈0.15 at layer 6 for *culture* and *cold*.
-* Committed outputs come from `nbconvert`, not papermill — use papermill
-  on the next re-execution. Checklist: `docs/ner_pipeline.md` §6.
+* Committed outputs come from papermill (first papermill run 2026-11-15,
+  after the MultiCaRe sample moved to `data/multicare/data/csv_sample/`;
+  results identical to the earlier nbconvert run). Checklist: `docs/ner_pipeline.md` §6.
 * Binder: branch `binder-ner` not yet created/pushed (2026-11-07); the
   Docker test of the image predates the 01a/01b tokenizers in `postBuild`.
 

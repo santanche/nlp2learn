@@ -33,7 +33,7 @@ jupyter lab                            # open 01a, 01b, 02a or ner_pipeline
 |---|---|
 | `--extra-index-url https://download.pytorch.org/whl/cpu` | CPU-only torch wheel; without it pip/uv install the CUDA build (several GB) |
 | `numpy<2` | spaCy 3.7 / thinc 8.2 wheels are compiled against numpy 1.x (`ValueError: numpy.dtype size changed` otherwise) |
-| `torch>=2.2`, `transformers>=4.45` | lower bounds only; tested with torch 2.15.0+cpu and transformers 5.22.1 |
+| `torch>=2.2`, `transformers>=4.45` | lower bounds only; tested with torch 2.15.0+cpu and transformers 5.22.2 |
 | `en_core_sci_sm` 0.5.4 (URL) | scispaCy models are only published for 0.5.4; this pulls spaCy 3.7.x |
 | `en_core_web_md` 3.7.1 (URL) | static vectors; same spaCy 3.7 line |
 | `nbgitpuller` | only used on Binder; harmless locally |

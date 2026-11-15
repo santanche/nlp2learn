@@ -2,8 +2,12 @@
 
 **Purpose of this document.** This is the reference for where the corpus
 comes from, which files were selected (and why), and the exact schema that
-ends up in `data/duckdb/clinical_cases.duckdb` (plus `data/csv/full/` and
-`data/csv/sample/`) after `01_data_preparation.ipynb` runs. Later notebooks
+ends up in `data/multicare/data/duckdb/clinical_cases.duckdb` (plus
+`data/multicare/data/csv_full/` and `data/multicare/data/csv_sample/`) after
+[`multicare_data_preparation.ipynb`](../../data/multicare/preparation/multicare_data_preparation.ipynb)
+runs. The dataset lives at the repository root, in `data/multicare/`, because it
+is shared with other parts of the repository (e.g. `techniques/ner/` reads the
+CSV sample); paths in this document are relative to the repository root. Later notebooks
 (exploration, manual NER/RE, knowledge graph construction, vector
 representations) should treat this file — not `data_dictionary.csv` alone —
 as the source of truth for column names and layout, because the raw files
@@ -43,7 +47,7 @@ mistake to fix:
 ## 2. Files in the Zenodo record and selection decisions
 
 The record has 15 files. Only three are downloaded by
-`01_data_preparation.ipynb`; the rest are skipped because the activity plan
+`multicare_data_preparation.ipynb`; the rest are skipped because the activity plan
 never touches images or abstracts.
 
 | File | Size | Decision | Reason |
@@ -56,7 +60,7 @@ never touches images or abstracts.
 | `case_images.parquet` | 55 MB | Skipped | Image metadata — same reason |
 | `PMC1.zip` … `PMC9.zip` | ~2.66 GB total | Skipped | Raw PMC image archives — by far the largest part of the record, entirely unused here |
 
-Files are downloaded at notebook runtime into `data/raw/` (gitignored)
+Files are downloaded at notebook runtime into `data/multicare/data/raw/` (gitignored)
 rather than committed to git, via Zenodo's `versions/latest` API endpoint
 keyed on the concept id `10079369` — so the notebook always tracks the
 current version instead of a version pinned at authoring time. Re-running
@@ -77,19 +81,21 @@ as flat, one-row-per-entity tables. The actual files are more nested:
   `mesh_terms`, `case_amount`, …) packed into a single struct column named
   `article_metadata`.
 
-`01_data_preparation.ipynb` unnests/flattens both before writing the DuckDB
+`multicare_data_preparation.ipynb` unnests/flattens both before writing the DuckDB
 tables (`UNNEST(cases)` for the list, `article_metadata.*` for the struct),
 so the tables described in Section 4 match what `data_dictionary.csv`
 implies — but a naive `SELECT * FROM read_parquet(...)` on the raw files
 will not.
 
-## 4. Resulting DuckDB schema (`data/duckdb/clinical_cases.duckdb`)
+## 4. Resulting DuckDB schema (`data/multicare/data/duckdb/clinical_cases.duckdb`)
 
-The same three tables are also exported as CSV in two forms (Section 6 of
-`01_data_preparation.ipynb`):
+The same three tables are also exported as CSV in two forms (Sections 5–6 of
+`multicare_data_preparation.ipynb`):
 
-- `data/csv/full/{cases,metadata,data_dictionary}.csv` — every row.
-- `data/csv/sample/{cases,metadata,data_dictionary}.csv` — a fixed sample of
+- `data/multicare/data/csv_full/{cases,metadata,data_dictionary}.csv` — every row
+  (gitignored).
+- `data/multicare/data/csv_sample/{cases,metadata,data_dictionary}.csv` —
+  versioned in git (≈220 KB) — a fixed sample of
   50 `article_id`s (seed `42`, drawn from the sorted list of all article
   ids), applied to `cases` and `metadata`; `metadata` ends up with exactly
   50 rows, `cases` with slightly more (some articles contribute several
@@ -146,8 +152,8 @@ use Section 4 of this document for actual DuckDB column names.
 
 ## 5. Confronting extracted metadata against the source paper
 
-The paper's abstract reports **93,816 clinical cases**. Section 5 of
-`01_data_preparation.ipynb` computes the same figure from the downloaded
+The paper's abstract reports **93,816 clinical cases**. Section 4 of
+`multicare_data_preparation.ipynb` computes the same figure from the downloaded
 data and diffs it:
 
 - Cases in DB (version 3.0.1, fetched 2026-08-06): **98,641**
@@ -166,7 +172,7 @@ version, and the dataset grows over time.
   rather than trusting the numbers above as current.
 - No entity/relation/annotation tables exist yet. Those are produced
   manually by students in Steps 3–5 of the activity plan and are out of
-  scope for `01_data_preparation.ipynb` and this document.
+  scope for `multicare_data_preparation.ipynb` and this document.
 - If a future Zenodo version changes the file layout again (e.g. flattens
   the nested columns, renames fields), re-verify Section 3 before trusting
   the `UNNEST`/struct-expansion logic in the notebook.

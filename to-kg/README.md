@@ -25,8 +25,8 @@ each gets its own environment rather than one shared one:
 
 | Environment | Notebook | What it needs |
 |---|---|---|
-| `environment/data-prep` | `01_data_preparation.ipynb` | DuckDB, pandas, requests — lightweight, runs anywhere |
-| `environment/kg-extraction` | `02_tokenization.ipynb`, `10_kg_extraction.ipynb` | PyTorch, transformers, spaCy/scispaCy (+ NLTK, unidecode for `02_tokenization.ipynb`) — local encoder models, heavier, laptop-scale |
+| `environment/data-prep` | `multicare_data_preparation.ipynb` (in `../data/multicare/preparation/`), `02a`/`02b`/`03` explorations | DuckDB, pandas, requests — lightweight, runs anywhere |
+| `environment/kg-extraction` | `01_tokenization.ipynb`, `10_kg_extraction.ipynb` | PyTorch, transformers, spaCy/scispaCy (+ NLTK, unidecode for `01_tokenization.ipynb`) — local encoder models, heavier, laptop-scale |
 
 Both are offered two ways: a **Docker image** (no local Python setup at all)
 or a **local `uv` virtual environment** (faster iteration, no container
@@ -53,8 +53,13 @@ docker compose up --build kg-extraction
 ```
 
 Both containers bind-mount the whole `to-kg/` directory into
-`/home/jovyan/work`, so files and downloaded data persist on the host
-across restarts (`data/` is gitignored). Check `docker compose logs
+`/home/jovyan/work/to-kg` and the shared MultiCaRe dataset folder
+(`../data/multicare/`, see [Data preparation](#data-preparation)) into
+`/home/jovyan/work/data/multicare`, keeping the same relative layout as on
+the host, so the notebooks' relative paths work unchanged and files and
+downloaded data persist on the host across restarts (the data folders are
+gitignored). In JupyterLab, open `to-kg/notebooks/` or
+`data/multicare/preparation/`. Check `docker compose logs
 <service>` for the token if you missed it. Stop with `docker compose down`.
 
 Optional: `10_kg_extraction.ipynb` can push the resulting graph into a
@@ -80,8 +85,8 @@ cd environment/data-prep
 uv venv
 source .venv/bin/activate       # .venv\Scripts\activate on Windows
 uv pip install -r requirements.txt
-cd ../../notebooks
-jupyter lab 01_data_preparation.ipynb
+cd ../../../data/multicare/preparation
+jupyter lab multicare_data_preparation.ipynb
 ```
 
 ```bash
@@ -126,19 +131,16 @@ to-kg/
 │   └── kg-extraction/
 │       ├── requirements.txt
 │       └── Dockerfile
-├── data/                     # gitignored
-│   ├── raw/                        # downloaded Zenodo files
-│   ├── duckdb/                     # clinical_cases.duckdb
-│   └── csv/
-│       ├── full/                   # CSV export of every table, all rows
-│       └── sample/                 # CSV export, fixed 50-article random sample
+├── data/                     # gitignored — this project's outputs and caches
+│   ├── kg_extraction/              # written by 10_kg_extraction.ipynb
+│   ├── hf_cache/                   # Hugging Face downloads (01_tokenization.ipynb)
+│   └── nltk_data/                  # NLTK downloads (01_tokenization.ipynb)
 ├── notebooks/
-│   ├── 01_data_preparation.ipynb           # download source files, build DuckDB + CSV exports
-│   ├── 02a_csv_data_exploraton_sample.ipynb  # example queries over the CSV sample
-│   ├── 02b_csv_data_exploraton_full.ipynb    # example queries over the full CSV export
-│   ├── 03_duckdb_data_exploraton.ipynb       # example queries over the DuckDB database
-│   ├── 02_tokenization.ipynb       # tokenization/normalization tour (IIR Lecture 2) over real case text
-│   └── 10_kg_extraction.ipynb      # local, encoder-only KG extraction over a configurable sample
+│   ├── 01_tokenization.ipynb                  # tokenization/normalization tour (IIR Lecture 2) over real case text
+│   ├── 02a_csv_data_exploration_sample.ipynb  # example queries over the CSV sample
+│   ├── 02b_csv_data_exploration_full.ipynb    # example queries over the full CSV export
+│   ├── 03_duckdb_data_exploration.ipynb       # example queries over the DuckDB database
+│   └── 10_kg_extraction.ipynb                 # local, encoder-only KG extraction over a configurable sample
 └── viewer/
     ├── graph_viewer.html           # versioned KG viewer — loads data/kg_extraction/graph_data.js
     └── lib/vis-network.min.js      # vendored (offline, no CDN dependency)
@@ -146,27 +148,46 @@ to-kg/
 
 ## Data preparation
 
-`notebooks/01_data_preparation.ipynb` downloads three files from the latest
-version of the Zenodo record (`cases.parquet`, `metadata.parquet`,
-`data_dictionary.csv`) into `data/raw/`, loads them into a DuckDB database at
+The MultiCaRe dataset is prepared **outside this project**, in
+`data/multicare/` at the repository root, because other parts of the
+repository use it too (e.g. `techniques/ner/` reads the CSV sample):
+
+```
+data/multicare/
+├── preparation/
+│   └── multicare_data_preparation.ipynb   # download source files, build DuckDB + CSV exports
+└── data/
+    ├── raw/            # downloaded Zenodo files          (gitignored)
+    ├── duckdb/         # clinical_cases.duckdb            (gitignored)
+    ├── csv_full/       # CSV export of every table         (gitignored)
+    └── csv_sample/     # CSV export, fixed 50-article sample (versioned)
+```
+
+[`data/multicare/preparation/multicare_data_preparation.ipynb`](../data/multicare/preparation/multicare_data_preparation.ipynb) (run it in the
+`data-prep` environment) downloads three files from the latest version of
+the Zenodo record (`cases.parquet`, `metadata.parquet`,
+`data_dictionary.csv`) into `data/raw/` (paths relative to
+`data/multicare/`), loads them into a DuckDB database at
 `data/duckdb/clinical_cases.duckdb`:
 
 ```python
 import duckdb
-con = duckdb.connect("../data/duckdb/clinical_cases.duckdb")
+# from to-kg/notebooks/
+con = duckdb.connect("../../data/multicare/data/duckdb/clinical_cases.duckdb")
 ```
 
-and exports the same tables as CSV — `data/csv/full/` (every row) and
-`data/csv/sample/` (a fixed, seeded 50-article sample) — for notebooks that
-prefer plain CSV over a database file.
+and exports the same tables as CSV — `data/csv_full/` (every row) and
+`data/csv_sample/` (a fixed, seeded 50-article sample) — for notebooks that
+prefer plain CSV over a database file. Run it once before any notebook in
+this project.
 
 Three exploration notebooks then run the same set of example queries
 against each form, so the query logic is directly comparable across sample
 vs. full and CSV vs. DuckDB:
 
-- `notebooks/02a_csv_data_exploraton_sample.ipynb` — `data/csv/sample/`
-- `notebooks/02b_csv_data_exploraton_full.ipynb` — `data/csv/full/`
-- `notebooks/03_duckdb_data_exploraton.ipynb` — `data/duckdb/clinical_cases.duckdb`
+- `notebooks/02a_csv_data_exploration_sample.ipynb` — `data/multicare/data/csv_sample/`
+- `notebooks/02b_csv_data_exploration_full.ipynb` — `data/multicare/data/csv_full/`
+- `notebooks/03_duckdb_data_exploration.ipynb` — `data/multicare/data/duckdb/clinical_cases.duckdb`
 
 See [docs/data_source.md](docs/data_source.md) for the full analysis behind
 these decisions, and the exact DuckDB table schemas (`cases`, `metadata`,
@@ -174,7 +195,7 @@ these decisions, and the exact DuckDB table schemas (`cases`, `metadata`,
 
 ## Tokenization
 
-`notebooks/02_tokenization.ipynb` connects read-only to the same DuckDB
+`notebooks/01_tokenization.ipynb` connects read-only to the same DuckDB
 database and walks through the term-vocabulary concepts from *Introduction
 to Information Retrieval*, Lecture 2 (normalization, hyphen/whitespace
 tokenization problems, accents, case folding, stop words, lemmatization,
@@ -188,7 +209,7 @@ run it in the `kg-extraction` environment (it needs spaCy/scispaCy and
 ## KG extraction
 
 `notebooks/10_kg_extraction.ipynb` connects to the same DuckDB database
-(built by `01_data_preparation.ipynb`, assumed to already exist — this
+(built by `multicare_data_preparation.ipynb`, assumed to already exist — this
 notebook does not download anything) and runs the local, encoder-only
 pipeline proposed in
 [docs/kg_extraction_methodology.md](docs/kg_extraction_methodology.md) over

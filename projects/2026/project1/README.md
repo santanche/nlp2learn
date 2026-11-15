@@ -8,7 +8,7 @@ Este projeto envolve a extração de dados de um repositório que cataloga milha
 
 O banco de dados extraiu os casos clínicos disponíveis de artigos publicados no PubMed.
 
-Na pasta [sample/](sample/) estão disponíveis três arquivos de amostra, extraídos pelo notebook [`02a_csv_data_exploraton_sample.ipynb`](../../../to-kg/notebooks/02a_csv_data_exploraton_sample.ipynb) a partir de uma amostra fixa de 50 artigos do MultiCaRe (mais detalhes em [`to-kg/docs/data_source.md`](../../../to-kg/docs/data_source.md)):
+Na pasta [sample/](sample/) estão disponíveis três arquivos de amostra, extraídos pelo notebook [`02a_csv_data_exploration_sample.ipynb`](../../../to-kg/notebooks/02a_csv_data_exploration_sample.ipynb) a partir de uma amostra fixa de 50 artigos do MultiCaRe (mais detalhes em [`to-kg/docs/data_source.md`](../../../to-kg/docs/data_source.md)):
 
 - **[cases.csv](sample/cases.csv)** — um caso clínico por linha (um paciente). Colunas: `article_id` (PMCID do artigo, chave estrangeira para `metadata.csv`), `case_id` (`article_id` + sufixo sequencial, ex. `PMC5137649_01`), `case_text` (texto integral do relato de caso — a principal fonte para a extração de entidades e relações), `age` (idade; valores menores que 1 ano aparecem como 0) e `gender` (`Female`, `Male`, `Transgender` ou `Unknown`). 246 casos nesta amostra.
 
