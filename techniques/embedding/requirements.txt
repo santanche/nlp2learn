@@ -1,0 +1,12 @@
+# Text embeddings, first steps — environment for text-embeddings.ipynb
+
+# CPU-only PyTorch build: avoids pulling multi-GB CUDA libraries.
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+jupyterlab
+numpy
+pandas
+scikit-learn
+
+torch>=2.2
+transformers>=4.45
