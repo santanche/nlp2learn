@@ -9,8 +9,8 @@
 | | model | trained to… | pooling |
 |---|---|---|---|
 | A | `BAAI/bge-small-en-v1.5` (default) | produce sentence embeddings (contrastive) | `cls` |
-| B | `distilbert-base-uncased` | predict masked words, general English | `cls` (none trained) |
-| C | `microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext` | predict masked words, PubMed | `cls` (none trained) |
+| B | `distilbert-base-uncased` | predict masked words, general English (distilled from BERT) | `cls` (none trained) |
+| C | `microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext` | predict masked words + next-sentence prediction, PubMed | `cls` (trained for NSP only) |
 | D | `NeuML/pubmedbert-base-embeddings` | C fine-tuned for sentence embeddings | `mean` |
 
 The point of the comparison: the model's vocabulary/domain is not what makes
