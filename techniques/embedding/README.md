@@ -42,6 +42,13 @@ texts 1 and 2 are about abdominal pain, text 3 is about a possible seizure,
 text 4 about a rash. The notebook is committed with its outputs (executed
 with papermill, see the repository `CLAUDE.md`).
 
+## Run it on Binder
+
+[Launch `text-embeddings.ipynb`](https://mybinder.org/v2/gh/santanche/nlp2learn/binder-embedding?urlpath=git-pull%3Frepo%3Dhttps%253A%252F%252Fgithub.com%252Fsantanche%252Fnlp2learn%26urlpath%3Dlab%252Ftree%252Fnlp2learn%252Ftechniques%252Fembedding%252Ftext-embeddings.ipynb%26branch%3Dmain)
+— the image (branch `binder-embedding`, shared with `../classification/`)
+already holds the four models; setup and maintenance in
+[`binder-env/`](binder-env/README.md).
+
 ## Run it locally
 
 With [uv](https://docs.astral.sh/uv/), from this folder:

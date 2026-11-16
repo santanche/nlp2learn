@@ -33,6 +33,12 @@ into `data/` (gitignored) on the first run and cleans them:
 Result: 5,683 titles (676 to 2,130 per class). The notebook samples 600 per
 class and splits them 2/3 train, 1/3 test (1,600 / 800 titles).
 
+## Run it on Binder
+
+[Launch this folder](https://mybinder.org/v2/gh/santanche/nlp2learn/binder-embedding?urlpath=git-pull%3Frepo%3Dhttps%253A%252F%252Fgithub.com%252Fsantanche%252Fnlp2learn%26urlpath%3Dlab%252Ftree%252Fnlp2learn%252Ftechniques%252Fclassification%26branch%3Dmain)
+— same image as `../embedding/` (branch `binder-embedding`); setup and
+maintenance in [`../embedding/binder-env/`](../embedding/binder-env/README.md).
+
 ## Run it locally
 
 With [uv](https://docs.astral.sh/uv/), from this folder:

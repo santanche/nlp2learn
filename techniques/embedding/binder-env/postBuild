@@ -1,0 +1,25 @@
+#!/bin/bash
+# Runs once when Binder builds the image. Everything written to $HOME here is
+# part of the image, so student sessions do not download any model.
+set -euo pipefail
+
+# Hugging Face models -> default cache (~/.cache/huggingface); the notebooks do
+# not set HF_HOME, so they find them there. Same calls as the notebooks, so the
+# same files are fetched.
+#   text-embeddings.ipynb      : the four models A-D (one at a time)
+#   title-classification*.ipynb: BAAI/bge-small-en-v1.5 (model A)
+python - <<'PY'
+from transformers import AutoTokenizer, AutoModel
+
+for name in ["BAAI/bge-small-en-v1.5",
+             "distilbert-base-uncased",
+             "microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext",
+             "NeuML/pubmedbert-base-embeddings"]:
+    AutoTokenizer.from_pretrained(name)
+    AutoModel.from_pretrained(name)
+    print("cached:", name)
+PY
+
+# The Medical Abstracts CSVs (~18 MB) of techniques/classification are NOT
+# cached here: classification_helpers.py downloads them into the notebook's own
+# data/ folder, which only exists after nbgitpuller has pulled the notebooks.
