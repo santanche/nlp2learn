@@ -37,6 +37,12 @@ The notebook is committed with its outputs (executed with papermill, see
 the repository `CLAUDE.md`); the random draws use a fixed seed (`SEED`),
 so the outputs are the same on every run.
 
+## Run it on Binder
+
+[Launch `next-token-generation.ipynb`](https://mybinder.org/v2/gh/santanche/nlp2learn/binder-generative?urlpath=git-pull%3Frepo%3Dhttps%253A%252F%252Fgithub.com%252Fsantanche%252Fnlp2learn%26urlpath%3Dlab%252Ftree%252Fnlp2learn%252Ftechniques%252Fgenerative%252Fnext-token-generation.ipynb%26branch%3Dmain)
+— the image (branch `binder-generative`) already holds the two models;
+setup and maintenance in [`binder-env/`](binder-env/README.md).
+
 ## Run it locally
 
 With [uv](https://docs.astral.sh/uv/), from this folder:
