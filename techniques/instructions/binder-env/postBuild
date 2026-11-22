@@ -1,0 +1,22 @@
+#!/bin/bash
+# Runs once when Binder builds the image. Everything written to $HOME here is
+# part of the image, so student sessions do not download any model.
+set -euo pipefail
+
+# Hugging Face models -> default cache (~/.cache/huggingface); the notebook
+# does not set HF_HOME, so it finds them there. Same calls as the notebook, so
+# the same files are fetched.
+#   instruction-following.ipynb: two base models and their instruct versions
+#   (+ gpt2, the alternative base model of part 2)
+python - <<'PY'
+from transformers import AutoTokenizer, AutoModelForCausalLM
+
+for name in ["distilgpt2",
+             "gpt2",
+             "MBZUAI/LaMini-GPT-124M",
+             "HuggingFaceTB/SmolLM2-135M",
+             "HuggingFaceTB/SmolLM2-135M-Instruct"]:
+    AutoTokenizer.from_pretrained(name)
+    AutoModelForCausalLM.from_pretrained(name)
+    print("cached:", name)
+PY
