@@ -1,0 +1,19 @@
+#!/bin/bash
+# Runs once when Binder builds the image. Everything written to $HOME here is
+# part of the image, so student sessions do not download any model.
+set -euo pipefail
+
+# Hugging Face model -> default cache (~/.cache/huggingface); the notebook
+# does not set HF_HOME, so it finds it there. Same calls as the notebook, so
+# the same files are fetched.
+#   prompt-engineering.ipynb, parts 1-5: Qwen3-0.6B.
+#   Part 6 (Qwen3-1.7B, ~4 GB of memory) does not fit in a Binder session and
+#   is not cached.
+python - <<'PY'
+from transformers import AutoTokenizer, AutoModelForCausalLM
+
+for name in ["Qwen/Qwen3-0.6B"]:
+    AutoTokenizer.from_pretrained(name)
+    AutoModelForCausalLM.from_pretrained(name)
+    print("cached:", name)
+PY

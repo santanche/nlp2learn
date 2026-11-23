@@ -1,0 +1,10 @@
+# Prompt engineering — environment for prompt-engineering.ipynb
+
+# CPU-only PyTorch build: avoids pulling multi-GB CUDA libraries.
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+jupyterlab
+pandas
+
+torch>=2.2
+transformers>=4.45
